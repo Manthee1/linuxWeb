@@ -10,6 +10,12 @@ body {
 	background-color: black;
 }
 
+h1 {
+	color: white;
+	margin: auto;
+	font-family: consolas;
+}
+
 boot_msg {
 	text-align: left;
 	color: rgb(167, 167, 167);
