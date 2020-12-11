@@ -1,0 +1,109 @@
+body{
+    background-color:#1c6087;	
+    width:100%;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+@font-face {
+    font-family: 'AlegreyaSans-Light';
+    src: url('fonts/AlegreyaSans-Light.ttf');
+}
+
+
+p, h1 ,h2, h3{
+	size:20;
+	margin-left: 0 auto;
+    margin-right: 0 auto;
+	color:white;
+	content:center;
+	font-family:"Lucida Console",Lucida,Monospace;
+	
+
+}
+h1,h2{
+	font-size:50px;
+	
+}
+p{
+	
+	font-size:15px;
+	
+	
+}
+.button {
+    cursor: pointer;
+	margin-left: auto;
+    margin-right: auto;
+    background-color: #323536; /* Green */
+    border: none;
+    color: white;
+    padding: 7px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+.button:hover {
+
+    background-color: rgb(68, 107, 179);
+
+}
+.inputText {
+	margin-left: auto;
+    margin-right: auto;
+	
+	border:none;
+	background-color:#d1ecff; /*Light blue*/
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	font-family:'AlegreyaSans-Light',Sans;
+	
+}
+
+.Pcontent{
+    text-align: center;
+    position: relative;
+	margin-top: 20%;
+    margin-left:0, auto;
+  
+   
+}
+
+.Pcontent p,h1,h2,h3,div{
+	text-align:center;
+    margin-left:0, auto;
+}
+
+
+
+
+#talert{
+	margin-left: auto;
+    margin-right: auto;
+    color:red;
+
+	
+	
+}
+
+input:focus{
+
+    outline: none;
+
+}
+#loading{
+    margin-top: 100px;
+    width:100px;
+
+}

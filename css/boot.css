@@ -1,0 +1,24 @@
+::-webkit-scrollbar {
+	display: none;
+}
+
+html {
+	cursor: none;
+}
+
+body {
+	background-color: black;
+}
+
+boot_msg {
+	text-align: left;
+	color: rgb(167, 167, 167);
+	display: block;
+	margin: 20px;
+}
+span {
+	position: absolute;
+	right: 50px;
+	margin-top: 10px;
+	color: #58e83e;
+}

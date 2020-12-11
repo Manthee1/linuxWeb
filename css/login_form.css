@@ -1,0 +1,92 @@
+* {
+	outline: none !important;
+	font-family: consolas;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+}
+body {
+	display: flex;
+	margin: auto;
+	text-align: center;
+}
+
+background_wallpaper {
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	z-index: -1;
+	top: 0px;
+	left: 0px;
+	background-image: url("../img/LoginBG.jpeg");
+	background-repeat: no-repeat;
+	background-position-x: center;
+	background-position-y: center;
+	filter: contrast(0.6) blur(0.3rem) invert(0.8);
+}
+
+form {
+	margin: auto;
+	display: inline-block;
+	transition: all 0.5s ease-in-out;
+}
+
+form > * {
+	display: block;
+}
+
+login_user {
+	position: relative;
+	font-size: 50px;
+	margin: 30px 60px 50px 60px;
+	color: whitesmoke;
+}
+
+login_user > img {
+	margin: 10px 0px;
+	filter: invert(0.8);
+}
+
+login_time_display {
+	font-size: 80px;
+	color: rgb(255, 255, 255);
+	border-radius: 20px;
+	padding: 20px;
+	border: 10px solid white;
+}
+
+form > input {
+	display: inline-block;
+	font-size: 20px;
+	padding: 2px;
+	padding-left: 10px;
+
+	height: 45px;
+	width: 300px;
+	border-radius: 1px;
+	margin: -5px;
+	border: 3px solid rgb(200, 200, 200);
+	transition: background-color 50ms ease-in-out,border-color 50ms ease-in-out;
+
+}
+
+form > input:focus {
+	border: 3px solid transparent;
+}
+
+form > input[type="submit"] {
+	display: inline-block;
+
+	border: none;
+	padding: 0px;
+	width: 35px;
+	color: whitesmoke;
+	background-color: #413e3e;
+}
+
+login_user,
+input {
+	position: relative;
+	bottom: 100px;
+}

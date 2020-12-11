@@ -1,0 +1,256 @@
+body{
+    background-color:#1c6087;	
+    width:100%;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    cursor: default;
+}
+
+input:focus{
+
+    outline: none;
+
+}
+
+#timeBar{
+
+    position: absolute;
+    text-align: center;
+    top:0;
+    width: 100%;
+    left: 0;
+    padding: 0;
+
+
+
+}
+
+#currentTime{
+
+cursor: pointer;
+
+}
+
+#detailedTimeMenu{
+    
+    display: none;
+    position: absolute;
+    background-color: rgb(255, 255, 255);;
+    height: 200px;
+    width: 200px;
+    top:30px; 
+    left:50%;  
+    transform: translate(-50%, 0%);
+    border: 2px solid rgba(128, 128, 128, 0.137);
+    border-radius: 5px;
+}
+
+
+#actualDay{
+    position: absolute;
+    color: rgba(90, 90, 90, 0.836);
+    font-weight: lighter;
+    font-size: 12px;
+    margin-top: -10px;
+    margin-left: 10px;
+   
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#actualDate{
+    position: absolute;
+    color: rgba(90, 90, 90, 0.836);
+    font-size: 19px;
+    margin-top: -10px;
+    margin-left: 10px;
+   
+}
+#menuPoweroff{
+
+    position: absolute;
+    top:120px;
+    right:20px;
+    cursor: pointer;
+    height:38px;
+    transition: background-color cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
+    border-radius: 50%;
+}
+
+#menuPoweroff:hover{
+
+    background-color: steelblue;
+
+}
+#menuSettingsIco{
+
+    position: absolute;
+    top:120px;
+    left:20px;
+    cursor: pointer;
+    height:38px;
+    transition: background-color cubic-bezier(0.19, 1, 0.22, 1) 0.3s;
+    border-radius: 50%;
+}
+
+#menuSettingsIco:hover{
+
+    background-color: steelblue;
+;
+}
+small{
+
+    color: rgb(156, 156, 156);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+
+}
+
+
+.Calendar-daysInWeek > div{
+
+    display: inline-block;
+    color:rgb(44, 36, 36);
+    border-radius: 50%;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+    cursor: pointer;
+    margin-left: 5px; 
+    width:20px;
+    margin-bottom:3px;
+    text-align: center;
+}
+
+.Calendar-daysInWeek > div:hover{
+
+    background: rgb(169, 178, 184);
+   
+
+}
+
+.Calendar-daysInWeek > span{
+
+    
+    color:rgb(77, 74, 74);
+    border-radius: 50%;
+    margin-left: 10px; 
+
+}
+
+#Desktop{
+    position: absolute;
+    left:0; top:0;
+    width: 100%;
+    height:100%;
+   
+
+
+}
+
+.desktopContextMenu, .terminalContextMenu{
+    border: solid rgba(0, 0, 0, 0.329) 1px;
+    
+    width:100px;
+    display: none;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+
+}
+
+#desktopContextMenu > div , .terminalContextMenu > div{
+    width:85%;
+    border-radius: 0px;
+    margin:2px 5px;
+    padding:2px;
+    background-color: rgb(255, 255, 255);
+    
+    color: rgb(49, 49, 49);
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 500ms background-color;
+}
+
+#desktopContextMenu > div:hover, .terminalContextMenu > div:hover{
+
+    background-color: rgb(196, 227, 255);
+
+}
+
+
+#dcmTerminal{
+    border-radius: 0px;
+    border-top: #1c6087 2px solid;
+    
+  
+
+
+}
+
+#TerminalBody{
+    position: absolute;
+    display: none;
+    height:300px;
+    cursor: context-menu; 
+    width:500px;
+    background-color: rgba(0, 0, 0, 0.678);
+    
+
+}
+
+#Terminal-titlebar{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    color: black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    top:-5px;
+    width:100%;
+
+
+}
+
+
+#close-terminal{
+    position: absolute;
+    display: inline-block;
+    border-radius: 50%;
+    background-color: crimson;
+    text-align: right;
+    width: 15px;
+    height: 15px;
+    right:5px;top: 2px;
+   
+    transition: background-color ease-in-out 300ms;
+}
+
+#close-terminal:hover{
+
+    background-color: rgb(219, 92, 117);
+
+
+}
+
+#terminal-context{
+    position: absolute;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    color: aliceblue;
+    top:13px; 
+    outline: 0px;
+    border-width: 0;
+    resize: both;
+    min-width: 150px;
+    min-height: 150px;
+    width: 495px;
+    height: 280px;
+
+}
