@@ -1,5 +1,5 @@
 document.body.addEventListener("keypress", async () => {
-
+	document.querySelector("h1").remove();
 	loginHtml = await fetch("./X/Xorg-login.html");
 	loginHtml = await loginHtml.text();
 
