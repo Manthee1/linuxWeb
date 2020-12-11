@@ -97,8 +97,8 @@ function updateStatusAreaTime() {
 function createTerminal(y = 100, x = 100) {
 	popupContainer.innerHTML += `
 		<terminal_container style="	top: ${y}px;left: ${x}px;">
-			<terminal_header>
-				<termianl_exit/>
+			<terminal_header >
+				<termianl_exit onclick='this.parentElement.parentElement.remove()' />
 			</terminal_header>
 			<terminal_main contenteditable='true'>
 			LinuxJs@root:-$

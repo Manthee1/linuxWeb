@@ -2,15 +2,20 @@ htmlEl = document.querySelector("html");
 
 page = {
 	changePage: async (pageUrl) => {
-		var pageRequest = await fetch(pageUrl);
-		if ((await pageRequest.statusText) == "OK") {
-			pageHTML = await pageRequest.text();
-			htmlEl.innerHTML = pageHTML;
-			getJS.LoadAllJsFromHead();
-		} else {
-			console.error(`The specified page does not exists! (${pageUrl})`);
-			return false;
-		}
+		fetch(pageUrl).then(pageRequest => {
+			console.log(pageRequest);
+			if (pageRequest.ok) {
+				(async () => {
+					pageHTML = await pageRequest.text();
+					console.log(await pageHTML);
+					htmlEl.innerHTML = await pageHTML;
+					getJS.LoadAllJsFromHead();
+				})();
+			} else {
+				console.error(`The specified page does not exists! (${pageUrl})`);
+				return false;
+			}
+		});
 	},
 };
 date = {
@@ -45,11 +50,11 @@ getJS = {
 };
 
 
-function delay(timeDelay) {  
+function delay(timeDelay) {
 	timeDelay = timeDelay || 2000;
 	return new Promise(done => {
-	  setTimeout(() => {
-		done();
-	  }, timeDelay);
+		setTimeout(() => {
+			done();
+		}, timeDelay);
 	});
-  }
+}

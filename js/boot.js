@@ -3,7 +3,7 @@ document.body.addEventListener("keypress", async () => {
 	loginHtml = await fetch("./X/Xorg-login.html");
 	loginHtml = await loginHtml.text();
 
-	bootTimeMax = 5000; //ms
+	bootTimeMax = 1000; //ms
 	var bootText = [
 		"Setting up Interfaces ...",
 		"Configuring Drivers ...",

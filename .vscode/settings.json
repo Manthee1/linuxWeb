@@ -2,5 +2,6 @@
     "cSpell.words": [
         "termianl"
     ],
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "cmake.configureOnOpen": false
 }
