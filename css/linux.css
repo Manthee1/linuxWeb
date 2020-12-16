@@ -1,3 +1,7 @@
+:root {
+	--main-color: #383838;
+}
+
 * {
 	background-position: center;
 	background-repeat: no-repeat;
@@ -33,7 +37,7 @@ taskbar {
 	left: 0px;
 	width: 100vw;
 	height: 30px;
-	background-color: rgba(128, 128, 128, 0.397);
+	background-color: var(--main-color);
 }
 
 taskbar > * {
@@ -64,9 +68,6 @@ taskbar > right > * {
 	transition: background-color ease-in-out 0.15s;
 	filter: invert(0.8);
 }
-statusArea:hover {
-	background-color: rgba(168, 168, 168, 0.301);
-}
 
 volume {
 	position: relative;
@@ -78,6 +79,16 @@ volume {
 	background-size: 90%;
 }
 
+status_area_container {
+	display: inline-block;
+	position: fixed;
+	right: 10px;
+	top: 40px;
+	background-color: var(--main-color);
+	border-radius: 10px;
+	padding: 20px;
+}
+
 statusArea {
 	position: relative;
 	display: inline-block;
@@ -85,6 +96,10 @@ statusArea {
 	padding: 0px 5px 0px 5px !important;
 	height: 100%;
 	cursor: default;
+}
+
+statusArea:hover {
+	background-color: rgba(168, 168, 168, 0.301);
 }
 
 statusArea > * {
@@ -103,16 +118,6 @@ statusArea > settingsArrow {
 	background-image: url("../img/white_down_arrow.png");
 	width: 10px;
 	filter: invert(1); /* invert the previous invert */
-}
-
-status_area_container {
-	display: inline-block;
-	position: fixed;
-	right: 10px;
-	top: 40px;
-	background-color: #ffffff78;
-	border-radius: 10px;
-	padding: 20px;
 }
 
 /* volume_text {
@@ -200,28 +205,42 @@ context_menu > context_item:hover {
 	filter: brightness(1.1);
 }
 
-/* TERMINAL */
-terminal_container {
+/* APP STYLES */
+
+apps_layer {
 	position: absolute;
-	display: inline-block;
-	background-color: black;
-	width: auto;
-	height: auto;
+	top: 0px;
+	left: 0px;
+	/* overflow: hidden; */
+	/* width: 100vw; */
+	/* height: 100vh; */
+	margin: 0px;
+	padding: 0px;
 }
 
-terminal_header {
+app_container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(236, 236, 236);
+	width: 500px;
+	height: 300px;
+}
+
+app_header {
 	display: block;
 	width: auto;
 	height: 20px;
-	background-color: whitesmoke;
+	padding-left: 5px;
+	background-color: rgb(236, 236, 236);
 }
 
-terminal_title {
+/* app_title {
 	display: inline;
 	margin-left: 5px;
-}
+} */
 
-termianl_exit {
+app_exit {
 	display: inline;
 	width: 15px;
 	height: 15px;
@@ -233,21 +252,30 @@ termianl_exit {
 	opacity: 0.8;
 }
 
-termianl_exit:hover {
+app_exit:hover {
 	opacity: 1;
 }
 
-terminal_body {
+app_body {
 	display: flex;
 	flex-direction: column;
+	margin: 3px;
 	min-width: 100px;
 	min-height: 100px;
-	width: 500px;
-	height: 300px;
+	height: auto;
+	flex: 1 1 auto;
+	width: auto;
+
 	border: none;
-	color: #c5c5c5;
+	background-color: white;
+	color: rgb(24, 24, 24);
 	padding: 10px 5px;
 }
+app_body > * {
+	/* height: 100%; */
+}
+
+/* TERMINAL APP */
 
 terminal_main {
 	display: block;
