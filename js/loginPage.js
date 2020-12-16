@@ -29,13 +29,17 @@ document.querySelector("input[type=password]").focus();
 
 function palyLoginAnimation(x = false) {
 	if (x) {
+		//Correct password
 		form.style = "position:relative;bottom:50px;opacity:0;";
 		setTimeout(() => {
 			page.changePage("./X/Xorg.html");
 		}, 500);
 	} else {
+		//Wrong password
 		form.style = "position:relative;bottom:120px;opacity:1;";
 		document.querySelector("input[type=password]").style = "border-color:indianred";
+		document.querySelector("input[type=password]").innerHTML = "";
+
 		setTimeout(() => {
 			form.style = "position:relative;bottom:0px;opacity:1;";
 		}, 120);

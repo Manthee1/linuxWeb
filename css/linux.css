@@ -204,6 +204,7 @@ context_menu > context_item:hover {
 terminal_container {
 	position: absolute;
 	display: inline-block;
+	background-color: black;
 	width: auto;
 	height: auto;
 }
@@ -215,8 +216,13 @@ terminal_header {
 	background-color: whitesmoke;
 }
 
+terminal_title {
+	display: inline;
+	margin-left: 5px;
+}
+
 termianl_exit {
-	display: block;
+	display: inline;
 	width: 15px;
 	height: 15px;
 	background-color: red;
@@ -231,15 +237,35 @@ termianl_exit:hover {
 	opacity: 1;
 }
 
-terminal_main {
-	display: block;
+terminal_body {
+	display: flex;
+	flex-direction: column;
 	min-width: 100px;
 	min-height: 100px;
-
 	width: 500px;
 	height: 300px;
-	background-color: black;
 	border: none;
 	color: #c5c5c5;
 	padding: 10px 5px;
+}
+
+terminal_main {
+	display: block;
+	margin-bottom: 10px;
+}
+
+terminal_input {
+	display: flex;
+	font-size: 15px;
+	background-color: black;
+	width: 100%;
+}
+
+terminal_input > input {
+	flex: 1 1 auto;
+	margin-left: 5px;
+	border: none;
+	color: #c5c5c5;
+	font-size: 15px;
+	background-color: black;
 }

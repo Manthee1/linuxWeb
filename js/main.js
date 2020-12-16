@@ -3,11 +3,9 @@ htmlEl = document.querySelector("html");
 page = {
 	changePage: async (pageUrl) => {
 		fetch(pageUrl).then(pageRequest => {
-			console.log(pageRequest);
 			if (pageRequest.ok) {
 				(async () => {
 					pageHTML = await pageRequest.text();
-					console.log(await pageHTML);
 					htmlEl.innerHTML = await pageHTML;
 					getJS.LoadAllJsFromHead();
 				})();

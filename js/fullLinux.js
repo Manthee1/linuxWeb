@@ -94,43 +94,76 @@ function updateStatusAreaTime() {
 // 	});
 // }
 
-function createTerminal(y = 100, x = 100) {
-	popupContainer.innerHTML += `
-		<terminal_container style="	top: ${y}px;left: ${x}px;">
+terminal = {
+
+	version: "1.0.2",
+	runningTerminals: {},
+	runningIds: [],
+	remove: function (id) {
+		this[id] = {};
+		this.runningIds.splice(this.runningIds.indexOf(id), 1);
+		document.querySelector(`#${id}`).remove();
+
+	},
+	createTerminal: (y = 100, x = 100) => {
+
+		terminalId = terminal.runningIds.length == 0 ? "t0" : "t" + Number((terminal.runningIds.slice(-1)[0]).slice(1)) + 1
+		terminal.runningIds.push(terminalId);
+		popupContainer.innerHTML += `
+		<terminal_container id='${terminalId}' style="	top: ${y}px;left: ${x}px;">
 			<terminal_header >
-				<termianl_exit onclick='this.parentElement.parentElement.remove()' />
+				<terminal_title>
+					Terminal
+				</terminal_title>
+				<termianl_exit onclick="terminal.remove('${terminalId}')" />
 			</terminal_header>
-			<terminal_main contenteditable='true'>
-			LinuxJs@root:-$
-			</terminal_main>
+			<terminal_body>
+				<terminal_main>
+				Linux terminal version ${terminal.version}
+				</terminal_main>
+				<terminal_input >
+					LinuxWeb@root:-$
+					<input id type=text>
+				</terminal_input>
+			</terminal_body>
 		</terminal_container>
 `;
+		terminal.runningTerminals[terminalId] = {
+			id: terminalId,
+			originalOffsetY: 0,
+			originalOffsetX: 0,
+			terminal: document.querySelector(`#${terminalId}`),
+			terminalHeader: document.querySelector(`#${terminalId} terminal_header`),
 
-	var terminalElementGrabbed = false;
-
-	var originalOffsetY = 0;
-	var originalOffsetX = 0;
-
-	terminal = document.querySelector("terminal_container");
-	terminalHeader = document.querySelector("terminal_header");
-	terminalHeader.addEventListener("mousedown", (event) => {
-		event.preventDefault();
-		originalOffsetY = event.offsetY;
-		originalOffsetX = event.offsetX;
-		document.body.onmousemove = terminalMouseMove;
-
-		terminalHeader.onmouseup = () => {
-			document.body.onmousemove = null;
-			terminalHeader.onmouseup = null;
+			terminalMouseMove: function terminalMouseMove(event) {
+				console.log(event, this);
+				let tId = event.target.parentElement.id == '' ? event.target.parentElement.parentElement.id : event.target.parentElement.id;
+				let t = terminal.runningTerminals[tId];
+				var y = event.clientY - t.originalOffsetY;
+				var x = event.clientX - t.originalOffsetX;
+				t.terminal.style.top = y + "px";
+				t.terminal.style.left = x + "px";
+			}
+			//TODO: terminal escapes the cursor if you move it too quick. and the event.target switches form the terminal to body.  
 		};
-	});
-	function terminalMouseMove(event) {
-		var y = event.clientY - originalOffsetY;
-		var x = event.clientX - originalOffsetX;
-		terminal.style.top = y + "px";
-		terminal.style.left = x + "px";
+
+
+		terminal.runningTerminals[terminalId].terminalHeader.addEventListener("mousedown", (event) => {
+			event.preventDefault();
+			let tId = event.target.parentElement.id == '' ? event.target.parentElement.parentElement.id : event.target.parentElement.id;
+			let t = terminal.runningTerminals[tId];
+			t.originalOffsetY = event.offsetY;
+			t.originalOffsetX = event.offsetX;
+			document.body.onmousemove = t.terminalMouseMove;
+			t.terminalHeader.onmouseup = () => {
+				document.body.onmousemove = null;
+				t.terminalHeader.onmouseup = null;
+			};
+		});
 	}
 }
+
+
 
 desktop = document.querySelector("background_wallpaper");
 
@@ -138,7 +171,6 @@ desktop.addEventListener(
 	"contextmenu",
 	(event) => {
 		event.preventDefault();
-		console.log(event);
 		var x = event.clientX;
 		var y = event.clientY;
 
@@ -148,7 +180,7 @@ desktop.addEventListener(
 
 		popupContainer.innerHTML += `
 		<context_menu style="top: ${y}px;left: ${x}px;">
-		<context_item onclick="createTerminal(${y},${x});">Terminal</context_item>
+		<context_item onclick="terminal.createTerminal(${y},${x});">Terminal</context_item>
 		<context_item>Other</context_item>
 		
 		
