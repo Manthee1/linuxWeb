@@ -1,3 +1,8 @@
+
+build = async () => {
+	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
+};
+build()
 document.body.addEventListener("keypress", async () => {
 	document.querySelector("h1").remove();
 	loginHtml = await fetch("./X/Xorg-login.html");

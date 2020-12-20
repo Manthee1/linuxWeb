@@ -28,3 +28,11 @@ span {
 	margin-top: 10px;
 	color: #58e83e;
 }
+
+build {
+	display: block;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	color: rgba(255, 255, 255, 0.2);
+}
