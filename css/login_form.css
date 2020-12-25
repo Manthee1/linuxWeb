@@ -1,6 +1,7 @@
 * {
 	outline: none !important;
 	font-family: consolas;
+	background-size: 100%;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 }
@@ -13,17 +14,20 @@ body {
 background_wallpaper {
 	width: 100vw;
 	height: 100vh;
+
 	margin: 0;
 	padding: 0;
 	position: fixed;
 	z-index: -1;
 	top: 0px;
 	left: 0px;
-	background-image: url("../img/LoginBG.jpeg");
+	background-image: url("../img/LoginBG.jpg");
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-position-y: center;
-	filter: contrast(0.6) blur(0.3rem) invert(0.8);
+	background-size: auto;
+	filter: contrast(0.6) blur(1vh);
+	transform: scale(1.2);
 }
 
 form {
@@ -45,7 +49,6 @@ login_user {
 
 login_user > img {
 	margin: 10px 0px;
-	filter: invert(0.8);
 }
 
 login_time_display {
@@ -67,8 +70,7 @@ form > input {
 	border-radius: 1px;
 	margin: -5px;
 	border: 3px solid rgb(200, 200, 200);
-	transition: background-color 50ms ease-in-out,border-color 50ms ease-in-out;
-
+	transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out;
 }
 
 form > input:focus {
@@ -82,8 +84,9 @@ form > input[type="submit"] {
 	padding: 0px;
 	width: 35px;
 	color: whitesmoke;
-	background-color: #413e3e;
+	background-color: #556080;
 }
+/* user picture background: #556080 */
 
 login_user,
 input {
