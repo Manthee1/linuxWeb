@@ -12,6 +12,11 @@
 }
 
 * {
+	outline: none !important;
+	font-family: consolas;
+	background-size: 100%;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: contain;
@@ -23,7 +28,14 @@
 	-webkit-user-select: none;
 	-moz-user-select: none;
 }
-background_wallpaper {
+
+body {
+	overflow: hidden;
+	background-color: #000000;
+}
+
+desktop,
+main_background {
 	width: 100vw;
 	height: 100vh;
 	margin: 0;
@@ -37,6 +49,10 @@ background_wallpaper {
 	background-position-x: center;
 	background-position-y: center;
 	background-size: cover !important;
+}
+
+desktop {
+	background: unset;
 }
 
 /* ICONS */
@@ -369,17 +385,42 @@ context_menu {
 
 context_menu > context_item {
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 	display: block;
 	width: auto;
-	padding: 10px;
-	color: white;
+	font-size: 15px;
+	padding: 2px 5px;
+	color: var(--light-color);
 	margin: 2px 0px;
 	background-color: var(--main-color);
 }
 
 context_menu > context_item:hover {
 	filter: brightness(1.2);
+}
+
+context_menu > context_item > context_sub_menu {
+	display: none;
+	position: absolute;
+	top: 0px;
+	left: 100%;
+	background: var(--main-color);
+	padding: 2;
+	border: 1px solid var(--secondary-color);
+	width: 100%;
+	box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+context_menu > context_item > context_sub_menu:hover {
+	filter: brightness(1.2);
+}
+
+.context_sub_menu::after {
+	position: absolute;
+	content: ">";
+	font-family: consolas;
+	margin: 0 10px 0px 0px;
+	right: 0px;
 }
 
 /* PROCESS BAR */

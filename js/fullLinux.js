@@ -25,17 +25,17 @@ system = {
 	changeVolume: function (volume) {
 		this.global.volume = volume;
 		let img
-
 		X.statusArea.updateVolume();
 
 	},
 
 	startup: function () {//  Important: Should only be run once
+
 		if (this.started) return false;
 		this.started = true;
 		popupContainer = document.querySelector("system_popup_container");
 		appsLayer = document.querySelector("apps_layer");
-		desktop = document.querySelector("background_wallpaper");
+		desktop = document.querySelector("desktop");
 		processBar = document.querySelector("process_bar");
 		system.openPopups = [];
 		//Add system.build variable
@@ -76,9 +76,6 @@ system = {
 
 				});
 			}
-
-
-
 		})
 		document.body.addEventListener("click", () => {
 			system.clearOpenPopups()
@@ -98,7 +95,17 @@ system = {
 			popupContainer.innerHTML = "";
 		}
 
-	}
+	},
+	validatePassword: function (password) {
+
+
+		if (sha256(btoa(password)) == system.encPassword) return true;
+		else return false;
+
+
+
+	},
+	encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f"
 }
 
 
@@ -464,10 +471,16 @@ X = {
 					popupContainer.querySelector("context_menu").remove();
 				popupContainer.innerHTML += `
 		<context_menu style="top: ${y}px;left: ${x}px;">
-				<context_item onclick="processes.create('terminal', {x:${x},y:${y}});">Terminal</context_item>
-				<context_item onclick="processes.create('google', {x:${x},y:${y}});">Google</context_item>
-				<context_item onclick="processes.create('linuxWeb', {x:${x},y:${y}});">linuxWeb</context_item>
-				<context_item>Other</context_item>
+				<context_item >New Folder</context_item>
+				<context_item class='context_sub_menu' >
+					New Document
+					<context_sub_menu>
+						<context_item>Empty Document</context_item>
+					</context_sub_menu>
+				</context_item><br>
+				<context_item onclick="processes.create('terminal', {x:${x},y:${y}});">Terminal</context_item><br>
+				<context_item>Sort By Name</context_item><br>
+				<context_item>Change Background</context_item>
 			</context_menu>
 				`;
 				document.body.addEventListener("click", () => {
@@ -475,6 +488,23 @@ X = {
 						popupContainer.querySelector("context_menu").remove();
 					}
 				});
+
+				document.querySelectorAll('.context_sub_menu').forEach(x => {
+
+					x.addEventListener('mouseover', () => {
+						console.log('mouseover', x);
+						x.querySelector('context_sub_menu').style.display = 'block'
+
+					})
+
+					x.addEventListener('mouseleave', () => {
+
+						x.querySelector('context_sub_menu').style.display = ''
+
+
+					})
+
+				})
 				return false;
 			},
 				false
@@ -519,7 +549,7 @@ X = {
 					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
 					</slider_container>
 					<item><settings_icon></settings_icon><text>Settings (*Not Functional)</text></item>
-					<item><padlock_icon></padlock_icon><text>Lock (*Not Functional)</text></item>
+					<item onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><text>Lock</text></item>
 					<item><power_off_icon></power_off_icon><text>Power Off/Log Out (*-||-)</text></item>
 
         </status_area_container>`;
@@ -544,11 +574,71 @@ X = {
 			}
 			document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
 		}
+	},
+
+	lockScreen: {
+
+		form: document.querySelector("body > login > form"),
+		loginContainer: document.querySelector('body > login'),
+
+		unlock: function () {
+			system.startup();
+			this.loginContainer.style.display = 'none'
+			document.querySelector('body>linux').style.display = ''
+
+		},
+
+		lock: function () {
+			this.form.style = ''
+			this.loginContainer.style = 'opacity:0'
+			document.querySelector('body>linux').style.display = 'none'
+			setTimeout(() => {
+				this.loginContainer.style = 'opacity:1'
+				this.setup();
+			}, 20);
+		},
+
+
+		setup: function () {
+			document.querySelector("input[type=password]").value = '';
+			this.form.style = "position:relative;bottom:0px;";
+			this.loginContainer.style = "opacity:1;"
+			document.querySelector("input[type=password]").focus();
+		},
+
+
+		playLoginAnimation: function (x = false) {
+			if (x) {
+				//Correct password
+				this.form.style = "position:relative;bottom:50px;opacity:0;";
+				this.loginContainer.style = "opacity:0;"
+				setTimeout(() => {
+					this.unlock();
+				}, 500);
+			} else {
+				//Wrong password
+				this.form.style = "position:relative;bottom:120px;opacity:1;";
+				document.querySelector("input[type=password]").style = "border-color:indianred";
+				document.querySelector("input[type=password]").innerHTML = "";
+
+				setTimeout(() => {
+					this.form.style = "position:relative;bottom:0px;opacity:1;";
+				}, 120);
+
+				setTimeout(() => {
+					document.querySelector("input[type=password]").style = "";
+				}, 300);
+			}
+		}
+
+
+
+
+
 	}
 
 
 }
 
-
-system.startup();
+X.lockScreen.lock();
 

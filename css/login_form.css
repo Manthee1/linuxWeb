@@ -1,20 +1,24 @@
-* {
-	outline: none !important;
-	font-family: consolas;
-	background-size: 100%;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-}
-body {
+login {
 	display: flex;
+	opacity: 1;
 	margin: auto;
 	text-align: center;
-}
-
-background_wallpaper {
 	width: 100vw;
 	height: 100vh;
+	margin: 0;
+	padding: 0;
+	top: 0px;
+	left: 0px;
+	transition: opacity 0.5s ease-in-out;
+}
 
+login * {
+	opacity: 1;
+}
+
+login > login_background {
+	width: 100vw;
+	height: 100vh;
 	margin: 0;
 	padding: 0;
 	position: fixed;
@@ -25,33 +29,36 @@ background_wallpaper {
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-position-y: center;
-	background-size: auto;
+	background-size: cover;
 	filter: contrast(0.6) blur(1vh);
 	transform: scale(1.2);
 }
 
-form {
+login > form {
+	z-index: 1;
+
 	margin: auto;
 	display: inline-block;
+	margin: 15vh auto;
 	transition: all 0.5s ease-in-out;
 }
 
-form > * {
+login > form > * {
 	display: block;
 }
 
-login_user {
+login form > login_user {
 	position: relative;
 	font-size: 50px;
 	margin: 30px 60px 50px 60px;
 	color: whitesmoke;
 }
 
-login_user > img {
+login > form > login_user > img {
 	margin: 10px 0px;
 }
 
-login_time_display {
+login > form > login_time_display {
 	font-size: 80px;
 	color: rgb(255, 255, 255);
 	border-radius: 20px;
@@ -59,28 +66,31 @@ login_time_display {
 	border: 10px solid white;
 }
 
-form > input {
+login > form > input {
 	display: inline-block;
 	font-size: 20px;
 	padding: 2px;
 	padding-left: 10px;
-
 	height: 45px;
 	width: 300px;
 	border-radius: 1px;
 	margin: -5px;
+	color: black;
 	border: 3px solid rgb(200, 200, 200);
 	transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out;
 }
 
-form > input:focus {
+login > form > input:focus {
 	border: 3px solid transparent;
 }
 
-form > input[type="submit"] {
+login > form > input[type="submit"] {
+	position: relative;
 	display: inline-block;
-
+	font-family: monospace;
 	border: none;
+	top: -1px;
+	left: 7px;
 	padding: 0px;
 	width: 35px;
 	color: whitesmoke;
@@ -88,8 +98,8 @@ form > input[type="submit"] {
 }
 /* user picture background: #556080 */
 
-login_user,
-input {
+login > login_user,
+login > input {
 	position: relative;
 	bottom: 100px;
 }

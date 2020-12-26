@@ -5,7 +5,7 @@ build = async () => {
 build()
 document.body.addEventListener("keypress", async () => {
 	document.querySelector("h1").remove();
-	loginHtml = await fetch("./X/Xorg-login.html");
+	loginHtml = await fetch("./X/Xorg.html");
 	loginHtml = await loginHtml.text();
 
 	bootTimeMax = 1000; //ms
