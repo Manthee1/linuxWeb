@@ -1,0 +1,52 @@
+/* APP MENU */
+app_menu_container {
+	position: absolute;
+	display: flex;
+	flex-flow: column wrap;
+	top: 35px;
+	left: 5px;
+	padding: 10px 0px;
+	width: 300px;
+	max-height: 50vh;
+	overflow-y: auto;
+	opacity: 0.9;
+	height: auto;
+	background-color: var(--main-color);
+	border: 1px var(--secondary-color) solid;
+}
+
+app_menu_container * {
+	display: block;
+	width: 100%;
+	flex: 1 1 auto;
+}
+
+app_menu_container > app_search {
+	display: none;
+}
+
+app_menu_container input {
+	text-align: center;
+}
+
+app_menu_container > app_list {
+	display: flex;
+	flex-flow: column wrap;
+}
+app_menu_container > app_list > app_list_name {
+	/* text-align: center; */
+	text-overflow: ellipsis;
+	color: var(--light-color);
+	font-size: 15px;
+	background-color: var(--main-color);
+	display: inline-block;
+	width: calc(100% - 20px);
+	flex: 1 1 auto;
+	padding: 10px;
+
+	cursor: pointer;
+}
+
+app_menu_container > app_list > app_list_name:hover {
+	background-color: var(--hover-highlight-color);
+}

@@ -25,7 +25,7 @@ login > login_background {
 	z-index: -1;
 	top: 0px;
 	left: 0px;
-	background-image: url("../img/LoginBG.jpg");
+	background-image: url("../../img/LoginBG.jpg");
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-position-y: center;

@@ -1,11 +1,7 @@
 
-build = async () => {
+(async () => {
 	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
-};
-build()
-document.body.addEventListener("keypress", async () => {
-	document.querySelector("h1").remove();
-	loginHtml = await fetch("./X/Xorg.html");
+	loginHtml = await fetch("./X/linuxWeb_X.html");
 	loginHtml = await loginHtml.text();
 
 	bootTimeMax = 1000; //ms
@@ -30,11 +26,10 @@ document.body.addEventListener("keypress", async () => {
 	for (let i = 0; i < bootText.length; i++) {
 		document.querySelector("boot_info").innerHTML += `<boot_msg>${bootText[i]} <span>[ OK ]</span></boot_msg>`;
 		await delay(Math.random() * bootTimeMax / bootText.length)
-		//     /\ Equal delay for each boot message
+		//     /\ Random delay for each boot message
 	}
-
 	await delay(100);
-
 	await (await (htmlEl.innerHTML = await loginHtml)) && getJS.LoadAllJsFromHead();
+})();
 
-});
+

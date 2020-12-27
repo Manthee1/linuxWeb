@@ -1,0 +1,91 @@
+/* STATUS AREA */
+
+status_area_container {
+	display: flex;
+	display: inline-block;
+	position: fixed;
+	right: 10px;
+	top: 40px;
+	width: 250px;
+	background-color: var(--main-color);
+	border-radius: 10px;
+	padding: 20px 10px;
+}
+
+status_area_container > * {
+	display: flex;
+	margin: 5px 0px;
+	padding: 5px 10px;
+	justify-content: center;
+	align-content: center;
+	color: var(--light-color);
+	font-size: 14px;
+	text-align: left;
+}
+
+status_area_container > item {
+	background-color: none;
+	border-radius: 10px;
+}
+
+status_area_container > item:hover {
+	background-color: var(--hover-highlight-color);
+}
+
+status_area_container > * > * {
+	flex: 1 1 auto;
+	height: 20px;
+	margin: auto;
+}
+
+/* icon */
+status_area_container > * > *:first-child {
+	flex: 0 1 auto;
+	width: 20px;
+	margin-right: 10px;
+}
+
+status_area_container > * > *:last-child {
+	text-overflow: ellipsis;
+	flex: 1 1 auto;
+}
+
+status_area_container > slider_container > input[type="range"] {
+	-webkit-appearance: none; /* Override default CSS styles */
+	appearance: none;
+	display: inline-block;
+	height: 5px;
+	background: #575757;
+	outline: none;
+	opacity: 0.7;
+	-webkit-transition: 0.3s;
+	transition: opacity 0.3s;
+}
+
+/* Mouse-over effects */
+status_area_container > slider_container > input[type="range"]:hover {
+	opacity: 1;
+}
+
+status_area_container
+	> slider_container
+	> input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 15px;
+	background: azure;
+	border-radius: 50%;
+	height: 15px;
+	cursor: pointer;
+}
+
+status_area_container
+	> slider_container
+	> input[type="range"]::-moz-range-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 10px;
+	height: 10px;
+	background: #c5c5c5;
+	cursor: pointer;
+}

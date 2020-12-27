@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>X</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="./src/css/main.css" />
+
+
+	<link rel="stylesheet" type="text/css" href="./src/css/X/icons.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/taskbar.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/context_menu.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/status_area.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/process_bar.css" />
+
+	<link rel="stylesheet" type="text/css" href="./src/css/X/apps_layer.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/app_menu.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/apps_terminal.css" />
+
+	<link rel="stylesheet" type="text/css" href="./src/css/X/login.css" />
+
+	<script src="./src/js/libraries/sha256.js"></script>
+	<script src="./src/js/libraries/jsHelp.js"></script>
+	<script defer src="./src/js/main.js"></script>
+	<script defer src="./src/js/linuxWeb_js/system.js"></script>
+	<script defer src="./src/js/linuxWeb_js/processes.js"></script>
+	<script defer src="./src/js/linuxWeb_js/apps.js"></script>
+	<script defer src="./src/js/linuxWeb_js/X.js"></script>
+</head>
+
+<head>
+	<title>Login</title>
+</head>
+
+<body>
+	<login>
+		<login_background></login_background>
+		<form
+			onsubmit="event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));">
+			<login_user><img src="./src/img/user.png" /><br />root</login_user>
+			<input type="password" name="password" placeholder="Password" />
+			<input type="submit" value=">" />
+		</form>
+	</login>
+
+
+	<linux>
+		<!-- Desktop Area -->
+		<main_background></main_background>
+		<desktop></desktop>
+
+		<!-- Title bar -->
+		<taskbar>
+			<left>
+				<app_menu_button>
+					<app_menu_button_icon>
+				</app_menu_button>
+			</left>
+			<middle>
+				<dateTime></dateTime>
+			</middle>
+			<right>
+				<statusArea>
+					<volume_icon></volume_icon>
+					<padlock_icon></padlock_icon>
+					<settings_arrow></settings_arrow>
+				</statusArea>
+			</right>
+		</taskbar>
+		<!-- Process bar -->
+		<process_bar></process_bar>
+		<!-- Time Menu -->
+
+		<!-- Apps Layer -->
+		<apps_layer> </apps_layer>
+
+		<system_popup_container>
+		</system_popup_container>
+	</linux>
+</body>
+
+</html>

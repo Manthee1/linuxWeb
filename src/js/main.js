@@ -7,6 +7,7 @@ page = {
 				(async () => {
 					pageHTML = await pageRequest.text();
 					htmlEl.innerHTML = await pageHTML;
+					document.body.style.backgroundColor = "black";
 					getJS.LoadAllJsFromHead();
 				})();
 			} else {

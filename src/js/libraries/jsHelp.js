@@ -1,4 +1,5 @@
 
+console.log("jsHelp loaded");
 function help() {
     var helpPage = `
 ===============\n

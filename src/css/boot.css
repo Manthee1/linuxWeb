@@ -8,6 +8,8 @@ html {
 
 body {
 	background-color: black;
+	display: flex;
+	height: 100vh;
 }
 
 h1 {

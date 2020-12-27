@@ -1,0 +1,42 @@
+/* PROCESS BAR */
+
+process_bar {
+	display: flex;
+	background-color: var(--main-color);
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	/* border-top: 1px solid var(--secondary-color); */
+	align-content: center;
+	height: 25px;
+	opacity: 1;
+	width: 100%;
+	z-index: 1002;
+	flex-direction: row;
+}
+
+process_bar > process {
+	position: relative;
+	flex: 1 1 auto;
+	padding: 0px 8px;
+	min-height: 25px;
+	max-width: 200px;
+	text-overflow: ellipsis;
+	line-height: 25px;
+	font-size: 14px;
+	color: white;
+	font-weight: 100;
+	cursor: pointer;
+}
+process_bar > process:hover {
+	background-color: var(--secondary-color);
+	opacity: 1;
+}
+
+process_bar > process.selected {
+	background-color: var(--secondary-color);
+	opacity: 0.9;
+	top: -2px;
+	border-top: #cfcfcf 2px solid;
+	border-radius: 2px 2px 0px 0px;
+}

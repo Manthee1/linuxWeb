@@ -1,0 +1,145 @@
+/* APP STYLES */
+
+apps_layer {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	/* overflow: hidden; */
+	/* width: 100vw; */
+	/* height: 100vh; */
+	margin: 0px;
+	padding: 0px;
+}
+
+app_container {
+	position: absolute;
+	display: flex;
+	overflow: hidden;
+	flex-direction: column;
+	/* background-color: var(--main-color); */
+	width: 500px;
+	height: 300px;
+	min-width: 100px;
+	min-height: 100px;
+	border: var(--main-color) 1px solid;
+	box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.4);
+}
+
+app_header {
+	display: block;
+	width: auto;
+	font-size: 14px;
+	height: 20px;
+	padding: 2px 0px;
+	padding-left: 5px;
+	text-overflow: ellipsis;
+	background-color: var(--main-color);
+}
+
+/* app_title {
+	display: inline;
+	margin-left: 5px;
+} */
+
+app_exit {
+	display: inline;
+	width: 15px;
+	height: 15px;
+	background-color: rgb(255, 0, 0);
+	border-radius: 50%;
+	position: absolute;
+	right: 0px;
+	margin: 2.5px 5px;
+	opacity: 0.8;
+}
+
+app_exit:hover {
+	opacity: 1;
+}
+
+app_body {
+	display: flex;
+	flex-direction: column;
+	margin: 3px;
+	min-width: 100px;
+	min-height: 100px;
+	height: auto;
+	flex: 1 1 auto;
+	width: auto;
+	overflow: auto;
+	border: none;
+	background-color: white;
+	color: rgb(24, 24, 24);
+}
+app_body > * {
+	/* height: 100%; */
+}
+
+app_body * {
+	color: inherit;
+}
+
+app_resize {
+}
+
+resize_point {
+	z-index: 2;
+	width: 8px;
+	height: 5px;
+	position: absolute;
+	background: transparent;
+}
+
+app_resize .bottom-right {
+	bottom: 0px;
+	right: 0px;
+	cursor: se-resize;
+}
+
+app_resize .bottom-left {
+	bottom: 0px;
+	left: 0px;
+	cursor: sw-resize;
+}
+
+app_resize .top-right {
+	top: 0px;
+	right: 0px;
+	cursor: sw-resize;
+}
+
+app_resize .top-left {
+	top: 0px;
+	left: 0px;
+	cursor: se-resize;
+}
+
+app_resize .top {
+	top: 0px;
+	left: 5px;
+	width: calc(100% - 10px);
+	cursor: n-resize;
+}
+app_resize .bottom {
+	bottom: 0px;
+	left: 5px;
+	width: calc(100% - 12px);
+
+	cursor: s-resize;
+}
+
+app_resize .left {
+	left: 0px;
+	top: 5px;
+	height: calc(100% - 10px);
+
+	cursor: e-resize;
+}
+
+app_resize .right {
+	top: 5px;
+	right: -3px;
+	width: 5px;
+	height: calc(100% - 10px);
+	cursor: w-resize;
+}
