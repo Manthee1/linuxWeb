@@ -36,7 +36,7 @@ login > login_background {
 
 login > form {
 	z-index: 1;
-
+	font-family: monospace;
 	margin: auto;
 	display: inline-block;
 	margin: 15vh auto;
@@ -71,6 +71,7 @@ login > form > input {
 	font-size: 20px;
 	padding: 2px;
 	padding-left: 10px;
+	font-family: inherit;
 	height: 45px;
 	width: 300px;
 	border-radius: 1px;
@@ -89,10 +90,12 @@ login > form > input[type="submit"] {
 	display: inline-block;
 	font-family: monospace;
 	border: none;
-	top: -1px;
-	left: 7px;
+	top: 0px;
+	font-family: inherit;
+	left: 3px;
 	padding: 0px;
 	width: 35px;
+	height: 56px;
 	color: whitesmoke;
 	background-color: #556080;
 }

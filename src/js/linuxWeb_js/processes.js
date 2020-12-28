@@ -4,33 +4,32 @@ processes = {
 
     pid: {},
 
+    //Create a pid number
     getNewPid: function () {
-
         if (Object.entries(this.pid).length == 0)
             return 0;
         else return Number(Object.keys(this.pid).sort().slice(-1)) + 1
     },
 
-
+    //Convert string pid into pid 'pid0' => 0
     getNumberPid: function (pid) {
         return Number(pid.split('pid')[1])
-
     },
-
+    //Brings the selected app to top
     bringToTop: function (element) {
-
         const pid = this.getNumberPid(element.id);
-        typeof (this.pid[pid]['onFocus']) == "function" && this.pid[pid].onFocus();
+        typeof (this.pid[pid]['onFocus']) == "function" && this.pid[pid].onFocus(); // If it has a onFocus then.... do that
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
-        // if (element == appsLayer.children[appsLayer.children.length - 1]) return false;
-        appsLayer.insertAdjacentElement('beforeend', element)
+        // If it is not currently on top do this
+        appsLayer.insertAdjacentElement('beforeend', element) // bring to top
         this.makeProcessResizable("#" + element.id);
-        this.currentlySelectedProcess != null && this.currentlySelectedProcess.getProcessBarElement().classList.remove('selected')
+        this.currentlySelectedProcess != null && this.currentlySelectedProcess.getProcessBarElement().classList.remove('selected') // removes the selected class from the previous apps progress bar thingy.
         this.pid[pid].getProcessBarElement().classList.add('selected');
         this.currentlySelectedProcess = this.pid[pid];
-        console.log('Focused', this.pid[pid]);
+        // console.log('Focused', this.pid[pid]);
     },
 
+    //Default values for the app createData parameters.
     processSchema: {
         title: "Untitled App",
         titleColor: "inherit",
@@ -44,8 +43,8 @@ processes = {
         minWidth: Number(),
         minHeight: Number(),
         bodyBorder: Boolean(),
-        fullHeight: Boolean(),
-        fullWidth: Boolean(),
+        fullHeight: false,
+        fullWidth: false,
 
     },
 
@@ -58,26 +57,32 @@ processes = {
         this.currentlySelectedProcess = null;
     },
 
-    create: function (appName, position = { x: 100, y: 100 }) {
+    create: function (appName, position = { x: desktop.clientWidth / 2, y: desktop.clientHeight / 2 }) {
         let processID = processes.getNewPid();
         let stringyPID = "pid" + processID
         if (apps[appName] == undefined) {
             console.error(`Not Found: App '${appName}' does not exist`)
             return false
         }
-        let appCreateData = apps[appName].createData;
-
-        Object.entries(this.processSchema).forEach(entry => {
-            if (!appCreateData[entry[0]] == undefined || typeof (appCreateData[entry[0]]) != typeof (entry[1])) {
-                appCreateData[entry[0]] = entry[1];
-            }
-            // !system.global.isValid(entry[1]) && (appCreateData[entry[0]] = "");
-        })
+        let appCreateData = {};
 
 
+        Object.assign(appCreateData, this.processSchema)
+        Object.assign(appCreateData, apps[appName].createData)
+
+        // Object.entries(this.processSchema).forEach(entry => {
+        //     //If a The app doesn't have have a defined parameter in the createData
+        //     //that is defined in processSchema then we just grab that one. 'Cause its the default.
+        //     if (!appCreateData[entry[0]] == undefined || typeof (appCreateData[entry[0]]) != typeof (entry[1])) {
+        //         appCreateData[entry[0]] = entry[1];
+        //     }
+        //     // !system.global.isValid(entry[1]) && (appCreateData[entry[0]] = "");
+        // })
+
+        //Then styles are used here
         let containerStyles = `
-			min-height:${appCreateData.minHeight};
-			min-width:${appCreateData.minWidth};
+			min-height:${appCreateData.minHeight}px;
+            min-width:${appCreateData.minWidth}px;
 		`
 
         let bodyStyles = `
@@ -89,10 +94,10 @@ processes = {
 			opacity: ${appCreateData.opacity};
 			padding: ${appCreateData.padding};
 		`
-
+        //This is how the html is created. read
         appsLayer.innerHTML += `
 			<app_container onmousedown="processes.bringToTop(this)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
-				<app_header style="color:${appCreateData.titleColor};background-color:${appCreateData.headerColor};" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
+				<app_header style="color:${appCreateData.titleColor};background-color:${appCreateData.headerColor};opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					${appCreateData.title}
 					<app_exit onmousedown="document.body.removeAttribute('onmousemove')" onclick="processes.remove('${stringyPID}')" />
 				</app_header>
@@ -118,7 +123,7 @@ processes = {
         processBar.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='processBarPID${processID}'>${appCreateData.title}</process>`
         processes.pid[processID] = {}
 
-        //Assign Functions
+        //Assign the createDate.methods object to the root of the apps pid object.
         Object.assign(processes.pid[processID], appCreateData.methods)
 
         Object.assign(processes.pid[processID], {
@@ -133,12 +138,13 @@ processes = {
         });
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
-        apps[appName].onStart(processes.pid[processID])
+        apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
 
         return true;
     },
 
+    //Handles window movement. so yeah.
     processMouseDownHandler: function (event, stringyPID) {
         if (event.target.tagName != "APP_HEADER") return false
         pid = this.getNumberPid(stringyPID);
@@ -162,6 +168,8 @@ processes = {
 
     makeProcessResizable: function (cssSelector) {
         //Thanks to Hung Nguyen for this code. (I modified simplified it a little) Original: https://codepen.io/ZeroX-DG/pen/vjdoYe
+
+        //Makes a element resizable. (Note: Not any element. Has to have resize points!)
         const element = document.querySelector(cssSelector);
         const resizePoints = document.querySelectorAll(cssSelector + ' resize_point')
         const minimum_size = 150;
@@ -184,6 +192,8 @@ processes = {
                 window.addEventListener('mouseup', stopResize)
             })
             function resize(e) {
+                // Easy to understand. besides it's not really gonna change so this is gonna probably be the final version of this snippet
+                // No point in trying to understand it then
                 const resizeClassList = x.classList.toString()
                 if (resizeClassList.includes('top')) {
                     const height = original_height - (e.pageY - original_mouse_y)
@@ -209,14 +219,10 @@ processes = {
                         element.style.width = width + 'px'
                     }
                 }
-
             }
-
             function stopResize() {
                 window.removeEventListener('mousemove', resize)
             }
         })
-
     }
-
 }

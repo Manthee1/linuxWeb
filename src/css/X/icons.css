@@ -38,7 +38,25 @@ settings_icon {
 power_off_icon {
 	position: relative;
 	display: inline-block;
-	background-image: url("../../img/power-off.svg");
+	background-image: url("../../img/power-off-2.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+
+logout_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/logoff.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+
+restart_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/restart.svg");
 	filter: invert(0.6);
 	width: 50px;
 	height: 50px;

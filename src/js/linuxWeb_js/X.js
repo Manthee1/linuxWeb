@@ -1,13 +1,14 @@
 X = {
     desktopContextMenu: {
-        enable: function () {
-            desktop.addEventListener("contextmenu", (event) => {
-                event.preventDefault();
-                var x = event.clientX;
-                var y = event.clientY;
-                if (system.global.elementExists(popupContainer.querySelector("context_menu")))
-                    popupContainer.querySelector("context_menu").remove();
-                popupContainer.innerHTML += `
+        //enable is executed on system startup
+        createOnMousePosition: true,
+        listenerType: "contextmenu",
+        toggleElement: document.querySelector('desktop'),
+        recreateBehaviour: "recreate",
+        changeBorder: false,
+        preventDefault: true,
+        getHTML: function (x = 100, y = 100) {
+            return `
 		<context_menu style="top: ${y}px;left: ${x}px;">
 				<context_item >New Folder</context_item>
 				<context_item class='context_sub_menu' >
@@ -20,40 +21,34 @@ X = {
 				<context_item>Sort By Name</context_item><br>
 				<context_item>Change Background</context_item>
 			</context_menu>
-				`;
-                document.body.addEventListener("click", () => {
-                    if (system.global.elementExists(popupContainer.querySelector("context_menu"))) {
-                        popupContainer.querySelector("context_menu").remove();
-                    }
-                });
+				`
 
-                document.querySelectorAll('.context_sub_menu').forEach(x => {
-
-                    x.addEventListener('mouseover', () => {
-                        console.log('mouseover', x);
-                        x.querySelector('context_sub_menu').style.display = 'block'
-
-                    })
-
-                    x.addEventListener('mouseleave', () => {
-
-                        x.querySelector('context_sub_menu').style.display = ''
+        },
+        closeCondition: function (event) {
+            return event.target.tagName != "CONTEXT_MENU"
+        },
 
 
-                    })
+        onCreate: function () {
 
+            document.querySelectorAll('.context_sub_menu').forEach(x => {
+                x.addEventListener('mouseover', () => {
+                    x.querySelector('context_sub_menu').style.display = 'block'
                 })
-                return false;
-            },
-                false
-            );
+                x.addEventListener('mouseleave', () => {
+                    x.querySelector('context_sub_menu').style.display = ''
+                })
+            })
 
-        }
+        },
+
+
+
     },
 
     appMenu: {
-
-        toggleButtonElement: document.querySelector('app_menu_button'),
+        listenerType: "click",
+        toggleElement: document.querySelector('app_menu_button'),
         getHTML: function () {
             let html = `
 				<app_menu_container>
@@ -72,8 +67,8 @@ X = {
     },
 
     statusArea: {
-
-        toggleButtonElement: document.querySelector("statusArea"),
+        listenerType: "click",
+        toggleElement: document.querySelector("statusArea"),
 
         getHTML: function () {
 
@@ -86,9 +81,9 @@ X = {
 					<brightness_icon></brightness_icon>
 					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
 					</slider_container>
-					<item><settings_icon></settings_icon><text>Settings (*Not Functional)</text></item>
+					<item onclick="system.clearOpenPopups();processes.create('settings')"><settings_icon></settings_icon><text>Settings</text></item>
 					<item onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><text>Lock</text></item>
-					<item><power_off_icon></power_off_icon><text>Power Off/Log Out (*-||-)</text></item>
+					<item onclick='X.powerMenu.show()'><power_off_icon ></power_off_icon><text>Power Off/Log Out</text></item>
 
         </status_area_container>`;
         },
@@ -113,6 +108,37 @@ X = {
             document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
         }
     },
+
+    overlay: {
+
+        remove: function () {
+            document.querySelectorAll('overlay').forEach(x => x.remove())
+        }
+
+
+    },
+
+
+    powerMenu: {
+
+        show: function () {
+            system.clearOpenPopups();
+            popupContainer.innerHTML += `
+                <overlay>
+                    <power_menu>
+                    <options>
+                        <div><power_off_icon></power_off_icon><span>Power Off</span></div>
+                        <div><logout_icon></logout_icon><span>Log off</span></div>
+                        <div><restart_icon></restart_icon><span>Restart</span></div>
+                    </options>
+                        <cancel_button onclick='X.overlay.remove()'>Cancel</cancel_button>
+                        </power_menu>
+                </overlay>
+            `;
+
+        }
+    },
+
 
     lockScreen: {
 

@@ -1,6 +1,9 @@
 
 (async () => {
+
+	//Request the build.ver file which has the current build version in it...
 	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
+	// Fetch the main X html so it's ready while the boot messages are doing their thing
 	loginHtml = await fetch("./X/linuxWeb_X.html");
 	loginHtml = await loginHtml.text();
 
@@ -22,12 +25,13 @@
 		"Preparing NetworkProxyMirror ...",
 		"Booting into LinuxGUI ...",
 	];
-
+	// Loop thorough the messages and display one, wait, display another, wait...
 	for (let i = 0; i < bootText.length; i++) {
 		document.querySelector("boot_info").innerHTML += `<boot_msg>${bootText[i]} <span>[ OK ]</span></boot_msg>`;
 		await delay(Math.random() * bootTimeMax / bootText.length)
 		//     /\ Random delay for each boot message
 	}
+	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
 	await delay(100);
 	await (await (htmlEl.innerHTML = await loginHtml)) && getJS.LoadAllJsFromHead();
 })();
