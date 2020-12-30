@@ -117,29 +117,6 @@ X = {
 
 
     },
-
-
-    powerMenu: {
-
-        show: function () {
-            system.clearOpenPopups();
-            popupContainer.innerHTML += `
-                <overlay>
-                    <power_menu>
-                    <options>
-                        <div><power_off_icon></power_off_icon><span>Power Off</span></div>
-                        <div><logout_icon></logout_icon><span>Log off</span></div>
-                        <div><restart_icon></restart_icon><span>Restart</span></div>
-                    </options>
-                        <cancel_button onclick='X.overlay.remove()'>Cancel</cancel_button>
-                        </power_menu>
-                </overlay>
-            `;
-
-        }
-    },
-
-
     lockScreen: {
 
         form: document.querySelector("body > login > form"),
@@ -148,17 +125,21 @@ X = {
         unlock: function () {
             system.startup();
             this.loginContainer.style.display = 'none'
-            document.querySelector('body>linux').style.display = ''
-
+            document.querySelector('body>linux').style = 'opacity:0;'
+            setTimeout(() => {
+                document.querySelector('body>linux').style.opacity = '1'
+            }, 20);
         },
 
         lock: function () {
             this.form.style = ''
             this.loginContainer.style = 'opacity:0'
-            document.querySelector('body>linux').style.display = 'none'
+
+            document.querySelector('body>linux').style.opacity = '0'
             setTimeout(() => {
                 this.loginContainer.style = 'opacity:1'
                 this.setup();
+                document.querySelector('body>linux').style.display = 'none'
             }, 20);
         },
 
@@ -194,7 +175,64 @@ X = {
                 }, 300);
             }
         }
-    }
+    },
+
+    prompt: {
+        //Not finished
+        create: function (message, type) {
+            return false;
+            switch (type) {
+                case "warn":
+                    break;
+                case "error":
+                    break;
+                case "info":
+                    break;
+                case "value":
+                    break;
+                case "input":
+                    break;
+                default:
+                    break;
+            }
+
+        },
+
+    },
+
+    shutdown: function () {
+        page.changePage('./X/linuxWeb_shutdown.html');
+    },
+
+    logout: function () {
+        page.changePage('./X/linuxWeb_X.html');
+    },
+    restart: function () {
+        page.changePage('./X/linuxWeb_shutdown.html', 'restart');
+    },
+
+
+    powerMenu: {
+
+        show: function () {
+            system.clearOpenPopups();
+            popupContainer.innerHTML += `
+                <overlay>
+                    <power_menu>
+                    <options>
+                        <div><power_off_icon  onclick='X.shutdown();'></power_off_icon><span>Power Off</span></div>
+                        <div><logout_icon  onclick='X.logout();'></logout_icon><span>Log out</span></div>
+                        <div><restart_icon onclick='X.restart();' ></restart_icon><span>Restart</span></div>
+                    </options>
+                        <cancel_button onclick='X.overlay.remove()'>Cancel</cancel_button>
+                        </power_menu>
+                </overlay>
+            `;
+
+        }
+    },
+
+
 }
 
 X.lockScreen.lock()

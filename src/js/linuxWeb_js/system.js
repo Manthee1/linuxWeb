@@ -18,7 +18,6 @@ system = {
             return text.replace(/[&<>"']/g, function (m) { return map[m]; });
         },
     },
-
     // I won't comment understandable functions here...
     changeBrightness: function (brightness) {
         this.global.brightness = brightness;
@@ -29,7 +28,6 @@ system = {
         let img
         X.statusArea.updateVolume();
     },
-
     startup: function () {//  Important: Should only be run once
 
         if (this.started) return false;
@@ -121,7 +119,6 @@ system = {
         });
 
     },
-
     //Clear all open system menu popups.
     clearOpenPopups: function (forcefully = false) {
         if (system.openPopups.length != 0 || forcefully) {

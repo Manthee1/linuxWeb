@@ -2,15 +2,17 @@ htmlEl = document.querySelector("html");
 
 page = {
 	//I mean... Simple i think. Chang the page. Yeah.... Thats all. You can keep scrolling now.
-	changePage: async (pageUrl) => {
+	changePage: async (pageUrl, x = null) => {
 		fetch(pageUrl).then(pageRequest => {
 			if (pageRequest.ok) {
 				(async () => {
+					htmlEl.style = "background:black;";
 					pageHTML = await pageRequest.text();
+					htmlEl.style = "background:black; visibility: hidden";
 					htmlEl.innerHTML = await pageHTML;
-					document.body.style = "background:black;opacity: 0;";
-					document.body.addEventListener('load', () => document.body.style = "background:black;opacity: 1;")
-					getJS.LoadAllJsFromHead()
+					// document.body.innerHTML += "<hideEverythingUntilCssLoads style='margin:0px;padding:0px;width:100vw;height:100vh;z-index:1000000;background: black;'></hideEverythingUntilCssLoads>"
+					await getJS.LoadAllJsFromHead() != 'dead';
+					pageChangeTransmittedValue = x;
 				})();
 			} else {
 				console.error(`The specified page does not exists! (${pageUrl})`);
@@ -45,12 +47,15 @@ getJS = {
 	// Why am i commenting on function that are very easy to understand. IDK. 
 	// Probably to waste your time reading this :)
 	LoadAllJsFromHead: () => {
-		document.head.querySelectorAll("script").forEach(async (x) => {
-			// eval(await (await fetch(x.src)).text());
-			var script = document.createElement("script");
-			script.type = "text/javascript";
-			script.src = x.src;
-			document.head.appendChild(script);
+		return new Promise(done => {
+			document.head.querySelectorAll("script").forEach(async (x) => {
+				// eval(await (await fetch(x.src)).text());
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = x.src;
+				document.head.appendChild(script);
+				done()
+			});
 		});
 	},
 };

@@ -16,10 +16,11 @@ apps = {
             bodyBorderSize: '0px',
             opacity: 0.9,
             padding: "10px 5px",
-            HTML: `
+            getHTML: function () {
+                return `
 				<terminal_main >Linux terminal version 1.0.3<br></terminal_main>
 				<terminal_input >LinuxWeb@root:-$<input type=text></terminal_input>
-				`,
+				`},
             methods: {
                 // Everything here gets aded to the pid object of the app.
                 // So every terminal has its own separate 'commandHistory', 'addToCommandHistory()'
@@ -108,18 +109,78 @@ apps = {
         },
     },
 
-
-
     settings: {
         name: "Settings",
 
+        settingsLayout: {
+            selected: 0,
+            0: {
+                name: "About",
+                iconTag: "about_icon",
+                panel: {
+                    h1: "About",
+                    hr: '',
+                }
+            },
+            1: {
+                name: "Appearance",
+                iconTag: "appearance_icon",
+                panel: {
+                    h1: "Appearance Settings",
+                    hr: '',
+                }
+            },
+            2: {
+                name: "Desktop",
+                iconTag: "desktop_icon",
+                panel: {
+                    h1: "Desktop Settings",
+                    hr: '',
+                }
+            },
+            3: {
+                name: "Sound",
+                iconTag: "volume_icon",
+                panel: {
+                    h1: "Sound Settings",
+                    hr: '',
+                }
+            },
+
+        },
         createData: {
             title: "Settings",
             fullHeight: true,
             fullWidth: true,
             minWidth: 500,
             minHeight: 500,
-            HTML: `<settings></settings>`
+            onlyOneInstanceAllowed: true,
+            getHTML: function () {
+                let menuItems = Object.entries(apps.settings.settingsLayout).map((x) => {
+                    [menuItemId, menuItem] = [x[0], x[1]]
+                    if (typeof menuItem != 'object') return ''
+                    return `<menuItem ${apps.settings.settingsLayout.selected == menuItemId && "class='selected'"} onclick='apps.settings.switchToPanel(${menuItemId},false,this)'><${menuItem.iconTag}></${menuItem.iconTag}>${menuItem.name}</menuItem>`
+                }).join('');
+                return `<settings><sidebarMenu>${menuItems}</sidebarMenu><panel>${apps.settings.switchToPanel(0, true)}</panel></settings>`;
+
+            }
+        },
+
+        switchToPanel: function (panelMenuId, onlyGetHTML = false, element) {
+            let settingsLayoutObj = this.settingsLayout[panelMenuId]
+            let panelHTML = Object.entries(settingsLayoutObj.panel).map(x => {
+                [tag, val] = [x[0], x[1]];
+                return `<${tag}>${val}</${tag}>`
+            }).join('')
+
+            if (onlyGetHTML) return panelHTML
+            else {
+                document.querySelectorAll('settings .selected').forEach(x => x.classList.remove("selected"))
+                document.querySelector('settings > panel').innerHTML = panelHTML;
+                element.classList.add("selected")
+            }
+            return true
+
         },
     },
 
@@ -132,23 +193,9 @@ apps = {
             fullWidth: true,
             minWidth: 1000,
             minHeight: 500,
-            HTML: `<iframe style='height:100%;' src="https://www.google.com/webhp?igu=1"></iframe>`
+            getHTML: function () { return `<iframe style='height:100%;' src="https://www.google.com/webhp?igu=1"></iframe>` },
         },
     },
-
-    google1: {
-        name: "Google Website1",
-
-        createData: {
-            title: "Google Search1",
-            fullHeight: true,
-            fullWidth: true,
-            minWidth: 1000,
-            minHeight: 700,
-            HTML: `<iframe style='height:100%;' src="https://www.google.com/webhp?igu=1"></iframe>`
-        },
-    },
-
 }
 
 

@@ -8,8 +8,10 @@ html {
 
 body {
 	background-color: black;
+	overflow-y: scroll;
 	display: flex;
 	height: 100vh;
+	width: 100vw;
 }
 
 h1 {
@@ -18,7 +20,13 @@ h1 {
 	font-family: consolas;
 }
 
-boot_msg {
+message_info {
+	width: 100%;
+	padding-bottom: 20px;
+	height: fit-content;
+}
+
+message {
 	text-align: left;
 	color: rgb(167, 167, 167);
 	display: block;
@@ -27,8 +35,7 @@ boot_msg {
 span {
 	position: absolute;
 	right: 50px;
-	margin-top: 10px;
-	color: #58e83e;
+	color: #adfa9f;
 }
 
 build {

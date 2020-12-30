@@ -3,7 +3,14 @@ processes = {
     currentlySelectedProcess: null,
 
     pid: {},
-
+    getPidObject: function () {
+        let obj = {}
+        Object.values(this.pid).forEach(x => {
+            typeof obj == 'object' && (obj[x.id] = x)
+        });
+        if (obj == {}) return false
+        else return Object.values(obj)
+    },
     //Create a pid number
     getNewPid: function () {
         if (Object.entries(this.pid).length == 0)
@@ -14,6 +21,24 @@ processes = {
     //Convert string pid into pid 'pid0' => 0
     getNumberPid: function (pid) {
         return Number(pid.split('pid')[1])
+    },
+    //Return the first pid object of the specified app name.
+    getFirstPidFormAppName: function (appName) {
+
+        let pidValues = this.getPidObject();
+        for (let i = 0; i < pidValues.length; i++) {
+            if (pidValues[i].appName == appName) return pidValues[i];
+        }
+    },
+
+    runningInstanceAmount: function (appName) {
+
+        let amount = 0;
+        let pidValues = this.getPidObject()
+        for (let i = 0; i < pidValues.length; i++) {
+            pidValues[i].appName == appName && amount++
+        }
+        return amount;
     },
     //Brings the selected app to top
     bringToTop: function (element) {
@@ -40,12 +65,11 @@ processes = {
         padding: "inherit",
         opacity: 1,
         HTML: String(),
-        minWidth: Number(),
-        minHeight: Number(),
+        minWidth: 150,
+        minHeight: 150,
         bodyBorder: Boolean(),
         fullHeight: false,
         fullWidth: false,
-
     },
 
     remove: function (stringyPID) {
@@ -53,17 +77,27 @@ processes = {
         // this.pid.splice(this.runningIds.indexOf(pid), 1);
         document.querySelector(`#${stringyPID}`).remove();
         this.pid[pid].getProcessBarElement().remove();
-        this.pid[pid] = null;
+        delete this.pid[pid];
         this.currentlySelectedProcess = null;
     },
 
     create: function (appName, position = { x: desktop.clientWidth / 2, y: desktop.clientHeight / 2 }) {
-        let processID = processes.getNewPid();
-        let stringyPID = "pid" + processID
+
         if (apps[appName] == undefined) {
             console.error(`Not Found: App '${appName}' does not exist`)
             return false
         }
+
+        if (apps[appName].createData.onlyOneInstanceAllowed && this.runningInstanceAmount(appName) > 0) {
+            let message = `One instance of App: '${appName}' already running!`
+            this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
+            X.prompt.create(message, 'warn');
+            // console.warn(message)
+            return false
+        }
+
+        let processID = processes.getNewPid();
+        let stringyPID = "pid" + processID;
         let appCreateData = {};
 
 
@@ -102,7 +136,7 @@ processes = {
 					<app_exit onmousedown="document.body.removeAttribute('onmousemove')" onclick="processes.remove('${stringyPID}')" />
 				</app_header>
 				<app_body style="${bodyStyles}">
-					${appCreateData.HTML}
+					${appCreateData.getHTML()}
 				</app_body>
 				<app_resize>
 					<resize_point class='bottom-right'></resize_point>
@@ -129,6 +163,7 @@ processes = {
         Object.assign(processes.pid[processID], {
             id: processID,
             elementId: stringyPID,
+            appName: appName,
             originalOffsetY: 0,
             originalOffsetX: 0,
             getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
@@ -172,7 +207,9 @@ processes = {
         //Makes a element resizable. (Note: Not any element. Has to have resize points!)
         const element = document.querySelector(cssSelector);
         const resizePoints = document.querySelectorAll(cssSelector + ' resize_point')
-        const minimum_size = 150;
+        const minimum_size_x = element.style.minWidth.replace('px', '') || 150;
+        const minimum_size_y = element.style.minHeight.replace('px', '') || 150;
+
         let original_width = 0;
         let original_height = 0;
         let original_x = 0;
@@ -184,6 +221,7 @@ processes = {
                 e.preventDefault()
                 original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
                 original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+                console.log(original_width, original_height);
                 original_x = element.getBoundingClientRect().left;
                 original_y = element.getBoundingClientRect().top;
                 original_mouse_x = e.pageX;
@@ -197,25 +235,25 @@ processes = {
                 const resizeClassList = x.classList.toString()
                 if (resizeClassList.includes('top')) {
                     const height = original_height - (e.pageY - original_mouse_y)
-                    if (height > minimum_size) {
+                    if (height > minimum_size_y) {
                         element.style.height = height + 'px'
                         element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
                     }
                 } else if (resizeClassList.includes('bottom')) {
                     const height = original_height + (e.pageY - original_mouse_y)
-                    if (height > minimum_size) {
+                    if (height > minimum_size_y) {
                         element.style.height = height + 'px'
                     }
                 }
                 if (resizeClassList.includes('left')) {
                     const width = original_width - (e.pageX - original_mouse_x)
-                    if (width > minimum_size) {
+                    if (width > minimum_size_x) {
                         element.style.width = width + 'px'
                         element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
                     }
                 } else if (resizeClassList.includes('right')) {
                     const width = original_width + (e.pageX - original_mouse_x)
-                    if (width > minimum_size) {
+                    if (width > minimum_size_x) {
                         element.style.width = width + 'px'
                     }
                 }
