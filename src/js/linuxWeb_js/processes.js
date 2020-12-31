@@ -45,6 +45,12 @@ processes = {
         const pid = this.getNumberPid(element.id);
         typeof (this.pid[pid]['onFocus']) == "function" && this.pid[pid].onFocus(); // If it has a onFocus then.... do that
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
+        if (this.pid[pid].minimized == true) {
+            element.style.transform = "";
+            element.style.opacity = "";
+            element.style.display = "";
+            this.pid[pid].minimized = false;
+        }
         // If it is not currently on top do this
         appsLayer.insertAdjacentElement('beforeend', element) // bring to top
         this.makeProcessResizable("#" + element.id);
@@ -61,19 +67,62 @@ processes = {
         bodyColor: "inherit",
         textColor: "inherit",
         headerColor: "var(--main-color);",
+        headerBottomColor: "inherit",
         bodyBorderSize: "inherit",
         padding: "inherit",
         opacity: 1,
         HTML: String(),
-        minWidth: 150,
+        height: 300,
+        width: 500,
         minHeight: 150,
+        minWidth: 150,
         bodyBorder: Boolean(),
         fullHeight: false,
         fullWidth: false,
     },
 
+    maximize: function (stringyPID) {
+        let pid = this.getNumberPid(stringyPID);
+        let element = document.querySelector(`#${stringyPID}`);
+        if (this.pid[pid].maximized == true) {
+            element.style.transition = "all 0.5s ease-in-out";
+            element.style.top = this.pid[pid].positionBeforeMaximize.y;
+            element.style.left = this.pid[pid].positionBeforeMaximize.x;
+            element.style.height = this.pid[pid].sizeBeforeMaximize.height;
+            element.style.width = this.pid[pid].sizeBeforeMaximize.width;
+            element.querySelector('app_resize').style.display = ''
+            this.pid[pid].maximized = false;
+
+        } else {
+            this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
+            this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
+            element.style.transition = "all 0.5s ease-in-out";
+            element.style.top = "32px";
+            element.style.left = "0px";
+            element.style.height = `${window.innerHeight - 55}px`;
+            element.style.width = `${window.innerWidth}px`;
+            element.querySelector('app_resize').style.display = 'none'
+            this.pid[pid].maximized = true;
+        }
+
+        setTimeout(() => {
+            element.style.transition = "";
+        }, 500);
+    },
+    minimize: function (stringyPID) {
+        let pid = this.getNumberPid(stringyPID);
+        let element = document.querySelector(`#${stringyPID}`);
+        element.style.transform = "scale(0.5)";
+        element.style.opacity = "0"
+        this.pid[pid].minimized = true;
+        this.currentlySelectedProcess = null;
+        this.pid[pid].getProcessBarElement().classList.remove('selected');
+        setTimeout(() => {
+            element.style.display = 'none';
+        }, 500);
+    },
     remove: function (stringyPID) {
-        pid = this.getNumberPid(stringyPID);
+        let pid = this.getNumberPid(stringyPID);
         // this.pid.splice(this.runningIds.indexOf(pid), 1);
         document.querySelector(`#${stringyPID}`).remove();
         this.pid[pid].getProcessBarElement().remove();
@@ -81,7 +130,7 @@ processes = {
         this.currentlySelectedProcess = null;
     },
 
-    create: function (appName, position = { x: desktop.clientWidth / 2, y: desktop.clientHeight / 2 }) {
+    create: function (appName, position = { x: 'default', y: 'default' }) {
 
         if (apps[appName] == undefined) {
             console.error(`Not Found: App '${appName}' does not exist`)
@@ -112,13 +161,17 @@ processes = {
         //     }
         //     // !system.global.isValid(entry[1]) && (appCreateData[entry[0]] = "");
         // })
-
+        appCreateData.height < appCreateData.minHeight && (appCreateData.height = appCreateData.minHeight)
+        appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
+        position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2)
+        position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2)
+        console.log(appCreateData.height, appCreateData.width, position);
         //Then styles are used here
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
             min-width:${appCreateData.minWidth}px;
-		`
-
+            z-Index: 4;
+		`;
         let bodyStyles = `
 			background-color:${appCreateData.bodyColor};
 			color:${appCreateData.textColor};
@@ -127,13 +180,20 @@ processes = {
 			width:${(appCreateData.fullWidth && "100%") || "auto"};
 			opacity: ${appCreateData.opacity};
 			padding: ${appCreateData.padding};
-		`
+        `;
+        let headerStyles = `
+            color: ${appCreateData.titleColor};
+            background-color:${appCreateData.headerColor};
+            border-bottom: 1px solid ${appCreateData.headerBottomColor};
+        `;
         //This is how the html is created. read
         appsLayer.innerHTML += `
 			<app_container onmousedown="processes.bringToTop(this)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
-				<app_header style="color:${appCreateData.titleColor};background-color:${appCreateData.headerColor};opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
+				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					${appCreateData.title}
-					<app_exit onmousedown="document.body.removeAttribute('onmousemove')" onclick="processes.remove('${stringyPID}')" />
+					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
+					<app_maximize onclick="processes.maximize('${stringyPID}')"><square_icon></square_icon></app_maximize>
+					<app_exit onclick="processes.remove('${stringyPID}')"><x_icon></x_icon></app_exit>
 				</app_header>
 				<app_body style="${bodyStyles}">
 					${appCreateData.getHTML()}
@@ -164,6 +224,10 @@ processes = {
             id: processID,
             elementId: stringyPID,
             appName: appName,
+            minimized: false,
+            maximized: false,
+            positionBeforeMaximize: { x: position.x, y: position.y },
+            sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
             originalOffsetY: 0,
             originalOffsetX: 0,
             getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
@@ -181,8 +245,8 @@ processes = {
 
     //Handles window movement. so yeah.
     processMouseDownHandler: function (event, stringyPID) {
-        if (event.target.tagName != "APP_HEADER") return false
         pid = this.getNumberPid(stringyPID);
+        if (event.target.tagName != "APP_HEADER" || this.pid[pid].maximized) return false
         let process = this.pid[pid];
         process.originalOffsetY = event.offsetY;
         process.originalOffsetX = event.offsetX;

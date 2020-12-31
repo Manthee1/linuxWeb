@@ -7,6 +7,7 @@ taskbar {
 	width: 100vw;
 	height: 30px;
 	background-color: var(--main-color);
+	border-bottom: var(--lighter-main-color) 2px solid;
 }
 
 taskbar > * {

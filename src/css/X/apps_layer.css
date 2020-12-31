@@ -23,10 +23,13 @@ app_container {
 	min-height: 100px;
 	border: var(--main-color) 1px solid;
 	box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.4);
+	transform: scale(1);
+	opacity: 1;
+	transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 app_header {
-	display: block;
+	display: flex;
 	width: auto;
 	font-size: 14px;
 	height: 20px;
@@ -41,20 +44,45 @@ app_header {
 	margin-left: 5px;
 } */
 
-app_exit {
+app_header > * {
 	display: inline;
-	width: 15px;
-	height: 15px;
-	background-color: rgb(255, 0, 0);
+	width: 12px;
+	height: 12px;
+	background-color: var(--lighter-main-color);
 	border-radius: 50%;
 	position: absolute;
-	right: 0px;
-	margin: 2.5px 5px;
+	right: 5px;
+	justify-self: center;
+	align-self: center;
 	opacity: 0.8;
+	line-height: 12px;
+}
+app_header > *:hover {
+	opacity: 1;
 }
 
-app_exit:hover {
-	opacity: 1;
+app_exit {
+	background-color: rgb(255, 90, 90);
+}
+app_maximize {
+	right: 25px;
+}
+
+app_minimize {
+	right: 45px;
+}
+
+app_header > * > * {
+	background-position: center;
+	height: 12px;
+	width: 12px;
+	background-size: 6px;
+	padding: 0px;
+	margin: 0px;
+}
+
+app_maximize > * {
+	background-size: 40%;
 }
 
 app_body {

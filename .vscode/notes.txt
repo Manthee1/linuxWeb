@@ -1,0 +1,10 @@
+2020-12-31 
++ Fixed app_resize element overlaping other apps and activating through them
++ Added icons to settings
++ processes.create now creates apps without a defined x,y in the center of the desktop
++ Added app minimize
++ Added app maximize
++ App maximize and minimize finished and fully functional
+
+
+

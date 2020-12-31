@@ -61,3 +61,59 @@ restart_icon {
 	width: 50px;
 	height: 50px;
 }
+about_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/about.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+appearance_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/appearance.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+desktop_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/desktop.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+user_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/user.svg");
+	filter: invert(0.6);
+	width: 50px;
+	height: 50px;
+}
+x_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/x.svg");
+	filter: invert(1);
+	width: 50px;
+	height: 50px;
+}
+square_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/square.svg");
+	filter: invert(1);
+	width: 50px;
+	height: 50px;
+}
+minus_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/minus.svg");
+	filter: invert(1);
+	width: 50px;
+	height: 50px;
+}

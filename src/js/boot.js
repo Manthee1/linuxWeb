@@ -2,9 +2,7 @@
 (async () => {
 
 	//Request the build.ver file which has the current build version in it...
-	// document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
-	// Fetch the main X html so it's ready while the boot messages are doing their thing
-	// loginHtml = await (await fetch("./X/linuxWeb_X.html")).text();
+	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
 	await delay(1000);
 
 	timeMax = 1000; //ms

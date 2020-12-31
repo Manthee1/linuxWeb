@@ -6,7 +6,7 @@ process_bar {
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	/* border-top: 1px solid var(--secondary-color); */
+	border-top: 2px solid var(--lighter-main-color);
 	align-content: center;
 	height: 25px;
 	opacity: 1;
@@ -24,6 +24,7 @@ process_bar > process {
 	text-overflow: ellipsis;
 	line-height: 25px;
 	font-size: 14px;
+	border-left: 1px solid var(--lighter-main-color);
 	color: white;
 	font-weight: 100;
 	cursor: pointer;

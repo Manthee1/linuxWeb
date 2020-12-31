@@ -15,7 +15,7 @@ settings > sidebarMenu {
 	flex-flow: column;
 	flex: 0 0 0;
 	padding: 10px 0px;
-	border-right: 2px var(--secondary-color) solid;
+	border-right: 2px var(--lighter-main-color) solid;
 }
 settings > sidebarMenu > * {
 	display: flex;
@@ -25,9 +25,10 @@ settings > sidebarMenu > * {
 }
 
 settings > sidebarMenu > * > *:first-child {
+	/* flex: 0 0 0; */
 	height: 20px;
 	width: 20px;
-	padding-right: 10px;
+	margin-right: 10px;
 }
 
 settings > sidebarMenu > *:hover {

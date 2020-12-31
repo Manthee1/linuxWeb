@@ -69,6 +69,7 @@ apps = {
                 //system.global.escapeHtml() - make string not html. understood?... Good!
                 terminalElement.main.innerHTML += `${system.global.escapeHtml(terminalElement.inputPrefix.innerText)} ${system.global.escapeHtml(text)}<br>`;
                 try {
+                    processInstance.currentHistoryNumber = -1;
                     // If eval return nothing then just don't return it to the terminal
                     commandExecuted = eval(text);
                     if (typeof (commandExecuted) != 'undefined') {
@@ -112,39 +113,53 @@ apps = {
     settings: {
         name: "Settings",
 
-        settingsLayout: {
+        layout: {
             selected: 0,
             0: {
                 name: "About",
                 iconTag: "about_icon",
-                panel: {
-                    h1: "About",
-                    hr: '',
-                }
+                getPanelHTML: function () {
+                    return `
+                    <h1>About</h1>
+                    <hr>
+                    <span>Build</span>
+                `}
             },
             1: {
                 name: "Appearance",
                 iconTag: "appearance_icon",
-                panel: {
-                    h1: "Appearance Settings",
-                    hr: '',
-                }
+                getPanelHTML: function () {
+                    return `
+                    <h1>Appearance Settings</h1>
+                    <hr>
+                `}
             },
             2: {
                 name: "Desktop",
                 iconTag: "desktop_icon",
-                panel: {
-                    h1: "Desktop Settings",
-                    hr: '',
-                }
+                getPanelHTML: function () {
+                    return `
+                    <h1>Desktop Settings</h1>
+                    <hr>
+                `}
             },
             3: {
                 name: "Sound",
                 iconTag: "volume_icon",
-                panel: {
-                    h1: "Sound Settings",
-                    hr: '',
-                }
+                getPanelHTML: function () {
+                    return `
+                    <h1>Sound Settings</h1>
+                    <hr>
+                `}
+            },
+            4: {
+                name: "User",
+                iconTag: "user_icon",
+                getPanelHTML: function () {
+                    return `
+                    <h1>User Settings</h1>
+                    <hr>
+                `}
             },
 
         },
@@ -154,12 +169,13 @@ apps = {
             fullWidth: true,
             minWidth: 500,
             minHeight: 500,
+            headerBottomColor: 'var(--lighter-main-color)',
             onlyOneInstanceAllowed: true,
             getHTML: function () {
-                let menuItems = Object.entries(apps.settings.settingsLayout).map((x) => {
+                let menuItems = Object.entries(apps.settings.layout).map((x) => {
                     [menuItemId, menuItem] = [x[0], x[1]]
                     if (typeof menuItem != 'object') return ''
-                    return `<menuItem ${apps.settings.settingsLayout.selected == menuItemId && "class='selected'"} onclick='apps.settings.switchToPanel(${menuItemId},false,this)'><${menuItem.iconTag}></${menuItem.iconTag}>${menuItem.name}</menuItem>`
+                    return `<menuItem ${apps.settings.layout.selected == menuItemId && "class='selected'"} onclick='apps.settings.switchToPanel(${menuItemId},false,this)'><${menuItem.iconTag}></${menuItem.iconTag}>${menuItem.name}</menuItem>`
                 }).join('');
                 return `<settings><sidebarMenu>${menuItems}</sidebarMenu><panel>${apps.settings.switchToPanel(0, true)}</panel></settings>`;
 
@@ -167,12 +183,8 @@ apps = {
         },
 
         switchToPanel: function (panelMenuId, onlyGetHTML = false, element) {
-            let settingsLayoutObj = this.settingsLayout[panelMenuId]
-            let panelHTML = Object.entries(settingsLayoutObj.panel).map(x => {
-                [tag, val] = [x[0], x[1]];
-                return `<${tag}>${val}</${tag}>`
-            }).join('')
-
+            let panelHTML = this.layout[panelMenuId].getPanelHTML();
+            console.log(panelHTML);
             if (onlyGetHTML) return panelHTML
             else {
                 document.querySelectorAll('settings .selected').forEach(x => x.classList.remove("selected"))
