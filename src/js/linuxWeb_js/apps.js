@@ -122,7 +122,7 @@ apps = {
                     return `
                     <h1>About</h1>
                     <hr>
-                    <span>Build</span>
+                    <span>Build: ${system.build}</span>
                 `}
             },
             1: {
