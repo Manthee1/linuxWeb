@@ -1,3 +1,5 @@
+/** @format */
+
 login {
 	display: flex;
 	opacity: 1;
@@ -25,64 +27,133 @@ login > login_background {
 	z-index: -1;
 	top: 0px;
 	left: 0px;
-	background-image: url("../../img/LoginBG.jpg");
+	background: var(--secondary-color);
+	background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%);
+	/* background-image: url("../../img/LoginBG.jpg"); */
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-position-y: center;
 	background-size: cover;
-	filter: contrast(0.6) blur(1vh);
-	transform: scale(1.2);
+	/* filter: contrast(0.6) blur(1vh); */
+	/* transform: scale(1.2); */
+}
+
+login > login_time {
+	/* font-size: 80px; */
+	position: absolute;
+	/* background-color: black; */
+	top: 50%;
+	left: 50%;
+	font-size: 50px;
+	transform: translate(-50%, -50%);
+	/* border-radius: 20px; */
+	/* padding: 20px; */
+	/* border: 10px solid white; */
+	transition: all 0.5s ease-in-out;
+}
+login > login_time > * {
+	display: block;
+	margin-top: 10px;
+}
+
+login > login_time > date {
+	font-size: 25px;
+}
+
+login > login_time > p {
+	position: relative;
+	top: 50px;
+	opacity: 0;
+	font-size: 15px;
+	transition: opacity 0.2s ease-in-out;
 }
 
 login > form {
-	z-index: 1;
-	font-family: monospace;
-	margin: auto;
+	bottom: 0px;
 	display: inline-block;
-	margin: 15vh auto;
+	z-index: 1;
+	position: relative;
+	font-family: Oxygen;
+	margin: auto;
+	padding: 25px;
+	padding-bottom: 120px; /* In order to center the input field and not the whole form horizontally */
+	color: gray;
+	/* margin: 15vh auto; */
 	transition: all 0.5s ease-in-out;
 }
 
-login > form > * {
+/* login > form > * {
+	color: gray;
 	display: block;
-}
+} */
 
 login form > login_user {
 	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	align-content: center;
+	justify-content: center;
 	font-size: 50px;
 	margin: 30px 60px 50px 60px;
-	color: whitesmoke;
 }
 
-login > form > login_user > img {
-	margin: 10px 0px;
+login > form > login_user > * {
+	margin: auto;
 }
 
-login > form > login_time_display {
-	font-size: 80px;
-	color: rgb(255, 255, 255);
-	border-radius: 20px;
-	padding: 20px;
-	border: 10px solid white;
+login > form > login_user > user_icon_container {
+	display: flex;
+	flex-flow: column nowrap;
+	border: 2px solid gray;
+	background: var(--main-color);
+	height: 50px;
+	width: 50px;
+	opacity: 0.5;
+	border-radius: 50%;
+	padding: 15px;
+}
+
+login > form > login_user > user_icon_container > user_icon {
+	background-size: 100%;
+	height: 50px;
+	width: 50px;
+	margin: auto;
+	background-position: center;
+	background-position-y: 0%;
+}
+
+login > form > login_user > user_name {
+	font-size: 25px;
+	margin-top: 10px;
+	color: gray;
+}
+
+input::-moz-focus-inner /*Remove button padding in FF*/ {
+	border: 0;
+	padding: 0;
 }
 
 login > form > input {
 	display: inline-block;
-	font-size: 20px;
-	padding: 2px;
-	padding-left: 10px;
-	font-family: inherit;
-	height: 45px;
+	font-size: 18px;
+	padding: 4px;
+	padding-left: 5px;
+	font-family: Oxygen;
+	/* padding-top: 6px; */
+
+	height: 20px;
+	/* line-height: 45px; */
 	width: 300px;
-	border-radius: 1px;
+	background: var(--main-color);
+	border-radius: 5px;
 	margin: -5px;
-	color: black;
-	border: 3px solid rgb(200, 200, 200);
+	color: white;
+	border: 1px solid var(--general-border-color);
 	transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out;
 }
 
 login > form > input:focus {
-	border: 3px solid transparent;
+	border: 1px solid transparent;
 }
 
 login > form > input[type="submit"] {

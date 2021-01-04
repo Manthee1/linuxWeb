@@ -1,35 +1,44 @@
-/* STATUS AREA */
+/**
+ * /* STATUS AREA
+ *
+ * @format
+ */
 
 status_area_container {
 	display: flex;
 	display: inline-block;
 	position: fixed;
 	right: 10px;
-	top: 40px;
-	width: 250px;
+	top: 35px;
+	width: 280px;
 	background-color: var(--main-color);
 	border-radius: 10px;
-	padding: 20px 10px;
+	padding: 10px 0px;
 }
 
-status_area_container > * {
+status_area_container > *:not(hr) {
 	display: flex;
 	margin: 5px 0px;
-	padding: 5px 10px;
+	width: auto;
+	padding: 5px 20px;
+	background-color: none;
 	justify-content: center;
 	align-content: center;
 	color: var(--light-color);
 	font-size: 14px;
 	text-align: left;
+	border-radius: 0px;
 }
-
-status_area_container > item {
-	background-color: none;
-	border-radius: 10px;
-}
-
-status_area_container > item:hover {
+status_area_container > *:not(hr):hover {
 	background-color: var(--hover-highlight-color);
+}
+status_area_container > hr {
+	width: 50%;
+	height: 1px;
+	border: none;
+	margin: auto;
+	margin: 10px auto;
+	background-color: var(--lighter-main-color);
 }
 
 status_area_container > * > * {
@@ -67,9 +76,7 @@ status_area_container > slider_container > input[type="range"]:hover {
 	opacity: 1;
 }
 
-status_area_container
-	> slider_container
-	> input[type="range"]::-webkit-slider-thumb {
+status_area_container > slider_container > input[type="range"]::-webkit-slider-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 15px;
@@ -79,9 +86,7 @@ status_area_container
 	cursor: pointer;
 }
 
-status_area_container
-	> slider_container
-	> input[type="range"]::-moz-range-thumb {
+status_area_container > slider_container > input[type="range"]::-moz-range-thumb {
 	-webkit-appearance: none;
 	appearance: none;
 	width: 10px;

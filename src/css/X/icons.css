@@ -1,10 +1,23 @@
-/* ICONS */
+/**
+ * /* ICONS
+ *
+ * @format
+ */
+
+logo_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/logo.svg");
+	width: 50px;
+	height: 50px;
+	margin: auto;
+}
 
 padlock_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/padlock.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -13,7 +26,7 @@ volume_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/volume/medium.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -22,7 +35,7 @@ brightness_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/brightness.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -31,7 +44,7 @@ settings_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/settings.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -39,7 +52,7 @@ power_off_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/power-off-2.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -48,7 +61,7 @@ logout_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/logoff.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -57,7 +70,7 @@ restart_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/restart.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -65,7 +78,7 @@ about_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/about.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -73,7 +86,7 @@ appearance_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/appearance.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -81,7 +94,7 @@ desktop_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/desktop.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -89,7 +102,7 @@ user_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/user.svg");
-	filter: invert(0.6);
+	filter: brightness(0.6);
 	width: 50px;
 	height: 50px;
 }
@@ -97,7 +110,6 @@ x_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/x.svg");
-	filter: invert(1);
 	width: 50px;
 	height: 50px;
 }
@@ -105,7 +117,6 @@ square_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/square.svg");
-	filter: invert(1);
 	width: 50px;
 	height: 50px;
 }
@@ -113,7 +124,14 @@ minus_icon {
 	position: relative;
 	display: inline-block;
 	background-image: url("../../img/minus.svg");
-	filter: invert(1);
 	width: 50px;
 	height: 50px;
+}
+network_icon {
+	position: relative;
+	display: inline-block;
+	background-image: url("../../img/network.svg");
+	width: 50px;
+	height: 50px;
+	filter: brightness(0.6);
 }

@@ -26,7 +26,7 @@ system = {
     changeVolume: function (volume) {
         this.global.volume = volume;
         let img
-        X.statusArea.updateVolume();
+        X.services.volume.update();
     },
     startup: function () {//  Important: Should only be run once
 
@@ -43,20 +43,14 @@ system = {
         })() // Get build version
 
         this.initializeX()
-
-        X.statusArea.updateStatusAreaTime();
-        setTimeout(() => {
-            setInterval(() => {
-                X.statusArea.updateStatusAreaTime();
-            }, 60 * 1000);
-        }, (60 - new Date().getSeconds()) * 1000); //makes sure the update is synchronized
+        X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
 
         //WHen the body is clicked all popup's get closed
 
     },
     //initializes the X object 
     initializeX: function () {
-        this.openPopupClicked = false
+        X.openMenuClicked = false
         // Execute all the enable() methods in the X objects 
 
         xObjSchema = {
@@ -72,34 +66,30 @@ system = {
         }
 
         // Do stuff.. Make all the objects with a toggle button show their html and handle the clicking and closing when clicked outside of html. i don't know what im writing i hope this is understandable
-        Object.entries(X).forEach(xObj => {
+        Object.entries(X.menus).forEach(xObj => {
             let [xObjName, xObjValue] = [xObj[0], xObj[1]];
             let sysUIData = {};
             Object.assign(sysUIData, xObjSchema);
             Object.assign(sysUIData, xObjValue);
             // console.log(xObjName, sysUIData);
-            if (typeof (sysUIData) == "object" && sysUIData.toggleElement != undefined && typeof sysUIData.getHTML == 'function') {
+            if (typeof (xObjValue) == "object" && sysUIData.toggleElement != undefined && typeof sysUIData.getHTML == 'function') {
                 //Adds a 'onclick' listener for the button element that creates a system popup (app menu,status menu...)
                 sysUIData.toggleElement.addEventListener(sysUIData.listenerType, event => {
                     // console.log('sysClicked', event);
                     if (!system.openPopups.includes(xObjName) || sysUIData.recreateBehaviour == 'recreate') {
-                        system.clearOpenPopups(true)
+                        system.clearOpenMenus(true)
                         sysUIData.preventDefault && event.preventDefault()
                         setTimeout(() => {
                             if (sysUIData.createOnMousePosition) elHTML = sysUIData.getHTML(event.clientX, event.clientY);
                             else elHTML = sysUIData.getHTML()
-
                             popupContainer.innerHTML += elHTML //Add the objects html to the dom.
-
                             //Block the body 'onclick' from deleting the popups when you clicked on them.
                             //Block is we '!want' it closed. Get it?
                             popupContainer.children[popupContainer.children.length - 1].addEventListener('click', (event) => {
                                 if ((typeof sysUIData.closeCondition == 'function' && !sysUIData.closeCondition(event)) || typeof sysUIData.closeCondition != 'function') {
-                                    system.openPopupClicked == false && (system.openPopupClicked = true);
+                                    X.menus.openMenuClicked == false && (X.menus.openMenuClicked = true);
                                 }
-
                             })
-
                             sysUIData.changeBorder && (sysUIData.toggleElement.style.borderBottom = "solid gray 2px");
                             system.openPopups.push(xObjName);
                             typeof sysUIData.onCreate == 'function' && sysUIData.onCreate(event)
@@ -109,22 +99,25 @@ system = {
             }
         });
 
+
+
+
         // Deletes a popup when it's clicked outside of it.
         document.body.addEventListener("click", () => {
-            if (system.openPopupClicked) {
-                system.openPopupClicked = false
+            if (X.menus.openMenuClicked) {
+                X.menus.openMenuClicked = false
                 return false;
             }
-            system.clearOpenPopups()
+            system.clearOpenMenus()
         });
 
     },
     //Clear all open system menu popups.
-    clearOpenPopups: function (forcefully = false) {
+    clearOpenMenus: function (forcefully = false) {
         if (system.openPopups.length != 0 || forcefully) {
             // console.log("Body click");
             system.openPopups.forEach(openPopup => {
-                X[openPopup].toggleElement.style.borderBottom = "";
+                X.menus[openPopup].toggleElement.style.borderBottom = "";
             })
             system.openPopups = [];
             // X.statusArea.volumeSliderDisplayToggle(true);

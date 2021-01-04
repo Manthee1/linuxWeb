@@ -10,7 +10,7 @@
 
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/icons.css" />
-	<link rel="stylesheet" type="text/css" href="./src/css/X/taskbar.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/topbar.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/process_bar.css" />
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/context_menu.css" />
@@ -40,11 +40,21 @@
 <body>
 	<login>
 		<login_background></login_background>
+		<login_time>
+			<time></time>
+			<date></date>
+			<p>Press a key to unlock</p>
+
+		</login_time>
 		<form
 			onsubmit="event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));">
-			<login_user><img src="./src/img/user.png" /><br />root</login_user>
+			<login_user>
+				<user_icon_container>
+					<user_icon></user_icon>
+				</user_icon_container>
+				<user_name>root</user_name>
+			</login_user>
 			<input type="password" name="password" placeholder="Password" />
-			<input type="submit" value=">" />
 		</form>
 	</login>
 
@@ -55,10 +65,10 @@
 		<desktop></desktop>
 
 		<!-- Title bar -->
-		<taskbar>
+		<topbar>
 			<left>
 				<app_menu_button>
-					<app_menu_button_icon>
+					Activities
 				</app_menu_button>
 			</left>
 			<middle>
@@ -66,12 +76,12 @@
 			</middle>
 			<right>
 				<statusArea>
+					<network_icon></network_icon>
 					<volume_icon></volume_icon>
-					<padlock_icon></padlock_icon>
 					<settings_arrow></settings_arrow>
 				</statusArea>
 			</right>
-		</taskbar>
+		</topbar>
 		<!-- Process bar -->
 		<process_bar></process_bar>
 		<!-- Time Menu -->

@@ -22,6 +22,47 @@ page = {
 	},
 };
 date = {
+	//Basically converts the 'options' into a date/time
+	get: (options, divider = " ") => {
+		options = options.split(' ')
+		let returnString = options.map(x => {
+			switch (x) {
+				case 'date': return new Date().getDate()
+					break;
+				case 'month': return new Date().getMonth() + 1
+					break;
+				case 'year': return new Date().getFullYear()
+					break;
+				case 'month>str': return new Date().toDateString().slice(4, 7)
+					break;
+				case 'day>str': return new Date().toDateString().slice(0, 3)
+					break;
+				case 'day': return new Date().getDay()
+					break;
+				case 'time': return date.getTime('hms', ':')
+					break;
+				case 'time-h': return date.getTime('ms', ':')
+					break;
+				case 'time-m': return date.getTime('hs', ':')
+					break;
+				case 'time-s': return date.getTime('hm', ':')
+					break;
+				case 'h': return new Date().getHours
+					break;
+				case 'm': return new Date().getMinutes
+					break;
+				case 's': return new Date().getSeconds
+					break;
+				default:
+					' '
+					break;
+			}
+		}).join(divider)
+
+		return returnString
+
+
+	},
 	//Simple. Return the Date. Easy...
 	getDate: () => {
 		return new Date(new Date().getDate()).toLocaleDateString();
@@ -30,12 +71,8 @@ date = {
 	getTime: (x, divider = ":") => {
 		var [h, m, s] = new Date(new Date().getTime()).toLocaleTimeString().split(":");
 		returnTimes = x.split("");
-		out = "";
-		for (let i = 0; i < returnTimes.length; i++) {
-			i > 0 && (out += divider);
-			out += eval(returnTimes[i]);
-		}
-		return out;
+		return returnTimes.map(x => { if (eval(x).length == 1) return "0" + eval(x); else return eval(x) }).join(divider)
+			;
 	},
 	//Self explanatory...
 	getDateAndTime: () => {

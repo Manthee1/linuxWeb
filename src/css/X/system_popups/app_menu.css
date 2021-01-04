@@ -1,17 +1,22 @@
-/* APP MENU */
+/**
+ * /* APP MENU
+ *
+ * @format
+ */
+
 app_menu_container {
 	position: absolute;
 	display: flex;
 	flex-flow: column wrap;
-	top: 35px;
-	left: 5px;
+	top: 27px;
+	left: 0px;
 	padding: 10px 0px;
-	width: 300px;
-	max-height: 50vh;
-	overflow-y: auto;
+	width: 100vw;
+	height: calc(100vh - 45px);
+	overflow-y: none;
 	opacity: 0.9;
-	height: auto;
-	background-color: var(--main-color);
+	/* height: auto; */
+	background-color: #00000080;
 	border: 1px var(--secondary-color) solid;
 }
 
@@ -22,31 +27,63 @@ app_menu_container * {
 }
 
 app_menu_container > app_search {
-	display: none;
+	margin-top: 30px;
+}
+app_menu_container input {
+	width: 300px;
+	font-size: 18px;
+	padding: 5px;
+	padding-left: 10px;
+	color: white;
+	text-align: left;
+	margin: auto;
+	border: none;
+	border-radius: 10px;
+	background-color: var(--lighter-main-color);
 }
 
-app_menu_container input {
-	text-align: center;
+app_menu_container input::placeholder {
+	color: gray;
 }
 
 app_menu_container > app_list {
+	position: absolute;
+	width: auto;
+	margin: auto;
 	display: flex;
+	/* height: 1px; */
+	top: 50%;
+	transform: translate(0, -50%);
+	border: 2px solid var(--general-border-color);
+	border-left: none;
+	border-radius: 0px 10px 10px 0px;
+	background: var(--main-color);
+	padding: 5px 0px;
 	flex-flow: column wrap;
 }
-app_menu_container > app_list > app_list_name {
+app_menu_container > app_list > app {
 	/* text-align: center; */
 	text-overflow: ellipsis;
+	text-align: center;
 	color: var(--light-color);
-	font-size: 15px;
-	background-color: var(--main-color);
+	font-size: 40px;
+	height: 50px;
+	width: 50px;
+	/* background-color: transparent; */
 	display: inline-block;
-	width: calc(100% - 20px);
+	/* width: calc(100% - 20px); */
+	border-radius: 10px;
 	flex: 1 1 auto;
-	padding: 10px;
-
+	padding: 15px;
+	margin: 5px 10px;
 	cursor: pointer;
+	transition: background-color 0.1s ease-in-out;
 }
 
-app_menu_container > app_list > app_list_name:hover {
+app_menu_container > app_list > app:hover {
 	background-color: var(--hover-highlight-color);
+}
+app_menu_container > app_list > app > * {
+	height: 50px;
+	width: 50px;
 }

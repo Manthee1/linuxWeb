@@ -1,15 +1,20 @@
+/** @format */
+
 @font-face {
 	src: url("./fonts/Oxygen-Regular.ttf");
 	font-family: "Oxygen";
 }
 
 :root {
-	--main-color: #18171f;
-	--secondary-color: #000000;
-	--lighter-main-color: #2b2836;
+	--main-color: #0c0c0c;
+	--secondary-color: #18171f;
+	--background-color: #141414;
+	--lighter-main-color: #222222;
 	--general-border-color: #2b2b2f;
 	--light-color: #9e9e9e;
 	--hover-highlight-color: #9e9e9e5d;
+	--select-color: #1964de;
+	--error-color: #410e0e;
 }
 
 html {
@@ -40,7 +45,7 @@ body {
 	padding: 0px;
 	margin: 0px;
 	opacity: 1;
-	background-color: #000000;
+	background-color: var(--background-color);
 	animation: hideAll 1s ease-in-out;
 }
 
@@ -68,7 +73,7 @@ main_background {
 	left: 0px;
 	position: fixed;
 	z-index: 0;
-	background-image: url("../img/MainBG-2.jpg");
+	background-image: url("../img/MainBG.png");
 	background-repeat: no-repeat;
 	background-position-x: center;
 	background-position-y: center;

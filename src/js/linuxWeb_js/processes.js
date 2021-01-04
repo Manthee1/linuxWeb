@@ -41,7 +41,12 @@ processes = {
         return amount;
     },
     //Brings the selected app to top
-    bringToTop: function (element) {
+    bringToTop: function (element, event = null) {
+        if (event != null && event.target.tagName.endsWith("ICON") && event.target.parentElement.parentElement.tagName == "APP_HEADER") {
+
+            return false
+
+        }
         const pid = this.getNumberPid(element.id);
         typeof (this.pid[pid]['onFocus']) == "function" && this.pid[pid].onFocus(); // If it has a onFocus then.... do that
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
@@ -84,6 +89,7 @@ processes = {
     maximize: function (stringyPID) {
         let pid = this.getNumberPid(stringyPID);
         let element = document.querySelector(`#${stringyPID}`);
+        this.bringToTop(element);
         if (this.pid[pid].maximized == true) {
             element.style.transition = "all 0.5s ease-in-out";
             element.style.top = this.pid[pid].positionBeforeMaximize.y;
@@ -97,7 +103,7 @@ processes = {
             this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
             this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
             element.style.transition = "all 0.5s ease-in-out";
-            element.style.top = "32px";
+            element.style.top = "27px";
             element.style.left = "0px";
             element.style.height = `${window.innerHeight - 55}px`;
             element.style.width = `${window.innerWidth}px`;
@@ -112,6 +118,7 @@ processes = {
     minimize: function (stringyPID) {
         let pid = this.getNumberPid(stringyPID);
         let element = document.querySelector(`#${stringyPID}`);
+        this.bringToTop(element);
         element.style.transform = "scale(0.5)";
         element.style.opacity = "0"
         this.pid[pid].minimized = true;
@@ -188,7 +195,7 @@ processes = {
         `;
         //This is how the html is created. read
         appsLayer.innerHTML += `
-			<app_container onmousedown="processes.bringToTop(this)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
+			<app_container onmousedown="processes.bringToTop(this,event)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					${appCreateData.title}
 					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
@@ -248,6 +255,7 @@ processes = {
         pid = this.getNumberPid(stringyPID);
         if (event.target.tagName != "APP_HEADER" || this.pid[pid].maximized) return false
         let process = this.pid[pid];
+        console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
         process.originalOffsetY = event.offsetY;
         process.originalOffsetX = event.offsetX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
@@ -258,6 +266,7 @@ processes = {
     },
 
     processMouseMoveHandler: function (event, process) {
+        console.log(event, process);
         // console.log(event, pid);
         var y = event.clientY - process.originalOffsetY;
         var x = event.clientX - process.originalOffsetX;

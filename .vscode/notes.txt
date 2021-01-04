@@ -1,10 +1,32 @@
 2020-12-31 
-+ Fixed app_resize element overlaping other apps and activating through them
++ Fixed app_resize element overlapping other apps and activating through them
 + Added icons to settings
 + processes.create now creates apps without a defined x,y in the center of the desktop
 + Added app minimize
 + Added app maximize
 + App maximize and minimize finished and fully functional
 
+2021-01-03
++ Redesigned the login page 
++ Made the title bar smaller (25px high)
++ Fixed a bug where you need to focus to a process in order to close/minimize/maximize it
++ Added a X.services object and put all the menus into X.menus
++ Changed all the svg default color to wite so i don't need to use filter: invert() on them
++ Redesigned the app_menu altho the search still doesn't work. I need more apps for that :)
++ Made onStart() get executed on every X.'service' before startup (*This will probably be changed)
++ Added a X.clock service that changes/updates time/date on elements every minute
++ Added a time display to the login menu that goes away on key press and shows the login form
++ Changed the main color #0c0c0c so its darker
++ Expanded the date object in main.js with a new function get that returns the date base on the parameters you gave it
++ Added Comments
++ Added a "Press a key to unlock" text to the lockscreen. It will popup 3 seconds after lockscreen.lock() was executed
 
-
+2021-01-04
++ Redesigned the 'status_area_container' (& Added a Connected item)
++ Changed the hover on topbar elements (background color -> brightness())
++ Change the 'app_menu_button' icon('O') into text('Activities')
++ Changed the background
++ Changed the logo
++ Changed 'titlebar' -> 'topbar'
++ Made app title aligned to the center of the header
+* Found a bug on mozilla where the windows sometimes lose movability

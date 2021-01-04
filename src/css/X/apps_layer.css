@@ -1,4 +1,8 @@
-/* APP STYLES */
+/**
+ * /* APP STYLES
+ *
+ * @format
+ */
 
 apps_layer {
 	position: absolute;
@@ -45,24 +49,28 @@ app_header {
 } */
 
 app_header > * {
-	display: inline;
+	display: flex;
 	width: 12px;
 	height: 12px;
 	background-color: var(--lighter-main-color);
 	border-radius: 50%;
 	position: absolute;
 	right: 5px;
+	top: 0px;
 	justify-self: center;
 	align-self: center;
 	opacity: 0.8;
 	line-height: 12px;
+	transform: translateY(50%);
 }
 app_header > *:hover {
 	opacity: 1;
+	filter: brightness(1.5);
 }
 
-app_exit {
+app_exit:hover {
 	background-color: rgb(255, 90, 90);
+	filter: none;
 }
 app_maximize {
 	right: 25px;

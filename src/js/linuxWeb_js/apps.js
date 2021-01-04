@@ -5,6 +5,7 @@ apps = {
         name: "linuxWeb Terminal",
         path: "apps.terminal",
         version: "1.0.4",
+        icon: "./src/img/terminal.svg",
 
         createData: {
             //The createData object is used to define the general parameters
@@ -112,6 +113,7 @@ apps = {
 
     settings: {
         name: "Settings",
+        icon: "./src/img/settings.svg",
 
         layout: {
             selected: 0,

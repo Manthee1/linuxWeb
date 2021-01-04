@@ -1,4 +1,8 @@
-/* PROCESS BAR */
+/**
+ * /* PROCESS BAR
+ *
+ * @format
+ */
 
 process_bar {
 	display: flex;
@@ -24,7 +28,7 @@ process_bar > process {
 	text-overflow: ellipsis;
 	line-height: 25px;
 	font-size: 14px;
-	border-left: 1px solid var(--lighter-main-color);
+	border-right: 1px solid var(--lighter-main-color);
 	color: white;
 	font-weight: 100;
 	cursor: pointer;

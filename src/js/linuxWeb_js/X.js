@@ -1,14 +1,17 @@
 X = {
-    desktopContextMenu: {
-        //enable is executed on system startup
-        createOnMousePosition: true,
-        listenerType: "contextmenu",
-        toggleElement: document.querySelector('desktop'),
-        recreateBehaviour: "recreate",
-        changeBorder: false,
-        preventDefault: true,
-        getHTML: function (x = 100, y = 100) {
-            return `
+
+
+    menus: {
+        desktopContextMenu: {
+            //enable is executed on system startup
+            createOnMousePosition: true,
+            listenerType: "contextmenu",
+            toggleElement: document.querySelector('desktop'),
+            recreateBehaviour: "recreate",
+            changeBorder: false,
+            preventDefault: true,
+            getHTML: function (x = 100, y = 100) {
+                return `
 		<context_menu style="top: ${y}px;left: ${x}px;">
 				<context_item >New Folder</context_item>
 				<context_item class='context_sub_menu' >
@@ -23,56 +26,56 @@ X = {
 			</context_menu>
 				`
 
-        },
-        closeCondition: function (event) {
-            return event.target.tagName != "CONTEXT_MENU"
-        },
+            },
+            closeCondition: function (event) {
+                return event.target.tagName != "CONTEXT_MENU"
+            },
 
 
-        onCreate: function () {
+            onCreate: function () {
 
-            document.querySelectorAll('.context_sub_menu').forEach(x => {
-                x.addEventListener('mouseover', () => {
-                    x.querySelector('context_sub_menu').style.display = 'block'
+                document.querySelectorAll('.context_sub_menu').forEach(x => {
+                    x.addEventListener('mouseover', () => {
+                        x.querySelector('context_sub_menu').style.display = 'block'
+                    })
+                    x.addEventListener('mouseleave', () => {
+                        x.querySelector('context_sub_menu').style.display = ''
+                    })
                 })
-                x.addEventListener('mouseleave', () => {
-                    x.querySelector('context_sub_menu').style.display = ''
-                })
-            })
+
+            },
+
+
 
         },
-
-
-
-    },
-
-    appMenu: {
-        listenerType: "click",
-        toggleElement: document.querySelector('app_menu_button'),
-        getHTML: function () {
-            let html = `
+        appMenu: {
+            listenerType: "click",
+            toggleElement: document.querySelector('app_menu_button'),
+            getHTML: function () {
+                let html = `
 				<app_menu_container>
-					<app_search><input type='search'></app_search>
+					<app_search><input placeholder='Type to search' type='search'></app_search>
 					<app_list>
 					${Object.entries(apps).map(x => {
-                let appName;
-                if (x[1].name == undefined) appName = x[0]; else appName = x[1].name;
-                return `<app_list_name onclick="system.clearOpenPopups();processes.create('${x[0]}');">${appName}</app_list_name>`
-            }).join('')}
+                    let appIcon;
+                    if (x[1].icon != undefined) appIcon = `<img src='${x[1].icon}'>`;
+                    else if (x[1].name != undefined) appIcon = x[1].name[0];
+                    else appIcon = x[0][0];
+                    return `<app onclick="system.clearOpenMenus();processes.create('${x[0]}');">${appIcon}</app>`
+                }).join('')}
 			</app_list>
 				</app_menu_container>
 		`
-            return html;
+                return html;
+            },
         },
-    },
+        statusArea: {
+            listenerType: "click",
+            toggleElement: document.querySelector("statusArea"),
 
-    statusArea: {
-        listenerType: "click",
-        toggleElement: document.querySelector("statusArea"),
+            getHTML: function () {
 
-        getHTML: function () {
-
-            return `<status_area_container>
+                return `<status_area_container>
 					<slider_container>
 					<volume_icon></volume_icon>
 					<input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
@@ -80,49 +83,105 @@ X = {
 					<slider_container>
 					<brightness_icon></brightness_icon>
 					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
-					</slider_container>
-					<item onclick="system.clearOpenPopups();processes.create('settings')"><settings_icon></settings_icon><text>Settings</text></item>
+                    </slider_container>
+                    <hr>
+                    <item><network_icon></network_icon><text>Connected</text></item>
+                    <hr>
+					<item onclick="system.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><text>Settings</text></item>
 					<item onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><text>Lock</text></item>
 					<item onclick='X.powerMenu.show()'><power_off_icon ></power_off_icon><text>Power Off/Log Out</text></item>
 
         </status_area_container>`;
+            },
         },
+    },
+    services: {
+        clock: {
+            onStart: function () {
+                //Triggers when the page loads
+                setTimeout(() => {
+                    setInterval(() => {
+                        //Updates all elements in the 'updateElements' object
+                        Object.value(X.services.clock.update.updateElements).forEach(x => {
+                            dateAndTime = date.get(x.options)
+                            x.element.innerHTML = dateAndTime;
+                            console.log("Time update. Next one in: ", 60 - new Date().getSeconds());
+                        })
+                    }, 60 * 1000);
+                }, (60 - new Date().getSeconds()) * 1000); // Makes sure the update is synchronized
+            },
 
-        updateStatusAreaTime: function () {
-            var dateAndTime = new Date().toUTCString().split(new Date().getFullYear())[0] + date.getTime("hm");
-            document.querySelector("dateTime").innerHTML = dateAndTime;
-            console.log("Time update. Next one in: ", 60 - new Date().getSeconds());
-        },
+            update: {
+                //updateElements stores the elements and the options for how  the time should be displayed on them eg. 0:{element,options}
+                updateElements: {},
+                //add Adds a new element to the object
+                add: function (element, options) {
+                    for (const x in this.updateElements) {
+                        if (this.updateElements[x].element == element) {
+                            return false
+                        }
+                    }
 
-        updateVolume: function () {
-            volume = system.global.volume;
-            if (volume > 66) {
-                img = "url('./src/img/volume/high.svg')";
-            } else if (volume > 33) {
-                img = "url('./src/img/volume/medium.svg')";
-            } else if (volume > 0) {
-                img = "url('./src/img/volume/low.svg')";
-            } else {
-                img = "url('./src/img/volume/mute.svg')";
+                    Object.assign(this.updateElements, { element: element, options: options })
+                    this.updateNow(element, options)
+
+                },
+                //remove Removes a existing element from the object
+
+                remove: function (element) {
+                    for (const x in this.updateElements) {
+                        if (this.updateElements[x].element == element) {
+                            delete this.updateElements[x];
+                            return true
+                        }
+                    }
+                },
+                //Immediately updates the element with the options.
+                updateNow: function (element, options) {
+                    element.innerHTML = date.get(options)
+                }
+
             }
-            document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
+
+        },
+        volume: {
+            update: function () {
+                volume = system.global.volume;
+                if (volume > 66) {
+                    img = "url('./src/img/volume/high.svg')";
+                } else if (volume > 33) {
+                    img = "url('./src/img/volume/medium.svg')";
+                } else if (volume > 0) {
+                    img = "url('./src/img/volume/low.svg')";
+                } else {
+                    img = "url('./src/img/volume/mute.svg')";
+                }
+                document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
+            }
+
         }
     },
 
-    overlay: {
 
+
+    overlay: {
+        //Simply remove's any element with the overlay tag
         remove: function () {
             document.querySelectorAll('overlay').forEach(x => x.remove())
         }
-
-
     },
-    lockScreen: {
 
+    lockScreen: {
+        //Define are lockscreen elements
         form: document.querySelector("body > login > form"),
         loginContainer: document.querySelector('body > login'),
-
+        loginTime: document.querySelector('body > login > login_time'),
+        time: document.querySelector('body > login > login_time > time'),
+        date: document.querySelector('body > login > login_time > date'),
+        p: document.querySelector("login > login_time > p "),
         unlock: function () {
+            //Fades the lockscreen and displays the linux element
+            X.services.clock.update.remove(this.loginTime)
             system.startup();
             this.loginContainer.style.display = 'none'
             document.querySelector('body>linux').style = 'opacity:0;'
@@ -132,26 +191,51 @@ X = {
         },
 
         lock: function () {
-            this.form.style = ''
+            // Shows the lockscreen and hides the linux function element
+            // Hides the form so the time gets displayed
+            // And when the user presses a key
+            // then showForm() gets executed, the time goes away and form fades in
             this.loginContainer.style = 'opacity:0'
+            this.form.style = "display:none";
+            this.loginTime.style = '';
+            this.p.style.opacity = '0';
+            X.services.clock.update.add(this.time, 'time-s');
+            X.services.clock.update.add(this.date, 'day>str month>str date');
+
+            setTimeout(() => {
+                this.p.style.opacity = '1';
+            }, 3000);
 
             document.querySelector('body>linux').style.opacity = '0'
             setTimeout(() => {
                 this.loginContainer.style = 'opacity:1'
-                this.setup();
+                document.querySelector("input[type=password]").value = '';
+                this.form.style = "position:relative;bottom:0px;display:none";
+                this.loginContainer.style = "opacity:1;"
+
                 document.querySelector('body>linux').style.display = 'none'
             }, 20);
+
+            document.body.setAttribute('onkeyup', `X.lockScreen.showForm(event)`)
         },
 
+        showForm: event => {
+            let passwordInput = X.lockScreen.form.querySelector("input[type='password']");
+            X.lockScreen.loginTime.style = 'opacity:0;top: 0px'
+            console.log(event)
 
-        setup: function () {
-            document.querySelector("input[type=password]").value = '';
-            this.form.style = "position:relative;bottom:0px;";
-            this.loginContainer.style = "opacity:1;"
-            document.querySelector("input[type=password]").focus();
+            setTimeout(() => {
+                X.lockScreen.form.style = 'opacity: 1'
+                X.lockScreen.form.querySelector("input[type='password']").focus();//Focus the input
+            }, 200);
+            setTimeout(() => {
+                X.lockScreen.loginTime.style = 'display:none'
+            }, 500);
+            // Removes the onkeyup attribute so this is not executed more than once
+            document.body.removeAttribute('onkeyup');
+
         },
-
-
+        //Self explanatory.
         playLoginAnimation: function (x = false) {
             if (x) {
                 //Correct password
@@ -163,7 +247,7 @@ X = {
             } else {
                 //Wrong password
                 this.form.style = "position:relative;bottom:120px;opacity:1;";
-                document.querySelector("input[type=password]").style = "border-color:indianred";
+                document.querySelector("input[type=password]").style = "border-color:var(--error-color)";
                 document.querySelector("input[type=password]").innerHTML = "";
 
                 setTimeout(() => {
@@ -176,7 +260,6 @@ X = {
             }
         }
     },
-
     prompt: {
         //Not finished
         create: function (message, type) {
@@ -199,11 +282,9 @@ X = {
         },
 
     },
-
     shutdown: function () {
         page.changePage('./X/linuxWeb_shutdown.html');
     },
-
     logout: function () {
         page.changePage('./X/linuxWeb_X.html');
     },
@@ -211,11 +292,10 @@ X = {
         page.changePage('./X/linuxWeb_shutdown.html', 'restart');
     },
 
-
     powerMenu: {
-
+        //Displays the power menu (* Im thinking of getting rid of this and replace it with a dropdown menu in the statusArea)
         show: function () {
-            system.clearOpenPopups();
+            system.clearOpenMenus();
             popupContainer.innerHTML += `
                 <overlay>
                     <power_menu>
@@ -231,8 +311,10 @@ X = {
 
         }
     },
-
-
 }
-
+//Executes onStart for every X.[service]
+Object.entries(X.services).forEach(xObj => {
+    let [xObjName, xObjValue] = [xObj[0], xObj[1]];
+    typeof xObjValue.onStart == 'function' && xObjValue.onStart()
+})
 X.lockScreen.lock()
