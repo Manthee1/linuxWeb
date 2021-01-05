@@ -1,3 +1,5 @@
+/** @format */
+
 ::-webkit-scrollbar {
 	display: none;
 }
@@ -30,11 +32,15 @@ message {
 	text-align: left;
 	color: rgb(167, 167, 167);
 	display: block;
-	margin: 20px;
+	margin: 0px;
+	font-size: 13px;
+	font-family: "Source Code Pro";
 }
 span {
-	position: absolute;
-	right: 50px;
+	font-size: 11px;
+
+	/* position: absolute; */
+	/* margin-right: 10px; */
 	color: #adfa9f;
 }
 

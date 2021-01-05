@@ -1,3 +1,17 @@
+Emoji Refrences:
+🔧 Fixed
+🎨 Redesigned
+🔨 Made
+🐜 Fixed a bug
+🔄 Changed 
+🔼 Updated
+🧹 Reorganized/Revamped
+➕ Added
+💅 Polished
+🏁 Finished
+⚒️ Started work
+
+Detailed Log:
 2020-12-31 
 + Fixed app_resize element overlapping other apps and activating through them
 + Added icons to settings
@@ -18,7 +32,7 @@
 + Added a time display to the login menu that goes away on key press and shows the login form
 + Changed the main color #0c0c0c so its darker
 + Expanded the date object in main.js with a new function get that returns the date base on the parameters you gave it
-+ Added Comments
++ Commented the code 
 + Added a "Press a key to unlock" text to the lockscreen. It will popup 3 seconds after lockscreen.lock() was executed
 
 2021-01-04
@@ -30,3 +44,21 @@
 + Changed 'titlebar' -> 'topbar'
 + Made app title aligned to the center of the header
 * Found a bug on mozilla where the windows sometimes lose movability
+
+
+Todos:
+TODO: Make a terminal command handler in the system objects DONE
+    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } DONE
+    |--- Create the interpreter
+        |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
+TODO: Make the topbar height dynamic 
+TODO: Makesure everything 
+TODO: Add the transparent topbar with only the right menu to the login screen 
+TODO: Make the powerMenu a dropdown
+TODO: Create a prompt/message function in X.
+TODO: Make unfocused app windows more transparent
+TODO: Rename processBar to applist DONE
+TODO: Change the '[ OK ]' text in boot to preceed the boot message (do the same in shutdown) DONE
+
+Bugs:
+FIXME: Mozila app_header mousemove not working.

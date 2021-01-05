@@ -35,7 +35,7 @@ system = {
         popupContainer = document.querySelector("system_popup_container");
         appsLayer = document.querySelector("apps_layer");
         desktop = document.querySelector("desktop");
-        processBar = document.querySelector("process_bar");
+        appList = document.querySelector("app_list");
         system.openPopups = [];
         //Add system.build variable
         (async () => {
@@ -123,10 +123,38 @@ system = {
             // X.statusArea.volumeSliderDisplayToggle(true);
             popupContainer.innerHTML = "";
         }
-
     },
     validatePassword: function (password) {
         if (sha256(btoa(password)) == system.encPassword) return true;
         else return false;
     },
+    cli: {
+        // i A.K.A Interpreter parses the command options and calls the command function
+        i: function (command = false, terminalProcess = false) {
+            // if (!command || !terminalProcess) return false
+
+            let options = {};
+
+            let a = command.split(' ')
+            callFunction = a.splice(0, 1)[0].trim()
+            if (a.length != 0) {
+                let optionBuffer = "";
+                a.forEach(x => {
+                    if (x.startsWith('-')) {
+                        optionBuffer.trim() != "" && (options[optionBuffer] = '');
+                        optionBuffer = x;
+                    } else if (x.trim() != "") {
+                        options[optionBuffer] = x;
+                        optionBuffer = "";
+                    }
+                })
+            }
+            return options
+        },
+        methods: {
+
+        }
+    }
 }
+
+

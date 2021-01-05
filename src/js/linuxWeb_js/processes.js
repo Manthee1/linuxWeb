@@ -221,7 +221,7 @@ processes = {
 			
 		`;
 
-        processBar.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='processBarPID${processID}'>${appCreateData.title}</process>`
+        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
         processes.pid[processID] = {}
 
         //Assign the createDate.methods object to the root of the apps pid object.
@@ -240,7 +240,7 @@ processes = {
             getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
             getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
-            getProcessBarElement: function () { return document.querySelector(`#processBarPID${this.id}`) },
+            getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
         });
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
@@ -255,7 +255,7 @@ processes = {
         pid = this.getNumberPid(stringyPID);
         if (event.target.tagName != "APP_HEADER" || this.pid[pid].maximized) return false
         let process = this.pid[pid];
-        console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
+        // console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
         process.originalOffsetY = event.offsetY;
         process.originalOffsetX = event.offsetX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
@@ -266,7 +266,7 @@ processes = {
     },
 
     processMouseMoveHandler: function (event, process) {
-        console.log(event, process);
+        // console.log(event, process);
         // console.log(event, pid);
         var y = event.clientY - process.originalOffsetY;
         var x = event.clientX - process.originalOffsetX;

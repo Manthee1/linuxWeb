@@ -64,10 +64,11 @@
     ]
 
     // Loop thorough the messages and display one, wait, display another, wait...
-    for (let i = 0; i < shutdownText.length; i++) {
-        document.querySelector("message_info").innerHTML += `<message>${shutdownText[i]} <span>[ OK ]</span></message>
+    for (const key in shutdownText) {
+        text = shutdownText[key]
+        document.querySelector("message_info").innerHTML += `<message><span>[ &nbsp; &nbsp; OK &nbsp; &nbsp; ]</span> ${text}</message>
         `;
-        await delay(Math.random() * timeMax / shutdownText.length);
+        await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (shutdownText.length * 2))) || Math.random() * (timeMax / (shutdownText.length * 2)));
         document.querySelector("message_info").lastElementChild.scrollIntoView()
         //     /\ Random delay for each boot message
     }
