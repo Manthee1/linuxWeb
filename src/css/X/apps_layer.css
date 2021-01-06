@@ -15,6 +15,14 @@ apps_layer {
 	padding: 0px;
 }
 
+apps_layer > * {
+	filter: brightness(0.85);
+}
+
+apps_layer > *:last-child {
+	filter: brightness(1);
+}
+
 app_container {
 	position: absolute;
 	display: flex;
@@ -34,6 +42,8 @@ app_container {
 
 app_header {
 	display: flex;
+	flex-flow: column nowrap;
+	text-align: center;
 	width: auto;
 	font-size: 14px;
 	height: 20px;
@@ -48,11 +58,11 @@ app_header {
 	margin-left: 5px;
 } */
 
-app_header > * {
+app_header > *:not(app_title) {
 	display: flex;
 	width: 12px;
 	height: 12px;
-	background-color: var(--lighter-main-color);
+	background-color: var(--main-color-b);
 	border-radius: 50%;
 	position: absolute;
 	right: 5px;
@@ -63,7 +73,7 @@ app_header > * {
 	line-height: 12px;
 	transform: translateY(50%);
 }
-app_header > *:hover {
+app_header > *:not(app_title):hover {
 	opacity: 1;
 	filter: brightness(1.5);
 }
@@ -73,11 +83,11 @@ app_exit:hover {
 	filter: none;
 }
 app_maximize {
-	right: 25px;
+	right: 25px !important;
 }
 
 app_minimize {
-	right: 45px;
+	right: 45px !important;
 }
 
 app_header > * > * {

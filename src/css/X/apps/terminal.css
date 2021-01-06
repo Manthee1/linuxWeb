@@ -1,6 +1,10 @@
-/* TERMINAL APP */
+/**
+ * /* TERMINAL APP
+ *
+ * @format
+ */
 
-terminal_main {
+app_body > terminal_main {
 	display: block;
 	font-size: 15px;
 	/* -moz-user-select: text;
@@ -12,7 +16,7 @@ terminal_main {
 	/* margin-bottom: 10px; */
 }
 
-terminal_main *,
+app_body > terminal_main *,
 terminal_input,
 terminal_input * {
 	font-size: 15px;
@@ -31,7 +35,7 @@ terminal_input * {
 	height: auto;
 } */
 
-terminal_main > command {
+app_body > terminal_main > command {
 	display: block;
 	margin-left: 2px;
 }

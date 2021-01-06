@@ -30,11 +30,8 @@ apps = {
                 currentCommand: "",
                 //This is executed by processes.bringToTop(); When the app is clicked on.
                 onFocus: function () {
-                    //Timeout set in order for the focus to work at all
-                    setTimeout(() => {
-                        let focusElement = this.getProcessElementBody().querySelector('terminal_input > input')
-                        document.activeElement != focusElement && focusElement.focus();
-                    }, 1);
+                    let focusElement = this.getProcessElementBody().querySelector('terminal_input > input')
+                    document.activeElement != focusElement && focusElement.focus();
                 },
                 //Adds a executed command to the command history array.
                 addToCommandHistory: function (commandToPush) {
@@ -125,6 +122,7 @@ apps = {
                     <h1>About</h1>
                     <hr>
                     <span>Build: ${system.build}</span>
+                    <div>Most icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                 `}
             },
             1: {
@@ -171,7 +169,7 @@ apps = {
             fullWidth: true,
             minWidth: 500,
             minHeight: 500,
-            headerBottomColor: 'var(--lighter-main-color)',
+            headerBottomColor: 'var(--main-color-b)',
             onlyOneInstanceAllowed: true,
             getHTML: function () {
                 let menuItems = Object.entries(apps.settings.layout).map((x) => {
@@ -186,7 +184,6 @@ apps = {
 
         switchToPanel: function (panelMenuId, onlyGetHTML = false, element) {
             let panelHTML = this.layout[panelMenuId].getPanelHTML();
-            console.log(panelHTML);
             if (onlyGetHTML) return panelHTML
             else {
                 document.querySelectorAll('settings .selected').forEach(x => x.classList.remove("selected"))
@@ -208,6 +205,22 @@ apps = {
             minWidth: 1000,
             minHeight: 500,
             getHTML: function () { return `<iframe style='height:100%;' src="https://www.google.com/webhp?igu=1"></iframe>` },
+        },
+    },
+    notepad: {
+        name: "Notepad",
+        icon: "./src/img/notepad.svg",
+        createData: {
+            title: "Notepad - Untitled Document",
+            fullWidth: true,
+            fullHeight: true,
+            getHTML: function () { return `<textarea></textarea>` },
+            methods: {
+                onFocus: function () {
+                    let focusElement = this.getProcessElementBody().querySelector('textarea')
+                    document.activeElement != focusElement && focusElement.focus();
+                },
+            },
         },
     },
 }

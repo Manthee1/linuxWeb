@@ -1,6 +1,6 @@
 /** @format */
 
-settings {
+app_body > settings {
 	width: 100%;
 	height: 100%;
 	flex-flow: row nowrap;
@@ -8,40 +8,40 @@ settings {
 	background-color: var(--main-color);
 }
 
-settings > * {
+app_body > settings > * {
 	flex: 1 1 auto;
 	padding: 20px;
 }
-settings > sidebarMenu {
+app_body > settings > sidebarMenu {
 	display: flex;
 	flex-flow: column;
 	flex: 0 0 0;
 	padding: 10px 0px;
-	border-right: 2px var(--lighter-main-color) solid;
+	border-right: 2px var(--main-color-b) solid;
 }
-settings > sidebarMenu > * {
+app_body > settings > sidebarMenu > * {
 	display: flex;
 	flex-flow: row nowrap;
 	flex: 0 0 0;
 	padding: 2px 10px;
 }
 
-settings > sidebarMenu > * > *:first-child {
+app_body > settings > sidebarMenu > * > *:first-child {
 	/* flex: 0 0 0; */
 	height: 20px;
 	width: 20px;
 	margin-right: 10px;
 }
 
-settings > sidebarMenu > *:hover {
+app_body > settings > sidebarMenu > *:hover {
 	background-color: var(--hover-highlight-color);
 }
 
-settings > sidebarMenu > .selected {
+app_body > settings > sidebarMenu > .selected {
 	background-color: var(--hover-highlight-color);
 }
 
-settings > panel > * {
+app_body > settings > panel > * {
 	margin: 5px;
 	padding: 0px;
 }

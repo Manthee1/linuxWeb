@@ -4,9 +4,10 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>X</title>
+	<title>linuxWeb</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet" type="text/css" href="./src/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/animations.css" />
 
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/icons.css" />
@@ -21,20 +22,16 @@
 	<link rel="stylesheet" type="text/css" href="./src/css/X/apps_layer.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/apps/terminal.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/apps/settings.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/apps/notepad.css" />
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/login.css" />
 
 	<script src="./src/js/libraries/sha256.js"></script>
 	<script src="./src/js/libraries/jsHelp.js"></script>
-	<script defer src="./src/js/main.js"></script>
-	<script defer src="./src/js/linuxWeb_js/system.js"></script>
-	<script defer src="./src/js/linuxWeb_js/processes.js"></script>
-	<script defer src="./src/js/linuxWeb_js/apps.js"></script>
-	<script defer src="./src/js/linuxWeb_js/X.js"></script>
-</head>
+	<script src="./src/js/main.js"></script>
 
-<head>
-	<title>Login</title>
+
+
 </head>
 
 <body>
@@ -56,6 +53,17 @@
 			</login_user>
 			<input type="password" name="password" placeholder="Password" />
 		</form>
+		<topbar>
+			<left></left>
+			<middle></middle>
+			<right>
+				<lockscreen_statusArea class="statusArea">
+					<network_icon></network_icon>
+					<volume_icon></volume_icon>
+					<down_icon></down_icon>
+				</lockscreen_statusArea>
+			</right>
+		</topbar>
 	</login>
 
 
@@ -75,10 +83,10 @@
 				<dateTime></dateTime>
 			</middle>
 			<right>
-				<statusArea>
+				<statusArea class="statusArea">
 					<network_icon></network_icon>
 					<volume_icon></volume_icon>
-					<settings_arrow></settings_arrow>
+					<down_icon></down_icon>
 				</statusArea>
 			</right>
 		</topbar>
@@ -89,9 +97,14 @@
 		<!-- Apps Layer -->
 		<apps_layer> </apps_layer>
 
-		<system_popup_container>
-		</system_popup_container>
+		<system_menu_container>
+		</system_menu_container>
+		<system_exit_animation_menu_container></system_exit_animation_menu_container>
 	</linux>
 </body>
+<script src="./src/js/linuxWeb_js/system.js"></script>
+<script src="./src/js/linuxWeb_js/apps.js"></script>
+<script src="./src/js/linuxWeb_js/processes.js"></script>
+<script src="./src/js/linuxWeb_js/X.js"></script>
 
 </html>

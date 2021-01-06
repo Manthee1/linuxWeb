@@ -9,7 +9,7 @@ topbar {
 	width: 100vw;
 	height: 25px;
 	background-color: var(--main-color);
-	border-bottom: var(--lighter-main-color) 2px solid;
+	border-bottom: var(--main-color-b) 2px solid;
 }
 
 topbar > * {
@@ -74,7 +74,7 @@ topbar > right > * {
 	transition: background-color ease-in-out 0.05s;
 }
 
-statusArea {
+.statusArea {
 	position: relative;
 	display: inline-block;
 	width: auto;
@@ -83,7 +83,7 @@ statusArea {
 	cursor: default;
 }
 
-statusArea > * {
+.statusArea > * {
 	position: relative;
 	display: inline-block;
 	width: 20px;
@@ -92,19 +92,18 @@ statusArea > * {
 	filter: brightness(0.8);
 }
 
-statusArea:hover > * {
+.statusArea:hover > * {
 	filter: brightness(1);
 	/* background-color: var(--hover-highlight-color); */
 	/* opacity: 0.5; */
 }
 
-statusArea > * {
+.statusArea > * {
 	margin: 0px 0px 0px 5px;
 	background-size: 90%;
 }
-statusArea > settings_arrow {
+.statusArea > down_icon {
 	display: inline-block;
-	background-image: url("../../img/white_down_arrow.png");
 	width: 15px;
 }
 

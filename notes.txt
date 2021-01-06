@@ -1,4 +1,7 @@
-Emoji Refrences:
+Hello! These are my notes
+Feel free to read them :)
+
+Emoji References:
 🔧 Fixed
 🎨 Redesigned
 🔨 Made
@@ -10,6 +13,7 @@ Emoji Refrences:
 💅 Polished
 🏁 Finished
 ⚒️ Started work
+🏷️ Renamed
 
 Detailed Log:
 2020-12-31 
@@ -34,6 +38,7 @@ Detailed Log:
 + Expanded the date object in main.js with a new function get that returns the date base on the parameters you gave it
 + Commented the code 
 + Added a "Press a key to unlock" text to the lockscreen. It will popup 3 seconds after lockscreen.lock() was executed
++ Added a option for a 12/24 hour clock in date.getTime()
 
 2021-01-04
 + Redesigned the 'status_area_container' (& Added a Connected item)
@@ -45,20 +50,50 @@ Detailed Log:
 + Made app title aligned to the center of the header
 * Found a bug on mozilla where the windows sometimes lose movability
 
+2021-01-5
++ Made the '[  OK  ]' text in boot precede the boot message
++ Renamed processBar to applist
+* Found a bug where the scrollbar is visible while booting/shuting down on Mozilla
+* Found a bug where appMenu disappears when clicked on search
++ Added a additionalBodyCss option in the app createData object
++ Fixed app title text not centering at all.
++ Fixed appMenu favorites css
++ Added a text editor app (notepad)
++ Made unfocused app windows more transparent
++ Converted powerMenu into a dropdown
++ Added fade animations when a menus are created/removed (Easily assignable animations in X.menus.'menu'.'someNewOptions')
++ Moved system.InitializeX() to X.initialize() together with and all other accompanying functions
++ Fixed Mozilla scrollbar issue
++ Now system.startup() is ran before X.lockScreen.lock. In fact system.startup() is the one that calls X.lockScreen.lock().
++ Added a new lockscreen status_area_menu with the options: brightness, volume: Power Options (Power Off, Restart)
++ Moved the html files to ./src/html/
 
 Todos:
-TODO: Make a terminal command handler in the system objects DONE
-    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } DONE
-    |--- Create the interpreter
-        |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
+DONE TODO: Make a terminal command handler in the system objects 
+DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
+DONE        |--- Create the interpreter
+In Progress |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
 TODO: Make the topbar height dynamic 
-TODO: Makesure everything 
-TODO: Add the transparent topbar with only the right menu to the login screen 
-TODO: Make the powerMenu a dropdown
-TODO: Create a prompt/message function in X.
-TODO: Make unfocused app windows more transparent
-TODO: Rename processBar to applist DONE
-TODO: Change the '[ OK ]' text in boot to preceed the boot message (do the same in shutdown) DONE
+DONE TODO: Add the transparent topbar with only the right menu to the login screen 
+DONE TODO: Make the powerMenu a dropdown
+TODO: Create a prompt/message function in the X object.
+DONE TODO: Make unfocused app windows more transparent
+DONE TODO: Rename processBar to applist 
+DONE TODO: Change the '[  OK  ]' text in boot to precede the boot message (do the same in shutdown) DONE
+DONE TODO: Add a text editor app (notepad)
+DONE TODO: Add fade animations when a menus are created or removed
+TODO: Rename app_menu -> Activities
+TODO: Make a notifications panel (activated when the time is clicked - topbar middle)
+TODO: Redesign the settings app.
+TODO: Expand the settings that don't need saving into cookies.
+TODO: Make a settings cookie storage system.
+TODO: Make a default file system object. And write user created files into a cookie/s.
+TODO: Somehow load javascript for the main page while booting in the boot page. That will make the boot not just aesthetic 
+TODO: Add better names to everything. Make them perfect
+TODO: Add max-height to app_title so it doesn't overflow into the header buttons
+TODO: Sleep...
 
 Bugs:
-FIXME: Mozila app_header mousemove not working.
+FIXME: Mozilla app_header mousemove not working sometimes.
+DONE FIXME: appMenu disappears when clicked on search  
+DONE FIXME: Scrollbar still visible when booting and shutting down on mozilla 

@@ -6,14 +6,15 @@
 
 html {
 	cursor: none;
+	overflow: hidden;
 }
-
 body {
-	background-color: black;
+	background-color: black !important;
 	overflow-y: scroll;
 	display: flex;
 	height: 100vh;
 	width: 100vw;
+	scrollbar-width: none !important;
 }
 
 h1 {

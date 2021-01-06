@@ -142,9 +142,8 @@
 		//     /\ Random delay for each boot message
 		document.querySelector("message_info").lastElementChild.scrollIntoView()
 	}
-
 	await delay(1000);
-	page.changePage("./X/linuxWeb_X.html");
+	page.changePage("./src/html/linuxWeb_X.html");
 
 	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
 	//Fuck you past i changed it!

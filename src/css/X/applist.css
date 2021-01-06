@@ -10,7 +10,7 @@ app_list {
 	position: absolute;
 	bottom: 0px;
 	left: 0px;
-	border-top: 2px solid var(--lighter-main-color);
+	border-top: 2px solid var(--main-color-b);
 	align-content: center;
 	height: 25px;
 	opacity: 1;
@@ -27,7 +27,7 @@ app_list > process {
 	text-overflow: ellipsis;
 	line-height: 25px;
 	font-size: 14px;
-	border-right: 1px solid var(--lighter-main-color);
+	border-right: 1px solid var(--main-color-b);
 	color: white;
 	font-weight: 100;
 	cursor: pointer;

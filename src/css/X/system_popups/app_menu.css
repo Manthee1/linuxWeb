@@ -39,14 +39,14 @@ app_menu_container input {
 	margin: auto;
 	border: none;
 	border-radius: 10px;
-	background-color: var(--lighter-main-color);
+	background-color: var(--main-color-b);
 }
 
 app_menu_container input::placeholder {
 	color: gray;
 }
 
-app_menu_container > app_list {
+app_menu_container > favorites {
 	position: absolute;
 	width: auto;
 	margin: auto;
@@ -61,7 +61,7 @@ app_menu_container > app_list {
 	padding: 5px 0px;
 	flex-flow: column wrap;
 }
-app_menu_container > app_list > app {
+app_menu_container > favorites > app {
 	/* text-align: center; */
 	text-overflow: ellipsis;
 	text-align: center;
@@ -80,10 +80,11 @@ app_menu_container > app_list > app {
 	transition: background-color 0.1s ease-in-out;
 }
 
-app_menu_container > app_list > app:hover {
+app_menu_container > favorites > app:hover {
 	background-color: var(--hover-highlight-color);
 }
-app_menu_container > app_list > app > * {
+app_menu_container > favorites > app > * {
 	height: 50px;
 	width: 50px;
+	filter: brightness(0.5);
 }

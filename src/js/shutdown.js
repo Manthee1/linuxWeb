@@ -75,7 +75,7 @@
 
     if (pageChangeTransmittedValue == 'restart') {
         await delay(1000)
-        page.changePage('./X/linuxWeb_boot.html')
+        page.changePage('./src/html/linuxWeb_boot.html')
     }
 })();
 

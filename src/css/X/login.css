@@ -177,3 +177,20 @@ login > input {
 	position: relative;
 	bottom: 100px;
 }
+
+login > topbar {
+	background-color: transparent;
+	border: none;
+}
+
+.login_status_area_menu {
+	z-index: 1;
+	background-color: var(--secondary-color);
+	/* display: flex; */
+	visibility: visible;
+}
+
+.login_status_area_menu dropdown {
+	background-color: var(--secondary-color);
+	filter: brightness(0.8);
+}

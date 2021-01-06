@@ -47,11 +47,11 @@ date = {
 					break;
 				case 'time-s': return date.getTime('hm', ':')
 					break;
-				case 'h': return new Date().getHours
+				case 'h': return new Date().getHours()
 					break;
-				case 'm': return new Date().getMinutes
+				case 'm': return new Date().getMinutes()
 					break;
-				case 's': return new Date().getSeconds
+				case 's': return new Date().getSeconds()
 					break;
 				default:
 					' '
@@ -68,11 +68,13 @@ date = {
 		return new Date(new Date().getDate()).toLocaleDateString();
 	},
 	//Returns the time. with your custom 'divider'. So ':' in '2020:6:9'
-	getTime: (x, divider = ":") => {
-		var [h, m, s] = new Date(new Date().getTime()).toLocaleTimeString().split(":");
-		returnTimes = x.split("");
-		return returnTimes.map(x => { if (eval(x).length == 1) return "0" + eval(x); else return eval(x) }).join(divider)
-			;
+	getTime: (x, divider = ":", clock12h = true) => {
+		let h, m, s, strEnd;
+		if (clock12h) [h, m, s, strEnd] = new Date().toLocaleTimeString().replaceAll(':', ' ').split(' ')
+		else[h, m, s] = new Date().toTimeString().split(" ")[0].split(':');
+		let returnTime = x.split("").map(x => { return eval(x); }).join(divider)
+		if (clock12h) returnTime += " " + strEnd
+		return returnTime;
 	},
 	//Self explanatory...
 	getDateAndTime: () => {
@@ -85,7 +87,7 @@ getJS = {
 	// Probably to waste your time reading this :)
 	LoadAllJsFromHead: () => {
 		return new Promise(done => {
-			document.head.querySelectorAll("script").forEach(async (x) => {
+			document.querySelectorAll("script").forEach(async (x) => {
 				// eval(await (await fetch(x.src)).text());
 				var script = document.createElement("script");
 				script.type = "text/javascript";

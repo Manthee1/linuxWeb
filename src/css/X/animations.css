@@ -1,0 +1,52 @@
+/** @format */
+
+@keyframes bottomFade {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		margin-top: 20px;
+	}
+}
+.bottomFadeIn {
+	animation: reverse bottomFade ease-in-out 0.2s;
+}
+
+.bottomFadeOut {
+	animation: bottomFade ease-in-out 0.2s;
+}
+
+@keyframes leftFade {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+		margin-left: 20px;
+	}
+}
+.leftFadeIn {
+	animation: reverse leftFade ease-in-out 0.2s;
+}
+
+.leftFadeOut {
+	animation: leftFade ease-in-out 0.2s;
+}
+
+@keyframes fade {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+.fadeIn {
+	animation: reverse fade ease-in-out 0.1s;
+}
+
+.fadeOut {
+	animation: forwards fade ease-in-out 0.1s;
+}

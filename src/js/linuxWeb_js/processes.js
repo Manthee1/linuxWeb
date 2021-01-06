@@ -48,7 +48,10 @@ processes = {
 
         }
         const pid = this.getNumberPid(element.id);
-        typeof (this.pid[pid]['onFocus']) == "function" && this.pid[pid].onFocus(); // If it has a onFocus then.... do that
+        typeof (this.pid[pid]['onFocus']) == "function" && setTimeout(() => {// If it has a onFocus then.... do that
+            //Timeout set in order for the focus to work at all
+            this.pid[pid].onFocus();
+        }, 1);
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
         if (this.pid[pid].minimized == true) {
             element.style.transform = "";
@@ -75,6 +78,7 @@ processes = {
         headerBottomColor: "inherit",
         bodyBorderSize: "inherit",
         padding: "inherit",
+        additionalBodyCss: "",
         opacity: 1,
         HTML: String(),
         height: 300,
@@ -172,7 +176,6 @@ processes = {
         appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
         position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2)
         position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2)
-        console.log(appCreateData.height, appCreateData.width, position);
         //Then styles are used here
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
@@ -186,7 +189,8 @@ processes = {
 			height:${(appCreateData.fullHeight && "100%") || "auto"};
 			width:${(appCreateData.fullWidth && "100%") || "auto"};
 			opacity: ${appCreateData.opacity};
-			padding: ${appCreateData.padding};
+            padding: ${appCreateData.padding};
+            ${appCreateData.additionalBodyCss}
         `;
         let headerStyles = `
             color: ${appCreateData.titleColor};
@@ -197,7 +201,7 @@ processes = {
         appsLayer.innerHTML += `
 			<app_container onmousedown="processes.bringToTop(this,event)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
-					${appCreateData.title}
+					<app_title onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')">${appCreateData.title}</app_title>
 					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
 					<app_maximize onclick="processes.maximize('${stringyPID}')"><square_icon></square_icon></app_maximize>
 					<app_exit onclick="processes.remove('${stringyPID}')"><x_icon></x_icon></app_exit>
@@ -253,7 +257,7 @@ processes = {
     //Handles window movement. so yeah.
     processMouseDownHandler: function (event, stringyPID) {
         pid = this.getNumberPid(stringyPID);
-        if (event.target.tagName != "APP_HEADER" || this.pid[pid].maximized) return false
+        if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
         let process = this.pid[pid];
         // console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
         process.originalOffsetY = event.offsetY;
@@ -294,7 +298,6 @@ processes = {
                 e.preventDefault()
                 original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
                 original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
-                console.log(original_width, original_height);
                 original_x = element.getBoundingClientRect().left;
                 original_y = element.getBoundingClientRect().top;
                 original_mouse_x = e.pageX;
