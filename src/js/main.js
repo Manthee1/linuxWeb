@@ -2,17 +2,25 @@ htmlEl = document.querySelector("html");
 
 page = {
 	//I mean... Simple i think. Chang the page. Yeah.... Thats all. You can keep scrolling now.
-	changePage: async (pageUrl, x = null) => {
+	changePage: async (pageUrl, doOnComplete = false, executeOnComplete = true) => {
 		fetch(pageUrl).then(pageRequest => {
 			if (pageRequest.ok) {
 				(async () => {
 					htmlEl.style = "background:black;";
-					pageHTML = await pageRequest.text();
+					let pageHTML = await pageRequest.text();
 					htmlEl.style = "background:black; visibility: hidden";
+					executeOnComplete && (htmlEl.style = "background:black; visibility: hidden !important;");
 					htmlEl.innerHTML = await pageHTML;
-					// document.body.innerHTML += "<hideEverythingUntilCssLoads style='margin:0px;padding:0px;width:100vw;height:100vh;z-index:1000000;background: black;'></hideEverythingUntilCssLoads>"
-					await getJS.LoadAllJsFromHead() != 'dead';
-					pageChangeTransmittedValue = x;
+					if (!executeOnComplete || !doOnComplete) { eval(doOnComplete) };
+					await (await page.loadAllJsFromHtml());
+					if (doOnComplete && executeOnComplete) {
+						eval(doOnComplete);
+						setTimeout(() => {
+							htmlEl.style = "";
+						}, 100);
+					} else htmlEl.style = "";
+
+
 				})();
 			} else {
 				console.error(`The specified page does not exists! (${pageUrl})`);
@@ -20,7 +28,55 @@ page = {
 			}
 		});
 	},
-};
+
+	// Why am i commenting on function that are very easy to understand. IDK. 
+	// Probably to waste your time reading this :)
+	loadJs: (jsSrc) => {
+		return new Promise(resolve => {
+			(async () => {
+				try {
+					let jsCode = await (await fetch(jsSrc)).text()
+					eval(await jsCode);
+				} catch (e) {
+					console.error(e, jsSrc);
+					eval(jsCode)
+				}
+				resolve()
+			})()
+		});
+	},
+
+	loadAllJsFromHtml: () => {
+		let scripts = document.querySelectorAll("script");
+		return new Promise(resolve => {
+			(async () => {
+				for (const key in scripts) {
+					let x = scripts[key]
+					if (x.src) {
+						await page.loadJs(x.src)
+					}
+				}
+				resolve();
+			})()
+		});
+	}
+}
+
+//No one actually knows what this one does. Very mysterious this one.
+//Well hopefully it doesn't matter
+//Oh btw. It's initiated with 'await' - remember that
+function delay(timeDelay) {
+
+	timeDelay = timeDelay || 2000;
+	return new Promise(resolve => {
+		setTimeout(() => {
+			resolve();
+		}, timeDelay);
+	});
+}
+
+
+
 date = {
 	//Basically converts the 'options' into a date/time
 	get: (options, divider = " ") => {
@@ -82,33 +138,4 @@ date = {
 	},
 };
 
-getJS = {
-	// Why am i commenting on function that are very easy to understand. IDK. 
-	// Probably to waste your time reading this :)
-	LoadAllJsFromHead: () => {
-		return new Promise(done => {
-			document.querySelectorAll("script").forEach(async (x) => {
-				// eval(await (await fetch(x.src)).text());
-				var script = document.createElement("script");
-				script.type = "text/javascript";
-				script.src = x.src;
-				document.head.appendChild(script);
-				done()
-			});
-		});
-	},
-};
 
-//No one actually knows what this one does. Very mysterious this one.
-//Well hopefully it doesn't matter
-//Oh btw. It's initiated with 'await' - remember that
-
-function delay(timeDelay) {
-
-	timeDelay = timeDelay || 2000;
-	return new Promise(done => {
-		setTimeout(() => {
-			done();
-		}, timeDelay);
-	});
-}

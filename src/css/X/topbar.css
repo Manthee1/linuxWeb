@@ -27,14 +27,14 @@ topbar > left {
 	text-align: left;
 }
 
-topbar > left > app_menu_button {
+topbar > left > activities_menu_button {
 	display: flex;
 	transition: filter ease-in-out 0.05s;
 	height: 100%;
 	padding: 0px 10px;
 }
 
-/* app_menu_button_icon {
+/* activities_menu_button_icon {
 	display: inline-block;
 	background-color: transparent;
 	border: 2px var(--light-color) solid;

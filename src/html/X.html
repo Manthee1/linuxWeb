@@ -13,11 +13,11 @@
 	<link rel="stylesheet" type="text/css" href="./src/css/X/icons.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/topbar.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/applist.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/cta.css" />
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/context_menu.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/status_area.css" />
-	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/app_menu.css" />
-	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/power_menu.css" />
+	<link rel="stylesheet" type="text/css" href="./src/css/X/system_popups/activities_menu.css" />
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/apps_layer.css" />
 	<link rel="stylesheet" type="text/css" href="./src/css/X/apps/terminal.css" />
@@ -26,11 +26,7 @@
 
 	<link rel="stylesheet" type="text/css" href="./src/css/X/login.css" />
 
-	<script src="./src/js/libraries/sha256.js"></script>
-	<script src="./src/js/libraries/jsHelp.js"></script>
-	<script src="./src/js/main.js"></script>
-
-
+	<script src="./src/js/linuxWeb_js/X.js"></script>
 
 </head>
 
@@ -40,7 +36,7 @@
 		<login_time>
 			<time></time>
 			<date></date>
-			<p>Press a key to unlock</p>
+			<p>Click or Press a key to unlock</p>
 
 		</login_time>
 		<form
@@ -75,9 +71,9 @@
 		<!-- Title bar -->
 		<topbar>
 			<left>
-				<app_menu_button>
+				<activities_menu_button>
 					Activities
-				</app_menu_button>
+				</activities_menu_button>
 			</left>
 			<middle>
 				<dateTime></dateTime>
@@ -90,21 +86,17 @@
 				</statusArea>
 			</right>
 		</topbar>
-		<!-- Process bar -->
+		<!-- App List Bar -->
 		<app_list></app_list>
-		<!-- Time Menu -->
 
 		<!-- Apps Layer -->
 		<apps_layer> </apps_layer>
 
-		<system_menu_container>
-		</system_menu_container>
+		<system_menu_container></system_menu_container>
 		<system_exit_animation_menu_container></system_exit_animation_menu_container>
 	</linux>
+	<overlay_container></overlay_container>
 </body>
-<script src="./src/js/linuxWeb_js/system.js"></script>
-<script src="./src/js/linuxWeb_js/apps.js"></script>
-<script src="./src/js/linuxWeb_js/processes.js"></script>
-<script src="./src/js/linuxWeb_js/X.js"></script>
+
 
 </html>

@@ -4,7 +4,7 @@
     await delay(1000);
 
 
-    timeMax = 5000; //ms
+    let timeMax = 5000; //ms
 
     shutdownText = [
         "Started Spewing fake shutdown messages",
@@ -73,9 +73,12 @@
         //     /\ Random delay for each boot message
     }
 
-    if (pageChangeTransmittedValue == 'restart') {
+    typeof afterShutdown != "undefined" && console.log(afterShutdown);
+
+    if (typeof afterShutdown != "undefined" && afterShutdown == 'restart') {
+        afterShutdown = "";
         await delay(1000)
-        page.changePage('./src/html/linuxWeb_boot.html')
+        page.changePage('./src/html/boot.html')
     }
 })();
 

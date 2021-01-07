@@ -26,11 +26,11 @@ apps_layer > *:last-child {
 app_container {
 	position: absolute;
 	display: flex;
-	overflow: hidden;
+	overflow: visible;
 	flex-direction: column;
 	/* background-color: var(--main-color); */
-	width: 500px;
-	height: 300px;
+	width: 600px;
+	height: 400px;
 	min-width: 100px;
 	min-height: 100px;
 	border: var(--main-color) 1px solid;
@@ -42,58 +42,84 @@ app_container {
 
 app_header {
 	display: flex;
-	flex-flow: column nowrap;
+	/* flex-flow: column nowrap; */
+	flex-flow: row nowrap;
 	text-align: center;
 	width: auto;
 	font-size: 14px;
-	height: 20px;
+	flex: 0 0 auto;
+	height: 30px;
 	padding: 2px 0px;
 	padding-left: 5px;
 	text-overflow: ellipsis;
 	background-color: var(--main-color);
 }
 
-/* app_title {
-	display: inline;
-	margin-left: 5px;
-} */
+app_header > app_title {
+	display: inline-block;
+	margin: auto;
+
+	width: 100%;
+	position: absolute;
+	height: inherit;
+	top: 0px;
+	left: 0px;
+	line-height: 250%;
+	width: calc(100% - 140px);
+	padding-left: 70px;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	/* transform: translateY(6px); */
+}
 
 app_header > *:not(app_title) {
+	position: relative;
+	margin: auto 3px;
+	margin-left: 3px;
+	top: 0px;
+	flex: 0 0 auto;
 	display: flex;
-	width: 12px;
-	height: 12px;
-	background-color: var(--main-color-b);
+	height: 20px;
+	width: auto;
+	min-width: 20px;
+	background-color: transparent;
+	/* position: absolute; */
 	border-radius: 50%;
-	position: absolute;
-	right: 5px;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	/* margin: auto; */
 	top: 0px;
 	justify-self: center;
 	align-self: center;
 	opacity: 0.8;
-	line-height: 12px;
-	transform: translateY(50%);
+	/* transform: translateY(50%); */
 }
 app_header > *:not(app_title):hover {
 	opacity: 1;
-	filter: brightness(1.5);
+	background-color: var(--main-color-b);
 }
-
 app_exit:hover {
-	background-color: rgb(255, 90, 90);
+	background-color: var(--light-red-color) !important;
 	filter: none;
 }
+
 app_maximize {
-	right: 25px !important;
+	/* right: 30px !important; */
 }
 
 app_minimize {
-	right: 45px !important;
+	/* right: 55px !important; */
+	margin-left: auto !important;
 }
 
-app_header > * > * {
+app_header > *:not(app_title) > * {
 	background-position: center;
-	height: 12px;
-	width: 12px;
+	height: 100%;
+	width: 100%;
 	background-size: 6px;
 	padding: 0px;
 	margin: 0px;

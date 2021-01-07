@@ -151,7 +151,7 @@ processes = {
         if (apps[appName].createData.onlyOneInstanceAllowed && this.runningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
             this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
-            X.prompt.create(message, 'warn');
+            X.cta.create(message, 'warn');
             // console.warn(message)
             return false
         }
@@ -257,21 +257,26 @@ processes = {
     //Handles window movement. so yeah.
     processMouseDownHandler: function (event, stringyPID) {
         pid = this.getNumberPid(stringyPID);
-        if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
         let process = this.pid[pid];
+        // if (event.target.tagName == "RESIZE_POINT") {
+        //     document.body.setAttribute('onmousemove', null)
+        //     process.getProcessElementHeader().setAttribute('onmouseup', null)
+        // }
+        if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
         // console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
-        process.originalOffsetY = event.offsetY;
-        process.originalOffsetX = event.offsetX;
+        process.originalOffsetY = event.layerY;
+        process.originalOffsetX = event.layerX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
         process.getProcessElementHeader().onmouseup = () => {
-            document.body.onmousemove = null;
-            process.getProcessElementHeader().onmouseup = null;
+            document.body.setAttribute('onmousemove', null)
+            process.getProcessElementHeader().setAttribute('onmouseup', null)
         }
     },
 
     processMouseMoveHandler: function (event, process) {
         // console.log(event, process);
         // console.log(event, pid);
+
         var y = event.clientY - process.originalOffsetY;
         var x = event.clientX - process.originalOffsetX;
         process.getProcessElement().style.top = y + "px";
@@ -335,6 +340,7 @@ processes = {
                 }
             }
             function stopResize() {
+                document.body.setAttribute('onmousemove', null)
                 window.removeEventListener('mousemove', resize)
             }
         })

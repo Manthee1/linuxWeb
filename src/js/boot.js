@@ -4,9 +4,11 @@
 	//Request the build.ver file which has the current build version in it...
 	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
 	await delay(1000);
+	let addMessage = message => document.querySelector("message_info").innerHTML += `<message><span>[ &nbsp; &nbsp; OK &nbsp; &nbsp; ]</span> ${message}</message>`;
 
-	timeMax = 1000; //ms
-	var bootText = [
+	let timeMax = 1000; //ms
+	let bootText = [
+		"Started Loading JavaScript from GitHub...",
 		"Created slice system-getty.slice.",
 		"Created slice system-modprobe.slice.",
 		"Created slice system-serial\x2dgetty.slice.",
@@ -133,22 +135,45 @@
 		"Reached target Multi-User System.",
 		"Reached target Graphical Interface.",
 	];
-	// Loop thorough the messages and display one, wait, display another, wait...
+	jsSources = [
+		"./src/js/libraries/sha256.js",
+		"./src/js/libraries/jsHelp.js",
+		"./src/js/linuxWeb_js/system.js",
+		"./src/js/linuxWeb_js/apps.js",
+		"./src/js/linuxWeb_js/processes.js",
+	]
+	retrieveMainJs = async (x = true) => {
+		return new Promise(resolve => {
+			(async () => {
+				for (const jsSrc of jsSources) {
+					x && addMessage(`Started retrieving ${jsSrc} ...`);
+					await page.loadJs(jsSrc)
+					x && addMessage(`Retrieved ${jsSrc} ...`);
+				}
+				resolve();
+			})()
+		})
 
-	for (const key in bootText) {
-		text = bootText[key]
-		document.querySelector("message_info").innerHTML += `<message><span>[ &nbsp; &nbsp; OK &nbsp; &nbsp; ]</span> ${text}</message>`;
+
+	}
+	await retrieveMainJs()
+
+	// Loop thorough the messages and display one, wait, display another, wait...
+	// let retrieveJs = page.loadAllJsFromHtml()
+	for (const text of bootText) {
+		addMessage(text);
 		await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (bootText.length * 2))) || Math.random() * (timeMax / (bootText.length * 2)));
 		//     /\ Random delay for each boot message
 		document.querySelector("message_info").lastElementChild.scrollIntoView()
 	}
+	// await retrieveJs
 	await delay(1000);
-	page.changePage("./src/html/linuxWeb_X.html");
+	page.changePage("./src/html/X.html", 'system.startup()', true);
 
 	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
 	//Fuck you past i changed it!
 
-	// await (await (htmlEl.innerHTML = await loginHtml)) && getJS.LoadAllJsFromHead();
+	// await (await (htmlEl.innerHTML = await loginHtml)) && page.loadAllJsFromHtml();
 })();
 
 

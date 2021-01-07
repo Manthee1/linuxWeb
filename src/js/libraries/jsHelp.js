@@ -172,7 +172,7 @@ Metacharacters\n
 \\\\r — Carriage return character\n
 \\\\t — Tab character\n
 \\\\v — Vertical tab character\n
-\\\\xxx — The character specified by an octal number xxx\n
+\\\\xxx — The character specified by an opromptl number xxx\n
 \\\\xdd — Character specified by a hexadecimal number dd\n
 \\\\uxxxx — The Unicode character specified by a hexadecimal number xxxx\n
 \n
@@ -233,8 +233,8 @@ Math Methods\n
 abs(x) — Returns the absolute (positive) value of x\n
 acos(x) — The arccosine of x, in radians\n
 asin(x) — Arcsine of x, in radians\n
-atan(x) — The arctangent of x as a numeric value\n
-atan2(y,x) — Arctangent of the quotient of its arguments\n
+atan(x) — The arpromptngent of x as a numeric value\n
+atan2(y,x) — Arpromptngent of the quotient of its arguments\n
 ceil(x) — Value of x rounded up to its nearest integer\n
 cos(x) — The cosine of x (x is in radians)\n
 exp(x) — Value of Ex\n

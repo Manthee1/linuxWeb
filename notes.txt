@@ -7,6 +7,7 @@ Emoji References:
 🔨 Made
 🐜 Fixed a bug
 🔄 Changed 
+⤵️ Converted 
 🔼 Updated
 🧹 Reorganized/Revamped
 ➕ Added
@@ -68,6 +69,23 @@ Detailed Log:
 + Added a new lockscreen status_area_menu with the options: brightness, volume: Power Options (Power Off, Restart)
 + Moved the html files to ./src/html/
 
+2021-01-6
++ Fixed issues with the terminal header. (cursor getting stuck between resize and move)
++ Mozilla app_header mousemove not working sometimes
++ Added max-width to app_title
++ Began work on the CTA
++ Made the js loading system synchronous i think. All and all more reliable
++ Finished CTA functionality
+
+2021-01-7
++ Styled the CTA
++ Renamed app_menu -> activities
++ Added a search icon to the activities search input *That still doesn't work.
++ Fixed a bug: event.path undefined on Mozilla. (They use event.composePath())
++ Made power options trigger a CTA that asks you "Are you sure".
++ Made the main scripts except for X.js load while booting
++ Moved the actual power functions to the system object
+
 Todos:
 DONE TODO: Make a terminal command handler in the system objects 
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
@@ -75,25 +93,33 @@ DONE        |--- Create the interpreter
 In Progress |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
 TODO: Make the topbar height dynamic 
 DONE TODO: Add the transparent topbar with only the right menu to the login screen 
-DONE TODO: Make the powerMenu a dropdown
-TODO: Create a prompt/message function in the X object.
+DONE TODO: Create a CTA/message function in the X object.
+DONE TODO: Make the powerMenu a dropdown.
 DONE TODO: Make unfocused app windows more transparent
 DONE TODO: Rename processBar to applist 
 DONE TODO: Change the '[  OK  ]' text in boot to precede the boot message (do the same in shutdown) DONE
 DONE TODO: Add a text editor app (notepad)
 DONE TODO: Add fade animations when a menus are created or removed
-TODO: Rename app_menu -> Activities
+DONE TODO: Rename app_menu -> activities_menu
 TODO: Make a notifications panel (activated when the time is clicked - topbar middle)
 TODO: Redesign the settings app.
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Make a settings cookie storage system.
 TODO: Make a default file system object. And write user created files into a cookie/s.
-TODO: Somehow load javascript for the main page while booting in the boot page. That will make the boot not just aesthetic 
+DONE TODO: Somehow load javascript for the main page while booting in the boot page. That will make the boot not just aesthetic 
 TODO: Add better names to everything. Make them perfect
-TODO: Add max-height to app_title so it doesn't overflow into the header buttons
-TODO: Sleep...
+DONE TODO: Add max-width to app_title so it doesn't overflow into the header buttons
+DONE TODO: Sleep...
+DONE TODO: Make the login.showForm() also trigger with an onclick
+DONE TODO: Add a better js loading system (synchronous i think)
+TODO: Separate X.js into components because the file is getting too long
+DONE TODO: Make the power off/shutdown functions invoke a CTA.
+DONE TODO: Style the CTA
+DONE TODO: Fix logout().
 
 Bugs:
-FIXME: Mozilla app_header mousemove not working sometimes.
+DONE FIXME: Mozilla app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  
 DONE FIXME: Scrollbar still visible when booting and shutting down on mozilla 
+DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
+DONE FIXME: Mozilla event.path undefined.

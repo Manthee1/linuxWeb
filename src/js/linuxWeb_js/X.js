@@ -49,18 +49,18 @@ X = {
                 })
             },
         },
-        appMenu: {
+        activities: {
             listenerType: "click",
-            toggleElement: document.querySelector('app_menu_button'),
+            toggleElement: document.querySelector('activities_menu_button'),
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 200, //ms 
-            elementTag: "app_menu_container",
+            elementTag: "activities_menu_container",
 
             getHTML: function () {
                 let html = `
-				<app_menu_container>
-					<app_search><input placeholder='Type to search' type='search'></app_search>
+				<activities_menu_container>
+					<app_search><search_icon></search_icon><input placeholder='Type to search' type='search'></app_search>
 					<favorites>
 					${Object.entries(apps).map(x => {
                     let appIcon;
@@ -70,13 +70,15 @@ X = {
                     return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');">${appIcon}</app>`
                 }).join('')}
 			</favorites>
-				</app_menu_container>
+				</activities_menu_container>
 		`
                 return html;
             },
 
             closeCondition: function (event) {
-                return event.target.tagName != "INPUT"
+                !X.general.elementIsInEventPath(event, document.querySelector("activities_menu_container"))
+
+
             },
 
         },
@@ -109,15 +111,14 @@ X = {
                         <item onclick='X.restart();'><span>Restart</span></item>
                         <item onclick='X.shutdown();'><span>Power Off</span></item>
                         <hr>
-                        <item onclick='X.logout();'><span>Log out</span></item>
+                        <item onclick='X.logout();'><span>Log Out</span></item>
                     </dropdown>
                     </dropdown_item>
 
         </status_area_container>`;
             },
             closeCondition: function (event) {
-                return !event.path.includes(document.querySelector("status_area_container"))
-                // return event.target.tagName != "DROPDOWN_ITEM"
+                !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
 
@@ -150,8 +151,7 @@ X = {
         </status_area_container>`;
             },
             closeCondition: function (event) {
-                return !event.path.includes(document.querySelector("status_area_container"))
-                // return event.target.tagName != "DROPDOWN_ITEM" && event.target.tagName != "ITEM" && event.target.tagName != "TEXT"
+                !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
     },
@@ -224,7 +224,7 @@ X = {
 
     general: {
         dropdown: {
-            toggle: function (element) {
+            toggle: (element) => {
                 if (!system.global.elementExists(element)) return false
                 let dropdownElement = element.querySelector('dropdown');
                 if (dropdownElement.style.height == "") {
@@ -238,6 +238,10 @@ X = {
                 }
             }
         },
+        elementIsInEventPath: (event, element) => {
+            clickPath = event.path || event.composedPath() //event.path is for chrome and event.composedPath() is mozilla firefox
+            return clickPath.includes(element)
+        }
     },
 
 
@@ -292,10 +296,13 @@ X = {
                 this.loginContainer.style = "opacity:1;"
                 document.querySelector('body>linux').style = 'visibility:hidden'
             }, 20);
+            setTimeout(() => {
+                document.body.setAttribute('onclick', `X.lockScreen.showForm(event)`)
+                document.body.setAttribute('onkeydown', `X.lockScreen.showForm(event)`)
 
-
-            document.body.setAttribute('onkeyup', `X.lockScreen.showForm(event)`)
+            }, 1000);
         },
+
 
         showForm: event => {
             let passwordInput = X.lockScreen.form.querySelector("input[type='password']");
@@ -309,7 +316,8 @@ X = {
                 X.lockScreen.loginTime.style = 'display:none'
             }, 500);
             // Removes the onkeyup attribute so this is not executed more than once
-            document.body.removeAttribute('onkeyup');
+            document.body.removeAttribute('onclick')
+            document.body.removeAttribute('onkeydown');
 
         },
         //Self explanatory.
@@ -338,59 +346,82 @@ X = {
             }
         }
     },
-    prompt: {
-        //Not finished
-        create: function (message, type) {
-            return false;
-            switch (type) {
-                case "warn":
-                    break;
-                case "error":
-                    break;
-                case "info":
-                    break;
-                case "value":
-                    break;
-                case "input":
-                    break;
-                default:
-                    break;
+    cta: function (title = "cta title :)", message = "This is a generic cta message", buttons = [["OK", true]]) {
+        //Has to be invoked with await to work correctly
+        X.clearOpenMenus();//We remove any open menus
+
+        // buttons: {["buttonText","returnValue"],["Cancel",false]}
+        // returnValue is what will be return when the user clicks that button.
+        if (buttons == [] || typeof buttons != 'object') return false;
+        if (typeof buttons[0] != "object") buttons = [...buttons];
+        let buttonsHTML = buttons.map(x => { return `<input type='button' value='${x[0]}'>` }).join('')
+
+        let ctaHTML = `
+            <overlay>
+                <cta>
+                    <cta_title>${title}</cta_title>
+                    <cta_message>${message}</cta_message>
+                    <cta_buttons>${buttonsHTML}</cta_buttons>
+                </cta>
+            </overlay>
+            `
+        overlayContainer.innerHTML += ctaHTML;
+        document.querySelector("cta > cta_buttons > input").focus()
+        buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
+        return new Promise(resolve => {
+            for (const i in buttons) {
+                buttonsInDOM[i].addEventListener('click', async event => {
+                    X.overlay.remove()
+                    resolve(buttons[i][1]);
+                })
             }
-
-        },
+        });
 
     },
-    shutdown: function () {
-        page.changePage('./src/html/linuxWeb_shutdown.html');
-    },
-    logout: function () {
-        page.changePage('./src/html/linuxWeb_X.html');
-    },
-    restart: function () {
-        page.changePage('./src/html/linuxWeb_shutdown.html', 'restart');
-    },
 
-    powerMenu: {
-        //Displays the power menu (* Im thinking of getting rid of this and replace it with a dropdown menu in the statusArea)
-        show: function () {
-            X.clearOpenMenus();
-            systemMenuContainer.innerHTML += `
-                <overlay>
-                    <power_menu>
-                    <options>
-                        <div><power_off_icon  onclick='X.shutdown();'></power_off_icon><span>Power Off</span></div>
-                        <div><logout_icon  onclick='X.logout();'></logout_icon><span>Log out</span></div>
-                        <div><restart_icon onclick='X.restart();' ></restart_icon><span>Restart</span></div>
-                    </options>
-                        <cancel_button onclick='X.overlay.remove()'>Cancel</cancel_button>
-                        </power_menu>
-                </overlay>
-            `;
 
-        }
+
+    shutdown: async function () {
+        let shutdownTimeout = setTimeout(() => {
+            system.shutdown()
+        }, 10000);
+        let shutdowncta = X.cta("Power Off", "This 'thing' Will turn off in 10 seconds!", [["Cancel", false], ["Power Off", true]]);
+        if (await shutdowncta) system.shutdown()
+        clearTimeout(shutdownTimeout);
+
+    },
+    logout: async function () {
+        let logoutTimeout = setTimeout(() => {
+            system.logout();
+        }, 10000);
+        let logoutcta = X.cta("Log Out", "You will be logged out in 10 seconds!", [["Cancel", false], ["Log Out", true]]);
+        if (await logoutcta) system.logout();
+        clearTimeout(logoutTimeout);
+    },
+    restart: async function () {
+        let restartTimeout = setTimeout(() => {
+            system.restart()
+        }, 10000);
+        let restartcta = X.cta("Restart", "This 'thing' Will restart in 10 seconds!", [["Cancel", false], ["Restart", true]]);
+        if (await restartcta) system.restart()
+        clearTimeout(restartTimeout);
     },
     //initializes the X object 
     initialize: function () {
+
+        linux = document.querySelector("body > linux");
+        desktop = document.querySelector("linux > desktop");
+        appsLayer = document.querySelector("linux > apps_layer");
+        appList = document.querySelector("linux > app_list");
+        systemMenuContainer = document.querySelector("system_menu_container");
+        systemExitAnimationMenuContainer = document.querySelector("system_exit_animation_menu_container");
+        overlayContainer = document.querySelector("body > overlay_container");
+
+        Object.entries(X.services).forEach(xObj => {
+            let [xObjName, xObjValue] = [xObj[0], xObj[1]];
+            typeof xObjValue.onStart == 'function' && xObjValue.onStart()
+        })
+
         X.menus.openMenuClicked = false
         this.openMenu = []
         // Execute all the enable() methods in the X objects
@@ -450,6 +481,8 @@ X = {
             }
             X.clearOpenMenus()
         });
+        console.log("X Initialize");
+        X.lockScreen.lock();
 
     },
     //Clear all open menus.
@@ -480,6 +513,7 @@ X = {
 
     createMenu: function (menuUIData, x, y) {
         // console.log(menuUIData, x, y);
+        let elHTML
         if (menuUIData.createOnMousePosition) elHTML = menuUIData.getHTML(x, y);
         else elHTML = menuUIData.getHTML()
 
@@ -493,10 +527,5 @@ X = {
     }
 }
 //Executes onStart for every X.[service]
-Object.entries(X.services).forEach(xObj => {
-    let [xObjName, xObjValue] = [xObj[0], xObj[1]];
-    typeof xObjValue.onStart == 'function' && xObjValue.onStart()
-})
-system.startup()
 
 

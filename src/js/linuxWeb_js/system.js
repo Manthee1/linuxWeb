@@ -29,20 +29,14 @@ system = {
         X.services.volume.update();
     },
     startup: function () {//  Important: Should only be run once
-
         if (this.started) return false;
         this.started = true;
-        systemMenuContainer = document.querySelector("system_menu_container");
-        systemExitAnimationMenuContainer = document.querySelector("system_exit_animation_menu_container");
-        appsLayer = document.querySelector("apps_layer");
-        desktop = document.querySelector("desktop");
-        appList = document.querySelector("app_list");
         //Add system.build variable
         (async () => {
             system.build = await (async () => { return (await fetch("./build.ver")).text() })()
         })() // Get build version
         X.initialize();
-        X.lockScreen.lock();
+
         X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
 
         //WHen the body is clicked all popup's get closed
@@ -79,7 +73,11 @@ system = {
         methods: {
 
         }
-    }
+    },
+
+    shutdown: () => page.changePage('./src/html/shutdown.html'),
+    logout: () => page.changePage('./src/html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+    restart: () => page.changePage('./src/html/shutdown.html', "afterShutdown='restart'", false),
 }
 
 
