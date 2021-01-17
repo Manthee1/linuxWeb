@@ -1,0 +1,26 @@
+{
+  "name": "linuxweb",
+  "version": "0.1.0",
+  "description": "Linux... but simulated on your web browser.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Manthee1/linuxWeb.git"
+  },
+  "keywords": [
+    "linux",
+    "simulated",
+    "web",
+    "javascript",
+    "project"
+  ],
+  "author": "Manthee1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Manthee1/linuxWeb/issues"
+  },
+  "homepage": "https://github.com/Manthee1/linuxWeb#readme"
+}
