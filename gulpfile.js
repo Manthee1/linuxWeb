@@ -20,11 +20,11 @@ function compileSass(cb) {
 }
 
 function compilePug(cb) {
-    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist)).pipe(browserSync.stream());
+    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/html')).pipe(browserSync.stream());
 }
 
 function compileJs(cb) {
-    return gulp.src(dir.js).pipe(concat('main.js')).pipe(uglify()).pipe(gulp.dest(dist + '/js')).pipe(browserSync.stream())
+    return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(dist + '/js')).pipe(browserSync.stream())
 }
 
 function watch() {
