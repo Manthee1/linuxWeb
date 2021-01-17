@@ -1,0 +1,91 @@
+/**
+ * /* APP MENU
+ *
+ * @format
+ */
+
+activities_menu_container
+position: absolute
+display: flex
+flex-flow: column wrap
+top: 27px
+left: 0px
+padding: 10px 0px
+width: 100vw
+height: calc(100vh - 45px)
+overflow-y: none
+opacity: 0.9
+	/* height: auto; */
+background-color: #00000080
+border: 1px var(--secondary-color) solid
+
+activities_menu_container > app_search
+margin-top: 30px
+flex: 0 0 auto
+display: flex
+margin: 30px auto
+justify-content: center
+
+app_search > *
+margin: auto 0px
+
+app_search > search_icon
+flex: 0 0 auto
+width: 20px
+height: 20px
+margin-right: -30px
+
+app_search > input
+width: 300px
+font-size: 15px
+padding: 5px
+padding-left: 35px
+color: var(--light-color)
+text-align: left
+border: none
+border-radius: 50px
+background-color: var(--main-color-b)
+
+activities_menu_container input::placeholder
+color: var(--light-color)
+
+activities_menu_container > favorites
+position: absolute
+width: auto
+margin: auto
+display: flex
+	/* height: 1px; */
+top: 50%
+transform: translate(0, -50%)
+border: 2px solid var(--general-border-color)
+border-left: none
+border-radius: 0px 10px 10px 0px
+background: var(--main-color)
+padding: 5px 0px
+flex-flow: column wrap
+
+activities_menu_container > favorites > app
+	/* text-align: center; */
+text-overflow: ellipsis
+text-align: center
+color: var(--light-color)
+font-size: 40px
+height: 50px
+width: 50px
+	/* background-color: transparent; */
+display: inline-block
+	/* width: calc(100% - 20px); */
+border-radius: 10px
+flex: 1 1 auto
+padding: 15px
+margin: 5px 10px
+cursor: pointer
+transition: background-color 0.1s ease-in-out
+
+activities_menu_container > favorites > app:hover
+background-color: var(--hover-highlight-color)
+
+activities_menu_container > favorites > app > *
+height: 50px
+width: 50px
+filter: brightness(0.5)

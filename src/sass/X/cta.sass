@@ -1,0 +1,36 @@
+overlay > cta
+background-color: var(--main-color-b)
+display: flex
+flex-flow: column nowrap
+padding: 0px
+margin: auto
+min-width: 440px
+border-radius: 10px
+padding-top: 10px
+overflow: hidden
+
+overlay > cta > *
+margin: 5px 30px
+display: flex
+width: 100%
+
+overlay > cta > cta_title
+font-size: 35px
+
+overlay > cta > cta_buttons
+margin: 0px
+margin-top: 30px
+
+overlay > cta > cta_buttons > input
+position: relative
+flex: 1 1 auto
+padding: 8px
+height: 50px
+	/* border-radius: 5px; */
+border: none
+	/* border: 1px solid var(--main-color-a); */
+border-top: 2px solid var(--main-color-a)
+background-color: var(--main-color-b)
+
+overlay > cta > cta_buttons > input:hover
+filter: brightness(1.2)
