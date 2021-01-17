@@ -6,16 +6,18 @@ Emoji References:
 🎨 Redesigned  
 🔧 Fixed (*A major fix*)  
 🐜 Fixed (*A minor fix*)  
-🏷️ Renamed  
 🔄 Changed  
 ⤵️ Converted  
 🔼 Updated  
 🧹 Reorganized/Revamped  
 ➕ Added  
 ➖ Removed  
+📦 Moved  
+🏷️ Renamed  
 💅 Polished  
 ⚒️ Started work  
 🏁 Finished  
+
 
 Detailed Log:
 2020-12-31 
