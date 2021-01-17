@@ -151,7 +151,6 @@ processes = {
         if (apps[appName].createData.onlyOneInstanceAllowed && this.runningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
             this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
-            X.cta.create(message, 'warn');
             // console.warn(message)
             return false
         }
