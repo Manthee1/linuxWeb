@@ -1,0 +1,68 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  title linuxWeb
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  link(rel='stylesheet' type='text/css' href='./src/css/main.css')
+  
+  link(rel='stylesheet' type='text/css' href='./src/css/X/animations.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/icons.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/topbar.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/applist.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/cta.css')
+
+  link(rel='stylesheet' type='text/css' href='./src/css/X/system_popups/context_menu.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/system_popups/status_area.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/system_popups/activities_menu.css')
+
+  link(rel='stylesheet' type='text/css' href='./src/css/X/apps_layer.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/apps/terminal.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/apps/settings.css')
+  link(rel='stylesheet' type='text/css' href='./src/css/X/apps/notepad.css')
+
+  link(rel='stylesheet' type='text/css' href='./src/css/X/login.css')
+  script(src='./src/js/linuxWeb_js/X.js')
+login
+  login_background
+  login_time
+    time
+    date
+    p Click or Press a key to unlock
+  form(onsubmit='event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));')
+    login_user
+      user_icon_container
+        user_icon
+      user_name root
+    input(type='password' name='password' placeholder='Password')
+  topbar
+    left
+    middle
+    right
+      lockscreen_statusarea.statusArea
+        network_icon
+        volume_icon
+        down_icon
+linux
+  // Desktop Area
+  main_background
+  desktop
+  // Title bar
+  topbar
+    left
+      activities_menu_button
+        | Activities
+    middle
+      datetime
+    right
+      statusarea.statusArea
+        network_icon
+        volume_icon
+        down_icon
+  // App List Bar
+  app_list
+  // Apps Layer
+  apps_layer  
+  system_menu_container
+  system_exit_animation_menu_container
+overlay_container
