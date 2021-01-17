@@ -13,7 +13,8 @@ topbar > * {
   display: inline-block;
   width: 33%;
   height: 25px;
-  line-height: 25px; }
+  line-height: 25px;
+  text-align: center; }
 
 topbar > left {
   display: flex;

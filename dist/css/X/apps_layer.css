@@ -2,20 +2,22 @@ apps_layer {
   position: absolute;
   top: 0px;
   left: 0px;
+  /* overflow: hidden; */
+  /* width: 100vw; */
+  /* height: 100vh; */
   margin: 0px;
   padding: 0px; }
-
-apps_layer > * {
-  filter: brightness(0.85); }
-
-apps_layer > *:last-child {
-  filter: brightness(1); }
+  apps_layer > * {
+    filter: brightness(0.85); }
+    apps_layer > *:last-child {
+      filter: brightness(1); }
 
 app_container {
   position: absolute;
   display: flex;
   overflow: visible;
   flex-direction: column;
+  /* background-color: var(--main-color); */
   width: 600px;
   height: 400px;
   min-width: 100px;
@@ -28,6 +30,7 @@ app_container {
 
 app_header {
   display: flex;
+  /* flex-flow: column nowrap; */
   flex-flow: row nowrap;
   text-align: center;
   width: auto;
@@ -38,53 +41,58 @@ app_header {
   padding-left: 5px;
   text-overflow: ellipsis;
   background-color: var(--main-color); }
-
-app_header > app_title {
-  display: inline-block;
-  margin: auto;
-  width: 100%;
-  position: absolute;
-  height: inherit;
-  top: 0px;
-  left: 0px;
-  line-height: 250%;
-  width: calc(100% - 140px);
-  padding-left: 70px;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden; }
-
-app_header > *:not(app_title) {
-  position: relative;
-  margin: auto 3px;
-  margin-left: 3px;
-  top: 0px;
-  flex: 0 0 auto;
-  display: flex;
-  height: 20px;
-  width: auto;
-  min-width: 20px;
-  background-color: transparent;
-  border-radius: 50%;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0px;
-  justify-self: center;
-  align-self: center;
-  opacity: 0.8; }
-
-app_header > *:not(app_title):hover {
-  opacity: 1;
-  background-color: var(--main-color-b) !important; }
+  app_header > app_title {
+    display: inline-block;
+    margin: auto;
+    width: 100%;
+    position: absolute;
+    height: inherit;
+    top: 0px;
+    left: 0px;
+    line-height: 250%;
+    width: calc(100% - 140px);
+    padding-left: 70px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    /* transform: translateY(6px); */ }
+  app_header > *:not(app_title) {
+    position: relative;
+    margin: auto 3px;
+    margin-left: 3px;
+    top: 0px;
+    flex: 0 0 auto;
+    display: flex;
+    height: 20px;
+    width: auto;
+    min-width: 20px;
+    background-color: transparent;
+    /* position: absolute; */
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    /* margin: auto; */
+    top: 0px;
+    justify-self: center;
+    align-self: center;
+    opacity: 0.8;
+    /* transform: translateY(50%); */ }
+    app_header > *:not(app_title):hover {
+      opacity: 1;
+      background-color: var(--main-color-b); }
 
 app_exit:hover {
-  background-color: var(--light-red-color);
+  background-color: var(--light-red-color) !important;
   filter: none; }
 
+app_maximize {
+  /* right: 30px !important; */ }
+
 app_minimize {
+  /* right: 55px !important; */
   margin-left: auto !important; }
 
 app_header > *:not(app_title) > * {
@@ -111,9 +119,10 @@ app_body {
   border: none;
   background-color: white;
   color: #181818; }
-
-app_body * {
-  color: inherit; }
+  app_body > * {
+    /* height: 100%; */ }
+  app_body * {
+    color: inherit; }
 
 resize_point {
   z-index: 2;

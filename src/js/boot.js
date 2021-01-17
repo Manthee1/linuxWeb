@@ -136,11 +136,11 @@
 		"Reached target Graphical Interface.",
 	];
 	jsSources = [
-		"./src/js/libraries/sha256.js",
-		"./src/js/libraries/jsHelp.js",
-		"./src/js/linuxWeb_js/system.js",
-		"./src/js/linuxWeb_js/apps.js",
-		"./src/js/linuxWeb_js/processes.js",
+		"./js/libraries/sha256.js",
+		"./js/libraries/jsHelp.js",
+		"./js/linuxWeb_js/system.js",
+		"./js/linuxWeb_js/apps.js",
+		"./js/linuxWeb_js/processes.js",
 	]
 	retrieveMainJs = async (x = true) => {
 		return new Promise(resolve => {
@@ -168,7 +168,7 @@
 	}
 	// await retrieveJs
 	await delay(1000);
-	page.changePage("./src/html/X.html", 'system.startup()', true);
+	page.changePage("./html/X.html", 'system.startup()', true);
 
 	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
 	//Fuck you past i changed it!

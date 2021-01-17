@@ -89,6 +89,12 @@ Detailed Log:
 + Made the main scripts except for X.js load while booting
 + Moved the actual power functions to the system object
 
+2021-01-17
+Implemented gulp into the project
+Fixed sass issues
+
+
+
 Todos:
 DONE TODO: Make a terminal command handler in the system objects 
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 

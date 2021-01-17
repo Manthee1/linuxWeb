@@ -208,13 +208,13 @@ X = {
             update: function () {
                 volume = system.global.volume;
                 if (volume > 66) {
-                    img = "url('./src/img/volume/high.svg')";
+                    img = "url('./img/volume/high.svg')";
                 } else if (volume > 33) {
-                    img = "url('./src/img/volume/medium.svg')";
+                    img = "url('./img/volume/medium.svg')";
                 } else if (volume > 0) {
-                    img = "url('./src/img/volume/low.svg')";
+                    img = "url('./img/volume/low.svg')";
                 } else {
-                    img = "url('./src/img/volume/mute.svg')";
+                    img = "url('./img/volume/mute.svg')";
                 }
                 document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
             }

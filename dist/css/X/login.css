@@ -1,4 +1,4 @@
-login {
+.login {
   display: flex;
   opacity: 1;
   margin: auto;
@@ -10,148 +10,133 @@ login {
   top: 0px;
   left: 0px;
   transition: opacity 0.5s ease-in-out; }
-
-login * {
-  opacity: 1; }
-
-login > login_background {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  z-index: -1;
-  top: 0px;
-  left: 0px;
-  background: var(--secondary-color);
-  background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%);
-  /* background-image: url("../../img/LoginBG.jpg"); */
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: center;
-  background-size: cover;
-  /* filter: contrast(0.6) blur(1vh); */
-  /* transform: scale(1.2); */ }
-
-login > login_time {
-  /* font-size: 80px; */
-  position: absolute;
-  /* background-color: black; */
-  top: 50%;
-  left: 50%;
-  font-size: 50px;
-  transform: translate(-50%, -50%);
-  /* border-radius: 20px; */
-  /* padding: 20px; */
-  /* border: 10px solid white; */
-  transition: all 0.5s ease-in-out; }
-
-login > login_time > * {
-  display: block;
-  margin-top: 10px; }
-
-login > login_time > date {
-  font-size: 25px; }
-
-login > login_time > p {
-  position: relative;
-  top: 50px;
-  opacity: 0;
-  font-size: 15px;
-  transition: opacity 0.2s ease-in-out; }
-
-login > form {
-  bottom: 0px;
-  display: inline-block;
-  z-index: 1;
-  position: relative;
-  font-family: Oxygen;
-  margin: auto;
-  padding: 25px;
-  padding-bottom: 120px;
-  color: gray;
-  transition: all 0.5s ease-in-out; }
-
-login > form > login_user > * {
-  margin: auto; }
-
-login > form > login_user > user_icon_container {
-  display: flex;
-  flex-flow: column nowrap;
-  border: 2px solid gray;
-  background: var(--main-color);
-  height: 50px;
-  width: 50px;
-  opacity: 0.5;
-  border-radius: 50%;
-  padding: 15px; }
-
-login > form > login_user > user_icon_container > user_icon {
-  background-size: 100%;
-  height: 50px;
-  width: 50px;
-  margin: auto;
-  background-position: center;
-  background-position-y: 0%; }
-
-login > form > login_user > user_name {
-  font-size: 25px;
-  margin-top: 10px;
-  color: gray; }
-
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0; }
-
-login > form > input {
-  display: inline-block;
-  font-size: 18px;
-  padding: 4px;
-  padding-left: 5px;
-  font-family: Oxygen;
-  /* padding-top: 6px; */
-  height: 20px;
-  /* line-height: 45px; */
-  width: 300px;
-  background: var(--main-color);
-  border-radius: 5px;
-  margin: -5px;
-  color: white;
-  border: 1px solid var(--general-border-color);
-  transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out; }
-
-login > form > input:focus {
-  border: 1px solid transparent; }
-
-login > form > input[type="submit"] {
-  position: relative;
-  display: inline-block;
-  font-family: monospace;
-  border: none;
-  top: 0px;
-  font-family: inherit;
-  left: 3px;
-  padding: 0px;
-  width: 35px;
-  height: 56px;
-  color: whitesmoke;
-  background-color: #556080; }
+  .login * {
+    opacity: 1; }
+  .login > .login_background {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: -1;
+    top: 0px;
+    left: 0px;
+    background: var(--secondary-color);
+    background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%);
+    /* background-image: url("../../img/LoginBG.jpg"); */
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    /* filter: contrast(0.6) blur(1vh); */
+    /* transform: scale(1.2); */ }
+  .login > .login_time {
+    /* font-size: 80px; */
+    position: absolute;
+    /* background-color: black; */
+    top: 50%;
+    left: 50%;
+    font-size: 50px;
+    transform: translate(-50%, -50%);
+    /* border-radius: 20px; */
+    /* padding: 20px; */
+    /* border: 10px solid white; */
+    transition: all 0.5s ease-in-out; }
+    .login > .login_time > * {
+      display: block;
+      margin-top: 10px; }
+    .login > .login_time > date {
+      font-size: 25px; }
+    .login > .login_time > p {
+      position: relative;
+      top: 50px;
+      opacity: 0;
+      font-size: 15px;
+      transition: opacity 0.2s ease-in-out; }
+  .login > form {
+    bottom: 0px;
+    display: inline-block;
+    z-index: 1;
+    position: relative;
+    font-family: Oxygen;
+    margin: auto;
+    padding: 25px;
+    padding-bottom: 120px;
+    color: gray;
+    transition: all 0.5s ease-in-out; }
+    .login > form > .login_user {
+      display: block;
+      margin-bottom: 20px; }
+      .login > form > .login_user > * {
+        margin: auto; }
+      .login > form > .login_user > user_icon_container {
+        display: flex;
+        flex-flow: column nowrap;
+        border: 2px solid gray;
+        background: var(--main-color);
+        height: 50px;
+        width: 50px;
+        opacity: 0.5;
+        border-radius: 50%;
+        padding: 15px; }
+        .login > form > .login_user > user_icon_container > user_icon {
+          background-size: 100%;
+          height: 50px;
+          width: 50px;
+          margin: auto;
+          background-position: center;
+          background-position-y: 0%; }
+      .login > form > .login_user > user_name {
+        font-size: 25px;
+        margin-top: 10px;
+        color: gray; }
+    .login > form > input {
+      display: inline-block;
+      font-size: 18px;
+      padding: 4px;
+      padding-left: 5px;
+      font-family: Oxygen;
+      /* padding-top: 6px; */
+      height: 20px;
+      /* line-height: 45px; */
+      width: 300px;
+      background: var(--main-color);
+      border-radius: 5px;
+      margin: -5px;
+      color: white;
+      border: 1px solid var(--general-border-color);
+      transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out; }
+      .login > form > input:focus {
+        border: 1px solid transparent; }
+      .login > form > input[type="submit"] {
+        position: relative;
+        display: inline-block;
+        font-family: monospace;
+        border: none;
+        top: 0px;
+        font-family: inherit;
+        left: 3px;
+        padding: 0px;
+        width: 35px;
+        height: 56px;
+        color: whitesmoke;
+        background-color: #556080; }
+  .login > .login_user, .login > input {
+    position: relative;
+    bottom: 100px; }
+  .login > topbar {
+    background-color: transparent;
+    border: none; }
 
 /* user picture background: #556080 */
-login > login_user,
-login > input {
-  position: relative;
-  bottom: 100px; }
-
-login > topbar {
-  background-color: transparent;
-  border: none; }
-
 .login_status_area_menu {
   z-index: 1;
   background-color: var(--secondary-color);
-  /* display: flex; */
   visibility: visible; }
   .login_status_area_menu dropdown {
     background-color: var(--secondary-color);
     filter: brightness(0.8); }
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0; }

@@ -75,9 +75,9 @@ system = {
         }
     },
 
-    shutdown: () => page.changePage('./src/html/shutdown.html'),
-    logout: () => page.changePage('./src/html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
-    restart: () => page.changePage('./src/html/shutdown.html', "afterShutdown='restart'", false),
+    shutdown: () => page.changePage('./html/shutdown.html'),
+    logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+    restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
 }
 
 
