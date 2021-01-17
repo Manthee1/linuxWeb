@@ -61,22 +61,25 @@ apps = {
         parseCommand: async function (event, element, processInstance) {
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                terminalElement = this.InitiateVariables(processInstance);
-                text = element.value;
+                let terminalElement = this.InitiateVariables(processInstance);
+                let text = element.value;
                 element.value = "";
                 //system.global.escapeHtml() - make string not html. understood?... Good!
                 terminalElement.main.innerHTML += `${system.global.escapeHtml(terminalElement.inputPrefix.innerText)} ${system.global.escapeHtml(text)}<br>`;
                 try {
                     processInstance.currentHistoryNumber = -1;
                     // If eval return nothing then just don't return it to the terminal
-                    commandExecuted = eval(text);
+                    // let commandExecuted = eval(`(async()=>{${text}})();`);
+                    let commandExecuted = eval(text);
+
                     if (typeof (commandExecuted) != 'undefined') {
                         //Objects just get outputted as they were written
-                        if (typeof (commandExecuted) != 'object') {
-                            commandExecuted = system.global.escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>");
-                        } else commandExecuted = text
+                        if (typeof (commandExecuted) == 'object')
+                            commandExecuted = JSON.stringify(commandExecuted)
+                        commandExecuted = system.global.escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>");
                         terminalElement.main.innerHTML += commandExecuted + "<br>";
                     }
+
                 } catch (e) {
                     //Returns error
                     terminalElement.main.innerHTML += e + "<br>";
