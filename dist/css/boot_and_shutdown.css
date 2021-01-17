@@ -1,0 +1,45 @@
+::-webkit-scrollbar {
+  display: none; }
+
+html {
+  cursor: none;
+  overflow: hidden; }
+
+body {
+  background-color: black !important;
+  overflow-y: scroll;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  scrollbar-width: none !important; }
+
+h1 {
+  color: white;
+  margin: auto;
+  font-family: consolas; }
+
+message_info {
+  width: 100%;
+  padding-bottom: 20px;
+  height: fit-content; }
+
+message {
+  text-align: left;
+  color: #a7a7a7;
+  display: block;
+  margin: 0px;
+  font-size: 13px;
+  font-family: "Source Code Pro"; }
+
+span {
+  font-size: 11px;
+  /* position: absolute; */
+  /* margin-right: 10px; */
+  color: #adfa9f; }
+
+build {
+  display: block;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  color: rgba(255, 255, 255, 0.2); }

@@ -1,0 +1,8 @@
+app_body > textarea {
+  height: 100vh;
+  resize: none;
+  background-color: var(--main-color-a);
+  border: none;
+  padding: 10px;
+  overflow: auto;
+  white-space: nowrap; }

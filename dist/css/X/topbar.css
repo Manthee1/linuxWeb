@@ -1,0 +1,74 @@
+topbar {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 25px;
+  background-color: var(--main-color);
+  border-bottom: var(--main-color-b) 2px solid; }
+
+topbar > * {
+  display: inline-block;
+  width: 33%;
+  height: 25px;
+  line-height: 25px; }
+
+topbar > left {
+  display: flex;
+  flex: 1 1 auto;
+  text-align: left; }
+
+topbar > left > activities_menu_button {
+  display: flex;
+  transition: filter ease-in-out 0.05s;
+  height: 100%;
+  padding: 0px 10px; }
+
+dateTime {
+  font-size: 15px;
+  display: inline-block;
+  height: 20px;
+  align-items: center;
+  vertical-align: middle;
+  line-height: 100%;
+  text-align: center; }
+
+/* Right styles */
+topbar > right {
+  display: inline-block;
+  position: relative;
+  flex: 1 1 auto;
+  text-align: right; }
+
+topbar > right > * {
+  padding: 0px 4px;
+  background-color: transparent;
+  transition: background-color ease-in-out 0.05s; }
+
+.statusArea {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  padding: 0px 10px 0px 10px !important;
+  height: 100%;
+  cursor: default; }
+  .statusArea > * {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 100%;
+    opacity: 0.8;
+    filter: brightness(0.8); }
+  .statusArea:hover > * {
+    filter: brightness(1); }
+  .statusArea > * {
+    margin: 0px 0px 0px 5px;
+    background-size: 90%; }
+  .statusArea > down_icon {
+    display: inline-block;
+    width: 15px; }
+
+topbar > * > *:hover {
+  filter: brightness(1.4); }
