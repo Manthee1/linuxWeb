@@ -2,19 +2,20 @@ Hello! These are my notes
 Feel free to read them :)
 
 Emoji References:
-🔧 Fixed
-🎨 Redesigned
-🔨 Made
-🐜 Fixed a bug
-🔄 Changed 
-⤵️ Converted 
-🔼 Updated
-🧹 Reorganized/Revamped
-➕ Added
-💅 Polished
-🏁 Finished
-⚒️ Started work
-🏷️ Renamed
+🔨 Made  
+🎨 Redesigned  
+🔧 Fixed (*A major fix*)  
+🐜 Fixed (*A minor fix*)  
+🏷️ Renamed  
+🔄 Changed  
+⤵️ Converted  
+🔼 Updated  
+🧹 Reorganized/Revamped  
+➕ Added  
+➖ Removed  
+💅 Polished  
+⚒️ Started work  
+🏁 Finished  
 
 Detailed Log:
 2020-12-31 
@@ -116,6 +117,8 @@ TODO: Separate X.js into components because the file is getting too long
 DONE TODO: Make the power off/shutdown functions invoke a CTA.
 DONE TODO: Style the CTA
 DONE TODO: Fix logout().
+TODO: Limit the window scaling to the screen size
+TODO: Implement gulp into the project for performance and other reasons.
 
 Bugs:
 DONE FIXME: Mozilla app_header mousemove not working sometimes.
@@ -123,3 +126,4 @@ DONE FIXME: appMenu disappears when clicked on search
 DONE FIXME: Scrollbar still visible when booting and shutting down on mozilla 
 DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
 DONE FIXME: Mozilla event.path undefined.
+FIXME: Enter not working on notepad.
