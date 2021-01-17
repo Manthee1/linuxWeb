@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./src/css/boot_and_shutdown.css" />
-    <link rel="stylesheet" type="text/css" href="./src/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="./dist/css/boot_and_shutdown.css" />
+    <link rel="stylesheet" type="text/css" href="./dist/css/main.css" />
 
-    <script defer src="./src/js/main.js"></script>
+    <script defer src="./dist/js/main.js"></script>
     <title>linuxWeb pre-boot</title>
 </head>
 
@@ -17,7 +17,7 @@
 
 <script>
     document.body.addEventListener('keypress', () => {
-        page.changePage('./src/html/boot.html');
+        page.changePage('./dist/html/boot.html');
     })
 </script>
 
