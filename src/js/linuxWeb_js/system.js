@@ -71,7 +71,7 @@ system = {
             console.log(callMethod);
 
             if (system.cli.commands[callMethod] != undefined) return system.cli.commands[callMethod].method(options);
-            else return `the command '${callMethod}' does not exist!`
+            else return `The command '${callMethod}' does not exist!`
 
         },
         commands: {
@@ -90,13 +90,30 @@ system = {
                         output = "-----help-----\n"
                         output += "For more information about a specific command type: help <command>\n\n"
                         output += Object.entries(system.cli.commands).map(x => { return `${x[0]}        ${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
+                    } else {
+                        let command = Object.values(options)[0];
+                        console.log(command, system.cli.commands[command]);
+                        if (system.cli.commands[command] == undefined)
+                            output = `The command '${command}' does not exist!`
+                        else if (system.cli.commands[command].help == undefined)
+                            output = `There is no help page for '${command}'`
+                        else {
+                            output = `-----${command} help-----\n\n`
+                            output += system.cli.commands[command].help + "\n";
+                        }
+
                     }
-                    else output = system.cli.commands[Object.values(options)[0]].help;
                     return output;
                 },
             },
             echo: {
-                help: "Eg usage: echo \"Hello Word\"",
+                help: `Echos your message back to you
+                    USAGE
+                        echo <message>
+                        ----------------
+                        echo HelloWorld
+                        or
+                        echo \"Hello Word\"`,
                 method: (options) => {
                     let text = Object.values(options)[0];
                     text = text.trim()
