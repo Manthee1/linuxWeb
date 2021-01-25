@@ -130,8 +130,8 @@ date = {
 		[h, m, s] = [d.getHours(), d.getMinutes(), d.getSeconds()];
 		console.log(h, m, s);
 		if (clock12h) {
-			if (h > 11) {
-				h -= 11;
+			if (h > 12) {
+				h -= 12;
 				strEnd = "PM";
 			} else strEnd = "AM";
 		}
