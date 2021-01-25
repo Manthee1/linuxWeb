@@ -2,7 +2,7 @@ apps = {
 
     terminal: {
         //Saddle up for this one. 
-        name: "linuxWeb Terminal",
+        name: "linuxWEB Terminal",
         path: "apps.terminal",
         version: "1.0.4",
         icon: "./img/terminal.svg",
@@ -10,7 +10,7 @@ apps = {
         createData: {
             //The createData object is used to define the general parameters
             //so that the processes.create() knows how to customize it and create it.
-            title: "JS Terminal",
+            title: "Terminal",
             bodyColor: "black",
             textColor: "white",
             bodyBorder: false,
@@ -19,8 +19,8 @@ apps = {
             padding: "10px 5px",
             getHTML: function () {
                 return `
-				<terminal_main >Linux terminal version 1.0.3<br></terminal_main>
-				<terminal_input >LinuxWeb@root:-$<input type=text></terminal_input>
+				<terminal_main >linuxWEB terminal version 1.0.3<br></terminal_main>
+				<terminal_input >linuxWEB@root:-$<input type=text></terminal_input>
 				`},
             methods: {
                 // Everything here gets aded to the pid object of the app.
