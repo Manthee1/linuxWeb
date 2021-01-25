@@ -135,6 +135,12 @@ date = {
 				strEnd = "PM";
 			} else strEnd = "AM";
 		}
+
+
+
+		m.toString().length < 2 && (m = '0' + m)
+		s.toString().length < 2 && (s = '0' + s)
+
 		let returnTime = x.split("").map(x => { return eval(x); }).join(divider) + " " + strEnd
 		return returnTime;
 	},
