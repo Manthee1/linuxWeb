@@ -125,11 +125,17 @@ date = {
 	},
 	//Returns the time. with your custom 'divider'. So ':' in '2020:6:9'
 	getTime: (x, divider = ":", clock12h = true) => {
-		let h, m, s, strEnd;
-		if (clock12h) [h, m, s, strEnd] = new Date().toLocaleTimeString().replaceAll(':', ' ').split(' ')
-		else[h, m, s] = new Date().toTimeString().split(" ")[0].split(':');
-		let returnTime = x.split("").map(x => { return eval(x); }).join(divider)
-		if (clock12h) returnTime += " " + strEnd
+		let h, m, s, strEnd = "";
+		let d = new Date();
+		[h, m, s] = [d.getHours(), d.getMinutes(), d.getSeconds()];
+		console.log(h, m, s);
+		if (clock12h) {
+			if (h > 11) {
+				h -= 11;
+				strEnd = "PM";
+			} else strEnd = "AM";
+		}
+		let returnTime = x.split("").map(x => { return eval(x); }).join(divider) + " " + strEnd
 		return returnTime;
 	},
 	//Self explanatory...

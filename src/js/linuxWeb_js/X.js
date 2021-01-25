@@ -98,7 +98,7 @@ X = {
 					</item>
 					<item>
 					<brightness_icon></brightness_icon>
-					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
+					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="200" value="${system.global.brightness}" step="1" type="range">
                     </item>
                     <hr>
                     <item><network_icon></network_icon><text>Connected</text></item>

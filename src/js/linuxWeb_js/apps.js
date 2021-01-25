@@ -70,13 +70,15 @@ apps = {
                     processInstance.currentHistoryNumber = -1;
                     // If eval return nothing then just don't return it to the terminal
                     // let commandExecuted = eval(`(async()=>{${text}})();`);
-                    let commandExecuted = eval(text);
 
+                    // let commandExecuted = eval(text);
+                    commandExecuted = system.cli.i(text);
+                    console.log(commandExecuted);
                     if (typeof (commandExecuted) != 'undefined') {
                         //Objects just get outputted as they were written
                         if (typeof (commandExecuted) == 'object')
                             commandExecuted = JSON.stringify(commandExecuted)
-                        commandExecuted = system.global.escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>");
+                        commandExecuted = system.global.escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&emsp;");
                         terminalElement.main.innerHTML += commandExecuted + "<br>";
                     }
 
