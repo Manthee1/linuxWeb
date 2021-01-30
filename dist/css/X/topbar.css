@@ -12,7 +12,7 @@ topbar {
 topbar > * {
   width: 33%;
   height: 25px;
-  line-height: 28px;
+  line-height: 25px;
   text-align: center; }
 
 topbar > left {
