@@ -52,12 +52,12 @@ Detailed Log:
 + Changed the logo
 + Changed 'titlebar' -> 'topbar'
 + Made app title aligned to the center of the header
-* Found a bug on mozilla where the windows sometimes lose movability
+* Found a bug on Firefox where the windows sometimes lose movability
 
 2021-01-5
 + Made the '[  OK  ]' text in boot precede the boot message
 + Renamed processBar to applist
-* Found a bug where the scrollbar is visible while booting/shuting down on Mozilla
+* Found a bug where the scrollbar is visible while booting/shuting down on Firefox
 * Found a bug where appMenu disappears when clicked on search
 + Added a additionalBodyCss option in the app createData object
 + Fixed app title text not centering at all.
@@ -67,14 +67,14 @@ Detailed Log:
 + Converted powerMenu into a dropdown
 + Added fade animations when a menus are created/removed (Easily assignable animations in X.menus.'menu'.'someNewOptions')
 + Moved system.InitializeX() to X.initialize() together with and all other accompanying functions
-+ Fixed Mozilla scrollbar issue
++ Fixed Firefox scrollbar issue
 + Now system.startup() is ran before X.lockScreen.lock. In fact system.startup() is the one that calls X.lockScreen.lock().
 + Added a new lockscreen status_area_menu with the options: brightness, volume: Power Options (Power Off, Restart)
 + Moved the html files to ./src/html/
 
 2021-01-6
 + Fixed issues with the terminal header. (cursor getting stuck between resize and move)
-+ Mozilla app_header mousemove not working sometimes
++ Firefox app_header mousemove not working sometimes
 + Added max-width to app_title
 + Began work on the CTA
 + Made the js loading system synchronous i think. All and all more reliable
@@ -84,7 +84,7 @@ Detailed Log:
 + Styled the CTA
 + Renamed app_menu -> activities
 + Added a search icon to the activities search input *That still doesn't work.
-+ Fixed a bug: event.path undefined on Mozilla. (They use event.composePath())
++ Fixed a bug: event.path undefined on Firefox. (They use event.composePath())
 + Made power options trigger a CTA that asks you "Are you sure".
 + Made the main scripts except for X.js load while booting
 + Moved the actual power functions to the system object
@@ -126,12 +126,13 @@ DONE TODO: Make the power off/shutdown functions invoke a CTA.
 DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 TODO: Limit the window scaling to the screen size
-TODO: Implement gulp into the project for performance and other reasons.
+DONE TODO: Implement gulp into the project for performance and other reasons.
 
 Bugs:
-DONE FIXME: Mozilla app_header mousemove not working sometimes.
+DONE FIXME: Firefox app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  
-DONE FIXME: Scrollbar still visible when booting and shutting down on mozilla 
+DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox 
 DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
-DONE FIXME: Mozilla event.path undefined.
-FIXME: Enter not working on notepad.
+DONE FIXME: Firefox event.path undefined.
+FIXME: Enter not working on notepad. (*On Firefox)
+FIXME: all app inputs get cleared when a new app is open
