@@ -19,8 +19,8 @@ apps = {
             padding: "10px 5px",
             getHTML: function () {
                 return `
-				<terminal_main >linuxWEB terminal version 1.0.3<br></terminal_main>
-				<terminal_input >linuxWEB@root:-$<input type=text></terminal_input>
+                <terminal_main >linuxWEB terminal version 1.0.3<br></terminal_main>
+				<terminal_input >linuxWEB@root:-$ <input type=text></terminal_input>
 				`},
             methods: {
                 // Everything here gets aded to the pid object of the app.
@@ -106,10 +106,14 @@ apps = {
                 terminalElement.input.value = command;
                 processInstance.currentHistoryNumber = processInstance.currentHistoryNumber + val;
             } else if (processInstance.currentHistoryNumber > processInstance.currentHistoryNumber + val) {
-                //If command is undefined and you you went down in history then: current command
+                // If command is undefined and you you went down in history then: current command
                 terminalElement.input.value = processInstance.currentCommand;
                 processInstance.currentHistoryNumber = -1;
             }
+            // Put the cursor on the end
+            setTimeout(() => {
+                terminalElement.input.selectionStart = terminalElement.input.selectionEnd = terminalElement.input.value.length;
+            }, 0);
         },
     },
 
