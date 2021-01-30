@@ -31,7 +31,7 @@ processes = {
         }
     },
 
-    runningInstanceAmount: function (appName) {
+    getRunningInstanceAmount: function (appName) {
 
         let amount = 0;
         let pidValues = this.getPidObject()
@@ -148,7 +148,7 @@ processes = {
             return false
         }
 
-        if (apps[appName].createData.onlyOneInstanceAllowed && this.runningInstanceAmount(appName) > 0) {
+        if (apps[appName].createData.onlyOneInstanceAllowed && this.getRunningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
             this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
             // console.warn(message)
