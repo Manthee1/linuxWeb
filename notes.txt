@@ -91,16 +91,20 @@ Detailed Log:
 + Moved the actual power functions to the system object
 
 2021-01-17
-Implemented gulp into the project
-Fixed sass issues
++ Implemented gulp into the project
++ Fixed sass issues
 
-
+2021-01-30
++ Changed fonts
++ Updated alot of styles
++ Changed settings, terminal, topbar, context-menu, app_container styles
++ Limited the app width/height
 
 Todos:
 DONE TODO: Make a terminal command handler in the system objects 
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
 DONE        |--- Create the interpreter
-In Progress |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
+DONE |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
 TODO: Make the topbar height dynamic 
 DONE TODO: Add the transparent topbar with only the right menu to the login screen 
 DONE TODO: Create a CTA/message function in the X object.
@@ -126,7 +130,7 @@ TODO: Separate X.js into components because the file is getting too long
 DONE TODO: Make the power off/shutdown functions invoke a CTA.
 DONE TODO: Style the CTA
 DONE TODO: Fix logout().
-TODO: Limit the window scaling to the screen size
+DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
 
 Bugs:

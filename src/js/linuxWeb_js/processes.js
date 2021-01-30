@@ -315,27 +315,33 @@ processes = {
                 const resizeClassList = x.classList.toString()
                 if (resizeClassList.includes('top')) {
                     const height = original_height - (e.pageY - original_mouse_y)
-                    if (height > minimum_size_y) {
+                    if (height > minimum_size_y && height <= window.innerHeight) {
                         element.style.height = height + 'px'
                         element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
                     }
                 } else if (resizeClassList.includes('bottom')) {
                     const height = original_height + (e.pageY - original_mouse_y)
-                    if (height > minimum_size_y) {
+                    if (height > minimum_size_y && height <= window.innerHeight) {
                         element.style.height = height + 'px'
                     }
                 }
                 if (resizeClassList.includes('left')) {
                     const width = original_width - (e.pageX - original_mouse_x)
-                    if (width > minimum_size_x) {
+                    if (width > minimum_size_x && width <= window.innerWidth) {
                         element.style.width = width + 'px'
                         element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
                     }
                 } else if (resizeClassList.includes('right')) {
                     const width = original_width + (e.pageX - original_mouse_x)
-                    if (width > minimum_size_x) {
+                    if (width > minimum_size_x && width <= window.innerWidth) {
                         element.style.width = width + 'px'
                     }
+                }
+                if (height >= window.innerHeight) {
+                    element.style.height = window.innerHeight
+                }
+                if (width >= window.innerWidth) {
+                    element.style.width = window.innerWidth
                 }
             }
             function stopResize() {
