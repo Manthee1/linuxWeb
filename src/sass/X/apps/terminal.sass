@@ -1,29 +1,23 @@
+
+$terminalFontSize: 15px
+
 app_body > terminal_main
     display: block
-    font-size: 15px
+    font-size: $terminalFontSize
+    font-family: var(--mono-font)
     -khtml-user-select: text
     -webkit-user-select: text
     -ms-user-select: text
     user-select: text
     cursor: default
 
+
 app_body > terminal_main *,
 terminal_input,
 terminal_input *
-    font-size: 15px
+    font-family: var(--mono-font)
+    font-size: $terminalFontSize
 
-// terminal_main > textarea {
-//  display: block;
-//  width: 100%;
-//  text-align: left;
-//  background-color: transparent;
-//  resize: none;
-//  border: none;
-//  color: inherit;
-//  font-size: inherit;
-//  min-height: 10px;
-//  height: auto;
-// }
 
 app_body > terminal_main > command
     display: block
@@ -36,7 +30,9 @@ terminal_input
 
 terminal_input > input
     flex: 1 1 auto
-    margin-left: 6px
+    font-size: $terminalFontSize
     border: none
+    margin-left: 4px
     color: inherit
     background-color: transparent
+    padding: 0px

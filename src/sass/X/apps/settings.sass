@@ -13,14 +13,15 @@ app_body > settings > sidebarMenu
     display: flex
     flex-flow: column
     flex: 0 0 0
-    padding: 10px 0px
+    padding: 0px
     border-right: 2px var(--main-color-b) solid
 
 app_body > settings > sidebarMenu > *
     display: flex
     flex-flow: row nowrap
     flex: 0 0 0
-    padding: 2px 10px
+    padding: 10px 20px
+    transition: background-color 0.2s linear
 
 app_body > settings > sidebarMenu > * > *:first-child
     /* flex: 0 0 0;
@@ -32,8 +33,11 @@ app_body > settings > sidebarMenu > *:hover
     background-color: var(--hover-highlight-color)
 
 app_body > settings > sidebarMenu > .selected
-    background-color: var(--hover-highlight-color)
+    background-color: var(--main-color-b)
 
-app_body > settings > panel > *
-    margin: 5px
-    padding: 0px
+app_body > settings > panel
+    background-color: var(--main-color-lighter)
+    > *
+        margin: 5px
+        padding: 0px
+
