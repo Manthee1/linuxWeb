@@ -49,10 +49,10 @@ activities_menu_container > favorites {
   display: flex;
   top: 50%;
   transform: translate(0, -50%);
-  border: 2px solid var(--general-border-color);
+  border: 1px solid var(--general-border-color);
   border-left: none;
   border-radius: 0px 10px 10px 0px;
-  background: var(--main-color);
+  background: var(--background-color);
   padding: 5px 0px;
   flex-flow: column wrap; }
 

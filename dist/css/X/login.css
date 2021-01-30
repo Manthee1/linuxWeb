@@ -37,7 +37,7 @@
     top: 50%;
     left: 50%;
     font-size: 50px;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -70%);
     /* border-radius: 20px; */
     /* padding: 20px; */
     /* border: 10px solid white; */
@@ -58,7 +58,6 @@
     display: inline-block;
     z-index: 1;
     position: relative;
-    font-family: Oxygen;
     margin: auto;
     padding: 25px;
     padding-bottom: 120px;
@@ -95,7 +94,6 @@
       font-size: 18px;
       padding: 4px;
       padding-left: 5px;
-      font-family: Oxygen;
       /* padding-top: 6px; */
       height: 20px;
       /* line-height: 45px; */

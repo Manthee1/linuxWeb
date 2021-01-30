@@ -2,7 +2,7 @@ Hello! These are my notes
 Feel free to read them :)
 
 Emoji References:
-🔨 Made  
+🔨 Made/Built  
 🎨 Redesigned  
 🔧 Fixed (*A major fix*)  
 🐜 Fixed (*A minor fix*)  

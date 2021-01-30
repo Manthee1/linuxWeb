@@ -17,24 +17,24 @@ app_container {
   display: flex;
   overflow: visible;
   flex-direction: column;
-  /* background-color: var(--main-color); */
   width: 600px;
   height: 400px;
   min-width: 100px;
   min-height: 100px;
   border: var(--main-color) 1px solid;
   box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.4);
+  border-radius: 8px 8px 0px 0px;
   transform: scale(1);
+  overflow: hidden;
   opacity: 1;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
 
 app_header {
   display: flex;
-  /* flex-flow: column nowrap; */
   flex-flow: row nowrap;
   text-align: center;
   width: auto;
-  font-size: 14px;
+  font-size: 16px;
   flex: 0 0 auto;
   height: 30px;
   padding: 2px 0px;
@@ -49,7 +49,7 @@ app_header {
     height: inherit;
     top: 0px;
     left: 0px;
-    line-height: 250%;
+    line-height: 200%;
     width: calc(100% - 140px);
     padding-left: 70px;
     text-align: center;

@@ -10,16 +10,16 @@ topbar {
   border-bottom: var(--main-color-b) 2px solid; }
 
 topbar > * {
-  display: inline-block;
   width: 33%;
   height: 25px;
-  line-height: 25px;
+  line-height: 28px;
   text-align: center; }
 
 topbar > left {
   display: flex;
   flex: 1 1 auto;
-  text-align: left; }
+  text-align: left;
+  justify-content: left; }
 
 topbar > left > activities_menu_button {
   display: flex;
@@ -28,12 +28,8 @@ topbar > left > activities_menu_button {
   padding: 0px 10px; }
 
 dateTime {
-  font-size: 15px;
   display: inline-block;
-  height: 20px;
   align-items: center;
-  vertical-align: middle;
-  line-height: 100%;
   text-align: center; }
 
 /* Right styles */

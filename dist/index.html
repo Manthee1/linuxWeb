@@ -7,7 +7,8 @@
     <link rel="stylesheet" type="text/css" href="./css/boot_and_shutdown.css" />
     <link rel="stylesheet" type="text/css" href="./css/main.css" />
 
-    <script defer src="./js/main.js"></script>
+    <script src="./js/main.js"></script>
+
     <title>linuxWeb pre-boot</title>
 </head>
 
@@ -16,9 +17,9 @@
 </body>
 
 <script>
-    document.body.addEventListener('keypress', () => {
-        page.changePage('./html/boot.html');
-    })
+    // document.body.addEventListener('keypress', () => {
+    page.changePage('./html/boot.html');
+        // })
 </script>
 
 </html>
