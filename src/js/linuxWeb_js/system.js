@@ -71,7 +71,7 @@ system = {
             console.log(callMethod);
 
             if (system.cli.commands[callMethod] != undefined) return system.cli.commands[callMethod].method(options);
-            else return `The command '${callMethod}' does not exist!`
+            else return `${callMethod}: command not found`
 
         },
         commands: {
@@ -92,13 +92,10 @@ system = {
                         output += Object.entries(system.cli.commands).map(x => { return `${x[0]}        ${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
                     } else {
                         let command = Object.values(options)[0];
-                        console.log(command, system.cli.commands[command]);
-                        if (system.cli.commands[command] == undefined)
-                            output = `The command '${command}' does not exist!`
-                        else if (system.cli.commands[command].help == undefined)
-                            output = `There is no help page for '${command}'`
+                        if (system.cli.commands[command] == undefined || system.cli.commands[command].help == undefined)
+                            output = `No help for '${command}' try: help help`
                         else {
-                            output = `-----${command} help-----\n\n`
+                            output = `----- ${command} help-----\n\n`
                             output += system.cli.commands[command].help + "\n";
                         }
 
@@ -108,10 +105,10 @@ system = {
             },
             echo: {
                 help: `Echos your message back to you
-                    USAGE
-                        echo <message>
-                        ----------------
-                        echo HelloWorld
+                        USAGE
+                        echo < message >
+                            ----------------
+                                echo HelloWorld
                         or
                         echo \"Hello Word\"`,
                 method: (options) => {
