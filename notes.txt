@@ -116,7 +116,7 @@ TODO: Expand the settings that don't need saving into cookies.
 TODO: Make a settings cookie storage system.
 TODO: Make a default file system object. And write user created files into a cookie/s.
 DONE TODO: Somehow load javascript for the main page while booting in the boot page. That will make the boot not just aesthetic 
-TODO: Add better names to everything. Make them perfect
+     TODO: Add better names to everything. Make them perfect
 DONE TODO: Add max-width to app_title so it doesn't overflow into the header buttons
 DONE TODO: Sleep...
 DONE TODO: Make the login.showForm() also trigger with an onclick
