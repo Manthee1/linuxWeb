@@ -51,12 +51,12 @@ system = {
         // i A.K.A Interpreter parses the command options and calls the command function
         i: function (command = false, terminalProcess = false) {
             // if (!command || !terminalProcess) return false
-
-            let options = {};
+            let options = null;
 
             let a = command.split(' ')
-            callFunction = a.splice(0, 1)[0].trim()
+            let callMethod = a.splice(0, 1)[0].trim()
             if (a.length != 0) {
+                options = {};
                 let optionBuffer = "";
                 a.forEach(x => {
                     if (x.startsWith('-')) {
@@ -68,9 +68,60 @@ system = {
                     }
                 })
             }
-            return options
+            console.log(callMethod);
+
+            if (system.cli.commands[callMethod] != undefined) return system.cli.commands[callMethod].method(options);
+            else return `The command '${callMethod}' does not exist!`
+
         },
-        methods: {
+        commands: {
+            help: {
+                shortHelp: "Displays help pages for commands",
+                help: `Displays a help page for commands
+                    
+                USAGE
+                    help
+                    help <command>
+                `,
+                method: (options) => {
+                    console.log(options);
+                    let output = "";
+                    if (options == null) {
+                        output = "-----help-----\n"
+                        output += "For more information about a specific command type: help <command>\n\n"
+                        output += Object.entries(system.cli.commands).map(x => { return `${x[0]}        ${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
+                    } else {
+                        let command = Object.values(options)[0];
+                        console.log(command, system.cli.commands[command]);
+                        if (system.cli.commands[command] == undefined)
+                            output = `The command '${command}' does not exist!`
+                        else if (system.cli.commands[command].help == undefined)
+                            output = `There is no help page for '${command}'`
+                        else {
+                            output = `-----${command} help-----\n\n`
+                            output += system.cli.commands[command].help + "\n";
+                        }
+
+                    }
+                    return output;
+                },
+            },
+            echo: {
+                help: `Echos your message back to you
+                    USAGE
+                        echo <message>
+                        ----------------
+                        echo HelloWorld
+                        or
+                        echo \"Hello Word\"`,
+                method: (options) => {
+                    let text = Object.values(options)[0];
+                    text = text.trim()
+                    if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
+                    return text
+                }
+            }
+
 
         }
     },
