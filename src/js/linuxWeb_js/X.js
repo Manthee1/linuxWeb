@@ -259,7 +259,7 @@ X = {
         loginTime: document.querySelector('body > .login > .login_time'),
         time: document.querySelector('body > .login > .login_time > time'),
         date: document.querySelector('body > .login > .login_time > date'),
-        p: document.querySelector("login > login_time > p "),
+        p: document.querySelector(".login > .login_time > p "),
         unlock: function () {
             X.clearOpenMenus();
             //Fades the lockscreen and displays the linux element
