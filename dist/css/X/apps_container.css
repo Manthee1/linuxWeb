@@ -1,15 +1,12 @@
-apps_layer {
+apps_container {
   position: absolute;
   top: 0px;
   left: 0px;
-  /* overflow: hidden; */
-  /* width: 100vw; */
-  /* height: 100vh; */
   margin: 0px;
   padding: 0px; }
-  apps_layer > * {
+  apps_container > * {
     filter: brightness(0.85); }
-    apps_layer > *:last-child {
+    apps_container > *:last-child {
       filter: brightness(1); }
 
 app_container {
