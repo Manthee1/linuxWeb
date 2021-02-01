@@ -60,7 +60,7 @@ processes = {
             this.pid[pid].minimized = false;
         }
         // If it is not currently on top do this
-        appsLayer.insertAdjacentElement('beforeend', element) // bring to top
+        appsContainer.insertAdjacentElement('beforeend', element) // bring to top
         this.makeProcessResizable("#" + element.id);
         this.currentlySelectedProcess != null && this.currentlySelectedProcess.getProcessBarElement().classList.remove('selected') // removes the selected class from the previous apps progress bar thingy.
         this.pid[pid].getProcessBarElement().classList.add('selected');
@@ -220,7 +220,7 @@ processes = {
 			
 		`;
         //Insert the appHTML so that the value fields of inputs and similar don't get wiped.
-        appsLayer.insertAdjacentHTML('beforeend', appHTML);
+        appsContainer.insertAdjacentHTML('beforeend', appHTML);
 
         (async () => {
             await delay(5000);

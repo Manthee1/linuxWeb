@@ -254,11 +254,11 @@ X = {
 
     lockScreen: {
         //Define are lockscreen elements
-        form: document.querySelector("body > login > form"),
-        loginContainer: document.querySelector('body > login'),
-        loginTime: document.querySelector('body > login > login_time'),
-        time: document.querySelector('body > login > login_time > time'),
-        date: document.querySelector('body > login > login_time > date'),
+        form: document.querySelector("body > .login > form"),
+        loginContainer: document.querySelector('body > .login'),
+        loginTime: document.querySelector('body > .login > login_time'),
+        time: document.querySelector('body > .login > .login_time > time'),
+        date: document.querySelector('body > .login > .login_time > date'),
         p: document.querySelector("login > login_time > p "),
         unlock: function () {
             X.clearOpenMenus();
@@ -411,10 +411,10 @@ X = {
 
         linux = document.querySelector("body > linux");
         desktop = document.querySelector("linux > desktop");
-        appsLayer = document.querySelector("linux > apps_container");
+        appsContainer = document.querySelector("linux > apps_container");
         appList = document.querySelector("linux > app_list");
         systemMenuContainer = document.querySelector("system_menu_container");
-        systemExitAnimationMenuContainer = document.querySelector("system_exit_animation_menu_container");
+        systemExitAnimationMenuContainer = document.querySelector("system_menu_animation_container");
         overlayContainer = document.querySelector("body > overlay_container");
 
         Object.entries(X.services).forEach(xObj => {
