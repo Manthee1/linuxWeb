@@ -143,11 +143,13 @@ processes = {
 
     create: function (appName, position = { x: 'default', y: 'default' }) {
 
+        //If the app doesn't exists.
         if (apps[appName] == undefined) {
             console.error(`Not Found: App '${appName}' does not exist`)
             return false
         }
 
+        //If an app is already open and onlyOneInstanceAllowed then just focus on it
         if (apps[appName].createData.onlyOneInstanceAllowed && this.getRunningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
             this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
@@ -163,23 +165,16 @@ processes = {
         Object.assign(appCreateData, this.processSchema)
         Object.assign(appCreateData, apps[appName].createData)
 
-        // Object.entries(this.processSchema).forEach(entry => {
-        //     //If a The app doesn't have have a defined parameter in the createData
-        //     //that is defined in processSchema then we just grab that one. 'Cause its the default.
-        //     if (!appCreateData[entry[0]] == undefined || typeof (appCreateData[entry[0]]) != typeof (entry[1])) {
-        //         appCreateData[entry[0]] = entry[1];
-        //     }
-        //     // !system.global.isValid(entry[1]) && (appCreateData[entry[0]] = "");
-        // })
         appCreateData.height < appCreateData.minHeight && (appCreateData.height = appCreateData.minHeight)
         appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
         position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2)
         position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2)
+
         //Then styles are used here
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
-            min-width:${appCreateData.minWidth}px;
-            z-Index: 4;
+			min-width:${appCreateData.minWidth}px;
+			z-Index: 4;
 		`;
         let bodyStyles = `
 			background-color:${appCreateData.bodyColor};
@@ -188,16 +183,17 @@ processes = {
 			height:${(appCreateData.fullHeight && "100%") || "auto"};
 			width:${(appCreateData.fullWidth && "100%") || "auto"};
 			opacity: ${appCreateData.opacity};
-            padding: ${appCreateData.padding};
-            ${appCreateData.additionalBodyCss}
-        `;
+			padding: ${appCreateData.padding};
+			${appCreateData.additionalBodyCss}
+		`;
         let headerStyles = `
-            color: ${appCreateData.titleColor};
-            background-color:${appCreateData.headerColor};
-            border-bottom: 1px solid ${appCreateData.headerBottomColor};
-        `;
-        //This is how the html is created. read
-        appsLayer.innerHTML += `
+			color: ${appCreateData.titleColor};
+			background-color:${appCreateData.headerColor};
+			border-bottom: 1px solid ${appCreateData.headerBottomColor};
+		`;
+
+        //This is how the app html is created.
+        appHTML = `
 			<app_container onmousedown="processes.bringToTop(this,event)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					<app_title onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')">${appCreateData.title}</app_title>
@@ -223,33 +219,37 @@ processes = {
 				</app_container>
 			
 		`;
+        //Insert the appHTML so that the value fields of inputs and similar don't get wiped.
+        appsLayer.insertAdjacentHTML('beforeend', appHTML);
 
-        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
-        processes.pid[processID] = {}
+        (async () => {
+            await delay(5000);
+            appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
+            processes.pid[processID] = {}
 
-        //Assign the createDate.methods object to the root of the apps pid object.
-        Object.assign(processes.pid[processID], appCreateData.methods)
+            //Assign the createDate.methods object to the root of the apps pid object.
+            Object.assign(processes.pid[processID], appCreateData.methods)
 
-        Object.assign(processes.pid[processID], {
-            id: processID,
-            elementId: stringyPID,
-            appName: appName,
-            minimized: false,
-            maximized: false,
-            positionBeforeMaximize: { x: position.x, y: position.y },
-            sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
-            originalOffsetY: 0,
-            originalOffsetX: 0,
-            getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
-            getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
-            getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
-            getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
-        });
-        this.makeProcessResizable("#" + processes.pid[processID].elementId);
-        this.bringToTop(processes.pid[processID].getProcessElement())
-        apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
-        appCreateData = {};
-
+            Object.assign(processes.pid[processID], {
+                id: processID,
+                elementId: stringyPID,
+                appName: appName,
+                minimized: false,
+                maximized: false,
+                positionBeforeMaximize: { x: position.x, y: position.y },
+                sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
+                originalOffsetY: 0,
+                originalOffsetX: 0,
+                getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
+                getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
+                getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
+                getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
+            });
+            this.makeProcessResizable("#" + processes.pid[processID].elementId);
+            this.bringToTop(processes.pid[processID].getProcessElement())
+            apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
+            appCreateData = {};
+        })();
         return true;
     },
 
@@ -258,8 +258,8 @@ processes = {
         pid = this.getNumberPid(stringyPID);
         let process = this.pid[pid];
         // if (event.target.tagName == "RESIZE_POINT") {
-        //     document.body.setAttribute('onmousemove', null)
-        //     process.getProcessElementHeader().setAttribute('onmouseup', null)
+        //	 document.body.setAttribute('onmousemove', null)
+        //	 process.getProcessElementHeader().setAttribute('onmouseup', null)
         // }
         if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
         // console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);

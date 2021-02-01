@@ -100,6 +100,10 @@ Detailed Log:
 + Changed settings, terminal, topbar, context-menu, app_container styles
 + Limited the app width/height
 
+2021-02-1
++ Fixed app inputs getting cleared when a new app is open
+
+
 Todos:
 DONE TODO: Make a terminal command handler in the system objects 
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
@@ -140,4 +144,4 @@ DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox
 DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
 DONE FIXME: Firefox event.path undefined.
 FIXME: Enter not working on notepad. (*On Firefox)
-FIXME: all app inputs get cleared when a new app is open
+DONE FIXME: all app inputs get cleared when a new app is open
