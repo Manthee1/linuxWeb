@@ -102,6 +102,7 @@ Detailed Log:
 
 2021-02-1
 + Fixed app inputs getting cleared when a new app is open
++ Renamed apps_layer to apps app_container
 
 
 Todos:

@@ -4,5 +4,4 @@ app_body > textarea {
   background-color: var(--main-color-a);
   border: none;
   padding: 10px;
-  overflow: auto;
-  white-space: nowrap; }
+  overflow: auto; }
