@@ -136,6 +136,7 @@ DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
+TODO: Add a notification area with a calendar as in grub. (opened on clicking the topbar time)
 
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
