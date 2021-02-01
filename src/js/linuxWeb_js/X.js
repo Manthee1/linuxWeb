@@ -256,7 +256,7 @@ X = {
         //Define are lockscreen elements
         form: document.querySelector("body > .login > form"),
         loginContainer: document.querySelector('body > .login'),
-        loginTime: document.querySelector('body > .login > login_time'),
+        loginTime: document.querySelector('body > .login > .login_time'),
         time: document.querySelector('body > .login > .login_time > time'),
         date: document.querySelector('body > .login > .login_time > date'),
         p: document.querySelector("login > login_time > p "),
