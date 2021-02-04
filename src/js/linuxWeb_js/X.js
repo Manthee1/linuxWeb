@@ -1,7 +1,6 @@
 X = {
     openMenus: [],
 
-
     menus: {
         desktopContextMenu: {
             createOnMousePosition: true,
@@ -98,7 +97,7 @@ X = {
 					</item>
 					<item>
 					<brightness_icon></brightness_icon>
-					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="200" value="${system.global.brightness}" step="1" type="range">
+					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
                     </item>
                     <hr>
                     <item><network_icon></network_icon><text>Connected</text></item>
@@ -260,6 +259,7 @@ X = {
         time: document.querySelector('body > .login > .login_time > time'),
         date: document.querySelector('body > .login > .login_time > date'),
         p: document.querySelector(".login > .login_time > p "),
+
         unlock: function () {
             X.clearOpenMenus();
             //Fades the lockscreen and displays the linux element
@@ -286,7 +286,7 @@ X = {
 
             setTimeout(() => {
                 this.p.style.opacity = '1';
-            }, 3000);
+            }, 200);
 
             document.querySelector('body>linux').style.opacity = '0'
             setTimeout(() => {
@@ -300,7 +300,7 @@ X = {
                 document.body.setAttribute('onclick', `X.lockScreen.showForm(event)`)
                 document.body.setAttribute('onkeydown', `X.lockScreen.showForm(event)`)
 
-            }, 1000);
+            }, 20);
         },
 
 
