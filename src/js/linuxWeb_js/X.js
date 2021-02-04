@@ -75,9 +75,7 @@ X = {
             },
 
             closeCondition: function (event) {
-                !X.general.elementIsInEventPath(event, document.querySelector("activities_menu_container"))
-
-
+                return !X.general.elementIsInEventPath(event, document.querySelector("activities_menu_container"))
             },
 
         },
@@ -117,7 +115,7 @@ X = {
         </status_area_container>`;
             },
             closeCondition: function (event) {
-                !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
 
@@ -150,7 +148,7 @@ X = {
         </status_area_container>`;
             },
             closeCondition: function (event) {
-                !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
     },

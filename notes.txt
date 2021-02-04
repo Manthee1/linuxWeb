@@ -104,6 +104,8 @@ Detailed Log:
 + Fixed app inputs getting cleared when a new app is open
 + Renamed apps_layer to apps app_container
 
+20-02-04
++ Stopped writing the detailed log as it's takes additional time I'll rather spend on developing. 
 
 Todos:
 DONE TODO: Make a terminal command handler in the system objects 
@@ -120,8 +122,7 @@ DONE TODO: Change the '[  OK  ]' text in boot to precede the boot message (do th
 DONE TODO: Add a text editor app (notepad)
 DONE TODO: Add fade animations when a menus are created or removed
 DONE TODO: Rename app_menu -> activities_menu
-TODO: Make a notifications panel (activated when the time is clicked - topbar middle)
-TODO: Redesign the settings app.
+DONE TODO: Redesign the settings app. (*sidebarmenu)
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Make a settings cookie storage system.
 TODO: Make a default file system object. And write user created files into a cookie/s.
@@ -137,8 +138,8 @@ DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
-TODO: Add a notification area with a calendar as in grub. (opened on clicking the topbar time)
-TODO: Allow input immediately for when the login screen appears 
+TODO: Add a notification panel with a calendar as in grub. (opened on when the topbar time is clicked)
+DONE TODO: Allow input immediately for when the login screen appears 
 
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.

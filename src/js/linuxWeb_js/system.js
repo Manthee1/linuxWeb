@@ -48,30 +48,36 @@ system = {
         else return false;
     },
     cli: {
-        // i A.K.A Interpreter parses the command options and calls the command function
+        // 'i' A.K.A Interpreter parses the command options and calls the command function
         i: function (command = false, terminalProcess = false) {
             // if (!command || !terminalProcess) return false
             let options = null;
 
-            let a = command.split(' ')
+            let a = (command.trim() + " ").split(' ')
             let callMethod = a.splice(0, 1)[0].trim()
             if (a.length != 0) {
-                options = {};
+                options = { "": [] };
                 let optionBuffer = "";
+                let i = 0;
                 a.forEach(x => {
+
                     if (x.startsWith('-')) {
                         optionBuffer.trim() != "" && (options[optionBuffer] = '');
                         optionBuffer = x;
                     } else if (x.trim() != "") {
-                        options[optionBuffer] = x;
+                        if (optionBuffer.trim() == "") options[""].push(x);
+                        else options[optionBuffer] = x;
                         optionBuffer = "";
                     }
                 })
             }
-            console.log(callMethod);
-
-            if (system.cli.commands[callMethod] != undefined) return system.cli.commands[callMethod].method(options);
-            else return `${callMethod}: command not found`
+            try {
+                const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options) : `${callMethod}: command not found`
+                return ret;
+            } catch (error) {
+                console.log(error);
+                throw `${callMethod}: ${error}`
+            }
 
         },
         commands: {
@@ -79,12 +85,11 @@ system = {
                 shortHelp: "Displays help pages for commands",
                 help: `Displays a help page for commands
                     
-                USAGE
-                    help
-                    help <command>
+    USAGE
+        help
+        help <command>
                 `,
                 method: (options) => {
-                    console.log(options);
                     let output = "";
                     if (options == null) {
                         output = "-----help-----\n"
@@ -104,22 +109,36 @@ system = {
                 },
             },
             echo: {
+                shortHelp: "Echos your message back to you",
                 help: `Echos your message back to you
-                        USAGE
-                        echo < message >
-                            ----------------
-                                echo HelloWorld
-                        or
-                        echo \"Hello Word\"`,
+    USAGE
+        echo < message >
+         ----------------
+        echo Hello Word`,
                 method: (options) => {
-                    let text = Object.values(options)[0];
+                    let text = options[""].join(" ")
                     text = text.trim()
                     if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
                     return text
                 }
+            },
+            app: {
+                shortHelp: "Starts an app",
+                help: `Starts an app
+    USAGE
+        app < app name >
+        ----------------
+        app terminal
+        app notepad
+`,
+                method: (options) => {
+                    let appName = options[""][0];
+                    console.log(appName, options[""][0]);
+                    if (apps[appName] != undefined) processes.create(appName)
+                    else throw `${appName}: No such app`
+
+                }
             }
-
-
         }
     },
 
