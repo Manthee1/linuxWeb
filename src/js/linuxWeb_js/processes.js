@@ -65,7 +65,6 @@ processes = {
         this.currentlySelectedProcess != null && this.currentlySelectedProcess.getProcessBarElement().classList.remove('selected') // removes the selected class from the previous apps progress bar thingy.
         this.pid[pid].getProcessBarElement().classList.add('selected');
         this.currentlySelectedProcess = this.pid[pid];
-        // console.log('Focused', this.pid[pid]);
     },
 
     //Default values for the app createData parameters.
@@ -153,7 +152,6 @@ processes = {
         if (apps[appName].createData.onlyOneInstanceAllowed && this.getRunningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
             this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
-            // console.warn(message)
             return false
         }
 
@@ -262,7 +260,6 @@ processes = {
         //	 process.getProcessElementHeader().setAttribute('onmouseup', null)
         // }
         if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
-        // console.log(event, stringyPID, event.target.tagName, this.pid[pid].maximized, this.pid[pid]);
         process.originalOffsetY = event.layerY;
         process.originalOffsetX = event.layerX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
@@ -273,9 +270,6 @@ processes = {
     },
 
     processMouseMoveHandler: function (event, process) {
-        // console.log(event, process);
-        // console.log(event, pid);
-
         var y = event.clientY - process.originalOffsetY;
         var x = event.clientX - process.originalOffsetX;
         process.getProcessElement().style.top = y + "px";
