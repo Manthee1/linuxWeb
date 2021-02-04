@@ -286,7 +286,7 @@ X = {
 
             setTimeout(() => {
                 this.p.style.opacity = '1';
-            }, 200);
+            }, 3000);
 
             document.querySelector('body>linux').style.opacity = '0'
             setTimeout(() => {
