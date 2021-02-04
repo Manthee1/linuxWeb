@@ -1,1 +1,0 @@
-if(null!=document.querySelector("login_time_display")){var login_time_display=document.querySelector("login_time_display");login_time_display.innerHTML=date.getTime("hm"),setInterval(()=>{login_time_display.innerHTML=date.getTime("hm")},6e4-Number(1e3*date.getTime("s")))}

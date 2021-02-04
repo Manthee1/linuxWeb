@@ -138,6 +138,7 @@ DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
 TODO: Add a notification area with a calendar as in grub. (opened on clicking the topbar time)
+TODO: Allow input immediately for when the login screen appears 
 
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
