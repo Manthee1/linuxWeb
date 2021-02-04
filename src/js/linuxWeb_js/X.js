@@ -446,11 +446,9 @@ X = {
             let menuUIData = {};
             Object.assign(menuUIData, xObjSchema);
             Object.assign(menuUIData, xObjValue);
-            // console.log(xObjName, menuUIData);
             if (typeof (xObjValue) == "object" && menuUIData.toggleElement != undefined && typeof menuUIData.getHTML == 'function') {
                 //Adds a 'onclick' listener for the button element that creates a menu(app menu,status menu...)
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
-                    // console.log('sysClicked', event);
                     if (!X.openMenus.includes(xObjName) || menuUIData.recreateBehaviour == 'recreate') {
                         X.clearOpenMenus(true)
                         menuUIData.preventDefault && event.preventDefault()
@@ -512,7 +510,6 @@ X = {
     },
 
     createMenu: function (menuUIData, x, y) {
-        // console.log(menuUIData, x, y);
         let elHTML
         if (menuUIData.createOnMousePosition) elHTML = menuUIData.getHTML(x, y);
         else elHTML = menuUIData.getHTML()
