@@ -220,34 +220,32 @@ processes = {
         //Insert the appHTML so that the value fields of inputs and similar don't get wiped.
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
 
-        (async () => {
-            await delay(5000);
-            appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
-            processes.pid[processID] = {}
 
-            //Assign the createDate.methods object to the root of the apps pid object.
-            Object.assign(processes.pid[processID], appCreateData.methods)
+        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
+        processes.pid[processID] = {}
 
-            Object.assign(processes.pid[processID], {
-                id: processID,
-                elementId: stringyPID,
-                appName: appName,
-                minimized: false,
-                maximized: false,
-                positionBeforeMaximize: { x: position.x, y: position.y },
-                sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
-                originalOffsetY: 0,
-                originalOffsetX: 0,
-                getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
-                getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
-                getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
-                getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
-            });
-            this.makeProcessResizable("#" + processes.pid[processID].elementId);
-            this.bringToTop(processes.pid[processID].getProcessElement())
-            apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
-            appCreateData = {};
-        })();
+        //Assign the createDate.methods object to the root of the apps pid object.
+        Object.assign(processes.pid[processID], appCreateData.methods)
+
+        Object.assign(processes.pid[processID], {
+            id: processID,
+            elementId: stringyPID,
+            appName: appName,
+            minimized: false,
+            maximized: false,
+            positionBeforeMaximize: { x: position.x, y: position.y },
+            sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
+            originalOffsetY: 0,
+            originalOffsetX: 0,
+            getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
+            getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
+            getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
+            getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
+        });
+        this.makeProcessResizable("#" + processes.pid[processID].elementId);
+        this.bringToTop(processes.pid[processID].getProcessElement())
+        apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
+        appCreateData = {};
         return true;
     },
 
