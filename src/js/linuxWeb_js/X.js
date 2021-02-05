@@ -409,6 +409,7 @@ X = {
 
         linux = document.querySelector("body > linux");
         desktop = document.querySelector("linux > desktop");
+        topbar = document.querySelector("linux > topbar");
         appsContainer = document.querySelector("linux > apps_container");
         appList = document.querySelector("linux > app_list");
         systemMenuContainer = document.querySelector("system_menu_container");

@@ -7,8 +7,8 @@ context_menu {
   min-width: 200px;
   padding: 5px 0px;
   border-radius: 10px;
-  border: 1px solid var(--secondary-color);
-  box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--main-color-a);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.226);
   background-color: var(--main-color); }
 
 context_menu > context_item {

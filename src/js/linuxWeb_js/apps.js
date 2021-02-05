@@ -178,7 +178,7 @@ apps = {
             fullWidth: true,
             minWidth: 500,
             minHeight: 500,
-            headerBottomColor: 'var(--main-color-b)',
+            headerBorderBottomColor: 'var(--main-color-b)',
             onlyOneInstanceAllowed: true,
             getHTML: function () {
                 let menuItems = Object.entries(apps.settings.layout).map((x) => {

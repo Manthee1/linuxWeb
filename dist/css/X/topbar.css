@@ -5,14 +5,14 @@ topbar {
   top: 0px;
   left: 0px;
   width: 100vw;
-  height: 25px;
+  height: calc(var(--topbar-height) - 2px);
   background-color: var(--main-color);
-  border-bottom: var(--main-color-b) 2px solid; }
+  border-bottom: var(--main-color) 2px solid; }
 
 topbar > * {
   width: 33%;
-  height: 25px;
-  line-height: 25px;
+  height: calc(var(--topbar-height) - 2px);
+  line-height: calc(var(--topbar-height) - 2px);
   text-align: center; }
 
 topbar > left {
@@ -30,7 +30,8 @@ topbar > left > activities_menu_button {
 dateTime {
   display: inline-block;
   align-items: center;
-  text-align: center; }
+  text-align: center;
+  padding: 0px 12px; }
 
 /* Right styles */
 topbar > right {

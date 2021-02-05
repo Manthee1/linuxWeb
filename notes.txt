@@ -112,7 +112,7 @@ DONE TODO: Make a terminal command handler in the system objects
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
 DONE        |--- Create the interpreter
 DONE |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
-TODO: Make the topbar height dynamic 
+     TODO: Make the topbar height dynamic 
 DONE TODO: Add the transparent topbar with only the right menu to the login screen 
 DONE TODO: Create a CTA/message function in the X object.
 DONE TODO: Make the powerMenu a dropdown.
@@ -147,5 +147,5 @@ DONE FIXME: appMenu disappears when clicked on search
 DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox 
 DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
 DONE FIXME: Firefox event.path undefined.
-FIXME: Enter not working on notepad. (*On Firefox)
+DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open

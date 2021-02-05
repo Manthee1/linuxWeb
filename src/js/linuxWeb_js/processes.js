@@ -70,13 +70,13 @@ processes = {
     //Default values for the app createData parameters.
     processSchema: {
         title: "Untitled App",
-        titleColor: "inherit",
-        bodyColor: "inherit",
-        textColor: "inherit",
-        headerColor: "var(--main-color);",
-        headerBottomColor: "inherit",
-        bodyBorderSize: "inherit",
-        padding: "inherit",
+        titleColor: "",
+        bodyColor: "",
+        textColor: "",
+        headerColor: "",
+        headerBorderBottomColor: "transparent",
+        bodyBorderSize: "",
+        padding: "",
         additionalBodyCss: "",
         opacity: 1,
         HTML: String(),
@@ -101,12 +101,11 @@ processes = {
             element.style.width = this.pid[pid].sizeBeforeMaximize.width;
             element.querySelector('app_resize').style.display = ''
             this.pid[pid].maximized = false;
-
         } else {
             this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
             this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
             element.style.transition = "all 0.5s ease-in-out";
-            element.style.top = "27px";
+            element.style.top = topbar.offsetHeight + "px";
             element.style.left = "0px";
             element.style.height = `${window.innerHeight - 55}px`;
             element.style.width = `${window.innerWidth}px`;
@@ -187,7 +186,7 @@ processes = {
         let headerStyles = `
 			color: ${appCreateData.titleColor};
 			background-color:${appCreateData.headerColor};
-			border-bottom: 1px solid ${appCreateData.headerBottomColor};
+			border-bottom: 1px solid ${appCreateData.headerBorderBottomColor};
 		`;
 
         //This is how the app html is created.
@@ -226,7 +225,6 @@ processes = {
 
         //Assign the createDate.methods object to the root of the apps pid object.
         Object.assign(processes.pid[processID], appCreateData.methods)
-
         Object.assign(processes.pid[processID], {
             id: processID,
             elementId: stringyPID,
@@ -269,6 +267,7 @@ processes = {
 
     processMouseMoveHandler: function (event, process) {
         var y = event.clientY - process.originalOffsetY;
+        y = y < topbar.offsetHeight ? topbar.offsetHeight : y;
         var x = event.clientX - process.originalOffsetX;
         process.getProcessElement().style.top = y + "px";
         process.getProcessElement().style.left = x + "px";

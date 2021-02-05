@@ -2,15 +2,14 @@ activities_menu_container {
   position: absolute;
   display: flex;
   flex-flow: column wrap;
-  top: 27px;
+  top: var(--topbar-height);
   left: 0px;
   padding: 10px 0px;
   width: 100vw;
   height: calc(100vh - 45px);
   overflow-y: none;
   opacity: 0.9;
-  background-color: #00000080;
-  border: 1px var(--secondary-color) solid; }
+  background-color: #00000080; }
 
 activities_menu_container > app_search {
   margin-top: 30px;

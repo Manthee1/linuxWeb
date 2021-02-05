@@ -17,6 +17,7 @@ system = {
             var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
             return text.replace(/[&<>"']/g, function (m) { return map[m]; });
         },
+        css: {},
     },
     // I won't comment understandable functions here...
     changeBrightness: function (brightness) {
@@ -28,6 +29,7 @@ system = {
         let img
         X.services.volume.update();
     },
+
     startup: function () {//  Important: Should only be run once
         if (this.started) return false;
         this.started = true;
@@ -38,9 +40,7 @@ system = {
         X.initialize();
 
         X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
-
-        //WHen the body is clicked all popup's get closed
-
+        // system.global.css["topbar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topbar-height').replace('px', '');
     },
 
     validatePassword: function (password) {
@@ -60,7 +60,6 @@ system = {
                 let optionBuffer = "";
                 let i = 0;
                 a.forEach(x => {
-
                     if (x.startsWith('-')) {
                         optionBuffer.trim() != "" && (options[optionBuffer] = '');
                         optionBuffer = x;
@@ -69,7 +68,7 @@ system = {
                         else options[optionBuffer] = x;
                         optionBuffer = "";
                     }
-                })
+                });
             }
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options) : `${callMethod}: command not found`
