@@ -1,30 +1,30 @@
-topbar
+top_bar
     position: fixed
     display: flex
     flex-direction: row
     top: 0px
     left: 0px
     width: 100vw
-    height: calc(var(--topbar-height) - 2px)
+    height: calc(var(--top_bar-height) - 2px)
     background-color: var(--main-color)
     border-bottom: var(--main-color) 2px solid
 
-topbar > *
+top_bar > *
     width: 33%
-    height: calc(var(--topbar-height) - 2px)
-    line-height: calc(var(--topbar-height) - 2px)
+    height: calc(var(--top_bar-height) - 2px)
+    line-height: calc(var(--top_bar-height) - 2px)
     text-align: center
 
 // Left styles
 
-topbar > left
+top_bar > left
     display: flex
     flex: 1 1 auto
     text-align: left
     justify-content: left
 
 
-topbar > left > activities_menu_button
+top_bar > left > activities_menu_button
     display: flex
     transition: filter ease-in-out 0.05s
     height: 100%
@@ -37,13 +37,13 @@ dateTime
     padding: 0px 12px
 
 /* Right styles
-topbar > right
+top_bar > right
     display: inline-block
     position: relative
     flex: 1 1 auto
     text-align: right
 
-topbar > right > *
+top_bar > right > *
     padding: 0px 4px
     background-color: transparent
     transition: background-color ease-in-out 0.05s
@@ -84,5 +84,5 @@ topbar > right > *
 //   font-size: 30px;
 // }
 
-topbar > * > *:hover
+top_bar > * > *:hover
     filter: brightness(1.4)

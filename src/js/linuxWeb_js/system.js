@@ -40,7 +40,7 @@ system = {
         X.initialize();
 
         X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
-        // system.global.css["topbar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topbar-height').replace('px', '');
+        // system.global.css["topBar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topBar-height').replace('px', '');
     },
 
     validatePassword: function (password) {

@@ -47,11 +47,11 @@ Detailed Log:
 
 2021-01-04
 + Redesigned the 'status_area_container' (& Added a Connected item)
-+ Changed the hover on topbar elements (background color -> brightness())
++ Changed the hover on top_bar elements (background color -> brightness())
 + Change the 'app_menu_button' icon('O') into text('Activities')
 + Changed the background
 + Changed the logo
-+ Changed 'titlebar' -> 'topbar'
++ Changed 'titlebar' -> 'top_bar'
 + Made app title aligned to the center of the header
 * Found a bug on Firefox where the windows sometimes lose movability
 
@@ -97,7 +97,7 @@ Detailed Log:
 2021-01-30
 + Changed fonts
 + Updated alot of styles
-+ Changed settings, terminal, topbar, context-menu, app_container styles
++ Changed settings, terminal, top_bar, context-menu, app_container styles
 + Limited the app width/height
 
 2021-02-1
@@ -112,8 +112,8 @@ DONE TODO: Make a terminal command handler in the system objects
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
 DONE        |--- Create the interpreter
 DONE |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
-     TODO: Make the topbar height dynamic 
-DONE TODO: Add the transparent topbar with only the right menu to the login screen 
+DONE TODO: Make the top_bar height dynamic 
+DONE TODO: Add the transparent top_bar with only the right menu to the login screen 
 DONE TODO: Create a CTA/message function in the X object.
 DONE TODO: Make the powerMenu a dropdown.
 DONE TODO: Make unfocused app windows more transparent
@@ -138,7 +138,7 @@ DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
-TODO: Add a notification panel with a calendar as in grub. (opened on when the topbar time is clicked)
+TODO: Add a notification panel with a calendar as in grub. (opened on when the top_bar time is clicked)
 DONE TODO: Allow input immediately for when the login screen appears 
 
 Bugs:

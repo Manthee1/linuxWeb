@@ -22,7 +22,7 @@ html {
   --select-color: #15539e;
   --error-color: #410e0e;
   --light-red-color: #ff5a5a;
-  --topbar-height: 25px;
+  --top_bar-height: 25px;
   --sans-font: "SourceSansPro";
   --mono-font: "RobotMono";
   font-family: var(--sans-font), sans;

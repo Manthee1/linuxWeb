@@ -105,7 +105,7 @@ processes = {
             this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
             this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
             element.style.transition = "all 0.5s ease-in-out";
-            element.style.top = topbar.offsetHeight + "px";
+            element.style.top = topBar.offsetHeight + "px";
             element.style.left = "0px";
             element.style.height = `${window.innerHeight - 55}px`;
             element.style.width = `${window.innerWidth}px`;
@@ -267,7 +267,7 @@ processes = {
 
     processMouseMoveHandler: function (event, process) {
         var y = event.clientY - process.originalOffsetY;
-        y = y < topbar.offsetHeight ? topbar.offsetHeight : y;
+        y = y < topBar.offsetHeight ? topBar.offsetHeight : y;
         var x = event.clientX - process.originalOffsetX;
         process.getProcessElement().style.top = y + "px";
         process.getProcessElement().style.left = x + "px";

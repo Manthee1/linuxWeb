@@ -122,7 +122,7 @@
   .login > .login_user, .login > input {
     position: relative;
     bottom: 100px; }
-  .login > topbar {
+  .login > top_bar {
     background-color: transparent;
     border: none; }
 
