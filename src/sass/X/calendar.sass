@@ -1,0 +1,33 @@
+calendar
+    display: flex
+    flex-flow: row nowrap
+    justify-content: center
+    align-content: center
+    width: auto
+    margin: auto
+    --day-size: 20px
+    --day-font-size: 15px
+    > month
+        flex: 1 1 auto
+        display: flex
+        flex-flow: column nowrap
+        justify-content: center
+        align-content: center
+        > week
+            display: flex
+            flex-flow: row nowrap
+            justify-content: left
+            align-content: left
+            flex: 1 1 100%
+            > day
+                max-width: var(--day-size)
+                max-height: var(--day-size)
+                font-size: var(--day-font-size)
+                padding: 5px
+                flex: 1 1 0
+                text-align: center
+                border-radius: 50%
+                &:hover
+                    background-color: var(--hover-highlight-color)
+                    
+            

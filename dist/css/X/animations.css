@@ -11,6 +11,12 @@
 .bottomFadeOut {
   animation: bottomFade ease-in-out 0.2s; }
 
+.topFadeIn {
+  animation: reverse bottomFade ease-in-out 0.2s; }
+
+.topFadeOut {
+  animation: bottomFade ease-in-out 0.2s; }
+
 @keyframes leftFade {
   from {
     opacity: 1; }
