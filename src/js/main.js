@@ -128,15 +128,12 @@ date = {
 		let h, m, s, strEnd = "";
 		let d = new Date();
 		[h, m, s] = [d.getHours(), d.getMinutes(), d.getSeconds()];
-		console.log(h, m, s);
 		if (clock12h) {
 			if (h > 12) {
 				h -= 12;
 				strEnd = "PM";
 			} else strEnd = "AM";
 		}
-
-
 
 		m.toString().length < 2 && (m = '0' + m)
 		s.toString().length < 2 && (s = '0' + s)
@@ -150,4 +147,12 @@ date = {
 	},
 };
 
+//Addon Functions
 
+let range = (a, b = null) => {
+	let n = b == null ? a : b;
+	let ret = [...Array(n).keys()]
+
+	if (b) ret = ret.splice(a)
+	return ret
+}
