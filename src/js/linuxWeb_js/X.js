@@ -152,6 +152,44 @@ X = {
             },
         },
     },
+
+    calendar: {
+
+        getHTML: function () {
+            let htmlOut = "<calendar><month>"
+            let calendarArray = this.createCalendarArray()
+            calendarArray.forEach(week => {
+                htmlOut += "<week>";
+                htmlOut += week.map(date => `<day>${date}</day>`).join('')
+                htmlOut += "</week>";
+            });
+            htmlOut += "</month></calendar>"
+            return htmlOut;
+        },
+        createCalendarArray: function (year = 0, month = 0) {
+            year = year || date.get("year");
+            month = month || date.get("month");
+            const monthFirstDay = new Date(`${year}/${month}/1`)
+            monthLastDay = new Date(monthFirstDay)
+            monthLastDay.setMonth(monthLastDay.getMonth() + 1)
+            monthLastDay = new Date(monthLastDay - 3600 * 1000 * 24)
+            const previousMonthFirstDay = new Date(monthFirstDay)
+            previousMonthFirstDay.setMonth(previousMonthFirstDay.getMonth() - 1)
+            const previousMonthLastDay = new Date(monthFirstDay - 3600 * 1000 * 24)
+            // const nextMonthFirstDay = new Date(monthLastDay + 3600 * 1000 * 24);
+            let calendarStartDate = new Date(monthFirstDay - 3600 * 1000 * 24 * monthFirstDay.getDay())
+            let calendarDates = [].concat(
+                range(calendarStartDate.getDate(), previousMonthLastDay.getDate() + 1),
+                range(monthFirstDay.getDate(), monthLastDay.getDate() + 1),
+                range(1, 30),
+            ).slice(0, 42)
+            calendarDates = calendarDates.map(x => { return x < 10 ? '0' + x : x })
+            let ret = [];
+            for (let i = 0; i < 6; i++) ret.push(calendarDates.splice(0, 7))
+            return ret;
+        }
+    },
+
     services: {
         clock: {
             onStart: function () {
