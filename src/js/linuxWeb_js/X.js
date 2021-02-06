@@ -79,6 +79,20 @@ X = {
             },
 
         },
+        notificationPanel: {
+            listenerType: "click",
+            toggleElement: document.querySelector("datetime"),
+            enterAnimation: "topFadeIn",
+            exitAnimation: "topFadeOut",
+            exitAnimationTime: 200, //ms
+            elementTag: "notification_panel_container",
+            getHTML: function () {
+                return `<notification_panel_container>${X.calendar.getHTML()}</notification_panel_container>`;
+            },
+            closeCondition: function (event) {
+                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container"))
+            },
+        },
         statusArea: {
             listenerType: "click",
             toggleElement: document.querySelector("statusArea"),
