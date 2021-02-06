@@ -11,5 +11,4 @@ notification_panel_container {
   height: 400px;
   border-radius: 10px; }
   notification_panel_container > calendar {
-    position: relative;
-    width: 33%; }
+    width: 200px; }

@@ -170,15 +170,19 @@ X = {
     calendar: {
 
         getHTML: function () {
-            let htmlOut = "<calendar><month>"
+            let htmlOut =
+                `<calendar>
+                <month>${date.get('month>full date year')}</month>
+                <calendar_content>
+                <week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days>
+                <dates>`
             let calendarArray = this.createCalendarArray()
             calendarArray.forEach(week => {
-                htmlOut += "<week>";
-                htmlOut += week.map(date => `<day>${date}</day>`).join('')
-                htmlOut += "</week>";
+                htmlOut += "<week>"
+                htmlOut += week.map(date => `<day><span>${date}</span></day>`).join('')
+                htmlOut += "</week>"
             });
-            htmlOut += "</month></calendar>"
-            return htmlOut;
+            return htmlOut + "</calendar_content>";
         },
         createCalendarArray: function (year = 0, month = 0) {
             year = year || date.get("year");

@@ -1,31 +1,43 @@
 calendar {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-content: center;
-  width: auto;
-  margin: auto;
-  --day-size: 20px;
-  --day-font-size: 15px; }
-  calendar > month {
-    flex: 1 1 auto;
+  display: inline-block;
+  max-width: min-content;
+  padding: 1.5em;
+  border: 2px solid white;
+  border-radius: 8px;
+  background-color: var(--general-border-color);
+  --size: 30px;
+  padding: 10px; }
+  calendar > calendar_content > week_days {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     justify-content: center;
-    align-content: center; }
-    calendar > month > week {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: left;
-      align-content: left;
-      flex: 1 1 100%; }
-      calendar > month > week > day {
-        max-width: var(--day-size);
-        max-height: var(--day-size);
-        font-size: var(--day-font-size);
-        padding: 5px;
-        flex: 1 1 0;
-        text-align: center;
-        border-radius: 50%; }
-        calendar > month > week > day:hover {
+    align-content: center;
+    margin-top: 1.25em; }
+    calendar > calendar_content > week_days > * {
+      font-size: 0.7em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      font-variant: small-caps;
+      text-align: center;
+      flex: 1 1 0px; }
+  calendar > calendar_content > dates > week {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-content: center;
+    flex: 1 1 0px; }
+    calendar > calendar_content > dates > week > day {
+      position: relative;
+      background-color: transparent;
+      text-align: center;
+      flex: 1 1 0px; }
+      calendar > calendar_content > dates > week > day > span {
+        display: inline-block;
+        border: 0;
+        border-radius: 50%;
+        height: var(--size);
+        width: var(--size);
+        line-height: var(--size);
+        vertical-align: middle; }
+        calendar > calendar_content > dates > week > day > span:hover {
           background-color: var(--hover-highlight-color); }
