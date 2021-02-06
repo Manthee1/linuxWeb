@@ -78,6 +78,8 @@ function delay(timeDelay) {
 
 
 date = {
+	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",],
+	weekdays: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",],
 	//Basically converts the 'options' into a date/time
 	get: (options, divider = " ") => {
 		options = options.split(' ')
@@ -85,15 +87,19 @@ date = {
 			switch (x) {
 				case 'date': return new Date().getDate()
 					break;
+				case 'year': return new Date().getFullYear()
+					break;
 				case 'month': return new Date().getMonth() + 1
 					break;
-				case 'year': return new Date().getFullYear()
+				case 'month>full': return date.months[new Date().getMonth()]
 					break;
 				case 'month>str': return new Date().toDateString().slice(4, 7)
 					break;
-				case 'day>str': return new Date().toDateString().slice(0, 3)
-					break;
 				case 'day': return new Date().getDay()
+					break;
+				case 'day>full': return date.weekdays(new Date().getDay())
+					break;
+				case 'day>str': return new Date().toDateString().slice(0, 3)
 					break;
 				case 'time': return date.getTime('hms', ':')
 					break;
