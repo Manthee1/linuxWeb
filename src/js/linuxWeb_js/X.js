@@ -90,7 +90,7 @@ X = {
                 if (notifications = X.notification.get()) {
                     let html = "";
                     Object.values(notifications).forEach(x => {
-                        html += `<notification onclick='${x.clickAction}'><notification_content><img src='${x.iconPath}'><text><title>${x.title}</title><description>${x.description}</description></text></notification_content>${!x.type ? `<x_icon onclick='X.notification.remove(${x.id}); this.parentElement.remove()'></x_icon>` : ""}</notification>`;
+                        html += `<notification onclick="${x.clickAction}"><notification_content><img src='${x.iconPath}'><text><title>${x.title}</title><description>${x.description}</description></text></notification_content>${!x.type ? `<x_icon onclick='X.notification.remove(${x.id}); this.parentElement.remove()'></x_icon>` : ""}</notification>`;
                     })
                     return html;
                 }
@@ -99,8 +99,9 @@ X = {
                 return `<notification_panel_container><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container"))
-            },
+                console.log(!X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || X.general.tagIsInEventPath(event, "NOTIFICATION"));
+                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || X.general.tagIsInEventPath(event, "NOTIFICATION");
+            }
         },
         statusArea: {
             listenerType: "click",
@@ -203,20 +204,17 @@ X = {
 
         getHTML: function () {
             let htmlOut =
-                `<calendar>
-                <month>${date.get('month>full date year')}</month>
-                <calendar_content>
-                <week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days>
-                <dates>`
-            let calendarArray = this.createCalendarArray()
+                `<calendar><month>${date.get('month>full date year')}</month><calendar_content>
+<week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days><dates>`
+            let calendarArray = this.createCalendarArray(0, 0, true, true)
             calendarArray.forEach(week => {
                 htmlOut += "<week>"
-                htmlOut += week.map(date => `<day><span ${date.startsWith('-') && "class = 'not_current_months_date'"} >${date.replaceAll('-', '')}</span></day>`).join('')
+                htmlOut += week.map(date => `<day><span ${date.startsWith('-') ? "class = 'not_current_months_date'" : ""} ${date.startsWith('&') ? "class = 'current_date'" : ""}>${date.replace(/-|&/gm, '') || date}</span></day>`).join('')
                 htmlOut += "</week>"
             });
             return htmlOut + "</calendar_content>";
         },
-        createCalendarArray: function (year = 0, month = 0) {
+        createCalendarArray: function (year = 0, month = 0, notMonthDatePrefix = false, currentDatePrefix = false) {
             year = year || date.get("year");
             month = month || date.get("month");
             const monthFirstDay = new Date(`${year}/${month}/1`)
@@ -228,11 +226,25 @@ X = {
             const previousMonthLastDay = new Date(monthFirstDay - 3600 * 1000 * 24)
             // const nextMonthFirstDay = new Date(monthLastDay + 3600 * 1000 * 24);
             let calendarStartDate = new Date(monthFirstDay - 3600 * 1000 * 24 * monthFirstDay.getDay())
+            let previousMonthDateRange = range(calendarStartDate.getDate(), previousMonthLastDay.getDate() + 1);
+            let currentMonthDateRange = range(monthFirstDay.getDate(), monthLastDay.getDate() + 1)
+            let nextMonthDateRange = range(1, 30)
+            if (notMonthDatePrefix) {
+                previousMonthDateRange = previousMonthDateRange.map(x => { return "-" + x });
+                nextMonthDateRange = nextMonthDateRange.map(x => { return "-" + x });
+            }
+            if (currentDatePrefix) {
+                day = Number(date.get('date'))
+                currentMonthDateRange[day - 1] = "&" + currentMonthDateRange[day - 1]
+
+            }
+
             let calendarDates = [].concat(
-                range(calendarStartDate.getDate(), previousMonthLastDay.getDate() + 1).map(x => { return "-" + x }),
-                range(monthFirstDay.getDate(), monthLastDay.getDate() + 1),
-                range(1, 30).map(x => { return "-" + x }),
+                previousMonthDateRange,
+                currentMonthDateRange,
+                nextMonthDateRange,
             ).slice(0, 42)
+
             calendarDates = calendarDates.map(x => { x = String(x); return x.length == 1 ? '0' + x : x })
             let ret = [];
             for (let i = 0; i < 6; i++) ret.push(calendarDates.splice(0, 7))
@@ -325,6 +337,16 @@ X = {
         elementIsInEventPath: (event, element) => {
             clickPath = event.path || event.composedPath() //event.path is for chrome and event.composedPath() is mozilla firefox
             return clickPath.includes(element)
+        },
+        tagIsInEventPath: (event, tag) => {
+            tag = tag.toUpperCase()
+            clickPath = event.path || event.composedPath()
+            console.log(tag, clickPath);
+            for (element of clickPath) {
+                console.log(element);
+                if (element.tagName == tag) return true
+            }
+            return false
         }
     },
 

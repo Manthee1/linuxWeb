@@ -42,7 +42,7 @@ system = {
         X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
         // system.global.css["topBar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topBar-height').replace('px', '');
         X.notification.create()
-        X.notification.create("Virus Alert", "Your computer has a virus", "process.create('terminal')", "./img/network.svg", 'persistent')
+        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", 'persistent')
     },
 
     validatePassword: function (password) {
