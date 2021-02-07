@@ -138,7 +138,7 @@ DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
-DO TODO: Add a notification panel with a calendar as in grub. (opened on when the top_bar time is clicked)
+DONE TODO: Add a notification panel with a calendar as in grub. (opened on when the top_bar time is clicked)
 DONE TODO: Allow input immediately for when the login screen appears 
 TODO: Change the style color to most everything.
 TODO: Make the status area a lighter color
