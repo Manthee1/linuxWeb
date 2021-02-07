@@ -24,8 +24,8 @@
             z-index: -1
             top: 0px
             left: 0px
-            background: var(--secondary-color)
-            background: radial-gradient(circle, var(--secondary-color) 0%, var(--background-color) 100%)
+            background: var(--main-color)
+            background: radial-gradient(circle, #18171f 0%, var(--background-color) 100%)
 
             /* background-image: url("../../img/LoginBG.jpg");
             background-repeat: no-repeat
@@ -50,7 +50,6 @@
             /* padding: 20px;
             /* border: 10px solid white;
             transition: all 0.5s ease-in-out
-
             >
                 *
                     display: block
@@ -89,7 +88,7 @@
                         display: flex
                         flex-flow: column nowrap
                         border: 2px solid gray
-                        background: var(--main-color)
+                        background: #00000063
                         height: 50px
                         width: 50px
                         opacity: 0.5
@@ -109,6 +108,7 @@
                         font-size: 25px
                         margin-top: 2rem
                         color: gray
+                        font-weight: 100
 
 
                 input
@@ -118,13 +118,14 @@
                     padding-left: 8px
                     height: 20px
                     width: 250px
-                    background: var(--main-color-a)
+                    background: #00000063
                     border-radius: 5px
                     margin: -5px
                     color: white
-                    border: 1px solid var(--main-color-darker)
-                    // border: none
-                    opacity: 0.8
+                    font-weight: 100
+                    border: 2px solid #000
+                    border: none
+                    // opacity: 0.5
                     transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out
 
                     &:focus
