@@ -1,5 +1,5 @@
 overlay > cta {
-  background-color: var(--main-color-b);
+  background-color: var(--main-color);
   display: flex;
   flex-flow: column nowrap;
   padding: 0px;
@@ -7,7 +7,8 @@ overlay > cta {
   min-width: 440px;
   border-radius: 10px;
   padding-top: 10px;
-  overflow: hidden; }
+  overflow: hidden;
+  color: var(--light); }
 
 overlay > cta > * {
   margin: 5px 30px;
@@ -29,8 +30,8 @@ overlay > cta > cta_buttons > input {
   /* border-radius: 5px; */
   border: none;
   /* border: 1px solid var(--main-color-a); */
-  border-top: 2px solid var(--main-color-a);
-  background-color: var(--main-color-b); }
+  border-top: 4px solid var(--main-color-lighter);
+  background-color: var(--main-color); }
 
 overlay > cta > cta_buttons > input:hover {
   filter: brightness(1.2); }

@@ -20,7 +20,6 @@ app_container {
   min-height: 100px;
   max-width: 100vw;
   max-height: 100vh;
-  border: var(--main-color) 1px solid;
   box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.4);
   border-radius: 8px 8px 0px 0px;
   transform: scale(1);

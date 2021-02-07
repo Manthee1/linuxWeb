@@ -7,7 +7,6 @@ context_menu {
   min-width: 200px;
   padding: 5px 0px;
   border-radius: 10px;
-  border: 1px solid var(--main-color-a);
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.226);
   background-color: var(--main-color); }
 
@@ -23,7 +22,7 @@ context_menu > context_item {
   background-color: var(--main-color); }
 
 context_menu > context_item:hover {
-  background-color: var(--hover-highlight-color); }
+  filter: brightness(1.15); }
 
 context_menu > context_item > context_sub_menu {
   display: none;

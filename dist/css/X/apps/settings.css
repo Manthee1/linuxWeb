@@ -3,7 +3,8 @@ app_body > settings {
   height: 100%;
   flex-flow: row nowrap;
   display: flex;
-  background-color: var(--main-color); }
+  background-color: var(--main-color);
+  color: var(--light-color); }
 
 app_body > settings > * {
   flex: 1 1 auto;
@@ -13,8 +14,7 @@ app_body > settings > sidebarMenu {
   display: flex;
   flex-flow: column;
   flex: 0 0 0;
-  padding: 0px;
-  border-right: 2px var(--main-color-b) solid; }
+  padding: 0px; }
 
 app_body > settings > sidebarMenu > * {
   display: flex;
@@ -30,10 +30,10 @@ app_body > settings > sidebarMenu > * > *:first-child {
   margin-right: 10px; }
 
 app_body > settings > sidebarMenu > *:hover {
-  background-color: var(--hover-highlight-color); }
+  background-color: var(--main-color-darker); }
 
 app_body > settings > sidebarMenu > .selected {
-  background-color: var(--main-color-b); }
+  background-color: var(--main-color-lighter); }
 
 app_body > settings > panel {
   background-color: var(--main-color-lighter); }

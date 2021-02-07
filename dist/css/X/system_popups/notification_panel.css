@@ -1,4 +1,6 @@
 notification_panel_container {
+  position: fixed;
+  margin-top: 0px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -7,23 +9,22 @@ notification_panel_container {
   top: calc(var(--top_bar-height) + 10px);
   left: 50%;
   transform: translate(-50%);
-  margin: auto;
-  background-color: var(--main-color-b);
+  background-color: var(--main-color);
   width: 600px;
   border-radius: 10px;
-  border: 2px solid var(--main-color-c); }
+  border: 2px solid var(--main-color-lighter); }
   notification_panel_container > calendar_container {
     padding: 0.5rem;
     flex: 1 1 0; }
     notification_panel_container > calendar_container > calendar {
       width: auto; }
   notification_panel_container > notifications_container {
-    border-right: 1px solid var(--main-color-c);
+    border-right: 1px solid var(--main-color-lighter);
     flex: 2 1 0; }
     notification_panel_container > notifications_container > notification {
       display: flex;
       flex-flow: column nowrap;
-      background-color: var(--main-color-c);
+      background-color: var(--main-color-lighter);
       border-radius: 10px;
       padding: 0.5rem;
       margin: 0.5rem;
@@ -45,6 +46,8 @@ notification_panel_container {
           filter: brightness(1.2); }
       notification_panel_container > notifications_container > notification:hover {
         filter: brightness(1.05); }
+      notification_panel_container > notifications_container > notification:active {
+        background-color: var(--main-color-darker); }
       notification_panel_container > notifications_container > notification > notification_content {
         display: flex;
         flex-flow: row nowrap; }

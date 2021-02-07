@@ -4,7 +4,7 @@ app_list {
   position: absolute;
   bottom: 0px;
   left: 0px;
-  border-top: 2px solid var(--main-color-b);
+  border-top: 2px solid var(--main-color);
   align-content: center;
   height: 25px;
   opacity: 1;
@@ -17,22 +17,22 @@ app_list > process {
   flex: 1 1 auto;
   padding: 0px 8px;
   min-height: 25px;
-  max-width: 200px;
+  max-width: 12rem;
   text-overflow: ellipsis;
   line-height: 25px;
   font-size: 14px;
-  border-right: 1px solid var(--main-color-b);
-  color: white;
+  border-right: 1px solid var(--main-color-lighter);
+  background-color: var(--main-color);
   font-weight: 100;
   cursor: pointer; }
 
 app_list > process:hover {
-  background-color: var(--secondary-color);
+  filter: brightness(1.15);
   opacity: 1; }
 
 app_list > process.selected {
-  background-color: var(--secondary-color);
+  background-color: var(--main-color-darker);
   opacity: 0.9;
   top: -2px;
-  border-top: #cfcfcf 2px solid;
+  border-top: var(--light-color) 2px solid;
   border-radius: 2px 2px 0px 0px; }
