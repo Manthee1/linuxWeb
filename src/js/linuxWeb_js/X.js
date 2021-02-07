@@ -179,7 +179,7 @@ X = {
             let calendarArray = this.createCalendarArray()
             calendarArray.forEach(week => {
                 htmlOut += "<week>"
-                htmlOut += week.map(date => `<day><span>${date}</span></day>`).join('')
+                htmlOut += week.map(date => `<day><span ${date.startsWith('-') && "class = 'not_current_months_date'"} >${date.replaceAll('-', '')}</span></day>`).join('')
                 htmlOut += "</week>"
             });
             return htmlOut + "</calendar_content>";
@@ -197,11 +197,11 @@ X = {
             // const nextMonthFirstDay = new Date(monthLastDay + 3600 * 1000 * 24);
             let calendarStartDate = new Date(monthFirstDay - 3600 * 1000 * 24 * monthFirstDay.getDay())
             let calendarDates = [].concat(
-                range(calendarStartDate.getDate(), previousMonthLastDay.getDate() + 1),
+                range(calendarStartDate.getDate(), previousMonthLastDay.getDate() + 1).map(x => { return "-" + x }),
                 range(monthFirstDay.getDate(), monthLastDay.getDate() + 1),
-                range(1, 30),
+                range(1, 30).map(x => { return "-" + x }),
             ).slice(0, 42)
-            calendarDates = calendarDates.map(x => { return x < 10 ? '0' + x : x })
+            calendarDates = calendarDates.map(x => { x = String(x); return x.length == 1 ? '0' + x : x })
             let ret = [];
             for (let i = 0; i < 6; i++) ret.push(calendarDates.splice(0, 7))
             return ret;
@@ -217,9 +217,8 @@ X = {
                         //Updates all elements in the 'updateElements' object
                         Object.values(X.services.clock.update.updateElements).forEach(x => {
                             x.element.innerHTML = date.get(x.options);
-                        })
+                        });
                         console.log("Time update. Next one in: ", 60 - new Date().getSeconds());
-
                     }, 60 * 1000);
                 }, (60 - new Date().getSeconds()) * 1000); // Makes sure the update is synchronized
             },

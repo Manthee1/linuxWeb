@@ -2,26 +2,33 @@ calendar
     display: inline-block
     max-width: min-content
     padding: 1.5em
-    border: 2px solid white
+    // border: 1px solid black
     border-radius: 8px
-    background-color: var(--general-border-color)
+    background-color: var(--main-color-c)
     --size: 30px
     padding: 10px
     > calendar_content
+        display: flex
+        flex-flow: column nowrap
+        justify-content: center
+        align-content: center
         > week_days
             display: flex
             flex-flow: row nowrap
             justify-content: center
             align-content: center
             margin-top: 1.25em
+
             > *
                 font-size: 0.7em
                 font-weight: 500
                 letter-spacing: 0.1em
                 font-variant: small-caps
+                width: var(--size)
                 text-align: center
                 flex: 1 1 0px
         > dates
+            padding: 20px 0px 
             >week
                 display: flex
                 flex-flow: row nowrap
@@ -30,11 +37,10 @@ calendar
                 flex: 1 1 0px
                 > day
                     position: relative
-                    
-                    // line-height: 200%
                     background-color: transparent
                     text-align: center
                     flex: 1 1 0px
+                    font-size: 80%
                     > span
                         display: inline-block
                         border: 0
@@ -45,3 +51,5 @@ calendar
                         vertical-align: middle
                         &:hover
                             background-color: var(--hover-highlight-color)
+                    >.not_current_months_date
+                        color: var(--light-gray-color)
