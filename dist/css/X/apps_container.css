@@ -80,7 +80,7 @@ app_header {
     /* transform: translateY(50%); */ }
     app_header > *:not(app_title):hover {
       opacity: 1;
-      background-color: var(--main-color-b); }
+      background-color: var(--main-color); }
 
 app_exit:hover {
   background-color: var(--light-red-color) !important;

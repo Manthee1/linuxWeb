@@ -32,7 +32,7 @@ status_area_container hr {
   border: none;
   margin: auto;
   margin: 10px auto;
-  background-color: var(--main-color-b); }
+  background-color: var(--main-color-darker); }
 
 status_area_container item > * {
   flex: 1 1 auto;
