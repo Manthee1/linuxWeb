@@ -82,12 +82,21 @@ X = {
         notificationPanel: {
             listenerType: "click",
             toggleElement: document.querySelector("datetime"),
-            enterAnimation: "topFadeIn",
-            exitAnimation: "topFadeOut",
+            enterAnimation: "bottomFadeIn",
+            exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
             elementTag: "notification_panel_container",
+            parseNotificationsToHTML: function () {
+                if (notifications = X.notification.get()) {
+                    let html = "";
+                    Object.values(notifications).forEach(x => {
+                        html += `<notification onclick='${x.clickAction}'><notification_content><img src='${x.iconPath}'><text><title>${x.title}</title><description>${x.description}</description></text></notification_content>${!x.type ? `<x_icon onclick='X.notification.remove(${x.id}); this.parentElement.remove()'></x_icon>` : ""}</notification>`;
+                    })
+                    return html;
+                }
+            },
             getHTML: function () {
-                return `<notification_panel_container>${X.calendar.getHTML()}</notification_panel_container>`;
+                return `<notification_panel_container><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
                 return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container"))
@@ -101,7 +110,6 @@ X = {
             exitAnimationTime: 200, //ms
             elementTag: "status_area_container",
             getHTML: function () {
-
                 return `<status_area_container>
 					<item>
 					<volume_icon></volume_icon>
@@ -140,30 +148,54 @@ X = {
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
             elementTag: "status_area_container",
-            getHTML: function () {
-                return `<status_area_container class='login_status_area_menu'>
+            getHTML: () => `<status_area_container class='login_status_area_menu'>
 					<item>
-					<volume_icon></volume_icon>
-					<input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
+					    <volume_icon></volume_icon>
+					    <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
 					</item>
 					<item>
-					<brightness_icon></brightness_icon>
-					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
+					    <brightness_icon></brightness_icon>
+					    <input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
                     </item>
                     <hr>
                     <dropdown_item onclick='X.general.dropdown.toggle(this)'>
-                    <item><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></item>
+                        <item><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></item>
                     <dropdown>
                         <item onclick='X.restart();'><span>Restart</span></item>
                         <item onclick='X.shutdown();'><span>Power Off</span></item>
-                    </dropdown>
+                        </dropdown>
                     </dropdown_item>
-
-        </status_area_container>`;
-            },
+        </status_area_container>`,
             closeCondition: function (event) {
                 return !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
+        },
+    },
+
+    notification: {
+        notifications: {},
+        get: function () {
+            if (this.notifications == {}) return false
+            return this.notifications;
+        },
+        create: function (title = "", description = "", clickAction = "", iconPath = "", persistent = false) {
+            title = title || "Notification";
+            description = description || "This is a default notification";
+            iconPath = iconPath || "./img/about.svg";
+            type = typeof (type) != "boolean" ? false : persistent; //'persistent', 'temporary'
+            clickAction = clickAction || "";
+            id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
+            this.notifications[id] = {
+                "title": title,
+                "description": description,
+                "iconPath": iconPath,
+                "type": type,
+                "clickAction": clickAction,
+                "id": id,
+            };
+        },
+        remove: function (id) {
+            delete this.notifications[id]
         },
     },
 
