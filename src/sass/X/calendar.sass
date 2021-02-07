@@ -4,7 +4,7 @@ calendar
     padding: 1.5em
     // border: 1px solid black
     border-radius: 8px
-    background-color: var(--main-color-c)
+    background-color: var(--main-color-lighter)
     --size: 30px
     padding: 10px
     > calendar_content
@@ -18,7 +18,6 @@ calendar
             justify-content: center
             align-content: center
             margin-top: 1.25em
-
             > *
                 font-size: 0.7em
                 font-weight: 500
@@ -28,7 +27,7 @@ calendar
                 text-align: center
                 flex: 1 1 0px
         > dates
-            padding: 20px 0px 
+            padding-top: 0.2rem
             >week
                 display: flex
                 flex-flow: row nowrap
@@ -49,7 +48,12 @@ calendar
                         width: var(--size)
                         line-height: var(--size)
                         vertical-align: middle
+                        background-color: var(--main-color-lighter)
                         &:hover
-                            background-color: var(--hover-highlight-color)
+                            filter: brightness(1.15)
+                        &:not(.current_date):active
+                            background-color: var(--main-color-darker)
                     >.not_current_months_date
                         color: var(--light-gray-color)
+                    >.current_date
+                        background-color: var(--select-color)

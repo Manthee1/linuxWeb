@@ -36,7 +36,7 @@ app_search > input
     text-align: left
     border: none
     border-radius: 50px
-    background-color: var(--main-color-b)
+    background-color: var(--main-color)
 
 activities_menu_container input::placeholder
     color: var(--light-color)
@@ -48,18 +48,19 @@ activities_menu_container > favorites
     display: flex
     top: 50%
     transform: translate(0, -50%)
-    border: 1px solid var(--general-border-color)
+    border: 2px solid var(--main-color-lighter)
     border-left: none
     border-radius: 0px 10px 10px 0px
-    background: var(--background-color)
+    background: var(--main-color)
     padding: 5px 0px
     flex-flow: column wrap
 
 activities_menu_container > favorites > app
     text-overflow: ellipsis
     text-align: center
-    color: var(--light-color)
-    font-size: 40px
+    color: var(--light-gray-color)
+    font-size: 3rem
+    line-height: 50px
     height: 50px
     width: 50px
     display: inline-block
@@ -67,11 +68,13 @@ activities_menu_container > favorites > app
     flex: 1 1 auto
     padding: 15px
     margin: 5px 10px
+    background: var(--main-color)
     cursor: pointer
     transition: background-color 0.1s ease-in-out
 
 activities_menu_container > favorites > app:hover
-    background-color: var(--hover-highlight-color)
+
+   filter: brightness(1.15)
 
 activities_menu_container > favorites > app > *
     height: 50px

@@ -3,9 +3,8 @@ status_area_container
     display: inline-block
     position: fixed
     right: 10px
-    top: 35px
+    top: calc(var(--top_bar-height) + 10px)
     width: 280px
-    border: 1px solid var(--main-color-a)
     background-color: var(--main-color)
     border-radius: 10px
     padding: 10px 0px
@@ -22,9 +21,10 @@ status_area_container item
     font-size: 14px
     text-align: left
     border-radius: 0px
+    background-color: var(--main-color)
 
 status_area_container item:hover
-    background-color: var(--hover-highlight-color)
+    filter: brightness(1.2)
 
 status_area_container hr
     width: 50%
@@ -71,7 +71,7 @@ status_area_container dropdown_item > item
 
 status_area_container dropdown_item > dropdown
     height: 0px
-    background: var(--main-color-a)
+    background: var(--main-color-darker)
     overflow: hidden
     display: flex
     flex-flow: column nowrap
@@ -80,6 +80,12 @@ status_area_container dropdown_item > dropdown
 status_area_container dropdown > item
     padding-left: 50px
     margin: auto 0px
+    background-color: var(--main-color-darker)
+
+status_area_container dropdown > item:hover
+    background-color: var(--main-color)
+
+
 
 status_area_container input[type="range"]
     -webkit-appearance: none
