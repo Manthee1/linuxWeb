@@ -99,7 +99,6 @@ X = {
                 return `<notification_panel_container><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
-                console.log(!X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || X.general.tagIsInEventPath(event, "NOTIFICATION"));
                 return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || X.general.tagIsInEventPath(event, "NOTIFICATION");
             }
         },
@@ -341,9 +340,7 @@ X = {
         tagIsInEventPath: (event, tag) => {
             tag = tag.toUpperCase()
             clickPath = event.path || event.composedPath()
-            console.log(tag, clickPath);
             for (element of clickPath) {
-                console.log(element);
                 if (element.tagName == tag) return true
             }
             return false
