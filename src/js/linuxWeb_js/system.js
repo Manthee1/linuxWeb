@@ -57,7 +57,9 @@ system = {
 
             let a = (command.trim() + " ").split(' ')
             let callMethod = a.splice(0, 1)[0].trim()
-            if (a.length != 0) {
+            console.log(a);
+
+            if (a.length != 0 && !(a.length == 1 && a[0].trim().length === 0)) {
                 options = { "": [] };
                 let optionBuffer = "";
                 let i = 0;
@@ -72,6 +74,7 @@ system = {
                     }
                 });
             }
+            console.log(options);
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options) : `${callMethod}: command not found`
                 return ret;
@@ -117,10 +120,12 @@ system = {
          ----------------
         echo Hello Word`,
                 method: (options) => {
-                    let text = options[""].join(" ")
-                    text = text.trim()
-                    if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
-                    return text
+                    if (options != null) {
+                        let text = options[""].join(" ")
+                        text = text.trim()
+                        if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
+                        return text
+                    }
                 }
             },
             app: {

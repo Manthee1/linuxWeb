@@ -12,7 +12,8 @@ app_body > terminal_main *,
 terminal_input,
 terminal_input * {
   font-family: var(--mono-font);
-  font-size: 15px; }
+  font-size: 15px;
+  font-weight: 100; }
 
 app_body > terminal_main > command {
   display: block;
@@ -27,7 +28,7 @@ terminal_input > input {
   flex: 1 1 auto;
   font-size: 15px;
   border: none;
-  margin-left: 4px;
+  margin-left: 9px;
   color: inherit;
   background-color: transparent;
   padding: 0px; }
