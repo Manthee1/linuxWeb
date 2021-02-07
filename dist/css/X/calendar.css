@@ -2,42 +2,52 @@ calendar {
   display: inline-block;
   max-width: min-content;
   padding: 1.5em;
-  border: 2px solid white;
   border-radius: 8px;
-  background-color: var(--general-border-color);
+  background-color: var(--main-color-c);
   --size: 30px;
   padding: 10px; }
-  calendar > calendar_content > week_days {
+  calendar > calendar_content {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     justify-content: center;
-    align-content: center;
-    margin-top: 1.25em; }
-    calendar > calendar_content > week_days > * {
-      font-size: 0.7em;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      font-variant: small-caps;
-      text-align: center;
-      flex: 1 1 0px; }
-  calendar > calendar_content > dates > week {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-content: center;
-    flex: 1 1 0px; }
-    calendar > calendar_content > dates > week > day {
-      position: relative;
-      background-color: transparent;
-      text-align: center;
-      flex: 1 1 0px; }
-      calendar > calendar_content > dates > week > day > span {
-        display: inline-block;
-        border: 0;
-        border-radius: 50%;
-        height: var(--size);
+    align-content: center; }
+    calendar > calendar_content > week_days {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-content: center;
+      margin-top: 1.25em; }
+      calendar > calendar_content > week_days > * {
+        font-size: 0.7em;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        font-variant: small-caps;
         width: var(--size);
-        line-height: var(--size);
-        vertical-align: middle; }
-        calendar > calendar_content > dates > week > day > span:hover {
-          background-color: var(--hover-highlight-color); }
+        text-align: center;
+        flex: 1 1 0px; }
+    calendar > calendar_content > dates {
+      padding: 20px 0px; }
+      calendar > calendar_content > dates > week {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-content: center;
+        flex: 1 1 0px; }
+        calendar > calendar_content > dates > week > day {
+          position: relative;
+          background-color: transparent;
+          text-align: center;
+          flex: 1 1 0px;
+          font-size: 80%; }
+          calendar > calendar_content > dates > week > day > span {
+            display: inline-block;
+            border: 0;
+            border-radius: 50%;
+            height: var(--size);
+            width: var(--size);
+            line-height: var(--size);
+            vertical-align: middle; }
+            calendar > calendar_content > dates > week > day > span:hover {
+              background-color: var(--hover-highlight-color); }
+          calendar > calendar_content > dates > week > day > .not_current_months_date {
+            color: var(--light-gray-color); }
