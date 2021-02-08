@@ -140,9 +140,16 @@ DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
 DONE TODO: Add a notification panel with a calendar as in grub. (opened on when the top_bar time is clicked)
 DONE TODO: Allow input immediately for when the login screen appears 
-TODO: Change the style color to most everything.
-TODO: Make the status area a lighter color
-
+DONE TODO: Change the style color to most everything.
+DONE TODO: Make the status area a lighter color
+TODO: Improve the window manipulation.
+     \----Maximize when windows is dragged to the top of the screen
+     \----When a window is dragged to a side then maximize it to that side
+TODO: Add Reminders section in the notification panel.
+     \----Add a command for reminders
+     \----Play a sound when a notification is created
+     \----Add a Do not disrupt switch
+DONE TODO: Add mobile support (*somewhat functional)
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  

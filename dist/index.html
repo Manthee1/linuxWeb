@@ -13,13 +13,21 @@
 </head>
 
 <body>
-    <h1>Press a key to boot...</h1>
+    <pre_boot>
+        <h1> Press a key to boot...</h1>
+        <p>(or tap if your on a phone)</p>
+    </pre_boot>
+
 </body>
 
 <script>
-    document.body.addEventListener('keypress', () => {
+
+    function doTheThing() {
         page.changePage('./html/boot.html');
-    })
+
+    }
+    document.body.addEventListener('click', doTheThing);
+    document.body.addEventListener('keypress', doTheThing)
 </script>
 
 </html>
