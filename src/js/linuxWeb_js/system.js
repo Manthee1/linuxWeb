@@ -17,6 +17,9 @@ system = {
             var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
             return text.replace(/[&<>"']/g, function (m) { return map[m]; });
         },
+        isObjectEmpty: (obj) => {
+            return Object.entries(obj).length == 0
+        },
         css: {},
     },
     // I won't comment understandable functions here...

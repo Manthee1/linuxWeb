@@ -173,3 +173,14 @@ app_resize .right {
   width: 5px;
   height: calc(100% - 10px);
   cursor: w-resize; }
+
+window_size_projection {
+  position: absolute;
+  display: inline-block;
+  background-color: var(--select-color);
+  top: 0px;
+  left: 0px;
+  height: 0px;
+  width: 0px;
+  opacity: 0.5;
+  transition: opacity linear 0.1s; }

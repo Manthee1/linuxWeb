@@ -89,12 +89,93 @@ processes = {
         fullWidth: false,
     },
 
-    maximize: function (stringyPID) {
+    createWindowSizeProjection: function (process, size) {
+        let processElement = process.getProcessElement()
+        let top = topBar.offsetHeight;
+        let left = 0;
+        let width = document.body.offsetWidth
+        let height = window.innerHeight - (appList.offsetHeight - topBar.offsetHeight);
+        switch (size) {
+            case "maximum":// Do nothing. :)
+
+                break;
+            case "left-half":
+                width = document.body.offsetWidth / 2
+                break;
+            case "right-half":
+                width = document.body.offsetWidth / 2
+                left = document.body.offsetWidth / 2;
+                break;
+            default:
+                break;
+        }
+
+
+        if (typeof document.querySelector(`${size}-wsp`) != "undefined") {
+            let style = `
+            top:${top}px;
+            left:${left}px;
+            width:${width}px;
+            height:${height}px;
+        `
+            process.projectedSize = {
+                top: top,
+                left: left,
+                width: width,
+                height: height,
+            }
+
+            if (system.global.elementExists(document.querySelector('window_size_projection'))) {
+                let el = document.querySelector('window_size_projection');
+                el.style.cssText = style;
+                processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
+            } else {
+                this.hideWindowSizeProjection(process)
+                windowSizeProjectionHTML = `<window_size_projection id='#${size}-wsp' style='${style}' ></window_size_projection>`
+                processElement.insertAdjacentHTML('beforebegin', windowSizeProjectionHTML);
+            }
+
+        }
+    },
+
+    scaleToProjectedSize: function (process) {
+        if (system.global.elementExists(process.projectedSize) && !system.global.isObjectEmpty(process.projectedSize))
+            this.maximize(process.elementId, process.projectedSize)
+        this.hideWindowSizeProjection(process);
+
+    },
+
+    hideWindowSizeProjection: function (process, clearStyle = false) {
+        if (clearStyle) {
+            process.projectedSize = {}
+            el.style.opacity = 0;
+
+            // el.style.transition = 'opacity linear 0.1s'
+            // el.style = "opacity:0";
+            setTimeout(() => {
+                el.style = "opacity:0";
+            }, 100);
+            return true
+        }
+        el = document.querySelector('window_size_projection')
+        if (system.global.elementExists(el)) {
+            if (el.style.cssText == "opacity:0;") return false
+            el.id = '';
+            process.projectedSize = {}
+            el.style.opacity = 0;
+            // setTimeout(() => {
+            //     el.style.cssText = "opacity:0;";
+            // }, 300);
+        }
+    },
+
+    maximize: function (stringyPID, size = {}) {
         let pid = this.getNumberPid(stringyPID);
         let element = document.querySelector(`#${stringyPID}`);
         this.bringToTop(element);
         if (this.pid[pid].maximized == true) {
-            element.style.transition = "all 0.5s ease-in-out";
+            console.log(this.pid[pid].positionBeforeMaximize.y, this.pid[pid].positionBeforeMaximize.x);
+            element.style.transition = "all 0.3s ease-in-out";
             element.style.top = this.pid[pid].positionBeforeMaximize.y;
             element.style.left = this.pid[pid].positionBeforeMaximize.x;
             element.style.height = this.pid[pid].sizeBeforeMaximize.height;
@@ -102,13 +183,21 @@ processes = {
             element.querySelector('app_resize').style.display = ''
             this.pid[pid].maximized = false;
         } else {
+
             this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
             this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
-            element.style.transition = "all 0.5s ease-in-out";
-            element.style.top = topBar.offsetHeight + "px";
-            element.style.left = "0px";
-            element.style.height = `${window.innerHeight - 55}px`;
-            element.style.width = `${window.innerWidth}px`;
+            element.style.transition = "all 0.3s ease-in-out";
+            if (!system.global.isObjectEmpty(size)) {
+                element.style.top = size.top + "px";
+                element.style.left = size.left + "px";
+                element.style.height = size.height + "px";
+                element.style.width = size.width + "px";
+            } else {
+                element.style.top = topBar.offsetHeight + "px";
+                element.style.left = "0px";
+                element.style.height = `${window.innerHeight - (appList.offsetHeight - topBar.offsetHeight)}px`;
+                element.style.width = `${window.innerWidth}px`;
+            }
             element.querySelector('app_resize').style.display = 'none'
             this.pid[pid].maximized = true;
         }
@@ -248,27 +337,81 @@ processes = {
     },
 
     //Handles window movement. so yeah.
-    processMouseDownHandler: function (event, stringyPID) {
+    processMouseDownHandler: function (event, stringyPID, forceRun = false) {
         pid = this.getNumberPid(stringyPID);
         let process = this.pid[pid];
         // if (event.target.tagName == "RESIZE_POINT") {
         //	 document.body.setAttribute('onmousemove', null)
         //	 process.getProcessElementHeader().setAttribute('onmouseup', null)
         // }
-        if ((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") || this.pid[pid].maximized) return false
+        if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
+
+        if (process.maximized) {
+            let mouseY = event.clientY
+            let mouseX = event.clientX
+
+            document.body.onmousemove = e => {
+                if (Math.abs(mouseY - e.clientY) + Math.abs(mouseX - e.clientX) > 40) {
+                    process.maximized = true;
+                    let element = process.getProcessElement()
+                    element.style.top = e.layerY;
+
+                    document.body.setAttribute('onmousemove', null)
+                    let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width.replace('px', ''))
+                    let topOffset = e.clientY
+                    let leftOffset = e.clientX - headerStartToMouseDistance
+                    process.originalOffsetY = e.layerY;
+                    process.originalOffsetX = headerStartToMouseDistance;
+
+                    process.positionBeforeMaximize.x = leftOffset + 'px'
+                    process.positionBeforeMaximize.y = topOffset + 'px'
+                    element.style.height = process.sizeBeforeMaximize.height;
+                    element.style.width = process.sizeBeforeMaximize.width;
+                    element.style.top = topOffset + 'px';
+                    element.style.left = leftOffset + 'px';
+                    process.maximized = false;
+                    element.querySelector('app_resize').style.display = ''
+                    processes.initiateProcessMouseMoveHandler(process)
+                }
+            }
+            return false
+        }
+
         process.originalOffsetY = event.layerY;
         process.originalOffsetX = event.layerX;
+
+        console.log("click", process.originalOffsetY, process.originalOffsetX);
+        this.initiateProcessMouseMoveHandler(process)
+
+
+    },
+
+    initiateProcessMouseMoveHandler: function (process) {
+
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
-        process.getProcessElementHeader().onmouseup = () => {
+        document.body.onmouseup = () => {
             document.body.setAttribute('onmousemove', null)
             process.getProcessElementHeader().setAttribute('onmouseup', null)
+            this.scaleToProjectedSize(process);
+            this.hideWindowSizeProjection(process, true)
         }
     },
 
     processMouseMoveHandler: function (event, process) {
-        var y = event.clientY - process.originalOffsetY;
-        y = y < topBar.offsetHeight ? topBar.offsetHeight : y;
-        var x = event.clientX - process.originalOffsetX;
+        let mouseY = event.clientY
+        let mouseX = event.clientX
+        let y = mouseY - process.originalOffsetY;
+        let x = mouseX - process.originalOffsetX;
+        if (mouseY < topBar.offsetHeight)
+            this.createWindowSizeProjection(process, 'maximum')
+        else if (mouseX < 30)
+            this.createWindowSizeProjection(process, 'left-half')
+        else if (mouseX > document.body.offsetWidth - 30)
+            this.createWindowSizeProjection(process, 'right-half')
+        else
+            this.hideWindowSizeProjection(process)
+        y = y < topBar.offsetHeight ? topBar.offsetHeight : y; // Cap the position to the topBar height
+
         process.getProcessElement().style.top = y + "px";
         process.getProcessElement().style.left = x + "px";
     },
@@ -303,27 +446,31 @@ processes = {
             function resize(e) {
                 // Easy to understand. besides it's not really gonna change so this is gonna probably be the final version of this snippet
                 // No point in trying to understand it then
+
+                // Well I was wrong. It was changed And it wil lbe changed. Idk what but it will.
                 const resizeClassList = x.classList.toString()
+                let height = 0;
+                let width = 0;
                 if (resizeClassList.includes('top')) {
-                    const height = original_height - (e.pageY - original_mouse_y)
+                    height = original_height - (e.pageY - original_mouse_y)
                     if (height > minimum_size_y && height <= window.innerHeight) {
                         element.style.height = height + 'px'
                         element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
                     }
                 } else if (resizeClassList.includes('bottom')) {
-                    const height = original_height + (e.pageY - original_mouse_y)
+                    height = original_height + (e.pageY - original_mouse_y)
                     if (height > minimum_size_y && height <= window.innerHeight) {
                         element.style.height = height + 'px'
                     }
                 }
                 if (resizeClassList.includes('left')) {
-                    const width = original_width - (e.pageX - original_mouse_x)
+                    width = original_width - (e.pageX - original_mouse_x)
                     if (width > minimum_size_x && width <= window.innerWidth) {
                         element.style.width = width + 'px'
                         element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
                     }
                 } else if (resizeClassList.includes('right')) {
-                    const width = original_width + (e.pageX - original_mouse_x)
+                    width = original_width + (e.pageX - original_mouse_x)
                     if (width > minimum_size_x && width <= window.innerWidth) {
                         element.style.width = width + 'px'
                     }

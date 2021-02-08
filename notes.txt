@@ -150,6 +150,8 @@ TODO: Add Reminders section in the notification panel.
      \----Play a sound when a notification is created
      \----Add a Do not disrupt switch
 DONE TODO: Add mobile support (*somewhat functional)
+TODO: Fix login allow only 1 character on some phones
+
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  
