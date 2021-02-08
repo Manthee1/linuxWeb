@@ -142,15 +142,15 @@ DONE TODO: Add a notification panel with a calendar as in grub. (opened on when 
 DONE TODO: Allow input immediately for when the login screen appears 
 DONE TODO: Change the style color to most everything.
 DONE TODO: Make the status area a lighter color
-TODO: Improve the window manipulation.
-     \----Maximize when windows is dragged to the top of the screen
-     \----When a window is dragged to a side then maximize it to that side
+DONE TODO: Improve the window manipulation.
+DONE \----Maximize when windows is dragged to the top of the screen
+DONE \----When a window is dragged to a side then maximize it to that side
 TODO: Add Reminders section in the notification panel.
      \----Add a command for reminders
      \----Play a sound when a notification is created
      \----Add a Do not disrupt switch
 DONE TODO: Add mobile support (*somewhat functional)
-TODO: Fix login allow only 1 character on some phones
+
 
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
@@ -160,3 +160,4 @@ DONE FIXME: Cursor gets stuck between resize and move sometimes and renders ever
 DONE FIXME: Firefox event.path undefined.
 DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open
+FIXME: Login allow only 1 character on some phones
