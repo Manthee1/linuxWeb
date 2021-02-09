@@ -89,15 +89,16 @@ processes = {
         fullWidth: false,
     },
 
-    createWindowSizeProjection: function (process, size) {
+    createWindowSizeProjection: function (process, fillType = "full") {
+        if (system.global.elementExists(document.querySelector(`${fillType}-wsp`))) return false
         let processElement = process.getProcessElement()
         let top = topBar.offsetHeight;
         let left = 0;
         let width = document.body.offsetWidth
-        let height = window.innerHeight - (appList.offsetHeight - topBar.offsetHeight);
-        switch (size) {
-            case "maximum":// Do nothing. :)
+        let height = window.innerHeight - (appList.offsetHeight + topBar.offsetHeight);
 
+        switch (fillType) {
+            case "full":// Do nothing. :)
                 break;
             case "left-half":
                 width = document.body.offsetWidth / 2
@@ -110,102 +111,135 @@ processes = {
                 break;
         }
 
-
-        if (typeof document.querySelector(`${size}-wsp`) != "undefined") {
-            let style = `
+        let style = `
             top:${top}px;
             left:${left}px;
             width:${width}px;
             height:${height}px;
         `
-            process.projectedSize = {
-                top: top,
-                left: left,
-                width: width,
-                height: height,
-            }
+        process.fill = fillType
+        process.projectedFill = {
+            top: top,
+            left: left,
+            width: width,
+            height: height,
+        }
 
-            if (system.global.elementExists(document.querySelector('window_size_projection'))) {
-                let el = document.querySelector('window_size_projection');
-                el.style.cssText = style;
-                processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
-            } else {
-                this.hideWindowSizeProjection(process)
-                windowSizeProjectionHTML = `<window_size_projection id='#${size}-wsp' style='${style}' ></window_size_projection>`
-                processElement.insertAdjacentHTML('beforebegin', windowSizeProjectionHTML);
-            }
+        if (system.global.elementExists(document.querySelector('window_size_projection'))) {
+            let el = document.querySelector('window_size_projection');
+            el.style.cssText = style;
+            processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
 
+        } else {
+            this.hideWindowFillProjection(process)
+            windowSizeProjectionHTML = `<window_size_projection id='#${fillType}-wsp' style='${style}' ></window_size_projection>`
+            processElement.insertAdjacentHTML('beforebegin', windowSizeProjectionHTML);
         }
     },
 
-    scaleToProjectedSize: function (process) {
-        if (system.global.elementExists(process.projectedSize) && !system.global.isObjectEmpty(process.projectedSize))
-            this.maximize(process.elementId, process.projectedSize)
-        this.hideWindowSizeProjection(process);
+    // Well this one is tricky. Very hard to understand
+    // Nobody to this day knows the true meaning of how this method works.
+    // It is said that solving it would grant the puzzler eternal... something.
+    // Or maybe I'm just wasting your time ;)
+    scaleToProjectedFill: function (process) {
+        if (!system.global.isObjectEmpty(process.projectedFill))
+            if (process.fillType == 'full') {
+                this.maximize(process.elementId);
+            } else
+                this.scaleToFillArea(process.elementId, process.projectedFill);
+
+        this.hideWindowFillProjection(process);
 
     },
 
-    hideWindowSizeProjection: function (process, clearStyle = false) {
-        if (clearStyle) {
-            process.projectedSize = {}
-            el.style.opacity = 0;
-
-            // el.style.transition = 'opacity linear 0.1s'
-            // el.style = "opacity:0";
-            setTimeout(() => {
-                el.style = "opacity:0";
-            }, 100);
-            return true
-        }
+    // Hide the blue fill area projection thingy. Simple...
+    hideWindowFillProjection: function (process, clearStyle = false) {
         el = document.querySelector('window_size_projection')
         if (system.global.elementExists(el)) {
+            if (clearStyle) {
+                process.projectedFill = {}
+                el.style.opacity = 0;
+                setTimeout(() => {
+                    el.style = "opacity:0";
+                }, 100);
+                return true
+            }
             if (el.style.cssText == "opacity:0;") return false
-            el.id = '';
-            process.projectedSize = {}
+            process.projectedFill = {}
             el.style.opacity = 0;
-            // setTimeout(() => {
-            //     el.style.cssText = "opacity:0;";
-            // }, 300);
         }
     },
 
-    maximize: function (stringyPID, size = {}) {
+    //Scale an app to fill the specified area.
+    scaleToFillArea: function (stringyPID, fillData = {}) {
         let pid = this.getNumberPid(stringyPID);
         let element = document.querySelector(`#${stringyPID}`);
+        let process = this.pid[pid];
         this.bringToTop(element);
-        if (this.pid[pid].maximized == true) {
-            console.log(this.pid[pid].positionBeforeMaximize.y, this.pid[pid].positionBeforeMaximize.x);
-            element.style.transition = "all 0.3s ease-in-out";
-            element.style.top = this.pid[pid].positionBeforeMaximize.y;
-            element.style.left = this.pid[pid].positionBeforeMaximize.x;
-            element.style.height = this.pid[pid].sizeBeforeMaximize.height;
-            element.style.width = this.pid[pid].sizeBeforeMaximize.width;
+
+        if (process.scaledToArea && system.global.isObjectEmpty(fillData)) {
+            let top = Number(process.positionBeforeMaximize.y.replace('px', ''));
+            let left = Number(process.positionBeforeMaximize.x.replace('px', ''));
+            let height = Number(process.sizeBeforeMaximize.height.replace('px', ''));
+            let width = Number(process.sizeBeforeMaximize.width.replace('px', ''));
+            let maxHeight = window.innerHeight - appList.offsetHeight
+            let maxWidth = window.innerWidth
+            //Correct the position of the app if it's outside the screen.
+            // So when you unmaximize the app it won't appear partially outside the screen.
+            if (top + height > maxHeight)
+                top -= (top + height) - maxHeight
+            if (left + width > maxWidth)
+                left -= (left + width) - maxWidth
+            element.style.top = top + 'px';
+            element.style.left = left + 'px';
+            element.style.height = process.sizeBeforeMaximize.height;
+            element.style.width = process.sizeBeforeMaximize.width;
             element.querySelector('app_resize').style.display = ''
-            this.pid[pid].maximized = false;
+            process.maximized = false;
+            process.scaledToArea = false
         } else {
-
-            this.pid[pid].positionBeforeMaximize = { x: element.style.left, y: element.style.top };
-            this.pid[pid].sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
-            element.style.transition = "all 0.3s ease-in-out";
-            if (!system.global.isObjectEmpty(size)) {
-                element.style.top = size.top + "px";
-                element.style.left = size.left + "px";
-                element.style.height = size.height + "px";
-                element.style.width = size.width + "px";
-            } else {
-                element.style.top = topBar.offsetHeight + "px";
-                element.style.left = "0px";
-                element.style.height = `${window.innerHeight - (appList.offsetHeight - topBar.offsetHeight)}px`;
-                element.style.width = `${window.innerWidth}px`;
+            process.scaledToArea = true
+            //Make sure to only save a size/position when an app is not currently scaled
+            if (!process.scaledToArea) {
+                process.positionBeforeMaximize = { x: element.style.left, y: element.style.top };
+                process.sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
             }
-            element.querySelector('app_resize').style.display = 'none'
-            this.pid[pid].maximized = true;
+            element.style.transition = "all 0.2s ease-in-out";
+            element.style.top = fillData.top + "px";
+            element.style.left = fillData.left + "px";
+            element.style.height = fillData.height + "px";
+            element.style.width = fillData.width + "px";
         }
-
         setTimeout(() => {
             element.style.transition = "";
-        }, 500);
+        }, 200);
     },
+    // Set maximum size and offload the scaling to scaleToFillArea()
+    // This method makes sure that you still maximize an app even if it already fills a different area. Otherwise it would just unmaximize
+    maximize: function (stringyPID) {
+        let pid = this.getNumberPid(stringyPID);
+        let element = document.querySelector(`#${stringyPID}`);
+        let process = this.pid[pid];
+        this.bringToTop(element);
+        if (process.maximized == true) {
+            // Unmaximize
+            element.style.transition = "all 0.2s ease-in-out";
+            process.scaledToArea = true
+            this.scaleToFillArea(stringyPID, {})
+        } else {
+            // Maximize
+            fillData = {
+                "top": topBar.offsetHeight,
+                "left": 0,
+                "height": window.innerHeight - (appList.offsetHeight + topBar.offsetHeight),
+                "width": window.innerWidth,
+            }
+            process.maximized = true
+            console.log('maximize', fillData);
+            this.scaleToFillArea(stringyPID, fillData)
+        }
+    },
+    //Play a scale down animation and hide the app
     minimize: function (stringyPID) {
         let pid = this.getNumberPid(stringyPID);
         let element = document.querySelector(`#${stringyPID}`);
@@ -218,10 +252,11 @@ processes = {
         setTimeout(() => {
             element.style.display = 'none';
         }, 500);
+
     },
+    // Another hard one to understand. Or maybe not? probably.
     remove: function (stringyPID) {
         let pid = this.getNumberPid(stringyPID);
-        // this.pid.splice(this.runningIds.indexOf(pid), 1);
         document.querySelector(`#${stringyPID}`).remove();
         this.pid[pid].getProcessBarElement().remove();
         delete this.pid[pid];
@@ -229,7 +264,6 @@ processes = {
     },
 
     create: function (appName, position = { x: 'default', y: 'default' }) {
-
         //If the app doesn't exists.
         if (apps[appName] == undefined) {
             console.error(`Not Found: App '${appName}' does not exist`)
@@ -251,12 +285,13 @@ processes = {
         Object.assign(appCreateData, this.processSchema)
         Object.assign(appCreateData, apps[appName].createData)
 
+        // Make sure the size and position is good
         appCreateData.height < appCreateData.minHeight && (appCreateData.height = appCreateData.minHeight)
         appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
         position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2)
         position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2)
 
-        //Then styles are used here
+        //Then styles are defined here
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
 			min-width:${appCreateData.minWidth}px;
@@ -305,9 +340,8 @@ processes = {
 				</app_container>
 			
 		`;
-        //Insert the appHTML so that the value fields of inputs and similar don't get wiped.
+        //Insert the appHTML so that the value fields of inputs and similar elements don't get wiped.
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
-
 
         appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
         processes.pid[processID] = {}
@@ -320,6 +354,7 @@ processes = {
             appName: appName,
             minimized: false,
             maximized: false,
+            scaledToArea: false,
             positionBeforeMaximize: { x: position.x, y: position.y },
             sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
             originalOffsetY: 0,
@@ -345,63 +380,57 @@ processes = {
         //	 process.getProcessElementHeader().setAttribute('onmouseup', null)
         // }
         if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
-
-        if (process.maximized) {
+        if (process.maximized || process.scaledToArea) {
             let mouseY = event.clientY
             let mouseX = event.clientX
 
             document.body.onmousemove = e => {
                 if (Math.abs(mouseY - e.clientY) + Math.abs(mouseX - e.clientX) > 40) {
-                    process.maximized = true;
+
                     let element = process.getProcessElement()
                     element.style.top = e.layerY;
-
                     document.body.setAttribute('onmousemove', null)
+
+                    // Calculate the position of the app window based on your cursors position.
+                    // So that the it doesn't return to it's previous location where your cursor is not present 
+                    // And keep your cursors relative app header left offset 
                     let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width.replace('px', ''))
                     let topOffset = e.clientY
                     let leftOffset = e.clientX - headerStartToMouseDistance
-                    process.originalOffsetY = e.layerY;
-                    process.originalOffsetX = headerStartToMouseDistance;
-
                     process.positionBeforeMaximize.x = leftOffset + 'px'
                     process.positionBeforeMaximize.y = topOffset + 'px'
-                    element.style.height = process.sizeBeforeMaximize.height;
-                    element.style.width = process.sizeBeforeMaximize.width;
-                    element.style.top = topOffset + 'px';
-                    element.style.left = leftOffset + 'px';
-                    process.maximized = false;
-                    element.querySelector('app_resize').style.display = ''
-                    processes.initiateProcessMouseMoveHandler(process)
+
+                    process.scaledToArea = true;
+                    processes.scaleToFillArea(stringyPID, {})
+                    processes.initiateProcessMouseMoveHandler(process, e.layerY, headerStartToMouseDistance)
                 }
             }
             return false
         }
-
-        process.originalOffsetY = event.layerY;
-        process.originalOffsetX = event.layerX;
-
-        console.log("click", process.originalOffsetY, process.originalOffsetX);
-        this.initiateProcessMouseMoveHandler(process)
-
-
+        this.initiateProcessMouseMoveHandler(process, event.layerY, event.layerX)
     },
 
-    initiateProcessMouseMoveHandler: function (process) {
+    //Starts the mouse move handler.
+    initiateProcessMouseMoveHandler: function (process, originalOffsetY, originalOffsetX) {
+        process.originalOffsetY = originalOffsetY;
+        process.originalOffsetX = originalOffsetX;
 
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
         document.body.onmouseup = () => {
             document.body.setAttribute('onmousemove', null)
             process.getProcessElementHeader().setAttribute('onmouseup', null)
-            this.scaleToProjectedSize(process);
-            this.hideWindowSizeProjection(process, true)
+            this.scaleToProjectedFill(process);
+            this.hideWindowFillProjection(process, true)
         }
     },
-
+    //Mainly moves the app window 
     processMouseMoveHandler: function (event, process) {
         let mouseY = event.clientY
         let mouseX = event.clientX
         let y = mouseY - process.originalOffsetY;
         let x = mouseX - process.originalOffsetX;
+
+        //Check if the mouse is at any of the 'scale to area' locations
         if (mouseY < topBar.offsetHeight)
             this.createWindowSizeProjection(process, 'maximum')
         else if (mouseX < 30)
@@ -409,7 +438,9 @@ processes = {
         else if (mouseX > document.body.offsetWidth - 30)
             this.createWindowSizeProjection(process, 'right-half')
         else
-            this.hideWindowSizeProjection(process)
+            this.hideWindowFillProjection(process)
+        //Caps the apps top position to the top_bar's height.
+        // Very understandable I think.
         y = y < topBar.offsetHeight ? topBar.offsetHeight : y; // Cap the position to the topBar height
 
         process.getProcessElement().style.top = y + "px";
@@ -417,7 +448,7 @@ processes = {
     },
 
     makeProcessResizable: function (cssSelector) {
-        //Thanks to Hung Nguyen for this code. (I modified simplified it a little) Original: https://codepen.io/ZeroX-DG/pen/vjdoYe
+        //Thanks to Hung Nguyen for this code. (I simplified it a little) Original: https://codepen.io/ZeroX-DG/pen/vjdoYe
 
         //Makes a element resizable. (Note: Not any element. Has to have resize points!)
         const element = document.querySelector(cssSelector);
