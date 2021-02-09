@@ -178,10 +178,10 @@ processes = {
         this.bringToTop(element);
 
         if (process.scaledToArea && isObjectEmpty(fillData)) {
-            let top = Number(process.positionBeforeMaximize.y.replace('px', ''));
-            let left = Number(process.positionBeforeMaximize.x.replace('px', ''));
-            let height = Number(process.sizeBeforeMaximize.height.replace('px', ''));
-            let width = Number(process.sizeBeforeMaximize.width.replace('px', ''));
+            let top = process.positionBeforeMaximize.y;
+            let left = process.positionBeforeMaximize.x;
+            let height = process.sizeBeforeMaximize.height;
+            let width = process.sizeBeforeMaximize.width;
             let maxHeight = window.innerHeight - appList.offsetHeight
             let maxWidth = window.innerWidth
             //Correct the position of the app if it's outside the screen.
@@ -192,18 +192,18 @@ processes = {
                 left -= (left + width) - maxWidth
             element.style.top = top + 'px';
             element.style.left = left + 'px';
-            element.style.height = process.sizeBeforeMaximize.height;
-            element.style.width = process.sizeBeforeMaximize.width;
+            element.style.height = process.sizeBeforeMaximize.height + 'px';
+            element.style.width = process.sizeBeforeMaximize.width + 'px';
             element.querySelector('app_resize').style.display = ''
             process.maximized = false;
             process.scaledToArea = false
         } else {
-            process.scaledToArea = true
             //Make sure to only save a size/position when an app is not currently scaled
             if (!process.scaledToArea) {
                 process.positionBeforeMaximize = { x: element.style.left, y: element.style.top };
-                process.sizeBeforeMaximize = { width: element.clientWidth + "px", height: element.clientHeight + "px" }
+                process.sizeBeforeMaximize = { width: element.clientWidth, height: element.clientHeight }
             }
+            process.scaledToArea = true
             element.style.transition = "all 0.2s ease-in-out";
             element.style.top = fillData.top + "px";
             element.style.left = fillData.left + "px";
@@ -288,8 +288,8 @@ processes = {
         // Make sure the size and position is good
         appCreateData.height < appCreateData.minHeight && (appCreateData.height = appCreateData.minHeight)
         appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
-        position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2)
-        position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2)
+        position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2) + "px"
+        position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2) + "px"
 
         //Then styles are defined here
         let containerStyles = `
@@ -394,11 +394,12 @@ processes = {
                     // Calculate the position of the app window based on your cursors position.
                     // So that the it doesn't return to it's previous location where your cursor is not present 
                     // And keep your cursors relative app header left offset 
-                    let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width.replace('px', ''))
+                    console.log(process.sizeBeforeMaximize.width);
+                    let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width)
                     let topOffset = e.clientY
                     let leftOffset = e.clientX - headerStartToMouseDistance
-                    process.positionBeforeMaximize.x = leftOffset + 'px'
-                    process.positionBeforeMaximize.y = topOffset + 'px'
+                    process.positionBeforeMaximize.x = leftOffset
+                    process.positionBeforeMaximize.y = topOffset
 
                     process.scaledToArea = true;
                     processes.scaleToFillArea(stringyPID, {})
