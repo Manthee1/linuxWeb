@@ -64,8 +64,8 @@ apps = {
                 let terminalElement = this.InitiateVariables(processInstance);
                 let text = element.value;
                 element.value = "";
-                //system.global.escapeHtml() - make string not html. understood?... Good!
-                terminalElement.main.innerHTML += `${system.global.escapeHtml(terminalElement.inputPrefix.innerText)} ${system.global.escapeHtml(text)}<br>`;
+                //escapeHtml() - make string not html. understood?... Good!
+                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
                 try {
                     processInstance.currentHistoryNumber = -1;
                     // If eval return nothing then just don't return it to the terminal
@@ -78,7 +78,7 @@ apps = {
                         //Objects just get outputted as they were written
                         if (typeof (commandExecuted) == 'object')
                             commandExecuted = JSON.stringify(commandExecuted)
-                        commandExecuted = system.global.escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&emsp;");
+                        commandExecuted = escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&emsp;");
                         terminalElement.main.innerHTML += commandExecuted + "<br>";
                     }
 

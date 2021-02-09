@@ -90,7 +90,7 @@ processes = {
     },
 
     createWindowSizeProjection: function (process, fillType = "full") {
-        if (system.global.elementExists(document.querySelector(`${fillType}-wsp`))) return false
+        if (elementExists(document.querySelector(`${fillType}-wsp`))) return false
         let processElement = process.getProcessElement()
         let top = topBar.offsetHeight;
         let left = 0;
@@ -125,7 +125,7 @@ processes = {
             height: height,
         }
 
-        if (system.global.elementExists(document.querySelector('window_size_projection'))) {
+        if (elementExists(document.querySelector('window_size_projection'))) {
             let el = document.querySelector('window_size_projection');
             el.style.cssText = style;
             processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
@@ -142,7 +142,7 @@ processes = {
     // It is said that solving it would grant the puzzler eternal... something.
     // Or maybe I'm just wasting your time ;)
     scaleToProjectedFill: function (process) {
-        if (!system.global.isObjectEmpty(process.projectedFill))
+        if (!isObjectEmpty(process.projectedFill))
             if (process.fillType == 'full') {
                 this.maximize(process.elementId);
             } else
@@ -155,7 +155,7 @@ processes = {
     // Hide the blue fill area projection thingy. Simple...
     hideWindowFillProjection: function (process, clearStyle = false) {
         el = document.querySelector('window_size_projection')
-        if (system.global.elementExists(el)) {
+        if (elementExists(el)) {
             if (clearStyle) {
                 process.projectedFill = {}
                 el.style.opacity = 0;
@@ -177,7 +177,7 @@ processes = {
         let process = this.pid[pid];
         this.bringToTop(element);
 
-        if (process.scaledToArea && system.global.isObjectEmpty(fillData)) {
+        if (process.scaledToArea && isObjectEmpty(fillData)) {
             let top = Number(process.positionBeforeMaximize.y.replace('px', ''));
             let left = Number(process.positionBeforeMaximize.x.replace('px', ''));
             let height = Number(process.sizeBeforeMaximize.height.replace('px', ''));

@@ -162,3 +162,18 @@ let range = (a, b = null) => {
 	if (b) ret = ret.splice(a)
 	return ret
 }
+
+let isValid = x => {
+	return (x && x.toString().trim() !== "") || x == false;
+}
+let elementExists = (el) => {
+	if (typeof el != "undefined" && el != null) return true;
+	else return false;
+}
+let escapeHtml = (text) => {
+	var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+	return text.replace(/[&<>"']/g, function (m) { return map[m]; });
+}
+let isObjectEmpty = (obj) => {
+	return Object.entries(obj).length == 0
+}

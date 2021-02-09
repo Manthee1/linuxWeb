@@ -155,7 +155,7 @@ TODO: apps get opened in the top left
 TODO: Add an app enter animation
 TODO: Add an app exit animation
 DONE TODO: Differentiate between maximized and snapped to an area. (add a function 'fillArea'- something like the maximize except specifically for snapping apps to an area.)
-TODO: When an app is scaled to an area allow the possible resize functions
+DONE TODO: When an app is scaled to an area allow the possible resize functions
 TODO: Reorganize the functions. Specifically the ones in system.global
 TODO: Maximze app when its header is double taped
 Bugs:

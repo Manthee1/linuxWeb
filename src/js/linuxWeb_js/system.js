@@ -2,24 +2,9 @@ system = {
     started: false,
     encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f",
     global: {
-        //Global variables and functions...
+        //Global variables
         volume: 50,
         brightness: 100,
-
-        isValid: x => {
-            return (x && x.toString().trim() !== "") || x == false;
-        },
-        elementExists: (el) => {
-            if (typeof el != "undefined" && el != null) return true;
-            else return false;
-        },
-        escapeHtml: (text) => {
-            var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, function (m) { return map[m]; });
-        },
-        isObjectEmpty: (obj) => {
-            return Object.entries(obj).length == 0
-        },
         css: {},
     },
     // I won't comment understandable functions here...
