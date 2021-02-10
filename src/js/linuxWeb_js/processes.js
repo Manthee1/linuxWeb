@@ -294,7 +294,6 @@ processes = {
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
 			min-width:${appCreateData.minWidth}px;
-			z-Index: 4;
 		`;
         let bodyStyles = `
 			background-color:${appCreateData.bodyColor};
