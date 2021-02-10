@@ -338,13 +338,13 @@ X = {
             }
             return false
         },
-        addDoubleClickListener: (tag, callback) => {
+        addDoubleClickListener: (el, callback) => {
             clickedAmount = 0;
             doubleClickTimeout = 0;
-            tag.addEventListener('click', () => {
+            el.addEventListener('click', event => {
                 if (++clickedAmount == 2) {
                     clearTimeout(doubleClickTimeout);
-                    callback()
+                    callback(event)
                 }
                 clearTimeout(doubleClickTimeout);
                 doubleClickTimeout = setTimeout(() => {
