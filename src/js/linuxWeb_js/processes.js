@@ -363,8 +363,13 @@ processes = {
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
         });
+
+        let element = document.querySelector("#" + processes.pid[processID].elementId)
+
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
+        X.general.addDoubleClickListener(element, () => { processes.maximize(stringyPID) })
         this.bringToTop(processes.pid[processID].getProcessElement())
+
         apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
         return true;
