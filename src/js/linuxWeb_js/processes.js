@@ -48,9 +48,9 @@ processes = {
 
         }
         const pid = this.getNumberPid(element.id);
-        typeof (this.pid[pid]['onFocus']) == "function" && setTimeout(() => {// If it has a onFocus then.... do that
+        typeof this.pid[pid]['onFocus'] == "function" && setTimeout(() => {// If it has a onFocus then.... do that
             //Timeout set in order for the focus to work at all
-            this.pid[pid].onFocus();
+            typeof this.pid[pid] != "undefined" && this.pid[pid].onFocus();
         }, 1);
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
         if (this.pid[pid].minimized == true) {
@@ -413,13 +413,14 @@ processes = {
     initiateProcessMouseMoveHandler: function (process, originalOffsetY, originalOffsetX) {
         process.originalOffsetY = originalOffsetY;
         process.originalOffsetX = originalOffsetX;
-
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
         document.body.onmouseup = () => {
-            document.body.setAttribute('onmousemove', null)
-            elementExists(process.getProcessElementHeader()) && process.getProcessElementHeader().setAttribute('onmouseup', null)
-            this.scaleToProjectedFill(process);
-            this.hideWindowFillProjection(process, true)
+            if (elementExists(process.getProcessElementHeader())) {
+                document.body.setAttribute('onmousemove', null)
+                process.getProcessElementHeader().setAttribute('onmouseup', null)
+                this.scaleToProjectedFill(process);
+                this.hideWindowFillProjection(process, true)
+            } else document.body.onmouseup = null
         }
     },
     //Mainly moves the app window 
