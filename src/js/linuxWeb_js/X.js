@@ -313,7 +313,7 @@ X = {
     general: {
         dropdown: {
             toggle: (element) => {
-                if (!elementExists(element)) return false
+                if (!isDefined(element)) return false
                 let dropdownElement = element.querySelector('dropdown');
                 if (dropdownElement.style.height == "") {
                     dropdownElement.style = `height:${dropdownElement.childElementCount * 30}px;`

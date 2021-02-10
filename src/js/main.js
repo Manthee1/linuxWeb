@@ -166,7 +166,7 @@ let range = (a, b = null) => {
 let isValid = x => {
 	return (x && x.toString().trim() !== "") || x == false;
 }
-let elementExists = (el) => {
+let isDefined = (el) => {
 	if (typeof el == "undefined" || el == null) return false;
 	else return true;
 }
@@ -175,6 +175,6 @@ let escapeHtml = (text) => {
 	return text.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
 let isObjectEmpty = (obj) => {
-	if (elementExists(obj))
+	if (isDefined(obj))
 		return Object.entries(obj).length == 0
 }

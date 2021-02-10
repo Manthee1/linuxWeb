@@ -90,7 +90,7 @@ processes = {
     },
 
     createWindowSizeProjection: function (process, fillType = "full") {
-        if (elementExists(document.querySelector(`${fillType}-wsp`))) return false
+        if (isDefined(document.querySelector(`${fillType}-wsp`))) return false
         let processElement = process.getProcessElement()
         let top = topBar.offsetHeight;
         let left = 0;
@@ -125,7 +125,7 @@ processes = {
             height: height,
         }
 
-        if (elementExists(document.querySelector('window_size_projection'))) {
+        if (isDefined(document.querySelector('window_size_projection'))) {
             let el = document.querySelector('window_size_projection');
             el.style.cssText = style;
             processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
@@ -155,7 +155,7 @@ processes = {
     // Hide the blue fill area projection thingy. Simple...
     hideWindowFillProjection: function (process, clearStyle = false) {
         el = document.querySelector('window_size_projection')
-        if (elementExists(el)) {
+        if (isDefined(el)) {
             if (clearStyle) {
                 process.projectedFill = {}
                 el.style.opacity = 0;
@@ -415,7 +415,7 @@ processes = {
         process.originalOffsetX = originalOffsetX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
         document.body.onmouseup = () => {
-            if (elementExists(process.getProcessElementHeader())) {
+            if (isDefined(process.getProcessElementHeader())) {
                 document.body.setAttribute('onmousemove', null)
                 process.getProcessElementHeader().setAttribute('onmouseup', null)
                 this.scaleToProjectedFill(process);
