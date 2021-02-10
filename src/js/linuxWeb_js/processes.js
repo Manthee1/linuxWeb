@@ -117,7 +117,7 @@ processes = {
             width:${width}px;
             height:${height}px;
         `
-        process.fill = fillType
+        process.fillType = fillType
         process.projectedFill = {
             top: top,
             left: left,
@@ -200,7 +200,7 @@ processes = {
         } else {
             //Make sure to only save a size/position when an app is not currently scaled
             if (!process.scaledToArea) {
-                process.positionBeforeMaximize = { x: element.style.left, y: element.style.top };
+                process.positionBeforeMaximize = { x: Number(element.style.left.replace('px', '')), y: Number(element.style.top.replace('px', '')) };
                 process.sizeBeforeMaximize = { width: element.clientWidth, height: element.clientHeight }
             }
             process.scaledToArea = true
@@ -234,7 +234,7 @@ processes = {
                 "height": window.innerHeight - (appList.offsetHeight + topBar.offsetHeight),
                 "width": window.innerWidth,
             }
-            process.maximized = true
+            process.maximized = true;
             console.log('maximize', fillData);
             this.scaleToFillArea(stringyPID, fillData)
         }
