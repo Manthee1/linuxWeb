@@ -158,6 +158,8 @@ DONE TODO: Differentiate between maximized and snapped to an area. (add a functi
 DONE TODO: When an app is scaled to an area allow the possible resize functions
 TODO: Reorganize the functions. Specifically the ones in system.global
 TODO: Maximze app when its header is double taped
+DONE TODO: Make the context menu appear inside the screen instead of part of it escaping the bounds.
+
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  

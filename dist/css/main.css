@@ -52,6 +52,14 @@ input {
   color: var(--light);
   font-weight: 600; }
 
+hr {
+  width: 50%;
+  height: 1px;
+  border: none;
+  margin: auto;
+  margin: 10px auto;
+  background-color: var(--main-color-darker); }
+
 @keyframes hideAll {
   from {
     opacity: 0; }

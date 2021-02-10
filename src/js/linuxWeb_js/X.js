@@ -17,16 +17,9 @@ X = {
             getHTML: function (x = 100, y = 100) {
                 return `
 		<context_menu style="top: ${y}px;left: ${x}px;">
-				<context_item >New Folder</context_item>
-				<context_item class='context_sub_menu' >
-					New Document
-					<context_sub_menu>
-						<context_item>Empty Document</context_item>
-					</context_sub_menu>
-				</context_item><br>
-				<context_item onclick="processes.create('terminal', {x:${x},y:${y}});">Terminal</context_item><br>
-				<context_item>Sort By Name</context_item><br>
-				<context_item>Change Background</context_item>
+				<context_item>Change Background</context_item><hr>
+				<context_item onclick="processes.create('terminal')">Terminal</context_item>
+				<context_item onclick="processes.create('settings');">Settings</context_item>
 			</context_menu>
 				`
 
@@ -615,11 +608,23 @@ X = {
     },
 
     createMenu: function (menuUIData, x, y) {
-        let elHTML
-        if (menuUIData.createOnMousePosition) elHTML = menuUIData.getHTML(x, y);
-        else elHTML = menuUIData.getHTML()
+        let elHTML = menuUIData.getHTML(x, y);
+        let elTag = menuUIData.elementTag;
+        systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the objects html to the DOM.
 
-        systemMenuContainer.innerHTML += elHTML //Add the objects html to the DOM.
+        if (menuUIData.createOnMousePosition) {
+            let el = systemMenuContainer.querySelector(elTag)
+
+            // Correct the menu position if the part of it appears outside the screen
+            console.log(1, y, x);
+            x = x > window.innerWidth - el.offsetWidth ? window.innerWidth - el.offsetWidth : x
+            y = y > window.innerHeight - (el.offsetHeight + appList.offsetHeight) ? window.innerHeight - (el.offsetHeight + appList.offsetHeight + 1) : y
+            console.log(2, y, x);
+            el.style.top = y + 'px'
+            el.style.left = x + 'px'
+
+        }
+
         if (menuUIData.elementTag != "" && menuUIData.enterAnimation != "") {
             //If there is a enterAnimation then append it
             let element = systemMenuContainer.querySelector(menuUIData.elementTag);
