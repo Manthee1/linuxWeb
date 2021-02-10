@@ -235,7 +235,6 @@ processes = {
                 "width": window.innerWidth,
             }
             process.maximized = true;
-            console.log('maximize', fillData);
             this.scaleToFillArea(stringyPID, fillData)
         }
     },
@@ -394,7 +393,6 @@ processes = {
                     // Calculate the position of the app window based on your cursors position.
                     // So that the it doesn't return to it's previous location where your cursor is not present 
                     // And keep your cursors relative app header left offset 
-                    console.log(process.sizeBeforeMaximize.width);
                     let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width)
                     let topOffset = e.clientY
                     let leftOffset = e.clientX - headerStartToMouseDistance
@@ -419,7 +417,7 @@ processes = {
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
         document.body.onmouseup = () => {
             document.body.setAttribute('onmousemove', null)
-            process.getProcessElementHeader().setAttribute('onmouseup', null)
+            elementExists(process.getProcessElementHeader()) && process.getProcessElementHeader().setAttribute('onmouseup', null)
             this.scaleToProjectedFill(process);
             this.hideWindowFillProjection(process, true)
         }

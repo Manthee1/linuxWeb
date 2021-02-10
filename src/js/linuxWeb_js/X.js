@@ -342,7 +342,6 @@ X = {
             clickedAmount = 0;
             doubleClickTimeout = 0;
             tag.addEventListener('click', () => {
-                console.log(clickedAmount);
                 if (++clickedAmount == 2) {
                     clearTimeout(doubleClickTimeout);
                     callback()
@@ -632,10 +631,8 @@ X = {
             let el = systemMenuContainer.querySelector(elTag)
 
             // Correct the menu position if the part of it appears outside the screen
-            console.log(1, y, x);
             x = x > window.innerWidth - el.offsetWidth ? window.innerWidth - el.offsetWidth : x
             y = y > window.innerHeight - (el.offsetHeight + appList.offsetHeight) ? window.innerHeight - (el.offsetHeight + appList.offsetHeight + 1) : y
-            console.log(2, y, x);
             el.style.top = y + 'px'
             el.style.left = x + 'px'
 

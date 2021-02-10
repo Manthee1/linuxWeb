@@ -45,7 +45,6 @@ system = {
 
             let a = (command.trim() + " ").split(' ')
             let callMethod = a.splice(0, 1)[0].trim()
-            console.log(a);
 
             if (a.length != 0 && !(a.length == 1 && a[0].trim().length === 0)) {
                 options = { "": [] };
@@ -62,7 +61,6 @@ system = {
                     }
                 });
             }
-            console.log(options);
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options) : `${callMethod}: command not found`
                 return ret;
@@ -127,7 +125,6 @@ system = {
 `,
                 method: (options) => {
                     let appName = options[""][0];
-                    console.log(appName, options[""][0]);
                     if (apps[appName] != undefined) processes.create(appName)
                     else throw `${appName}: No such app`
 

@@ -167,13 +167,14 @@ let isValid = x => {
 	return (x && x.toString().trim() !== "") || x == false;
 }
 let elementExists = (el) => {
-	if (typeof el != "undefined" && el != null) return true;
-	else return false;
+	if (typeof el == "undefined" || el == null) return false;
+	else return true;
 }
 let escapeHtml = (text) => {
 	var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
 	return text.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
 let isObjectEmpty = (obj) => {
-	return Object.entries(obj).length == 0
+	if (elementExists(obj))
+		return Object.entries(obj).length == 0
 }
