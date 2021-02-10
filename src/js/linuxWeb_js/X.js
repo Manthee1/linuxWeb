@@ -337,6 +337,22 @@ X = {
                 if (element.tagName == tag) return true
             }
             return false
+        },
+        addDoubleClickListener: (tag, callback) => {
+            clickedAmount = 0;
+            doubleClickTimeout = 0;
+            tag.addEventListener('click', () => {
+                console.log(clickedAmount);
+                if (++clickedAmount == 2) {
+                    clearTimeout(doubleClickTimeout);
+                    callback()
+                }
+                clearTimeout(doubleClickTimeout);
+                doubleClickTimeout = setTimeout(() => {
+                    clickedAmount = 0;
+                }, 300);
+            })
+
         }
     },
 
