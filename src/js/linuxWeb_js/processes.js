@@ -23,21 +23,28 @@ processes = {
         return Number(pid.split('pid')[1])
     },
     //Return the first pid object of the specified app name.
-    getFirstPidFormAppName: function (appName) {
+    getFirstPidFromAppName: function (processName) {
         let pidValues = this.getPidObject();
         for (let i = 0; i < pidValues.length; i++) {
             if (pidValues[i].appName == appName) return pidValues[i];
         }
     },
 
-    getRunningInstanceAmount: function (appName) {
-
-        let amount = 0;
-        let pidValues = this.getPidObject()
-        for (let i = 0; i < pidValues.length; i++) {
-            pidValues[i].appName == appName && amount++
+    getRunningInstanceList: function (processName) {
+        let pidObject = this.getPidObject()
+        processesList = []
+        for (process of pidObject) {
+            process.appName == appName && amount++
+            processesList.push(process)
         }
-        return amount;
+        if (processesList.length == 0) return false
+        return processesList
+    },
+
+    getRunningInstanceAmount: function (processName) {
+
+        return this.getRunningInstanceList(appName).length
+
     },
     //Brings the selected app to top
     bringToTop: function (element, event = null) {
