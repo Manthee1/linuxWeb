@@ -376,10 +376,8 @@ processes = {
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
         });
 
-        let element = document.querySelector("#" + processes.pid[processID].elementId)
-
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
-        X.general.addDoubleClickListener(element, () => { processes.maximize(stringyPID) })
+        X.general.addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), () => { processes.maximize(stringyPID) })
         this.bringToTop(processes.pid[processID].getProcessElement())
 
         apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
