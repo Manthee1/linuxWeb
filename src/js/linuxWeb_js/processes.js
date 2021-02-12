@@ -325,7 +325,7 @@ processes = {
 
         //This is how the app html is created.
         appHTML = `
-			<app_container onmousedown="processes.bringToTop(this,event)" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
+			<app_container onmousedown="processes.bringToTop(this,event);" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					<app_title onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')">${appCreateData.title}</app_title>
 					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
@@ -388,10 +388,6 @@ processes = {
     processMouseDownHandler: function (event, stringyPID, forceRun = false) {
         pid = this.getNumberPid(stringyPID);
         let process = this.pid[pid];
-        // if (event.target.tagName == "RESIZE_POINT") {
-        //	 document.body.setAttribute('onmousemove', null)
-        //	 process.getProcessElementHeader().setAttribute('onmouseup', null)
-        // }
         if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
         if (process.maximized || process.scaledToArea) {
             let mouseY = event.clientY
@@ -428,12 +424,13 @@ processes = {
         process.originalOffsetY = originalOffsetY;
         process.originalOffsetX = originalOffsetX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
-        document.body.onmouseup = () => {
+        document.body.onmouseup = event => {
             if (isDefined(process.getProcessElementHeader())) {
                 document.body.setAttribute('onmousemove', null)
                 process.getProcessElementHeader().setAttribute('onmouseup', null)
                 this.scaleToProjectedFill(process);
                 this.hideWindowFillProjection(process, true)
+                document.body.onmouseup = null
             } else document.body.onmouseup = null
         }
     },
