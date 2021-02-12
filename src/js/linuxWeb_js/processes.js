@@ -256,7 +256,7 @@ processes = {
         const process = this.pid[pid]
         const el = document.querySelector(`#${stringyPID}`);
         process.getProcessBarElement().remove();
-        delete process;
+        delete this.pid[pid];
         this.currentlySelectedProcess = null;
         el.style.transition = "all 0.2s linear";
         el.style.transform = "scale(0.8)";
