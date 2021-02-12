@@ -8,7 +8,7 @@ processes = {
         Object.values(this.pid).forEach(x => {
             typeof obj == 'object' && (obj[x.id] = x)
         });
-        if (obj == {}) return false
+        if (isObjectEmpty(obj)) return false
         else return Object.values(obj)
     },
     //Create a pid number
@@ -31,11 +31,10 @@ processes = {
     },
 
     getRunningInstanceList: function (appName) {
-        let pidObject = this.getPidObject()
-        processesList = []
+        let pidObject = this.getPidObject();
+        processesList = [];
         for (process of pidObject) {
-            if (process.appName == appName)
-                processesList.push(process)
+            if (process.appName == appName) processesList.push(process);
         }
         if (processesList.length == 0) return false
         return processesList

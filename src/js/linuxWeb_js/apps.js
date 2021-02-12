@@ -42,40 +42,36 @@ apps = {
         },
         //Returns an object with references to the wanted terminal element in the dom
         //The parameter is the terminal 'pid' object
-        InitiateVariables: function (processInstance = null) {
-            if (processInstance == null) return false;
+        InitiateVariables: function (process = null) {
+            if (process == null) return false;
             return {
-                body: processInstance.getProcessElementBody(),
-                main: processInstance.getProcessElementBody().querySelector('terminal_main'),
-                inputPrefix: processInstance.getProcessElementBody().querySelector('terminal_input'),
-                input: terminalInput = processInstance.getProcessElementBody().querySelector('terminal_input > input')
+                body: process.getProcessElementBody(),
+                main: process.getProcessElementBody().querySelector('terminal_main'),
+                inputPrefix: process.getProcessElementBody().querySelector('terminal_input'),
+                input: terminalInput = process.getProcessElementBody().querySelector('terminal_input > input')
             }
         },
         //Executed once when the terminal is created
         //Adds a listener for keypress.  
-        onStart: function (processInstance) {
-            console.log("onStart Initialized: ", processInstance);
-            terminalElement = this.InitiateVariables(processInstance);
-            terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${processInstance.id}])`)
+        onStart: function (process) {
+            console.log("onStart Initialized: ", process);
+            terminalElement = this.InitiateVariables(process);
+            terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${process.id}])`)
         },
-        parseCommand: async function (event, element, processInstance) {
+        parseCommand: async function (event, element, process) {
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                let terminalElement = this.InitiateVariables(processInstance);
+                let terminalElement = this.InitiateVariables(process);
                 let text = element.value;
                 element.value = "";
-                //escapeHtml() - make string not html. understood?... Good!
                 terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
                 try {
-                    processInstance.currentHistoryNumber = -1;
+                    process.currentHistoryNumber = -1;
                     // If eval return nothing then just don't return it to the terminal
-                    // let commandExecuted = eval(`(async()=>{${text}})();`);
 
-                    // let commandExecuted = eval(text);
-                    commandExecuted = system.cli.i(text);
-                    console.log(commandExecuted);
+                    commandExecuted = system.cli.i(text, process);
                     if (typeof (commandExecuted) != 'undefined') {
-                        //Objects just get outputted as they were written
+                        //Objects just get stringified
                         if (typeof (commandExecuted) == 'object')
                             commandExecuted = JSON.stringify(commandExecuted)
                         commandExecuted = escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&emsp;");
@@ -86,29 +82,29 @@ apps = {
                     //Returns error
                     terminalElement.main.innerHTML += e + "<br>";
                 }
-                processInstance.addToCommandHistory(text);
+                process.addToCommandHistory(text);
                 element.scrollIntoView(false)
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
-                processInstance.currentHistoryNumber == -1 && (processInstance.currentCommand = element.value);
-                this.getFromCommandHistory(processInstance, +1)
+                process.currentHistoryNumber == -1 && (process.currentCommand = element.value);
+                this.getFromCommandHistory(process, +1)
             } else if (event.code == "ArrowDown") {
-                this.getFromCommandHistory(processInstance, -1)
+                this.getFromCommandHistory(process, -1)
             }
         },
-        getFromCommandHistory: function (processInstance, val) {
+        getFromCommandHistory: function (process, val) {
             // Go Up||Down a number in the commandHistory array, val=-1 or 1
-            let command = processInstance.commandHistory[processInstance.currentHistoryNumber + val];
-            if (processInstance.currentHistoryNumber + val < -1) return false
-            terminalElement = apps.terminal.InitiateVariables(processInstance);
+            let command = process.commandHistory[process.currentHistoryNumber + val];
+            if (process.currentHistoryNumber + val < -1) return false
+            terminalElement = apps.terminal.InitiateVariables(process);
             if (command != undefined) {
                 // If there is a command in the history then do that. Yeah...
                 terminalElement.input.value = command;
-                processInstance.currentHistoryNumber = processInstance.currentHistoryNumber + val;
-            } else if (processInstance.currentHistoryNumber > processInstance.currentHistoryNumber + val) {
+                process.currentHistoryNumber = process.currentHistoryNumber + val;
+            } else if (process.currentHistoryNumber > process.currentHistoryNumber + val) {
                 // If command is undefined and you you went down in history then: current command
-                terminalElement.input.value = processInstance.currentCommand;
-                processInstance.currentHistoryNumber = -1;
+                terminalElement.input.value = process.currentCommand;
+                process.currentHistoryNumber = -1;
             }
             // Put the cursor on the end
             setTimeout(() => {

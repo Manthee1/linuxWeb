@@ -40,7 +40,7 @@ system = {
     cli: {
         // 'i' A.K.A Interpreter parses the command options and calls the command function
         i: function (command = false, terminalProcess = false) {
-            // if (!command || !terminalProcess) return false
+            if (!command || !terminalProcess) return false
             let options = null;
 
             let a = (command.trim() + " ").split(' ')
@@ -62,7 +62,7 @@ system = {
                 });
             }
             try {
-                const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options) : `${callMethod}: command not found`
+                const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
                 return ret;
             } catch (error) {
                 console.log(error);
@@ -77,8 +77,7 @@ system = {
                     
     USAGE
         help
-        help <command>
-                `,
+        help <command>`,
                 method: (options) => {
                     let output = "";
                     if (options == null) {
@@ -101,6 +100,7 @@ system = {
             echo: {
                 shortHelp: "Echos your message back to you",
                 help: `Echos your message back to you
+
     USAGE
         echo < message >
          ----------------
@@ -113,21 +113,112 @@ system = {
                         return text
                     }
                 }
-            },
-            app: {
+            }, app: {
                 shortHelp: "Starts an app",
                 help: `Starts an app
+
     USAGE
         app < app name >
         ----------------
         app terminal
-        app notepad
-`,
+        app notepad`,
                 method: (options) => {
+                    if (options == null) return system.cli.commands.app.help;
                     let appName = options[""][0];
-                    if (apps[appName] != undefined) processes.create(appName)
-                    else throw `${appName}: No such app`
+                    if (apps[appName] != undefined) processes.create(appName);
+                    else throw `${appName}: No such app`;
+                }
+            },
 
+            shutdown: {
+                shortHelp: "Shoots the computer",
+                help: `Makes computer go beep boob RIP.
+
+    USAGE
+        shutdown`,
+                method: () => {
+                    system.shutdown()
+                }
+            },
+
+            restart: {
+                shortHelp: "Restarts",
+                help: `Restarts the computer
+
+    USAGE
+        restart`,
+                method: () => {
+                    system.restart()
+                }
+            },
+
+            logout: {
+                shortHelp: "Logouts",
+                help: `Restarts the computer
+
+    USAGE
+        logout`,
+                method: () => {
+                    system.logout();
+                }
+            },
+            lock: {
+                shortHelp: "Locks the screen",
+                help: `Locks the screen
+
+    USAGE
+        lock`,
+                method: () => {
+                    X.lockScreen.lock();
+                }
+            },
+            exit: {
+                shortHelp: "Exits the terminal window",
+                help: `Exits the terminal window"
+
+    USAGE
+        exit`,
+                method: (options, terminal) => {
+                    processes.remove(terminal.elementId)
+                }
+            },
+
+            kill: {
+                shortHelp: "Kills a process by pid",
+                help: `Kills a running process"
+
+    USAGE
+        kill < process pid >
+        ----------------
+        kill 1`,
+                method: (options) => {
+                    let pid = options[""][0];
+                    if (isNaN(Number(pid))) throw pid + " - Must be a number";
+
+
+                    if (isDefined(processes.pid[pid])) processes.remove("pid" + pid)
+                    else
+                        throw pid + " - No such process";
+                }
+            },
+            killall: {
+                shortHelp: "Kills processes ",
+                help: `Kills all running processes of a name"
+
+    USAGE
+        killall < process name >
+        ----------------
+        killall terminal
+        killall google`,
+                method: (options) => {
+                    let processName = options[""][0];
+                    processList = processes.getRunningInstanceList(processName);
+                    if (isValid(processList) && processList != false) {
+                        for (const process of processList) {
+                            processes.remove("pid" + process.id);
+                        }
+                    }
+                    else throw processName + " - No processes found"
                 }
             }
         }
