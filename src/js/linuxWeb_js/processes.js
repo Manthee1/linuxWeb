@@ -306,6 +306,9 @@ processes = {
         let containerStyles = `
 			min-height:${appCreateData.minHeight}px;
 			min-width:${appCreateData.minWidth}px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.1s linear;
 		`;
         let bodyStyles = `
 			background-color:${appCreateData.bodyColor};
@@ -375,6 +378,16 @@ processes = {
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
         });
 
+        setTimeout(() => {
+
+            const el = processes.pid[processID].getProcessElement()
+            el.style.opacity = ''
+            el.style.transform = ''
+            el.style.transition = ''
+
+
+        }, 1);
+
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         X.general.addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), () => { processes.maximize(stringyPID) })
         this.bringToTop(processes.pid[processID].getProcessElement())
@@ -389,7 +402,7 @@ processes = {
         pid = this.getNumberPid(stringyPID);
         let process = this.pid[pid];
         if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
-        if (process.maximized || process.scaledToArea) {
+        if (process.scaledToArea) {
             let mouseY = event.clientY
             let mouseX = event.clientX
 
