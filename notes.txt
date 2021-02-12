@@ -152,13 +152,14 @@ TODO: Add Reminders section in the notification panel.
 DONE TODO: Add mobile support (*somewhat functional)
 TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-TODO: Add an app enter animation
-TODO: Add an app exit animation
+     TODO: Add an app enter animation
+     TODO: Add an app exit animation
 DONE TODO: Differentiate between maximized and snapped to an area. (add a function 'fillArea'- something like the maximize except specifically for snapping apps to an area.)
 DONE TODO: When an app is scaled to an area allow the possible resize functions
-TODO: Reorganize the functions. Specifically the ones in system.global
-TODO: Maximze app when its header is double taped
+DONE TODO: Reorganize the functions. Specifically the ones in system.global
+DONE TODO: Maximze app when its header is double taped
 DONE TODO: Make the context menu appear inside the screen instead of part of it escaping the bounds.
+TODO: Implement commands: shutdown, restart, logoff, exit, 
 
 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.

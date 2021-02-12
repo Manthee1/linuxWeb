@@ -24,7 +24,6 @@ processes = {
     },
     //Return the first pid object of the specified app name.
     getFirstPidFormAppName: function (appName) {
-
         let pidValues = this.getPidObject();
         for (let i = 0; i < pidValues.length; i++) {
             if (pidValues[i].appName == appName) return pidValues[i];
@@ -42,11 +41,8 @@ processes = {
     },
     //Brings the selected app to top
     bringToTop: function (element, event = null) {
-        if (event != null && event.target.tagName.endsWith("ICON") && event.target.parentElement.parentElement.tagName == "APP_HEADER") {
+        if (event != null && event.target.tagName.endsWith("ICON") && event.target.parentElement.parentElement.tagName == "APP_HEADER") return false
 
-            return false
-
-        }
         const pid = this.getNumberPid(element.id);
         typeof this.pid[pid]['onFocus'] == "function" && setTimeout(() => {// If it has a onFocus then.... do that
             //Timeout set in order for the focus to work at all
@@ -91,7 +87,7 @@ processes = {
 
     createWindowSizeProjection: function (process, fillType = "full") {
         if (isDefined(document.querySelector(`${fillType}-wsp`))) return false
-        let processElement = process.getProcessElement()
+        let processElement = process.getProcessElement();
         let top = topBar.offsetHeight;
         let left = 0;
         let width = document.body.offsetWidth
@@ -198,8 +194,9 @@ processes = {
             process.maximized = false;
             process.scaledToArea = false
         } else {
-            //Make sure to only save a size/position when an app is not currently scaled
+            //Makes sure to only save a size/position when an app is not currently scaled
             if (!process.scaledToArea) {
+                console.log("saved area");
                 process.positionBeforeMaximize = { x: Number(element.style.left.replace('px', '')), y: Number(element.style.top.replace('px', '')) };
                 process.sizeBeforeMaximize = { width: element.clientWidth, height: element.clientHeight }
             }
@@ -256,10 +253,19 @@ processes = {
     // Another hard one to understand. Or maybe not? probably.
     remove: function (stringyPID) {
         let pid = this.getNumberPid(stringyPID);
-        document.querySelector(`#${stringyPID}`).remove();
-        this.pid[pid].getProcessBarElement().remove();
-        delete this.pid[pid];
+        const process = this.pid[pid]
+        const el = document.querySelector(`#${stringyPID}`);
+        process.getProcessBarElement().remove();
+        delete process;
         this.currentlySelectedProcess = null;
+        el.style.transition = "all 0.2s linear";
+        el.style.transform = "scale(0.8)";
+        el.style.opacity = "0";
+
+        setTimeout(() => {
+            el.remove()
+        }, 200);
+
     },
 
     create: function (appName, position = { x: 'default', y: 'default' }) {
@@ -436,7 +442,7 @@ processes = {
 
         //Check if the mouse is at any of the 'scale to area' locations
         if (mouseY < topBar.offsetHeight)
-            this.createWindowSizeProjection(process, 'maximum')
+            this.createWindowSizeProjection(process, 'maximize')
         else if (mouseX < 30)
             this.createWindowSizeProjection(process, 'left-half')
         else if (mouseX > document.body.offsetWidth - 30)
@@ -524,3 +530,4 @@ processes = {
         })
     }
 }
+
