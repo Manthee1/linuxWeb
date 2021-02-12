@@ -442,7 +442,7 @@ processes = {
 
         //Check if the mouse is at any of the 'scale to area' locations
         if (mouseY < topBar.offsetHeight)
-            this.createWindowSizeProjection(process, 'maximize')
+            this.createWindowSizeProjection(process, 'full')
         else if (mouseX < 30)
             this.createWindowSizeProjection(process, 'left-half')
         else if (mouseX > document.body.offsetWidth - 30)
