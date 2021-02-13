@@ -62,3 +62,43 @@ notification_panel_container {
           notification_panel_container > notifications_container > notification > notification_content > text > title {
             display: block;
             font-size: 150%; }
+  notification_panel_container > do_not_disrupt {
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    left: 10px;
+    align-content: center; }
+    notification_panel_container > do_not_disrupt > * {
+      margin: 2px 5px; }
+    notification_panel_container > do_not_disrupt > label {
+      display: inline-block;
+      border: 1px solid var(--main-color-darker);
+      background-color: var(--main-color-lighter);
+      border-radius: 10px;
+      width: 40px;
+      height: 16px;
+      padding: 1px;
+      transition: right 0.2s linear; }
+      notification_panel_container > do_not_disrupt > label::after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        background-color: var(--main-color-darker);
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        right: 30px;
+        transition: right 0.2s linear; }
+    notification_panel_container > do_not_disrupt > input:checked + label {
+      background-color: var(--select-color);
+      border-radius: 10px;
+      width: 40px;
+      height: 16px;
+      padding: 1px; }
+      notification_panel_container > do_not_disrupt > input:checked + label::after {
+        right: 8px; }
+    notification_panel_container > do_not_disrupt > input {
+      width: 0px;
+      height: 0px;
+      visibility: hidden;
+      display: none; }

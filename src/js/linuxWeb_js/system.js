@@ -5,6 +5,7 @@ system = {
         //Global variables
         volume: 50,
         brightness: 100,
+        doNotDisturb: false,
         css: {},
     },
     // I won't comment understandable functions here...
@@ -237,7 +238,7 @@ system = {
                     console.log(options, message, time);
                     if (isNaN(Number(time))) throw ` -t: must be a number`;
                     if (isValid(message) && message.length != 0) setTimeout(() => {
-                        X.notification.create("Reminder", message)
+                        X.notification.create("Reminder", message, '', '', false, true)
                     }, time * 1000);
                     else
                         throw "message - Cannot be empty";

@@ -10,7 +10,7 @@ popup_notifications_container {
     margin: 10px auto;
     padding: 10px;
     background: var(--main-color);
-    opacity: 0;
+    opacity: 0.7;
     border-radius: 10px;
     cursor: pointer; }
     popup_notifications_container > div:hover {

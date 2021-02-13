@@ -89,7 +89,7 @@ X = {
                 }
             },
             getHTML: function () {
-                return `<notification_panel_container><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
+                return `<notification_panel_container><do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
                 return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (X.general.tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
@@ -179,7 +179,7 @@ X = {
             clickAction = clickAction || "";
             id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
 
-            if (alert) {
+            if (alert && !system.global.doNotDisturb) {
                 notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
                 popupNotificationContainer.insertAdjacentHTML('afterbegin', notificationHTML);
                 popupNotificationContainer.children[0].style.transform = "scale(1)";

@@ -62,3 +62,46 @@ notification_panel_container
                     >title
                         display: block
                         font-size: 150%
+    > do_not_disrupt
+        position: absolute
+        display: flex
+        bottom: 10px
+        left: 10px
+        align-content: center
+        >*
+            margin: 2px 5px
+        >span
+        >label
+            display: inline-block
+            border: 1px solid var(--main-color-darker)
+            background-color: var(--main-color-lighter)
+            border-radius: 10px
+            width: 40px
+            height: 16px
+            padding: 1px
+            transition: right 0.2s linear
+            &::after
+                content: ""
+                position: absolute
+                display: inline-block
+                background-color: var(--main-color-darker)
+                height: 16px
+                width: 16px
+                border-radius: 50%
+                right: 30px
+                transition: right 0.2s linear
+        >input:checked + label
+            background-color: var(--select-color)
+            border-radius: 10px
+            width: 40px
+            height: 16px
+            padding: 1px
+            &::after
+                right: 8px
+        >input
+            width: 0px
+            height: 0px
+            visibility: hidden
+            display: none
+        
+            
