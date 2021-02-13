@@ -1,0 +1,21 @@
+popup_notifications_container
+    position: relative
+    top: var(--top_bar-height)
+    width: 100vw
+    > div
+        z-index: 5
+        display: block
+        width: 15rem
+        color: var(--light-color)
+        margin: 10px auto
+        padding: 10px
+        background: var(--main-color)
+        opacity: 0
+        border-radius: 10px
+        cursor: pointer
+        &:hover
+            opacity: 1
+        > *
+            display: block
+        > title
+            font-size: 120%

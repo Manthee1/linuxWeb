@@ -1,0 +1,21 @@
+popup_notifications_container {
+  position: relative;
+  top: var(--top_bar-height);
+  width: 100vw; }
+  popup_notifications_container > div {
+    z-index: 5;
+    display: block;
+    width: 15rem;
+    color: var(--light-color);
+    margin: 10px auto;
+    padding: 10px;
+    background: var(--main-color);
+    opacity: 0;
+    border-radius: 10px;
+    cursor: pointer; }
+    popup_notifications_container > div:hover {
+      opacity: 1; }
+    popup_notifications_container > div > * {
+      display: block; }
+    popup_notifications_container > div > title {
+      font-size: 120%; }

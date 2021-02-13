@@ -123,16 +123,11 @@ DONE TODO: Add a text editor app (notepad)
 DONE TODO: Add fade animations when a menus are created or removed
 DONE TODO: Rename app_menu -> activities_menu
 DONE TODO: Redesign the settings app. (*sidebarmenu)
-TODO: Expand the settings that don't need saving into cookies.
-TODO: Make a settings cookie storage system.
-TODO: Make a default file system object. And write user created files into a cookie/s.
 DONE TODO: Somehow load javascript for the main page while booting in the boot page. That will make the boot not just aesthetic 
-     TODO: Add better names to everything. Make them perfect
 DONE TODO: Add max-width to app_title so it doesn't overflow into the header buttons
 DONE TODO: Sleep...
 DONE TODO: Make the login.showForm() also trigger with an onclick
 DONE TODO: Add a better js loading system (synchronous i think)
-TODO: Separate X.js into components because the file is getting too long
 DONE TODO: Make the power off/shutdown functions invoke a CTA.
 DONE TODO: Style the CTA
 DONE TODO: Fix logout().
@@ -145,14 +140,8 @@ DONE TODO: Make the status area a lighter color
 DONE TODO: Improve the window manipulation.
 DONE \----Maximize when windows is dragged to the top of the screen
 DONE \----When a window is dragged to a side then maximize it to that side
-TODO: Add Reminders section in the notification panel.
-     \----Add a command for reminders
-     \----Play a sound when a notification is created
-     \----Add a Do not disrupt switch
 DONE TODO: Add mobile support (*somewhat functional)
-TODO: apps get opened in the top left
-     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-     TODO: Add an app enter animation
+DONE TODO: Add an app enter animation
 DONE TODO: Add an app exit animation
 DONE TODO: Differentiate between maximized and snapped to an area. (add a function 'fillArea'- something like the maximize except specifically for snapping apps to an area.)
 DONE TODO: When an app is scaled to an area allow the possible resize functions
@@ -161,6 +150,21 @@ DONE TODO: Maximze app when its header is double taped
 DONE TODO: Make the context menu appear inside the screen instead of part of it escaping the bounds.
 DONE TODO: Implement commands: shutdown, restart, logoff, exit, kill
 TODO: Implement more commands: top,
+     TODO: Improve all of the name. (variable names, function names, html tags, file names...)
+TODO: apps get opened in the top left
+     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
+TODO: Add Reminders section in the notification panel.
+DONE \----Add a command for reminders
+     \----Play a sound when a notification is created
+     \----Add a Do not disrupt switch
+TODO: Expand the settings that don't need saving into cookies.
+TODO: Make a settings cookie storage system.
+TODO: Make a default file system object. And write user created files into a cookie/s.
+
+
+
+Maybe do (But not necessary)
+TODO: Separate X.js into components because the file is getting too long
 
 
 Bugs:
@@ -171,4 +175,4 @@ DONE FIXME: Cursor gets stuck between resize and move sometimes and renders ever
 DONE FIXME: Firefox event.path undefined.
 DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open
-FIXME: Login allow only 1 character on some phones
+FIXME: Login allows only 1 character on some phones

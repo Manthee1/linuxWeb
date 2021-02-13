@@ -29,8 +29,8 @@ system = {
 
         X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
         // system.global.css["topBar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topBar-height').replace('px', '');
-        X.notification.create()
-        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", 'persistent')
+        X.notification.create('', '', '', '', '', false)
+        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
     },
 
     validatePassword: function (password) {
@@ -220,7 +220,29 @@ system = {
                     }
                     else throw processName + " - No processes found"
                 }
-            }
+            },
+            remind: {
+                shortHelp: "Create a reminder",
+                help: `Create a reminder"
+
+    USAGE
+        remind < message > -t < seconds >
+        ----------------
+        remind Sleep in the shed -t 180,
+        remind Get in the bed -t 3600`,
+
+                method: (options) => {
+                    const message = options[""].join(' ');
+                    const time = options['-t'];
+                    console.log(options, message, time);
+                    if (isNaN(Number(time))) throw ` -t: must be a number`;
+                    if (isValid(message) && message.length != 0) setTimeout(() => {
+                        X.notification.create("Reminder", message)
+                    }, time * 1000);
+                    else
+                        throw "message - Cannot be empty";
+                }
+            },
         }
     },
 

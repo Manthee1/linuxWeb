@@ -92,7 +92,7 @@ X = {
                 return `<notification_panel_container><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || X.general.tagIsInEventPath(event, "NOTIFICATION");
+                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (X.general.tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
             }
         },
         statusArea: {
@@ -171,13 +171,28 @@ X = {
             if (this.notifications == {}) return false
             return this.notifications;
         },
-        create: function (title = "", description = "", clickAction = "", iconPath = "", persistent = false) {
+        create: function (title = "", description = "", clickAction = "", iconPath = "", persistent = false, alert = true) {
             title = title || "Notification";
             description = description || "This is a default notification";
             iconPath = iconPath || "./img/about.svg";
             type = typeof (type) != "boolean" ? false : persistent; //'persistent', 'temporary'
             clickAction = clickAction || "";
             id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
+
+            if (alert) {
+                notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
+                popupNotificationContainer.insertAdjacentHTML('afterbegin', notificationHTML);
+                popupNotificationContainer.children[0].style.transform = "scale(1)";
+
+                popupNotificationContainer.children[0].style.transition = "all 0.2s linear";
+                setTimeout(() => {
+                    popupNotificationContainer.children[0].style.transform = "scale(0.8)";
+                    popupNotificationContainer.children[0].style.opacity = "0";
+                    setTimeout(() => {
+                        popupNotificationContainer.children[0].remove()
+                    }, 200);
+                }, 5000);
+            }
             this.notifications[id] = {
                 "title": title,
                 "description": description,
@@ -524,6 +539,7 @@ X = {
         linux = document.querySelector("body > linux");
         desktop = document.querySelector("linux > desktop");
         topBar = document.querySelector("linux > top_bar");
+        popupNotificationContainer = document.querySelector("linux > popup_notifications_container");
         appsContainer = document.querySelector("linux > apps_container");
         appList = document.querySelector("linux > app_list");
         systemMenuContainer = document.querySelector("system_menu_container");
