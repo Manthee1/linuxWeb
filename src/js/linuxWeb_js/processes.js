@@ -32,6 +32,7 @@ processes = {
 
     getRunningInstanceList: function (appName) {
         let pidObject = this.getPidObject();
+        if (isObjectEmpty(pidObject)) return false
         processesList = [];
         for (process of pidObject) {
             if (process.appName == appName) processesList.push(process);
@@ -41,9 +42,7 @@ processes = {
     },
 
     getRunningInstanceAmount: function (appName) {
-
         return this.getRunningInstanceList(appName).length
-
     },
     //Brings the selected app to top
     bringToTop: function (element, event = null) {
@@ -52,7 +51,7 @@ processes = {
         const pid = this.getNumberPid(element.id);
         typeof this.pid[pid]['onFocus'] == "function" && setTimeout(() => {// If it has a onFocus then.... do that
             //Timeout set in order for the focus to work at all
-            typeof this.pid[pid] != "undefined" && this.pid[pid].onFocus();
+            typeof this.pid[pid] != "undefined" && this.pid[pid].onFocus(event);
         }, 1);
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
         if (this.pid[pid].minimized == true) {
@@ -67,28 +66,6 @@ processes = {
         this.currentlySelectedProcess != null && this.currentlySelectedProcess.getProcessBarElement().classList.remove('selected') // removes the selected class from the previous apps progress bar thingy.
         this.pid[pid].getProcessBarElement().classList.add('selected');
         this.currentlySelectedProcess = this.pid[pid];
-    },
-
-    //Default values for the app createData parameters.
-    processSchema: {
-        title: "Untitled App",
-        titleColor: "",
-        bodyColor: "",
-        textColor: "",
-        headerColor: "",
-        headerBorderBottomColor: "transparent",
-        bodyBorderSize: "",
-        padding: "",
-        additionalBodyCss: "",
-        opacity: 1,
-        HTML: String(),
-        height: 300,
-        width: 500,
-        minHeight: 150,
-        minWidth: 150,
-        bodyBorder: Boolean(),
-        fullHeight: false,
-        fullWidth: false,
     },
 
     createWindowSizeProjection: function (process, fillType = "full") {
@@ -199,7 +176,7 @@ processes = {
             element.querySelector('app_resize').style.display = ''
             process.maximized = false;
             process.scaledToArea = false
-        } else {
+        } else if (!isObjectEmpty(fillData)) {
             //Makes sure to only save a size/position when an app is not currently scaled
             if (!process.scaledToArea) {
                 console.log("saved area");
@@ -213,9 +190,11 @@ processes = {
             element.style.height = fillData.height + "px";
             element.style.width = fillData.width + "px";
         }
+
         setTimeout(() => {
             element.style.transition = "";
         }, 200);
+
     },
     // Set maximum size and offload the scaling to scaleToFillArea()
     // This method makes sure that you still maximize an app even if it already fills a different area. Otherwise it would just unmaximize
@@ -227,8 +206,8 @@ processes = {
         if (process.maximized == true) {
             // Unmaximize
             element.style.transition = "all 0.2s ease-in-out";
-            process.scaledToArea = true
-            this.scaleToFillArea(stringyPID, {})
+            process.scaledToArea = true;
+            this.scaleToFillArea(stringyPID, {});
         } else {
             // Maximize
             fillData = {
@@ -274,6 +253,28 @@ processes = {
 
     },
 
+    //Default values for the app createData parameters.
+    processSchema: {
+        title: "Untitled App",
+        titleColor: "",
+        bodyColor: "",
+        textColor: "",
+        headerColor: "",
+        headerBorderBottomColor: "transparent",
+        bodyBorderSize: "",
+        padding: "",
+        additionalBodyCss: "",
+        opacity: 1,
+        HTML: String(),
+        height: 300,
+        width: 500,
+        minHeight: 150,
+        minWidth: 150,
+        bodyBorder: Boolean(),
+        fullHeight: false,
+        fullWidth: false,
+    },
+
     create: function (appName, position = { x: 'default', y: 'default' }) {
         //If the app doesn't exists.
         if (apps[appName] == undefined) {
@@ -292,7 +293,7 @@ processes = {
         let stringyPID = "pid" + processID;
         let appCreateData = {};
 
-
+        //Create the app Object according to the schema and replace the ones provided by the app's createData
         Object.assign(appCreateData, this.processSchema)
         Object.assign(appCreateData, apps[appName].createData)
 
@@ -355,7 +356,6 @@ processes = {
 		`;
         //Insert the appHTML so that the value fields of inputs and similar elements don't get wiped.
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
-
         appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
         processes.pid[processID] = {}
 
@@ -379,25 +379,22 @@ processes = {
         });
 
         setTimeout(() => {
-
             const el = processes.pid[processID].getProcessElement()
             el.style.opacity = ''
             el.style.transform = ''
             el.style.transition = ''
-
-
         }, 1);
 
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
-        X.general.addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), () => { processes.maximize(stringyPID) })
         this.bringToTop(processes.pid[processID].getProcessElement())
+        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), () => { processes.maximize(stringyPID) })
 
         apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
         return true;
     },
 
-    //Handles window movement. so yeah.
+    //Handles window movement. So... yeah.
     processMouseDownHandler: function (event, stringyPID, forceRun = false) {
         pid = this.getNumberPid(stringyPID);
         let process = this.pid[pid];
@@ -477,65 +474,59 @@ processes = {
         //Makes a element resizable. (Note: Not any element. Has to have resize points!)
         const element = document.querySelector(cssSelector);
         const resizePoints = document.querySelectorAll(cssSelector + ' resize_point')
-        const minimum_size_x = element.style.minWidth.replace('px', '') || 150;
-        const minimum_size_y = element.style.minHeight.replace('px', '') || 150;
+        const minimumSizeX = element.style.minWidth.replace('px', '') || 150;
+        const minimumSizeY = element.style.minHeight.replace('px', '') || 150;
 
-        let original_width = 0;
-        let original_height = 0;
-        let original_x = 0;
-        let original_y = 0;
-        let original_mouse_x = 0;
-        let original_mouse_y = 0;
+        let originalWidth = 0;
+        let originalHeight = 0;
+        let originalX = 0;
+        let originalY = 0;
+        let originalMouseX = 0;
+        let originalMouseY = 0;
         resizePoints.forEach(x => {
             x.addEventListener('mousedown', function (e) {
                 e.preventDefault()
-                original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
-                original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
-                original_x = element.getBoundingClientRect().left;
-                original_y = element.getBoundingClientRect().top;
-                original_mouse_x = e.pageX;
-                original_mouse_y = e.pageY;
+                originalWidth = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+                originalHeight = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+                originalX = element.getBoundingClientRect().left;
+                originalY = element.getBoundingClientRect().top;
+                originalMouseX = e.pageX;
+                originalMouseY = e.pageY;
                 window.addEventListener('mousemove', resize)
                 window.addEventListener('mouseup', stopResize)
             })
             function resize(e) {
                 // Easy to understand. besides it's not really gonna change so this is gonna probably be the final version of this snippet
-                // No point in trying to understand it then
 
-                // Well I was wrong. It was changed And it wil lbe changed. Idk what but it will.
+                // Well I was wrong. It was changed And it will be changed. Idk what, but it will.
                 const resizeClassList = x.classList.toString()
                 let height = 0;
                 let width = 0;
                 if (resizeClassList.includes('top')) {
-                    height = original_height - (e.pageY - original_mouse_y)
-                    if (height > minimum_size_y && height <= window.innerHeight) {
+                    height = originalHeight - (e.pageY - originalMouseY)
+                    if (height > minimumSizeY && height <= window.innerHeight) {
                         element.style.height = height + 'px'
-                        element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+                        element.style.top = originalY + (e.pageY - originalMouseY) + 'px'
                     }
                 } else if (resizeClassList.includes('bottom')) {
-                    height = original_height + (e.pageY - original_mouse_y)
-                    if (height > minimum_size_y && height <= window.innerHeight) {
+                    height = originalHeight + (e.pageY - originalMouseY)
+                    if (height > minimumSizeY && height <= window.innerHeight)
                         element.style.height = height + 'px'
-                    }
                 }
                 if (resizeClassList.includes('left')) {
-                    width = original_width - (e.pageX - original_mouse_x)
-                    if (width > minimum_size_x && width <= window.innerWidth) {
+                    width = originalWidth - (e.pageX - originalMouseX)
+                    if (width > minimumSizeX && width <= window.innerWidth) {
                         element.style.width = width + 'px'
-                        element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+                        element.style.left = originalX + (e.pageX - originalMouseX) + 'px'
                     }
                 } else if (resizeClassList.includes('right')) {
-                    width = original_width + (e.pageX - original_mouse_x)
-                    if (width > minimum_size_x && width <= window.innerWidth) {
+                    width = originalWidth + (e.pageX - originalMouseX)
+                    if (width > minimumSizeX && width <= window.innerWidth)
                         element.style.width = width + 'px'
-                    }
+
                 }
-                if (height >= window.innerHeight) {
-                    element.style.height = window.innerHeight
-                }
-                if (width >= window.innerWidth) {
-                    element.style.width = window.innerWidth
-                }
+                if (height >= window.innerHeight) element.style.height = window.innerHeight
+                if (width >= window.innerWidth) element.style.width = window.innerWidth
             }
             function stopResize() {
                 document.body.setAttribute('onmousemove', null)
@@ -544,4 +535,3 @@ processes = {
         })
     }
 }
-

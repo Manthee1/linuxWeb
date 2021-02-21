@@ -149,18 +149,17 @@ DONE TODO: Reorganize the functions. Specifically the ones in system.global
 DONE TODO: Maximze app when its header is double taped
 DONE TODO: Make the context menu appear inside the screen instead of part of it escaping the bounds.
 DONE TODO: Implement commands: shutdown, restart, logoff, exit, kill
+DONE \----Add a Do not disrupt switch
+DONE \----Add a command for reminders
 TODO: Implement more commands: top,
-     TODO: Improve all of the name. (variable names, function names, html tags, file names...)
 TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-TODO: Add Reminders section in the notification panel.
-DONE \----Add a command for reminders
-     \----Play a sound when a notification is created
-     \----Add a Do not disrupt switch
+TODO: Add an 'Add Reminder' section in the notification panel.
+
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Make a settings cookie storage system.
 TODO: Make a default file system object. And write user created files into a cookie/s.
-
+     TODO: Improve all names. (variable names, function names, html tags, file names...)
 
 
 Maybe do (But not necessary)

@@ -36,7 +36,8 @@ page = {
 			(async () => {
 				try {
 					let jsCode = await (await fetch(jsSrc)).text()
-					eval(await jsCode);
+					eval(await jsCode + `console.info(jsSrc + " Loaded")`);
+
 				} catch (e) {
 					console.error(e, jsSrc);
 					eval(jsCode)
@@ -162,19 +163,48 @@ let range = (a, b = null) => {
 	if (b) ret = ret.splice(a)
 	return ret
 }
-
 let isValid = x => {
 	return (x && x.toString().trim() !== "") || x == false;
 }
-let isDefined = (el) => {
+let isDefined = el => {
 	if (typeof el == "undefined" || el == null) return false;
 	else return true;
 }
-let escapeHtml = (text) => {
+let escapeHtml = text => {
 	var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
 	return text.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
-let isObjectEmpty = (obj) => {
+let isObjectEmpty = obj => {
 	if (isDefined(obj))
 		return Object.entries(obj).length == 0
+}
+let isTextEmpty = x => {
+	return (x.toString().trim().length == 0);
+}
+let elementIsInEventPath = (event, element) => {
+	clickPath = event.path || event.composedPath() //event.path is for chrome and event.composedPath() is mozilla firefox
+	return clickPath.includes(element)
+}
+let tagIsInEventPath = (event, tag) => {
+	tag = tag.toUpperCase()
+	clickPath = event.path || event.composedPath()
+	for (element of clickPath) {
+		if (element.tagName == tag) return true
+	}
+	return false
+}
+let addDoubleClickListener = (el, callback) => {
+	clickedAmount = 0;
+	doubleClickTimeout = 0;
+	el.addEventListener('click', event => {
+		if (++clickedAmount == 2) {
+			clearTimeout(doubleClickTimeout);
+			callback(event)
+		}
+		clearTimeout(doubleClickTimeout);
+		doubleClickTimeout = setTimeout(() => {
+			clickedAmount = 0;
+		}, 300);
+	})
+
 }

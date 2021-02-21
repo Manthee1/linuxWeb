@@ -137,7 +137,6 @@
 	];
 	jsSources = [
 		"./js/libraries/sha256.js",
-		"./js/libraries/jsHelp.js",
 		"./js/linuxWeb_js/system.js",
 		"./js/linuxWeb_js/apps.js",
 		"./js/linuxWeb_js/processes.js",

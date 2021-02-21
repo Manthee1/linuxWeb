@@ -4,7 +4,7 @@ apps = {
         //Saddle up for this one. 
         name: "linuxWEB Terminal",
         path: "apps.terminal",
-        version: "1.0.4",
+        version: "1.1.0",
         icon: "./img/terminal.svg",
 
         createData: {
@@ -19,19 +19,21 @@ apps = {
             padding: "10px 5px",
             getHTML: function () {
                 return `
-                <terminal_main >linuxWEB terminal version 1.0.3<br></terminal_main>
+                <terminal_main >linuxWEB terminal version ${apps.terminal.version}<br></terminal_main>
 				<terminal_input >linuxWEB@root:-$ <input type=text></terminal_input>
 				`},
             methods: {
-                // Everything here gets aded to the pid object of the app.
-                // So every terminal has its own separate 'commandHistory', 'addToCommandHistory()'
+                // Everything here gets added to the pid object of the app.
+                // So every terminal has its own separate 'commandHistory', 'addToCommandHistory()' etc.
                 commandHistory: [],
                 currentHistoryNumber: -1,
                 currentCommand: "",
                 //This is executed by processes.bringToTop(); When the app is clicked on.
-                onFocus: function () {
-                    let focusElement = this.getProcessElementBody().querySelector('terminal_input > input')
-                    document.activeElement != focusElement && focusElement.focus();
+                onFocus: function (event) {
+                    let focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
+                    let textElement = this.getProcessElementBody().querySelector('terminal_main');
+                    console.log(document.activeElement);
+                    (document.activeElement != focusElement && !elementIsInEventPath(event, textElement)) && focusElement.focus();
                 },
                 //Adds a executed command to the command history array.
                 addToCommandHistory: function (commandToPush) {
@@ -42,7 +44,7 @@ apps = {
         },
         //Returns an object with references to the wanted terminal element in the dom
         //The parameter is the terminal 'pid' object
-        InitiateVariables: function (process = null) {
+        InitiateProcessVariables: function (process = null) {
             if (process == null) return false;
             return {
                 body: process.getProcessElementBody(),
@@ -55,20 +57,19 @@ apps = {
         //Adds a listener for keypress.  
         onStart: function (process) {
             console.log("onStart Initialized: ", process);
-            terminalElement = this.InitiateVariables(process);
-            terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${process.id}])`)
+            terminalElement = this.InitiateProcessVariables(process);
+            terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${process.id}])`);
         },
         parseCommand: async function (event, element, process) {
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                let terminalElement = this.InitiateVariables(process);
+                let terminalElement = this.InitiateProcessVariables(process);
                 let text = element.value;
-                element.value = "";
+                element.value = ""; // CLear the input.
                 terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
+                if (isTextEmpty(text)) return false;
                 try {
                     process.currentHistoryNumber = -1;
-                    // If eval return nothing then just don't return it to the terminal
-
                     commandExecuted = system.cli.i(text, process);
                     if (typeof (commandExecuted) != 'undefined') {
                         //Objects just get stringified
@@ -92,11 +93,12 @@ apps = {
                 this.getFromCommandHistory(process, -1)
             }
         },
+
         getFromCommandHistory: function (process, val) {
             // Go Up||Down a number in the commandHistory array, val=-1 or 1
             let command = process.commandHistory[process.currentHistoryNumber + val];
             if (process.currentHistoryNumber + val < -1) return false
-            terminalElement = apps.terminal.InitiateVariables(process);
+            terminalElement = apps.terminal.InitiateProcessVariables(process);
             if (command != undefined) {
                 // If there is a command in the history then do that. Yeah...
                 terminalElement.input.value = command;

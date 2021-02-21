@@ -19,17 +19,14 @@ system = {
         X.services.volume.update();
     },
 
-    startup: function () {//  Important: Should only be run once
+    startup: function () { // !Important: Should only be run once
         if (this.started) return false;
         this.started = true;
-        //Add system.build variable
-        (async () => {
-            system.build = await (async () => { return (await fetch("./build.ver")).text() })()
-        })() // Get build version
-        X.initialize();
 
-        X.services.clock.update.add(document.querySelector('dateTime'), "month>str date  time-s")
-        // system.global.css["topBar-height"] = getComputedStyle(htmlEl).getPropertyValue('--topBar-height').replace('px', '');
+        //Add system.build variable [version]
+        (async () => { system.build = await (async () => { return (await fetch("./build.ver")).text() })() })() // Get build version
+        X.initialize();
+        X.services.clock.update.add(document.querySelector('dateTime'), "month>str date time-s")
         X.notification.create('', '', '', '', '', false)
         X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
     },

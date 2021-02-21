@@ -17,9 +17,9 @@ X = {
             getHTML: function (x = 100, y = 100) {
                 return `
 		<context_menu style="top: ${y}px;left: ${x}px;">
-				<context_item>Change Background</context_item><hr>
+				<context_item onclick="X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])">Change Background</context_item><hr>
 				<context_item onclick="processes.create('terminal')">Terminal</context_item>
-				<context_item onclick="processes.create('settings');">Settings</context_item>
+				<context_item onclick="processes.create('settings')">Settings</context_item>
 			</context_menu>
 				`
 
@@ -28,9 +28,7 @@ X = {
                 return event.target.tagName != "CONTEXT_MENU"
             },
 
-
             onCreate: function () {
-
                 document.querySelectorAll('.context_sub_menu').forEach(x => {
                     x.addEventListener('mouseover', () => {
                         x.querySelector('context_sub_menu').style.display = 'block'
@@ -68,7 +66,7 @@ X = {
             },
 
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("activities_menu_container"))
+                return !elementIsInEventPath(event, document.querySelector("activities_menu_container"))
             },
 
         },
@@ -92,7 +90,7 @@ X = {
                 return `<notification_panel_container><do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
             },
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (X.general.tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
+                return !elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
             }
         },
         statusArea: {
@@ -130,7 +128,7 @@ X = {
         </status_area_container>`;
             },
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
 
@@ -160,7 +158,7 @@ X = {
                     </dropdown_item>
         </status_area_container>`,
             closeCondition: function (event) {
-                return !X.general.elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !elementIsInEventPath(event, document.querySelector("status_area_container"))
             },
         },
     },
@@ -240,10 +238,10 @@ X = {
                 previousMonthDateRange = previousMonthDateRange.map(x => { return "-" + x });
                 nextMonthDateRange = nextMonthDateRange.map(x => { return "-" + x });
             }
+
             if (currentDatePrefix) {
                 day = Number(date.get('date'))
                 currentMonthDateRange[day - 1] = "&" + currentMonthDateRange[day - 1]
-
             }
 
             let calendarDates = [].concat(
@@ -269,13 +267,14 @@ X = {
                         Object.values(X.services.clock.update.updateElements).forEach(x => {
                             x.element.innerHTML = date.get(x.options);
                         });
-                        console.log("Time update. Next one in: ", 60 - new Date().getSeconds());
+                        console.log("Time updated. Next one in: ", 60 - new Date().getSeconds());
                     }, 60 * 1000);
                 }, (60 - new Date().getSeconds()) * 1000); // Makes sure the update is synchronized
             },
 
             update: {
-                //updateElements stores the elements and the options for how  the time should be displayed on them eg. 0:{element,options}
+                //updateElements stores the elements and their options eg. 0:{element,options}
+
                 updateElements: {},
                 //add Adds a new element to the object
                 add: function (element, options) {
@@ -341,35 +340,7 @@ X = {
                 }
             }
         },
-        elementIsInEventPath: (event, element) => {
-            clickPath = event.path || event.composedPath() //event.path is for chrome and event.composedPath() is mozilla firefox
-            return clickPath.includes(element)
-        },
-        tagIsInEventPath: (event, tag) => {
-            tag = tag.toUpperCase()
-            clickPath = event.path || event.composedPath()
-            for (element of clickPath) {
-                if (element.tagName == tag) return true
-            }
-            return false
-        },
-        addDoubleClickListener: (el, callback) => {
-            clickedAmount = 0;
-            doubleClickTimeout = 0;
-            el.addEventListener('click', event => {
-                if (++clickedAmount == 2) {
-                    clearTimeout(doubleClickTimeout);
-                    callback(event)
-                }
-                clearTimeout(doubleClickTimeout);
-                doubleClickTimeout = setTimeout(() => {
-                    clickedAmount = 0;
-                }, 300);
-            })
-
-        }
     },
-
 
     overlay: {
         //Simply remove's any element with the overlay tag
@@ -505,8 +476,6 @@ X = {
         });
 
     },
-
-
 
     shutdown: async function () {
         let shutdownTimeout = setTimeout(() => {
