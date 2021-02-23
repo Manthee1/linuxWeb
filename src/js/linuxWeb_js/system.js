@@ -320,10 +320,9 @@ system = {
         mkdir /var/www`,
 
                 method: (options, terminal) => {
-                    let dir = ''
-                    if (options != null) {
-                        dir = options[""][0].trim();
-                    }
+                    path = parseDir(options, terminal);
+                    fileSystem.write(path, 0, null, 777)
+
                 }
             },
             touch: {
@@ -337,10 +336,8 @@ system = {
         touch /home/example.txt`,
 
                 method: (options, terminal) => {
-                    let dir = ''
-                    if (options != null) {
-                        dir = options[""][0].trim();
-                    }
+                    path = parseDir(options, terminal);
+                    fileSystem.write(path, 1, "", 777)
                 },
 
 

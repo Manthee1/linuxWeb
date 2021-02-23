@@ -54,7 +54,7 @@ fileSystem = {
     },
 
     write: function (path, type = null, text = null, permissions = null) {
-        [file, filePath] = this.getDir(path, "array");
+        [file, filePath] = this.getDir(path, "array", false);
         console.log(file, filePath, true);
 
         if (!isDefined(file)) {
