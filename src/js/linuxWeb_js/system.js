@@ -241,12 +241,117 @@ system = {
                         throw "message - Cannot be empty";
                 }
             },
-        }
-    },
+            ls: {
+                shortHelp: "List the contents of a directory",
+                help: `List the Contents of the current or provided directory"
 
-    shutdown: () => page.changePage('./html/shutdown.html'),
-    logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
-    restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
-}
+    USAGE
+        ls <directory>
+        ----------------
+        ls
+        ls /home`,
+                method: (options, terminal) => {
+                    let dir = ''
+                    if (options != null) {
+                        dir = options[""][0].trim();
+                        const moreInfo = isDefined(options['-l']) ? true : false;
+                    }
+                    let path = dir
+                    let list = fileSystem.getObjectFromPath(path)
+                    let ret = ` Contents of '${path}' :\n`
+
+                    console.log(options);
+                    console.log(list);
+
+                    Object.entries(list).forEach(x => {
+                        if (x[0] != '\\0') {
+                            if (moreInfo) {
+                                let type = fileSystem.getType(x[1]) == 1 ? "-" : "d";
+                                let permissions = fileSystem.getPermissions(x[1])
+                                ret += `${type} ${permissions}`;
+                            }
+                            console.log(x[0], x[1])
+                            ret += `    ${x[0]}     \n`
+                        }
+                    })
+                    return ret;
+                }
+            },
+            cd: {
+                shortHelp: "Changes Directory",
+                help: `Changes the current directory or display the current directory"
+
+    USAGE
+        cd < directory >
+        ----------------
+        cd
+        cd /home`,
+                method: (options, terminal) => {
+                    let dir = ''
+                    if (options != null) {
+                        dir = options[""][0].trim();
+                    }
+                }
+            },
+            cat: {
+                shortHelp: "Displays file content",
+                help: `Displays the contents of a file"
+
+    USAGE
+     cat <path/to/file>
+        ----------------
+        cat example.txt
+        cat /home/example.txt`,
+
+
+                method: (options, terminal) => {
+                    let dir = ''
+                    if (options != null) {
+                        dir = options[""][0].trim();
+                    }
+                }
+            },
+            mkdir: {
+                shortHelp: "Create a Directory",
+                help: `Create a Directory"
+
+    USAGE
+        mkdir < directory > or < path/to/directory >
+        ----------------
+        mkdir project
+        mkdir /var/www`,
+
+                method: (options, terminal) => {
+                    let dir = ''
+                    if (options != null) {
+                        dir = options[""][0].trim();
+                    }
+                },
+
+                touch: {
+                    shortHelp: "Creates a file",
+                    help: `Creates a file"
+
+    USAGE
+        touch < path/to/file >
+        ----------------
+        touch example.txt
+        touch /home/example.txt`,
+
+                    method: (options, terminal) => {
+                        let dir = ''
+                        if (options != null) {
+                            dir = options[""][0].trim();
+                        }
+                    },
+
+
+                }
+            },
+
+            shutdown: () => page.changePage('./html/shutdown.html'),
+            logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+            restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
+        }
 
 
