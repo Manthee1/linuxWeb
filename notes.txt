@@ -156,10 +156,15 @@ TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
 TODO: Add an 'Add Reminder' section in the notification panel.
 
-TODO: Expand the settings that don't need saving into cookies.
 TODO: Make a settings cookie storage system.
-TODO: Make a default file system object. And write user created files into a cookie/s.
-     TODO: Improve all names. (variable names, function names, html tags, file names...)
+TODO: Expand the settings that don't need saving into cookies.
+
+DONE TODO: Make a default file system object.
+     \----Implement all the main functions(read, write, remove)
+     \----Implement commands to interface with the file system         - Partial Implementation (cat,ls,cd,mkdir,touch)
+
+
+TODO: Improve all names. (variable names, function names, html tags, file names...)
 
 
 Maybe do (But not necessary)
