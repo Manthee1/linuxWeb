@@ -27,7 +27,7 @@ fileSystem = {
     getType: function (file) {
         return file['\\0'].slice(3)
     },
-    getObjectFromPath: function (path, returnPath = false) {
+    getObjectFromPath: function (path, returnPath = false) { // returnPath = 'array' or 'string'
         path = path.trim()
         if (!path.startsWith('/')) {
             throw "Error 0: Bad Path Start :: Paths must start with '/'!"
@@ -35,14 +35,19 @@ fileSystem = {
         if (path.includes('\\0')) {
             throw "Error 1: Bad character in path :: '\\0' - Cannot be used in a path!" // '\0' - permissions and type string
         }
+
         path = path.slice(1); // Remove the '/' from the beginning
-        retObj = '';
         if (!isTextEmpty(path));
         objPath = path.split('/').map(x => { return isTextEmpty(x) ? '' : `['${x}']` }).join('');
-        retObj = eval(this.fileRootPath + objPath);
+
+        try {
+            retObj = eval(this.fileRootPath + objPath)
+        } catch (error) {
+            retObj = null;
+        }
+
         if (returnPath == 'array') return [retObj, path.split('/')];
         if (returnPath == 'string') return [retObj, objPath];
-
         else return retObj;
     },
 
@@ -51,10 +56,10 @@ fileSystem = {
         console.log(file, filePath);
 
         if (!isDefined(file)) {
-            objPath = this.fileRootPath
+            objPath = this.fileRootPath;
             filePath.forEach(x => {
-                nextPath = isTextEmpty(x) ? '' : `['${x}']`
-                objPath += nextPath
+                nextPath = isTextEmpty(x) ? '' : `['${x}']`;
+                objPath += nextPath;
                 if (!isDefined(eval(objPath))) {
                     eval(objPath + " = { '\\\\0': '7770' }");
                 }
