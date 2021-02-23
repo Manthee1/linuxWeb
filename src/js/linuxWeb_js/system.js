@@ -1,5 +1,6 @@
 system = {
     started: false,
+    user: "root",
     encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f",
     global: {
         //Global variables
@@ -100,7 +101,7 @@ system = {
                 help: `Echos your message back to you
 
     USAGE
-        echo < message >
+        echo <message>
          ----------------
         echo Hello Word`,
                 method: (options) => {
@@ -116,7 +117,7 @@ system = {
                 help: `Starts an app
 
     USAGE
-        app < app name >
+        app <app name>
         ----------------
         app terminal
         app notepad`,
@@ -172,7 +173,7 @@ system = {
             },
             exit: {
                 shortHelp: "Exits the terminal window",
-                help: `Exits the terminal window"
+                help: `Exits the terminal window
 
     USAGE
         exit`,
@@ -183,10 +184,10 @@ system = {
 
             kill: {
                 shortHelp: "Kills a process by pid",
-                help: `Kills a running process"
+                help: `Kills a running process
 
     USAGE
-        kill < process pid >
+        kill <process pid>
         ----------------
         kill 1`,
                 method: (options) => {
@@ -200,11 +201,11 @@ system = {
                 }
             },
             killall: {
-                shortHelp: "Kills processes ",
-                help: `Kills all running processes of a name"
+                shortHelp: "Kills processes",
+                help: `Kills all running processes of a name
 
     USAGE
-        killall < process name >
+        killall <process name>
         ----------------
         killall terminal
         killall google`,
@@ -221,10 +222,10 @@ system = {
             },
             remind: {
                 shortHelp: "Create a reminder",
-                help: `Create a reminder"
+                help: `Create a reminder
 
     USAGE
-        remind < message > -t < seconds >
+        remind <message> -t <seconds>
         ----------------
         remind Sleep in the shed -t 180,
         remind Get in the bed -t 3600`,
@@ -243,7 +244,7 @@ system = {
             },
             ls: {
                 shortHelp: "List the contents of a directory",
-                help: `List the Contents of the current or provided directory"
+                help: `List the Contents of the current or provided directory
 
     USAGE
         ls <directory>
@@ -251,51 +252,50 @@ system = {
         ls
         ls /home`,
                 method: (options, terminal) => {
-                    let dir = ''
-                    if (options != null) {
-                        dir = options[""][0].trim();
-                        const moreInfo = isDefined(options['-l']) ? true : false;
-                    }
-                    let path = dir
-                    let list = fileSystem.getObjectFromPath(path)
+                    path = parseDir(options, terminal)
+                    let moreInfo = "";
+                    let list = fileSystem.getDir(path, false, true);
                     let ret = ` Contents of '${path}' :\n`
 
                     console.log(options);
                     console.log(list);
 
+
+                    if (options != null)
+                        moreInfo = isDefined(options['-l']) ? true : false;
+
                     Object.entries(list).forEach(x => {
                         if (x[0] != '\\0') {
                             if (moreInfo) {
                                 let type = fileSystem.getType(x[1]) == 1 ? "-" : "d";
-                                let permissions = fileSystem.getPermissions(x[1])
+                                let permissions = fileSystem.getPermissions(x[1]);
                                 ret += `${type} ${permissions}`;
                             }
                             console.log(x[0], x[1])
-                            ret += `    ${x[0]}     \n`
+                            ret += `    ${x[0]}\n`
                         }
-                    })
-                    return ret;
+                    });
+                    return ret.slice(0, -1);
                 }
             },
             cd: {
                 shortHelp: "Changes Directory",
-                help: `Changes the current directory or display the current directory"
+                help: `Changes the current directory or display the current directory
 
     USAGE
-        cd < directory >
+        cd <directory>
         ----------------
         cd
         cd /home`,
                 method: (options, terminal) => {
-                    let dir = ''
-                    if (options != null) {
-                        dir = options[""][0].trim();
-                    }
+                    path = parseDir(options, terminal)
+                    terminal.setCurrentDirectory(path);
+                    return path;
                 }
             },
             cat: {
                 shortHelp: "Displays file content",
-                help: `Displays the contents of a file"
+                help: `Displays the contents of a file
 
     USAGE
      cat <path/to/file>
@@ -313,10 +313,10 @@ system = {
             },
             mkdir: {
                 shortHelp: "Create a Directory",
-                help: `Create a Directory"
+                help: `Create a Directory
 
     USAGE
-        mkdir < directory > or < path/to/directory >
+        mkdir <directory> or <path/to/directory>
         ----------------
         mkdir project
         mkdir /var/www`,
@@ -326,32 +326,50 @@ system = {
                     if (options != null) {
                         dir = options[""][0].trim();
                     }
-                },
-
-                touch: {
-                    shortHelp: "Creates a file",
-                    help: `Creates a file"
+                }
+            },
+            touch: {
+                shortHelp: "Creates a file",
+                help: `Creates a file
 
     USAGE
-        touch < path/to/file >
+        touch <path/to/file>
         ----------------
         touch example.txt
         touch /home/example.txt`,
 
-                    method: (options, terminal) => {
-                        let dir = ''
-                        if (options != null) {
-                            dir = options[""][0].trim();
-                        }
-                    },
+                method: (options, terminal) => {
+                    let dir = ''
+                    if (options != null) {
+                        dir = options[""][0].trim();
+                    }
+                },
 
 
-                }
-            },
+            }
+        },
 
-            shutdown: () => page.changePage('./html/shutdown.html'),
-            logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
-            restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
-        }
+        shutdown: () => page.changePage('./html/shutdown.html'),
+        logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+        restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
+    }
 
+}
+
+function parseDir(options, terminal) {
+    let path = terminal.currentDirectory;
+    if (options != null) {
+        dir = options[""].join('').trim();
+        dir.endsWith("/") ? dir.slice(0, -1) : dir;
+        if (isTextEmpty(dir)) path = '/'
+        else if (dir == '..') path = path.split('/').slice(0, -1).join('');
+        else if (!dir.startsWith('/')) path = path + (path.endsWith("/") ? "" : '/') + dir;
+        else path = dir;
+    }
+    path == "" && (path = '/')
+
+
+    console.log(path);
+    return path;
+}
 

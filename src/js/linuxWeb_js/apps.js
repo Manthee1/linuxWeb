@@ -19,8 +19,8 @@ apps = {
             padding: "10px 5px",
             getHTML: function () {
                 return `
-                <terminal_main >linuxWEB terminal version ${apps.terminal.version}<br></terminal_main>
-				<terminal_input >linuxWEB@root:-$ <input type=text></terminal_input>
+                <terminal_main>linuxWEB terminal version ${apps.terminal.version}<br></terminal_main>
+				<terminal_input><span>${this.methods.getPrefix()}</span><input type=text></terminal_input>
 				`},
             methods: {
                 // Everything here gets added to the pid object of the app.
@@ -28,6 +28,19 @@ apps = {
                 commandHistory: [],
                 currentHistoryNumber: -1,
                 currentCommand: "",
+
+                currentDirectory: "/",
+                user: system.user,
+                getPrefix: function () {
+                    return `[${this.user} ${this.currentDirectory}] $ `;
+                },
+                setCurrentDirectory: function (dir) {
+                    console.log(this, dir);
+                    if (isDefined(fileSystem.getDir(dir))) this.currentDirectory = dir;
+                    else throw `${dir}: Path not found.`
+                },
+
+
                 //This is executed by processes.bringToTop(); When the app is clicked on.
                 onFocus: function (event) {
                     let focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
@@ -83,6 +96,7 @@ apps = {
                     //Returns error
                     terminalElement.main.innerHTML += e + "<br>";
                 }
+                terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
                 process.addToCommandHistory(text);
                 element.scrollIntoView(false)
             } else if (event.code == "ArrowUp") {

@@ -27,8 +27,8 @@ fileSystem = {
     getType: function (file) {
         return file['\\0'].slice(3)
     },
-    getObjectFromPath: function (path, returnPath = false) { // returnPath = 'array' or 'string'
-        path = path.trim()
+    getDir: function (path, returnPath = false, throwError = true) { // returnPath = 'array' or 'string'
+        path = path.trim();
         if (!path.startsWith('/')) {
             throw "Error 0: Bad Path Start :: Paths must start with '/'!"
         }
@@ -46,14 +46,16 @@ fileSystem = {
             retObj = null;
         }
 
+        console.log(retObj, throwError);
+        if (!isDefined(retObj) && throwError) throw `/${path}: Path not found.`;
         if (returnPath == 'array') return [retObj, path.split('/')];
         if (returnPath == 'string') return [retObj, objPath];
         else return retObj;
     },
 
     write: function (path, type = null, text = null, permissions = null) {
-        [file, filePath] = this.getObjectFromPath(path, "array");
-        console.log(file, filePath);
+        [file, filePath] = this.getDir(path, "array");
+        console.log(file, filePath, true);
 
         if (!isDefined(file)) {
             objPath = this.fileRootPath;
@@ -75,21 +77,17 @@ fileSystem = {
     },
 
     read: function (path) {
-        file = this.getObjectFromPath(path);
-        if (!isDefined(file)) {
-            throw `Error 3: ${path} Does not exist!`;
-        } else if (!this.isFile(file)) {
+        file = this.getDir(path);
+        if (!this.isFile(file)) {
             throw `Error 2: ${path} is not a file!`;
         }
         return file.data
     },
     remove: function (path, force = false) {
-        [file, filePath] = this.getObjectFromPath(path, "string");
+        [file, filePath] = this.getDir(path, "string");
 
-        if (!isDefined(file))
-            throw `Error 3: ${path} Does not exist!`;
-        else if (!this.isEmptyDir(file) && !force)
-            throw `Error 10: Cannot remove an empty Directory (${path}) - try remove(*path*, true) to force remove a directory`;
+        if (!this.isEmptyDir(file) && !force)
+            throw `Error 10: Directory is not empty  (${path}) - try remove(*path*, true) to force remove a directory`;
 
         console.log(file, filePath);
         eval('delete ' + this.fileRootPath + filePath)
