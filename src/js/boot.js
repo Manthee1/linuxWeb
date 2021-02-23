@@ -140,6 +140,8 @@
 		"./js/linuxWeb_js/system.js",
 		"./js/linuxWeb_js/apps.js",
 		"./js/linuxWeb_js/processes.js",
+		"./js/linuxWeb_js/fileSystem.js",
+
 	]
 	retrieveMainJs = async (x = true) => {
 		return new Promise(resolve => {
