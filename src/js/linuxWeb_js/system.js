@@ -305,10 +305,8 @@ system = {
 
 
                 method: (options, terminal) => {
-                    let dir = ''
-                    if (options != null) {
-                        dir = options[""][0].trim();
-                    }
+                    path = parseDir(options, terminal)
+                    return fileSystem.read(path)
                 }
             },
             mkdir: {
