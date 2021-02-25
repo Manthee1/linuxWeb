@@ -178,6 +178,10 @@ let isObjectEmpty = obj => {
 	if (isDefined(obj))
 		return Object.entries(obj).length == 0
 }
+let isArrayEmpty = arr => {
+	if (isDefined(arr) && typeof arr == "Object")
+		return arr.length == 0
+}
 let isTextEmpty = x => {
 	return (x.toString().trim().length == 0);
 }
