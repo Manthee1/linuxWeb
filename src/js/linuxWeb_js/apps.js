@@ -36,8 +36,10 @@ apps = {
                 },
                 setCurrentDirectory: function (dir) {
                     console.log(this, dir);
-                    if (isDefined(fileSystem.getDir(dir))) this.currentDirectory = dir;
-                    else throw `${dir}: Path not found.`
+                    dirObj = fileSystem.getDir(dir)
+                    if (!isDefined(dirObj)) throw `${dir}: Path not found.`
+                    if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`
+                    this.currentDirectory = dir;
                 },
 
 
