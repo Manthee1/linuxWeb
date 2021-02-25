@@ -160,9 +160,24 @@ TODO: Make a settings cookie storage system.
 TODO: Expand the settings that don't need saving into cookies.
 
 DONE TODO: Make a default file system object.
-     \----Implement all the main functions(read, write, remove)
-     \----Implement commands to interface with the file system         - Partial Implementation (cat,ls,cd,mkdir,touch)
+DONE \----Implement all the main functions(read, write, remove)
 
+DONE Implement commands to interface with the file system
+DONE \----Add commands: cat
+DONE \----Add commands: ls
+DONE \----Add commands: cd
+DONE \----Add commands: mkdir
+DONE \----Add commands: touch
+DONE \----Add commands: write
+     \----Add commands: rm
+          
+          
+          
+          
+TODO: Revamp the command parser.
+     \----Treat things in quotes as a single value
+DONE \----Re-manage how the arguments are stored into the options object.
+DONE \----Add a Redirection operator ('>') for writing the output of a command to a file.
 
 TODO: Improve all names. (variable names, function names, html tags, file names...)
 
