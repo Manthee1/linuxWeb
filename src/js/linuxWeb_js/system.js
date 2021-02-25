@@ -41,32 +41,77 @@ system = {
         i: function (command = false, terminalProcess = false) {
             if (!command || !terminalProcess) return false
             let options = null;
+            let rawArgumentString = command.trim()
+            let writeToPath = false
 
-            let a = (command.trim() + " ").split(' ')
-            let callMethod = a.splice(0, 1)[0].trim()
+            //Check if redirection operator exist
+            if (rawArgumentString.includes('>')) {
+                [rawArgumentString, writeToPath] = rawArgumentString.split('>')
+                console.log(writeToPath);
+                writeToPath = parseDir(null, terminalProcess, writeToPath.trim());
+            }
+            argArray = (rawArgumentString + " ").split(' ')
 
-            if (a.length != 0 && !(a.length == 1 && a[0].trim().length === 0)) {
-                options = { "": [] };
+
+            // let getAllInQuotesRegExp = RegExp(`"(.*?)"`, 'gm')
+            // let argsInQuotes = rawArgumentString.match(getAllInQuotesRegExp)
+            // let argArray = rawArgumentString.replaceAll(getAllInQuotesRegExp, '$--##--')
+            // isDefined(argsInQuotes) && argsInQuotes.forEach(x => {
+            //     argArray[argArray.indexOf('$--##--')] = x;
+            // });
+
+
+
+
+            let callMethod = argArray.splice(0, 1)[0].trim();
+
+            if (argArray.length != 0 && !(argArray.length == 1 && argArray[0].trim().length === 0)) {
+
+                options = { "@": [], "$raw": rawArgumentString };
                 let optionBuffer = "";
-                let i = 0;
-                a.forEach(x => {
-                    if (x.startsWith('-')) {
-                        optionBuffer.trim() != "" && (options[optionBuffer] = '');
-                        optionBuffer = x;
-                    } else if (x.trim() != "") {
-                        if (optionBuffer.trim() == "") options[""].push(x);
-                        else options[optionBuffer] = x;
+                for (let x of argArray) {
+                    x = x.trim()
+                    if (x.startsWith('-') && x.length > 1) {
+                        if (!isTextEmpty(optionBuffer)) {
+                            obj = this.appendToOptions(optionBuffer, '', options);
+                            optionBuffer = "";
+                        }
+                        if (x.startsWith('--') && x.length > 2)
+                            optionBuffer = '-' + x.replaceAll('-', '');
+                        else optionBuffer = x.replaceAll('-', '');
+                    } else {
+                        if (isTextEmpty(optionBuffer)) options['@'].push(x);
+                        else obj = this.appendToOptions(optionBuffer, x, options);
                         optionBuffer = "";
                     }
-                });
+                }
+                options["@s"] = options["@"].join(' ')
             }
+
+            console.log(rawArgumentString, writeToPath, argArray, options);
+
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
-                return ret;
+
+                if (writeToPath) fileSystem.write(writeToPath, 1, ret, 777);
+                else return ret;
             } catch (error) {
                 console.log(error);
                 throw `${callMethod}: ${error}`
             }
+
+        },
+        getArgValue: function (arg) { },
+        appendToOptions: function (buffer, value, obj) {
+
+            if (buffer.startsWith('-'))
+                obj["-" + buffer] = value;
+            else if (!isTextEmpty(buffer))
+                for (const x of buffer) {
+                    obj['-' + x] = value
+                }
+
+            return obj;
 
         },
         commands: {
@@ -84,14 +129,13 @@ system = {
                         output += "For more information about a specific command type: help <command>\n\n"
                         output += Object.entries(system.cli.commands).map(x => { return `${x[0]}        ${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
                     } else {
-                        let command = Object.values(options)[0];
+                        let command = options['@'][0]
                         if (system.cli.commands[command] == undefined || system.cli.commands[command].help == undefined)
                             output = `No help for '${command}' try: help help`
                         else {
                             output = `----- ${command} help-----\n\n`
                             output += system.cli.commands[command].help + "\n";
                         }
-
                     }
                     return output;
                 },
@@ -106,7 +150,7 @@ system = {
         echo Hello Word`,
                 method: (options) => {
                     if (options != null) {
-                        let text = options[""].join(" ")
+                        let text = options["@s"]
                         text = text.trim()
                         if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
                         return text
@@ -123,7 +167,7 @@ system = {
         app notepad`,
                 method: (options) => {
                     if (options == null) return system.cli.commands.app.help;
-                    let appName = options[""][0];
+                    let appName = options["@s"];
                     if (apps[appName] != undefined) processes.create(appName);
                     else throw `${appName}: No such app`;
                 }
@@ -191,7 +235,7 @@ system = {
         ----------------
         kill 1`,
                 method: (options) => {
-                    let pid = options[""][0];
+                    let pid = options["@s"];
                     if (isNaN(Number(pid))) throw pid + " - Must be a number";
 
 
@@ -210,7 +254,7 @@ system = {
         killall terminal
         killall google`,
                 method: (options) => {
-                    let processName = options[""][0];
+                    let processName = options["@s"];
                     processList = processes.getRunningInstanceList(processName);
                     if (isValid(processList) && processList != false) {
                         for (const process of processList) {
@@ -231,7 +275,7 @@ system = {
         remind Get in the bed -t 3600`,
 
                 method: (options) => {
-                    const message = options[""].join(' ');
+                    const message = options["@s"];
                     const time = options['-t'];
                     console.log(options, message, time);
                     if (isNaN(Number(time))) throw ` -t: must be a number`;
@@ -253,7 +297,7 @@ system = {
         ls /home`,
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
-                    let moreInfo = "";
+                    let moreInfo = false;
                     let list = fileSystem.getDir(path, false, true);
                     let ret = ` Contents of '${path}' :\n`
 
@@ -261,7 +305,7 @@ system = {
                     console.log(list);
 
 
-                    if (options != null)
+                    if (isDefined(options))
                         moreInfo = isDefined(options['-l']) ? true : false;
 
                     Object.entries(list).forEach(x => {
@@ -341,28 +385,54 @@ system = {
                 },
 
 
+            },
+            write: {
+                shortHelp: "Writes to a file",
+                help: `Writes to a file
+
+    USAGE
+        write <text> -f <path/to/file>
+        ----------------
+        write Hello -f example.txt
+        write Hi! -f /home/example.txt`,
+
+                method: (options, terminal) => {
+                    if (options != null && isDefined(options['-f'])) {
+                        dir = options['-f'];
+                        text = options['@s'];
+                    } else throw "path must be specified with -f!";
+                    path = parseDir(options, terminal, dir);
+
+                    fileSystem.write(path, 1, text, 755)
+                },
+
+
             }
         },
+    },
 
-        shutdown: () => page.changePage('./html/shutdown.html'),
-        logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
-        restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
-    }
+
+
+    shutdown: () => page.changePage('./html/shutdown.html'),
+    logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+    restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
 
 }
 
-function parseDir(options, terminal) {
-    let path = terminal.currentDirectory;
-    if (options != null) {
-        dir = options[""].join('').trim();
-        dir.endsWith("/") ? dir.slice(0, -1) : dir;
+function parseDir(options, terminal = null, dir = null) {
+    let path = isDefined(terminal) ? terminal.currentDirectory : '/'
+
+    if (!isDefined(dir) && isDefined(options)) {
+        (dir = options["@"][0]);
+    }
+    if (isDefined(dir)) {
+        dir = dir.endsWith("/") ? dir.slice(0, -1) : dir;
         if (isTextEmpty(dir)) path = '/'
-        else if (dir == '..') path = path.split('/').slice(0, -1).join('');
+        else if (dir == '..') path = path.split('/').slice(0, -1).join('/')
         else if (!dir.startsWith('/')) path = path + (path.endsWith("/") ? "" : '/') + dir;
         else path = dir;
     }
-    path == "" && (path = '/')
-
+    !path.startsWith('/') && (path = '/' + path)
 
     console.log(path);
     return path;
