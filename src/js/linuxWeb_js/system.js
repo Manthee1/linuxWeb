@@ -133,6 +133,13 @@ system = {
                     return output;
                 },
             },
+            uname: {
+                shortHelp: "Prints System Information",
+                help: `Prints System Information`,
+                method: (options) => {
+                    return "linuxWEB"
+                }
+            },
             echo: {
                 shortHelp: "Echos your message back to you",
                 help: `Echos your message back to you
