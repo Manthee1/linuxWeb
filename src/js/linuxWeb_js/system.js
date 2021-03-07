@@ -47,7 +47,6 @@ system = {
             //Check if redirection operator exist
             if (rawArgumentString.includes('>')) {
                 [rawArgumentString, writeToPath] = rawArgumentString.split('>')
-                console.log(writeToPath);
                 writeToPath = parseDir(null, terminalProcess, writeToPath.trim());
             }
             argArray = (rawArgumentString + " ").split(' ')
@@ -84,14 +83,13 @@ system = {
                 options["@s"] = options["@"].join(' ')
             }
 
-            console.log(rawArgumentString, writeToPath, argArray, options);
+            // console.log(rawArgumentString, writeToPath, argArray, options);
 
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
                 if (writeToPath) fileSystem.write(writeToPath, 1, ret, 777);
                 else return ret;
             } catch (error) {
-                console.log(error);
                 throw `${callMethod}: ${error}`
             }
 
@@ -272,7 +270,6 @@ system = {
                 method: (options) => {
                     const message = options["@s"];
                     const time = options['-t'];
-                    console.log(options, message, time);
                     if (isNaN(Number(time))) throw ` -t: must be a number`;
                     if (isValid(message) && message.length != 0) setTimeout(() => {
                         X.notification.create("Reminder", message, '', '', false, true)
@@ -294,15 +291,9 @@ system = {
                     path = parseDir(options, terminal)
                     let moreInfo = false;
                     let list = fileSystem.getDir(path, false, true);
-                    let ret = ` Contents of '${path}' :\n`
-
-                    console.log(options);
-                    console.log(list);
-
-
+                    let ret = `Contents of '${path}' :\n`
                     if (isDefined(options))
                         moreInfo = isDefined(options['-l']) ? true : false;
-
                     Object.entries(list).forEach(x => {
                         if (x[0] != '\\0') {
                             if (moreInfo) {
@@ -310,7 +301,6 @@ system = {
                                 let permissions = fileSystem.getPermissions(x[1]);
                                 ret += `${type} ${permissions}`;
                             }
-                            console.log(x[0], x[1])
                             ret += `    ${x[0]}\n`
                         }
                     });
@@ -405,7 +395,6 @@ system = {
         top`,
 
                 method: function (options, terminal) {
-                    console.log(this.update);
                     terminal.initUpdate(this.update, options)
                 },
                 update: function (terminal, options, event = null) {
@@ -442,7 +431,6 @@ function parseDir(options, terminal = null, dir = null) {
     }
     !path.startsWith('/') && (path = '/' + path)
 
-    console.log(path);
     return path;
 }
 

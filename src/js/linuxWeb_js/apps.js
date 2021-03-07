@@ -41,7 +41,6 @@ apps = {
                 },
 
                 setCurrentDirectory: function (dir) {
-                    console.log(this, dir);
                     dirObj = fileSystem.getDir(dir);
                     if (!isDefined(dirObj)) throw `${dir}: Path not found.`;
                     if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`;
@@ -74,7 +73,6 @@ apps = {
                 onFocus: function (event) {
                     let focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
                     let textElement = this.getProcessElementBody().querySelector('terminal_main');
-                    console.log(document.activeElement);
                     (document.activeElement != focusElement && !elementIsInEventPath(event, textElement)) && focusElement.focus();
                 },
 
@@ -138,7 +136,6 @@ apps = {
 
         addTextToTerminal: function (text, element, process) {
             let terminalElement = this.InitiateProcessVariables(process);
-            console.log('el', element);
             element.value = ""; // Clear the input.
             try {
                 if (typeof (text) != 'undefined') {
