@@ -1,4 +1,4 @@
-app_body > terminal_main {
+app_body > terminal_main, app_body > terminal_buffer {
   display: block;
   font-size: 15px;
   font-family: var(--mono-font);
@@ -6,7 +6,8 @@ app_body > terminal_main {
   -webkit-user-select: text;
   -ms-user-select: text;
   user-select: text;
-  cursor: default; }
+  cursor: default;
+  white-space: break-spaces; }
 
 app_body > terminal_main *,
 terminal_input,

@@ -170,15 +170,12 @@ DONE \----Add commands: mkdir
 DONE \----Add commands: touch
 DONE \----Add commands: write
      \----Add commands: rm
-          
-          
-          
-          
+
 TODO: Revamp the command parser.
      \----Treat things in quotes as a single value
 DONE \----Re-manage how the arguments are stored into the options object.
 DONE \----Add a Redirection operator ('>') for writing the output of a command to a file.
-
+DONE \----Make a continuous mode that constantly updates the terminal until CTRL + C is pressed or the commands return statement is reached
 TODO: Improve all names. (variable names, function names, html tags, file names...)
 
 

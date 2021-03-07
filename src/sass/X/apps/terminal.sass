@@ -1,16 +1,18 @@
 
 $terminalFontSize: 15px
 
-app_body > terminal_main
-    display: block
-    font-size: $terminalFontSize
-    font-family: var(--mono-font)
-    -khtml-user-select: text
-    -webkit-user-select: text
-    -ms-user-select: text
-    user-select: text
-    cursor: default
-
+app_body >
+    terminal_main,terminal_buffer
+        display: block
+        font-size: $terminalFontSize
+        font-family: var(--mono-font)
+        -khtml-user-select: text
+        -webkit-user-select: text
+        -ms-user-select: text
+        user-select: text
+        cursor: default
+        white-space: break-spaces
+    
 
 app_body > terminal_main *,
 terminal_input,

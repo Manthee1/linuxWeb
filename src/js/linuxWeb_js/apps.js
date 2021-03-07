@@ -4,7 +4,7 @@ apps = {
         //Saddle up for this one. 
         name: "linuxWEB Terminal",
         path: "apps.terminal",
-        version: "1.1.0",
+        version: "1.2.0",
         icon: "./img/terminal.svg",
 
         createData: {
@@ -20,8 +20,10 @@ apps = {
             getHTML: function () {
                 return `
                 <terminal_main>linuxWEB terminal version ${apps.terminal.version}<br></terminal_main>
+                <terminal_buffer></terminal_buffer>
 				<terminal_input><span>${this.methods.getPrefix()}</span><input type=text></terminal_input>
 				`},
+
             methods: {
                 // Everything here gets added to the pid object of the app.
                 // So every terminal has its own separate 'commandHistory', 'addToCommandHistory()' etc.
@@ -29,19 +31,44 @@ apps = {
                 currentHistoryNumber: -1,
                 currentCommand: "",
 
+                updateInitialized: false,
+
                 currentDirectory: "/",
                 user: system.user,
+
                 getPrefix: function () {
                     return `[${this.user} ${this.currentDirectory}] $ `;
                 },
+
                 setCurrentDirectory: function (dir) {
                     console.log(this, dir);
-                    dirObj = fileSystem.getDir(dir)
-                    if (!isDefined(dirObj)) throw `${dir}: Path not found.`
-                    if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`
+                    dirObj = fileSystem.getDir(dir);
+                    if (!isDefined(dirObj)) throw `${dir}: Path not found.`;
+                    if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`;
                     this.currentDirectory = dir;
                 },
 
+                initUpdate: function (update, options) {
+                    this.updateInitialized = true;
+                    this.startUpdateLoop(update, options);
+                    this.getProcessElementBody().querySelector('terminal_buffer').innerHTML = escapeHtml(update(this, options, event));
+                    this.getProcessElementBody().querySelector('terminal_input > span').style.display = 'none';
+                },
+
+                startUpdateLoop: function (update, options, event = null) {
+                    terminal = this;
+                    setTimeout(() => {
+                        terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
+                        if (terminal.updateInitialized) {
+                            terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event));
+                            terminal.startUpdateLoop(update, options, event)
+                        }
+                    }, 1000); //1 fps basically
+                },
+
+                stopUpdateLoop: function () {
+                    this.updateInitialized = false;
+                },
 
                 //This is executed by processes.bringToTop(); When the app is clicked on.
                 onFocus: function (event) {
@@ -50,6 +77,7 @@ apps = {
                     console.log(document.activeElement);
                     (document.activeElement != focusElement && !elementIsInEventPath(event, textElement)) && focusElement.focus();
                 },
+
                 //Adds a executed command to the command history array.
                 addToCommandHistory: function (commandToPush) {
                     this.commandHistory.length > 30 && this.commandHistory.pop();
@@ -65,7 +93,8 @@ apps = {
                 body: process.getProcessElementBody(),
                 main: process.getProcessElementBody().querySelector('terminal_main'),
                 inputPrefix: process.getProcessElementBody().querySelector('terminal_input'),
-                input: terminalInput = process.getProcessElementBody().querySelector('terminal_input > input')
+                input: process.getProcessElementBody().querySelector('terminal_input > input'),
+                buffer: process.getProcessElementBody().querySelector('terminal_buffer'),
             }
         },
         //Executed once when the terminal is created
@@ -76,31 +105,28 @@ apps = {
             terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${process.id}])`);
         },
         parseCommand: async function (event, element, process) {
+            let terminalElement = this.InitiateProcessVariables(process);
+
+            if (process.updateInitialized) {
+                if (event.ctrlKey && event.key.toLowerCase() == 'c') {
+                    process.updateInitialized = false;
+                    this.addTextToTerminal(terminalElement.buffer.innerHTML, element, process);
+                    terminalElement.buffer.innerHTML = ""
+                    process.getProcessElementBody().querySelector('terminal_input > span').style.display = '';
+                    return false;
+                }
+                return false;
+            }
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                let terminalElement = this.InitiateProcessVariables(process);
                 let text = element.value;
-                element.value = ""; // CLear the input.
-                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
                 if (isTextEmpty(text)) return false;
-                try {
-                    process.currentHistoryNumber = -1;
-                    commandExecuted = system.cli.i(text, process);
-                    if (typeof (commandExecuted) != 'undefined') {
-                        //Objects just get stringified
-                        if (typeof (commandExecuted) == 'object')
-                            commandExecuted = JSON.stringify(commandExecuted)
-                        commandExecuted = escapeHtml(commandExecuted.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&emsp;");
-                        terminalElement.main.innerHTML += commandExecuted + "<br>";
-                    }
-
-                } catch (e) {
-                    //Returns error
-                    terminalElement.main.innerHTML += e + "<br>";
-                }
+                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
+                text = system.cli.i(text, process);
                 terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
+                process.currentHistoryNumber = -1;
                 process.addToCommandHistory(text);
-                element.scrollIntoView(false)
+                this.addTextToTerminal(text, element, process)
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
                 process.currentHistoryNumber == -1 && (process.currentCommand = element.value);
@@ -108,6 +134,25 @@ apps = {
             } else if (event.code == "ArrowDown") {
                 this.getFromCommandHistory(process, -1)
             }
+        },
+
+        addTextToTerminal: function (text, element, process) {
+            let terminalElement = this.InitiateProcessVariables(process);
+            console.log('el', element);
+            element.value = ""; // Clear the input.
+            try {
+                if (typeof (text) != 'undefined') {
+                    //Objects just get stringified
+                    if (typeof (text) == 'object') text = JSON.stringify(text)
+                    text = escapeHtml(text.toString()).replace(/\n/g, "<br>")//.replaceAll("    ", "&emsp;");
+                    terminalElement.main.innerHTML += text + "<br>";
+                }
+            } catch (e) {
+                //Returns error
+                terminalElement.main.innerHTML += e + "<br>";
+            }
+            element.scrollIntoView(false)
+
         },
 
         getFromCommandHistory: function (process, val) {
