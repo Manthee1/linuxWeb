@@ -52,16 +52,12 @@ system = {
             }
             argArray = (rawArgumentString + " ").split(' ')
 
-
             // let getAllInQuotesRegExp = RegExp(`"(.*?)"`, 'gm')
             // let argsInQuotes = rawArgumentString.match(getAllInQuotesRegExp)
             // let argArray = rawArgumentString.replaceAll(getAllInQuotesRegExp, '$--##--')
             // isDefined(argsInQuotes) && argsInQuotes.forEach(x => {
             //     argArray[argArray.indexOf('$--##--')] = x;
             // });
-
-
-
 
             let callMethod = argArray.splice(0, 1)[0].trim();
 
@@ -92,7 +88,6 @@ system = {
 
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
-
                 if (writeToPath) fileSystem.write(writeToPath, 1, ret, 777);
                 else return ret;
             } catch (error) {
@@ -383,8 +378,6 @@ system = {
                     path = parseDir(options, terminal);
                     fileSystem.write(path, 1, "", 777)
                 },
-
-
             },
             write: {
                 shortHelp: "Writes to a file",
@@ -402,16 +395,31 @@ system = {
                         text = options['@s'];
                     } else throw "path must be specified with -f!";
                     path = parseDir(options, terminal, dir);
-
                     fileSystem.write(path, 1, text, 755)
                 },
+            },
+            top: {
+                shortHelp: "Lists the active processes",
+                help: `List the active processes
+    USAGE
+        top`,
 
-
+                method: function (options, terminal) {
+                    console.log(this.update);
+                    terminal.initUpdate(this.update, options)
+                },
+                update: function (terminal, options, event = null) {
+                    if (obj = processes.getPidObject()) {
+                        ret = "";
+                        for (const x of Object.entries(obj)) {
+                            ret += `${x[0]}     ${x[1].appName} \n`
+                        }
+                        return ret;
+                    }
+                }
             }
         },
     },
-
-
 
     shutdown: () => page.changePage('./html/shutdown.html'),
     logout: () => page.changePage('./html/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
