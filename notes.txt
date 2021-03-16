@@ -13,7 +13,7 @@ Emoji References:
 ➕ Added  
 ➖ Removed  
 📦 Moved  
-📈 Improved
+📈 Improved  
 🏷️ Renamed  
 💅 Polished  
 ⚒️ Started work  

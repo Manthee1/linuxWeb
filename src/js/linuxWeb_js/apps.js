@@ -37,7 +37,7 @@ apps = {
                 user: system.user,
 
                 getPrefix: function () {
-                    return `[${this.user} ${this.currentDirectory}] $ `;
+                    return `[${this.user} ${this.currentDirectory}] $&nbsp`;
                 },
 
                 setCurrentDirectory: function (dir) {
@@ -119,7 +119,7 @@ apps = {
             if (event.code.includes('Enter')) {
                 let text = element.value;
                 if (isTextEmpty(text)) return false;
-                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
+                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(text)}<br>`;
 
                 try {
                     text = system.cli.i(text, process);
