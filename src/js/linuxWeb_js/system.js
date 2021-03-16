@@ -415,9 +415,9 @@ system = {
                 },
                 update: function (terminal, options, event = null) {
                     if (obj = processes.getPidObject()) {
-                        ret = "";
-                        for (const x of Object.entries(obj)) {
-                            ret += `${x[0]}     ${x[1].appName} \n`
+                        ret = "PID     AppName\n";
+                        for (const x of Object.values(obj)) {
+                            ret += `${x.id}     ${x.appName} \n`
                         }
                         return ret;
                     }

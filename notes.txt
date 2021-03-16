@@ -151,8 +151,8 @@ DONE TODO: Make the context menu appear inside the screen instead of part of it 
 DONE TODO: Implement commands: shutdown, restart, logoff, exit, kill
 DONE \----Add a Do not disrupt switch
 DONE \----Add a command for reminders
-TODO: Implement more commands: top,
-TODO: apps get opened in the top left
+DONE TODO: Implement more commands: top,
+DONE TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
 TODO: Add an 'Add Reminder' section in the notification panel.
 
@@ -178,6 +178,7 @@ DONE \----Add a Redirection operator ('>') for writing the output of a command t
 DONE \----Make a continuous mode that constantly updates the terminal until CTRL + C is pressed or the commands return statement is reached
 TODO: Improve all names. (variable names, function names, html tags, file names...)
 
+DONE TODO: Fix top command pid numbers not showing the correct pids
 
 Maybe do (But not necessary)
 TODO: Separate X.js into components because the file is getting too long
