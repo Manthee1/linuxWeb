@@ -80,7 +80,7 @@ system = {
                         optionBuffer = "";
                     }
                 }
-                options["@s"] = options["@"].join(' ')
+                options["@s"] = options["@"].join(' ').trim()
             }
 
             // console.log(rawArgumentString, writeToPath, argArray, options);
@@ -103,9 +103,7 @@ system = {
                 for (const x of buffer) {
                     obj['-' + x] = value
                 }
-
             return obj;
-
         },
         commands: {
             help: {
@@ -138,6 +136,13 @@ system = {
                 help: `Prints System Information`,
                 method: (options) => {
                     return "linuxWEB"
+                },
+            },
+            whoami: {
+                shortHelp: "Prints Username Information",
+                help: `Prints System Information`,
+                method: (options) => {
+                    return "root"
                 }
             },
             echo: {
@@ -156,7 +161,8 @@ system = {
                         return text
                     }
                 }
-            }, app: {
+            },
+            app: {
                 shortHelp: "Starts an app",
                 help: `Starts an app
 
@@ -235,6 +241,9 @@ system = {
         ----------------
         kill 1`,
                 method: (options) => {
+
+                    console.log(options);
+
                     let pid = options["@s"];
                     if (isNaN(Number(pid))) throw pid + " - Must be a number";
 
