@@ -50,16 +50,15 @@ apps = {
                 initUpdate: function (update, options) {
                     this.updateInitialized = true;
                     this.startUpdateLoop(update, options);
-                    this.getProcessElementBody().querySelector('terminal_buffer').innerHTML = escapeHtml(update(this, options, event));
                     this.getProcessElementBody().querySelector('terminal_input > span').style.display = 'none';
                 },
 
                 startUpdateLoop: function (update, options, event = null) {
                     terminal = this;
+                    terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
+                    terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event)).replaceAll("    ", "&Tab;");;
                     setTimeout(() => {
-                        terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
                         if (terminal.updateInitialized) {
-                            terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event));
                             terminal.startUpdateLoop(update, options, event)
                         }
                     }, 1000); //1 fps basically
@@ -146,7 +145,7 @@ apps = {
             if (typeof (text) != 'undefined') {
                 //Objects just get stringified
                 if (typeof (text) == 'object') text = JSON.stringify(text)
-                text = escapeHtml(text.toString()).replace(/\n/g, "<br>")//.replaceAll("    ", "&emsp;");
+                text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
                 terminalElement.main.innerHTML += text + "<br>";
             }
 

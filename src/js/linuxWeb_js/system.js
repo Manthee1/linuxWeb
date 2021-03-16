@@ -118,7 +118,7 @@ system = {
                     if (options == null) {
                         output = "-----help-----\n"
                         output += "For more information about a specific command type: help <command>\n\n"
-                        output += Object.entries(system.cli.commands).map(x => { return `${x[0]}        ${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
+                        output += Object.entries(system.cli.commands).map(x => { return `${x[0].length > 15 && x[0].slice(0, 12) + "..." || x[0]}    ${x[0].length < 8 && "    " || ""}${x[1].shortHelp ?? "*No short help available*"}\n`; }).join('');
                     } else {
                         let command = options['@'][0]
                         if (system.cli.commands[command] == undefined || system.cli.commands[command].help == undefined)
@@ -415,9 +415,9 @@ system = {
                 },
                 update: function (terminal, options, event = null) {
                     if (obj = processes.getPidObject()) {
-                        ret = "PID     AppName\n";
+                        ret = "PID    AppName\n";
                         for (const x of Object.values(obj)) {
-                            ret += `${x.id}     ${x.appName} \n`
+                            ret += `${x.id}    ${x.appName} \n`
                         }
                         return ret;
                     }
