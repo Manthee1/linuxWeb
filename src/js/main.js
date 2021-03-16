@@ -188,6 +188,7 @@ let isTextEmpty = x => {
 	return (x.toString().trim().length == 0);
 }
 let elementIsInEventPath = (event, element) => {
+	if (!isDefined(event)) return false;
 	clickPath = event.path || event.composedPath() //event.path is for chrome and event.composedPath() is mozilla firefox
 	return clickPath.includes(element)
 }
