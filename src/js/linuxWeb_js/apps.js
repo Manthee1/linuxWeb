@@ -120,11 +120,17 @@ apps = {
                 let text = element.value;
                 if (isTextEmpty(text)) return false;
                 terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)} ${escapeHtml(text)}<br>`;
-                text = system.cli.i(text, process);
-                terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
-                process.currentHistoryNumber = -1;
+
+                try {
+                    text = system.cli.i(text, process);
+                    terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
+                    process.currentHistoryNumber = -1;
+                    this.addTextToTerminal(text, element, process);
+                } catch (e) {
+                    //Returns error
+                    this.addTextToTerminal(e, element, process);
+                }
                 process.addToCommandHistory(text);
-                this.addTextToTerminal(text, element, process)
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
                 process.currentHistoryNumber == -1 && (process.currentCommand = element.value);
@@ -137,19 +143,14 @@ apps = {
         addTextToTerminal: function (text, element, process) {
             let terminalElement = this.InitiateProcessVariables(process);
             element.value = ""; // Clear the input.
-            try {
-                if (typeof (text) != 'undefined') {
-                    //Objects just get stringified
-                    if (typeof (text) == 'object') text = JSON.stringify(text)
-                    text = escapeHtml(text.toString()).replace(/\n/g, "<br>")//.replaceAll("    ", "&emsp;");
-                    terminalElement.main.innerHTML += text + "<br>";
-                }
-            } catch (e) {
-                //Returns error
-                terminalElement.main.innerHTML += e + "<br>";
+            if (typeof (text) != 'undefined') {
+                //Objects just get stringified
+                if (typeof (text) == 'object') text = JSON.stringify(text)
+                text = escapeHtml(text.toString()).replace(/\n/g, "<br>")//.replaceAll("    ", "&emsp;");
+                terminalElement.main.innerHTML += text + "<br>";
             }
-            element.scrollIntoView(false)
 
+            element.scrollIntoView(false);
         },
 
         getFromCommandHistory: function (process, val) {
