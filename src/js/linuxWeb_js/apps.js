@@ -51,21 +51,21 @@ apps = {
                     this.currentDirectory = dir;
                 },
 
-                initUpdate: function (update, options) {
+                initUpdate: function (update, options, updateDelay) {
                     this.updateInitialized = true;
-                    this.startUpdateLoop(update, options);
+                    this.startUpdateLoop(update, options, updateDelay);
                     this.getProcessElementBody().querySelector('terminal_input > span').style.display = 'none';
                 },
 
-                startUpdateLoop: function (update, options, event = null) {
+                startUpdateLoop: function (update, options, event = null, updateDelay = 1000) {
                     terminal = this;
                     terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
                     terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event)).replaceAll("    ", "&Tab;");;
                     setTimeout(() => {
                         if (terminal.updateInitialized) {
-                            terminal.startUpdateLoop(update, options, event)
+                            terminal.startUpdateLoop(update, options, event, updateDelay)
                         }
-                    }, 1000); //1 fps basically
+                    }, updateDelay); //1 fps basically
                 },
 
                 stopUpdateLoop: function () {
