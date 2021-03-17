@@ -40,6 +40,10 @@ apps = {
                     return `[${this.user} ${this.currentDirectory}] $&nbsp`;
                 },
 
+                clear: function () {
+                    this.getProcessElementBody().querySelector('terminal_main').innerHTML = "";
+                },
+
                 setCurrentDirectory: function (dir) {
                     dirObj = fileSystem.getDir(dir);
                     if (!isDefined(dirObj)) throw `${dir}: Path not found.`;
