@@ -18,6 +18,7 @@ Emoji References:
 💅 Polished  
 ⚒️ Started work  
 🏁 Finished  
+🪡 Implemented
 
 
 Detailed Log:
@@ -183,7 +184,7 @@ DONE TODO: Fix top command pid numbers not showing the correct pids
 
 
 
-TODO: Migrate project to electron!
+DONE TODO: Add electron to the project!
 
 
 Maybe do (But not necessary)
