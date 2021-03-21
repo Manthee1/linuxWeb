@@ -180,6 +180,12 @@ TODO: Improve all names. (variable names, function names, html tags, file names.
 
 DONE TODO: Fix top command pid numbers not showing the correct pids
 
+
+
+
+TODO: Migrate project to electron!
+
+
 Maybe do (But not necessary)
 TODO: Separate X.js into components because the file is getting too long
 
