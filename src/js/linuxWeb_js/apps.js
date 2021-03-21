@@ -40,6 +40,15 @@ apps = {
                     return `[${this.user} ${this.currentDirectory}] $&nbsp`;
                 },
 
+                addText: function (text) {
+                    inputElement = this.getProcessElementBody().querySelector('terminal_input > input');
+                    if (isDefined(text)) {
+                        text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
+                        this.getProcessElementBody().querySelector('terminal_main').innerHTML += text + "<br>";
+                        inputElement.scrollIntoView(false);
+                    }
+                },
+
                 clear: function () {
                     this.getProcessElementBody().querySelector('terminal_main').innerHTML = "";
                 },
@@ -65,7 +74,7 @@ apps = {
                         if (terminal.updateInitialized) {
                             terminal.startUpdateLoop(update, options, event, updateDelay)
                         }
-                    }, updateDelay); //1 fps basically
+                    }, updateDelay);
                 },
 
                 stopUpdateLoop: function () {
@@ -111,7 +120,7 @@ apps = {
             if (process.updateInitialized) {
                 if (event.ctrlKey && event.key.toLowerCase() == 'c') {
                     process.updateInitialized = false;
-                    this.addTextToTerminal(terminalElement.buffer.innerHTML, element, process);
+                    process.addText(terminalElement.buffer.innerHTML);
                     terminalElement.buffer.innerHTML = ""
                     process.getProcessElementBody().querySelector('terminal_input > span').style.display = '';
                     return false;
@@ -121,17 +130,21 @@ apps = {
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
                 let text = element.value;
-                if (isTextEmpty(text)) return false;
-                terminalElement.main.innerHTML += `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(text)}<br>`;
+                let parsedTextWithPrefix = `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(text)}`;
+                process.addText(parsedTextWithPrefix);
+
+                if (isTextEmpty(text))
+                    return false;
 
                 try {
                     text = system.cli.i(text, process);
+                    element.value = ""; // Clear the input.
                     terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
                     process.currentHistoryNumber = -1;
-                    this.addTextToTerminal(text, element, process);
+                    process.addText(text);
                 } catch (e) {
                     //Returns error
-                    this.addTextToTerminal(e, element, process);
+                    process.addText(e);
                 }
                 process.addToCommandHistory(text);
             } else if (event.code == "ArrowUp") {
@@ -143,18 +156,18 @@ apps = {
             }
         },
 
-        addTextToTerminal: function (text, element, process) {
-            let terminalElement = this.InitiateProcessVariables(process);
-            element.value = ""; // Clear the input.
-            if (typeof (text) != 'undefined') {
-                //Objects just get stringified
-                if (typeof (text) == 'object') text = JSON.stringify(text)
-                text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
-                terminalElement.main.innerHTML += text + "<br>";
-            }
+        // addTextToTerminal: function (text, element, process) {
+        //     let terminalElement = this.InitiateProcessVariables(process);
+        //     element.value = ""; // Clear the input.
+        //     if (typeof (text) != 'undefined') {
+        //         //Objects just get stringified
+        //         if (typeof (text) == 'object') text = JSON.stringify(text)
+        //         text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
+        //         terminalElement.main.innerHTML += text + "<br>";
+        //     }
 
-            element.scrollIntoView(false);
-        },
+        //     element.scrollIntoView(false);
+        // },
 
         getFromCommandHistory: function (process, val) {
             // Go Up||Down a number in the commandHistory array, val=-1 or 1
