@@ -430,32 +430,7 @@ system = {
                     }
                 }
             },
-            ping: {
-                shortHelp: "Lists the active processes",
-                help: `List the active processes
-    USAGE
-        top`,
-
-                method: function (options, terminal) {
-                    terminal.initUpdate(this.update, options, 2000)
-                },
-                update: function (terminal, options, event = null) {
-                    // PING 8.8.8.8(8.8.8.8) 56(84) bytes of data.
-                    // 64 bytes from 8.8.8.8: icmp_seq = 1 ttl=119 time=9.19 ms
-
-                    if (obj = processes.getPidObject()) {
-                        ret = "PID    AppName\n";
-                        for (const x of Object.values(obj)) {
-                            ret += `${x.id}    ${x.appName} \n`
-                        }
-                        return ret;
-                    }
-                }
-            }
         },
-
-
-
 
     },
 
