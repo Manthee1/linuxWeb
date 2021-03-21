@@ -70,6 +70,7 @@ apps = {
                     terminal = this;
                     terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
                     terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event)).replaceAll("    ", "&Tab;");;
+                    this.getProcessElementBody().querySelector('terminal_input > input').scrollIntoView(false); // scroll the buffer into view
                     setTimeout(() => {
                         if (terminal.updateInitialized) {
                             terminal.startUpdateLoop(update, options, event, updateDelay)
@@ -129,15 +130,15 @@ apps = {
             }
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                let text = element.value;
-                let parsedTextWithPrefix = `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(text)}`;
+                let rawText = element.value;
+                let parsedTextWithPrefix = `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(rawText)}`;
                 process.addText(parsedTextWithPrefix);
 
-                if (isTextEmpty(text))
+                if (isTextEmpty(rawText))
                     return false;
 
                 try {
-                    text = system.cli.i(text, process);
+                    text = system.cli.i(rawText, process);
                     element.value = ""; // Clear the input.
                     terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
                     process.currentHistoryNumber = -1;
@@ -146,7 +147,7 @@ apps = {
                     //Returns error
                     process.addText(e);
                 }
-                process.addToCommandHistory(text);
+                process.addToCommandHistory(rawText);
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
                 process.currentHistoryNumber == -1 && (process.currentCommand = element.value);
