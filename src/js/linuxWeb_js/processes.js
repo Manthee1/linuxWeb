@@ -67,7 +67,7 @@ processes = {
         this.pid[pid].getProcessBarElement().classList.add('selected');
         this.currentlySelectedProcess = this.pid[pid];
     },
-
+    //Projects where the window will scale to.
     createWindowSizeProjection: function (process, fillType = "full") {
         if (isDefined(document.querySelector(`${fillType}-wsp`))) return false
         let processElement = process.getProcessElement();
@@ -76,6 +76,7 @@ processes = {
         let width = document.body.offsetWidth
         let height = window.innerHeight - (appList.offsetHeight + topBar.offsetHeight);
 
+        //Defines the width and height of the Projection
         switch (fillType) {
             case "full":// Do nothing. :)
                 break;
@@ -103,7 +104,7 @@ processes = {
             width: width,
             height: height,
         }
-
+        //If 'window_size_projection' exists just change it's style. else create it
         if (isDefined(document.querySelector('window_size_projection'))) {
             let el = document.querySelector('window_size_projection');
             el.style.cssText = style;
@@ -156,6 +157,7 @@ processes = {
         let process = this.pid[pid];
         this.bringToTop(element);
 
+        //A lot of calculations i guess...
         if (process.scaledToArea && isObjectEmpty(fillData)) {
             let top = process.positionBeforeMaximize.y;
             let left = process.positionBeforeMaximize.x;
@@ -179,7 +181,6 @@ processes = {
         } else if (!isObjectEmpty(fillData)) {
             //Makes sure to only save a size/position when an app is not currently scaled
             if (!process.scaledToArea) {
-                console.log("saved area");
                 process.positionBeforeMaximize = { x: Number(element.style.left.replace('px', '')), y: Number(element.style.top.replace('px', '')) };
                 process.sizeBeforeMaximize = { width: element.clientWidth, height: element.clientHeight }
             }

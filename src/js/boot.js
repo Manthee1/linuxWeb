@@ -141,9 +141,9 @@
 		"./js/linuxWeb_js/apps.js",
 		"./js/linuxWeb_js/processes.js",
 		"./js/linuxWeb_js/fileSystem.js",
+	];
 
-	]
-	retrieveMainJs = async (x = true) => {
+	(async (x = true) => {
 		return new Promise(resolve => {
 			(async () => {
 				for (const jsSrc of jsSources) {
@@ -154,10 +154,7 @@
 				resolve();
 			})()
 		})
-
-
-	}
-	await retrieveMainJs()
+	})();
 
 	// Loop thorough the messages and display one, wait, display another, wait...
 	// let retrieveJs = page.loadAllJsFromHtml()

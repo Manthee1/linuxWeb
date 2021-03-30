@@ -3,6 +3,7 @@ X = {
 
     menus: {
         desktopContextMenu: {
+            //Menu options
             createOnMousePosition: true,
             listenerType: "contextmenu",
             toggleElement: document.querySelector('desktop'),
@@ -24,10 +25,11 @@ X = {
 				`
 
             },
+            // Close the menu when the condition returns true
             closeCondition: function (event) {
                 return event.target.tagName != "CONTEXT_MENU"
             },
-
+            //Gets called when the menu is created.
             onCreate: function () {
                 document.querySelectorAll('.context_sub_menu').forEach(x => {
                     x.addEventListener('mouseover', () => {
@@ -77,6 +79,7 @@ X = {
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
             elementTag: "notification_panel_container",
+
             parseNotificationsToHTML: function () {
                 if (notifications = X.notification.get()) {
                     let html = "";
@@ -162,7 +165,7 @@ X = {
             },
         },
     },
-
+    //The notification handler
     notification: {
         notifications: {},
         get: function () {
@@ -176,7 +179,7 @@ X = {
             type = typeof (type) != "boolean" ? false : persistent; //'persistent', 'temporary'
             clickAction = clickAction || "";
             id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
-
+            //Creates an popup notification when condition is true.
             if (alert && !system.global.doNotDisturb) {
                 notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
                 popupNotificationContainer.insertAdjacentHTML('afterbegin', notificationHTML);
@@ -206,7 +209,6 @@ X = {
     },
 
     calendar: {
-
         getHTML: function () {
             let htmlOut =
                 `<calendar><month>${date.get('month>full date year')}</month><calendar_content>
@@ -219,6 +221,7 @@ X = {
             });
             return htmlOut + "</calendar_content>";
         },
+        //Creates an calendar array. Yes a lot of Date stuff
         createCalendarArray: function (year = 0, month = 0, notMonthDatePrefix = false, currentDatePrefix = false) {
             year = year || date.get("year");
             month = month || date.get("month");
@@ -326,6 +329,7 @@ X = {
 
     general: {
         dropdown: {
+            //Dropdown handler...
             toggle: (element) => {
                 if (!isDefined(element)) return false
                 let dropdownElement = element.querySelector('dropdown');
@@ -401,7 +405,7 @@ X = {
             }, 20);
         },
 
-
+        //Shows the login form...
         showForm: event => {
             let passwordInput = X.lockScreen.form.querySelector("input[type='password']");
             X.lockScreen.loginTime.style = 'opacity:0;top: 0px'
@@ -418,7 +422,8 @@ X = {
             document.body.removeAttribute('onkeydown');
 
         },
-        //Self explanatory.
+        // Self explanatory. Yes but I'm still gonna explain it.
+        // Plays either the wrong or successful password animation.There explained. To a point
         playLoginAnimation: function (x = false) {
             if (x) {
                 //Correct password
@@ -586,9 +591,9 @@ X = {
         if (X.openMenus.length != 0 || forcefully) {
             X.openMenus.forEach(openMenu => {
                 X.menus[openMenu].toggleElement.style.borderBottom = "";
-                if (X.menus[openMenu].elementTag && X.menus[openMenu].exitAnimation) {
-                    //If there is a exitAnimation then play it and remove the element
 
+                //If there is a exitAnimation then play it and remove the element
+                if (X.menus[openMenu].elementTag && X.menus[openMenu].exitAnimation) {
                     let element = document.querySelector(X.menus[openMenu].elementTag);
                     systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
                     element.classList.add(X.menus[openMenu].exitAnimation)
@@ -606,7 +611,7 @@ X = {
             systemMenuContainer.innerHTML = "";
         }
     },
-
+    //Creates a menu.....
     createMenu: function (menuUIData, x, y) {
         let elHTML = menuUIData.getHTML(x, y);
         let elTag = menuUIData.elementTag;
@@ -631,6 +636,5 @@ X = {
 
     }
 }
-//Executes onStart for every X.[service]
 
 

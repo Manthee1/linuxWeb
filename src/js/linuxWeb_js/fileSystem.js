@@ -1,9 +1,10 @@
 fileSystem = {
-    fileRootPath = 'fileSystem.root'
-    ,
+    fileRootPath = 'fileSystem.root',
+    //Check if a file obj is a file
     isFile: function (file) {
         return file['\\0'].slice(3) == '1'
     },
+    //Check if a file obj is a dir
     isDir: function (file) {
         return file['\\0'].slice(3) == '0'
     },
@@ -35,11 +36,13 @@ fileSystem = {
         if (path.includes('\\0')) {
             throw "Error 1: Bad character in path :: '\\0' - Cannot be used in a path!" // '\0' - permissions and type string
         }
-
         path = path.slice(1); // Remove the '/' from the beginning
         if (!isTextEmpty(path));
+
+        //Gets the fileSystem Object from the stringy path
         objPath = path.split('/').map(x => { return isTextEmpty(x) ? '' : `['${x}']` }).join('');
 
+        //Check if the path exists
         try {
             retObj = eval(this.fileRootPath + objPath)
         } catch (error) {
@@ -65,11 +68,9 @@ fileSystem = {
                 if (!isDefined(eval(objPath))) {
                     eval(objPath + " = { '\\\\0': '7770' }");
                 }
-                console.log(objPath);
             });
             file = eval(objPath);
-        }
-        if (isDefined(file)) {
+        } else {
             if (type != null && type != this.getType(file)) this.setType(file, type);
             if (permissions != null && permissions != this.getPermissions(file)) this.setPermissions(file, permissions);
             if (this.isFile(file) && isDefined(text)) file.data = text;
@@ -89,7 +90,6 @@ fileSystem = {
         if (!this.isEmptyDir(file) && !force)
             throw `Error 10: Directory is not empty  (${path}) - try remove(*path*, true) to force remove a directory`;
 
-        console.log(file, filePath);
         eval('delete ' + this.fileRootPath + filePath)
     },
     //Actual file system
@@ -117,12 +117,5 @@ fileSystem = {
         var: {
             '\\0': "7770",
         },
-
-
-
     }
-
-
-
-
 }

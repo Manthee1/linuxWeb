@@ -3,25 +3,21 @@ htmlEl = document.querySelector("html");
 page = {
 	//I mean... Simple i think. Chang the page. Yeah.... Thats all. You can keep scrolling now.
 	changePage: async (pageUrl, doOnComplete = false, executeOnComplete = true) => {
-		fetch(pageUrl).then(pageRequest => {
+		fetch(pageUrl).then(async pageRequest => {
 			if (pageRequest.ok) {
-				(async () => {
-					htmlEl.style = "background:black;";
-					let pageHTML = await pageRequest.text();
-					htmlEl.style = "background:black; visibility: hidden";
-					executeOnComplete && (htmlEl.style = "background:black; visibility: hidden !important;");
-					htmlEl.innerHTML = await pageHTML;
-					if (!executeOnComplete || !doOnComplete) { eval(doOnComplete) };
-					await (await page.loadAllJsFromHtml());
-					if (doOnComplete && executeOnComplete) {
-						eval(doOnComplete);
-						setTimeout(() => {
-							htmlEl.style = "";
-						}, 100);
-					} else htmlEl.style = "";
-
-
-				})();
+				htmlEl.style = "background:black;";
+				let pageHTML = await pageRequest.text();
+				htmlEl.style = "background:black; visibility: hidden";
+				executeOnComplete && (htmlEl.style = "background:black; visibility: hidden !important;");
+				htmlEl.innerHTML = await pageHTML;
+				if (!executeOnComplete || !doOnComplete) { eval(doOnComplete) };
+				await (await page.loadAllJsFromHtml());
+				if (doOnComplete && executeOnComplete) {
+					eval(doOnComplete);
+					setTimeout(() => {
+						htmlEl.style = "";
+					}, 100);
+				} else htmlEl.style = "";
 			} else {
 				console.error(`The specified page does not exists! (${pageUrl})`);
 				return false;
@@ -32,33 +28,29 @@ page = {
 	// Why am i commenting on function that are very easy to understand. IDK. 
 	// Probably to waste your time reading this :)
 	loadJs: (jsSrc) => {
-		return new Promise(resolve => {
-			(async () => {
-				try {
-					let jsCode = await (await fetch(jsSrc)).text()
-					eval(await jsCode + `console.info(jsSrc + " Loaded")`);
+		return new Promise(async resolve => {
+			try {
+				let jsCode = await (await fetch(jsSrc)).text()
+				eval(await jsCode + `console.info(jsSrc + " Loaded")`);
 
-				} catch (e) {
-					console.error(e, jsSrc);
-					eval(jsCode)
-				}
-				resolve()
-			})()
+			} catch (e) {
+				console.error(e, jsSrc);
+				eval(jsCode)
+			}
+			resolve()
 		});
 	},
 
 	loadAllJsFromHtml: () => {
 		let scripts = document.querySelectorAll("script");
-		return new Promise(resolve => {
-			(async () => {
-				for (const key in scripts) {
-					let x = scripts[key]
-					if (x.src) {
-						await page.loadJs(x.src)
-					}
+		return new Promise(async resolve => {
+			for (const key in scripts) {
+				let x = scripts[key]
+				if (x.src) {
+					await page.loadJs(x.src)
 				}
-				resolve();
-			})()
+			}
+			resolve();
 		});
 	}
 }
@@ -75,8 +67,6 @@ function delay(timeDelay) {
 		}, timeDelay);
 	});
 }
-
-
 
 date = {
 	months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",],
@@ -121,10 +111,7 @@ date = {
 					break;
 			}
 		}).join(divider)
-
 		return returnString
-
-
 	},
 	//Simple. Return the Date. Easy...
 	getDate: () => {
@@ -156,6 +143,7 @@ date = {
 
 //Addon Functions
 
+// Basically the same as Python range() 
 let range = (a, b = null) => {
 	let n = b == null ? a : b;
 	let ret = [...Array(n).keys()]
@@ -213,5 +201,4 @@ let addDoubleClickListener = (el, callback) => {
 			clickedAmount = 0;
 		}, 300);
 	})
-
 }

@@ -59,7 +59,7 @@ apps = {
                     if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`;
                     this.currentDirectory = dir;
                 },
-
+                //Initiate the recursive update loop witch gets called ${updateDelay}
                 initUpdate: function (update, options, updateDelay) {
                     this.updateInitialized = true;
                     this.startUpdateLoop(update, options, updateDelay);
@@ -69,6 +69,8 @@ apps = {
                 startUpdateLoop: function (update, options, event = null, updateDelay = 1000) {
                     terminal = this;
                     terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
+
+                    //Sets the terminal content to what update() returns
                     terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event)).replaceAll("    ", "&Tab;");;
                     this.getProcessElementBody().querySelector('terminal_input > input').scrollIntoView(false); // scroll the buffer into view
                     setTimeout(() => {
@@ -82,7 +84,7 @@ apps = {
                     this.updateInitialized = false;
                 },
 
-                //This is executed by processes.bringToTop(); When the app is clicked on.
+                //This is executed by processes.bringToTop(); When app is 'focused' on.
                 onFocus: function (event) {
                     let focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
                     let textElement = this.getProcessElementBody().querySelector('terminal_main');
@@ -109,15 +111,16 @@ apps = {
             }
         },
         //Executed once when the terminal is created
-        //Adds a listener for keypress.  
         onStart: function (process) {
             console.log("onStart Initialized: ", process);
             terminalElement = this.InitiateProcessVariables(process);
+            //Adds a listener for keypress.
             terminalElement.input.setAttribute('onkeydown', this.path + `.parseCommand(event,this,processes.pid[${process.id}])`);
         },
+
         parseCommand: async function (event, element, process) {
             let terminalElement = this.InitiateProcessVariables(process);
-
+            //When the update loop is initialized don't parse the input as a command
             if (process.updateInitialized) {
                 if (event.ctrlKey && event.key.toLowerCase() == 'c') {
                     process.updateInitialized = false;
@@ -126,6 +129,8 @@ apps = {
                     process.getProcessElementBody().querySelector('terminal_input > span').style.display = '';
                     return false;
                 }
+
+                event.preventDefault();
                 return false;
             }
             //If enter was pressed do things
@@ -138,6 +143,7 @@ apps = {
                     return false;
 
                 try {
+                    //Runs the command through the interpreter and gets the command output.
                     text = system.cli.i(rawText, process);
                     element.value = ""; // Clear the input.
                     terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
@@ -195,6 +201,8 @@ apps = {
         name: "Settings",
         icon: "./img/settings.svg",
 
+        //The HTML Layout gets stored object... yea kinda wired. I even remember thinking this is good...
+        // Well I don't have time to fix this so you can stare at it for now.
         layout: {
             selected: 0,
             0: {
@@ -263,7 +271,7 @@ apps = {
                 return `<settings><sidebarMenu>${menuItems}</sidebarMenu><panel>${apps.settings.switchToPanel(0, true)}</panel></settings>`;
             }
         },
-
+        // Switches to the panel that's defined in the layout object...
         switchToPanel: function (panelMenuId, onlyGetHTML = false, element) {
             let panelHTML = this.layout[panelMenuId].getPanelHTML();
             if (onlyGetHTML) return panelHTML

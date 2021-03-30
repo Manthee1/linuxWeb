@@ -1,9 +1,6 @@
 
 (async () => {
-
     await delay(1000);
-
-
     let timeMax = 5000; //ms
 
     shutdownText = [

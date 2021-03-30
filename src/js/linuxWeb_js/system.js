@@ -58,12 +58,17 @@ system = {
             //     argArray[argArray.indexOf('$--##--')] = x;
             // });
 
+            //Separates the command name (callMethod) and it's arguments
             let callMethod = argArray.splice(0, 1)[0].trim();
 
+            //Checks if the argArray is not empty
             if (argArray.length != 0 && !(argArray.length == 1 && argArray[0].trim().length === 0)) {
-
+                //Default option object definition where @s = 
                 options = { "@": [], "$raw": rawArgumentString };
                 let optionBuffer = "";
+
+                //Main loop that parses the arguments into the options object
+                //Not complex just... Intricate?
                 for (let x of argArray) {
                     x = x.trim()
                     if (x.startsWith('-') && x.length > 1) {
@@ -84,6 +89,7 @@ system = {
             }
 
             // console.log(rawArgumentString, writeToPath, argArray, options);
+            //Ahh the classic check if an error occurs and then throw it again :)
 
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
@@ -92,9 +98,7 @@ system = {
             } catch (error) {
                 throw `${callMethod}: ${error}`
             }
-
         },
-        getArgValue: function (arg) { },
         appendToOptions: function (buffer, value, obj) {
 
             if (buffer.startsWith('-'))
@@ -105,6 +109,8 @@ system = {
                 }
             return obj;
         },
+
+        //The commands object containing the command names and all of their things...
         commands: {
             help: {
                 shortHelp: "Displays help pages for commands",
@@ -440,6 +446,9 @@ system = {
 
 }
 
+
+
+//Figures out which directory a user is targeting. So basically parses a String into an object. In a sense.
 function parseDir(options, terminal = null, dir = null) {
     let path = isDefined(terminal) ? terminal.currentDirectory : '/'
 
