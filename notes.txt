@@ -6,12 +6,13 @@ Emoji References:
 🎨 Redesigned  
 🔧 Fixed (*A major fix*)  
 🐜 Fixed (*A minor fix*)  
-🔄 Changed  
+🔄 Changed/Revamped 
 ⤵️ Converted  
 🔼 Updated  
-🧹 Reorganized/Revamped  
+🧹 Cleaned  
 ➕ Added  
 ➖ Removed  
+🗄️ Reformated/Reorganized
 📦 Moved  
 📈 Improved  
 🏷️ Renamed  
@@ -200,3 +201,4 @@ DONE FIXME: Firefox event.path undefined.
 DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open
 FIXME: Login allows only 1 character on some phones
+FIXME: Unmaximizeing an app with double click doesn't clear the onmousemove listener
