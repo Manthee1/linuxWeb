@@ -145,7 +145,6 @@ apps = {
                 try {
                     //Runs the command through the interpreter and gets the command output.
                     text = system.cli.i(rawText, process);
-                    element.value = ""; // Clear the input.
                     terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
                     process.currentHistoryNumber = -1;
                     process.addText(text);
@@ -153,6 +152,8 @@ apps = {
                     //Returns error
                     process.addText(e);
                 }
+
+                element.value = ""; // Clear the input.
                 process.addToCommandHistory(rawText);
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
