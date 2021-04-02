@@ -136,7 +136,7 @@ apps = {
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
                 let rawText = element.value;
-                let parsedTextWithPrefix = `${escapeHtml(terminalElement.inputPrefix.innerText)}${escapeHtml(rawText)}`;
+                let parsedTextWithPrefix = `${terminalElement.inputPrefix.innerText}${rawText}`;
                 process.addText(parsedTextWithPrefix);
 
                 if (isTextEmpty(rawText))
