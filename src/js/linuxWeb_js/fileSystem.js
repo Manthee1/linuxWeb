@@ -52,8 +52,9 @@ fileSystem = {
         }
 
         //Check if location is the expected type (dir or file)
-        if (isDefined(retObj) && expected != null && (fileType = fileSystem.isFile(retObj)) && fileType != expected) {
-            if (fileType == 1)
+        console.log(retObj, expected, fileSystem.isFile(retObj), expected);
+        if (isDefined(retObj) && expected != null && fileSystem.isFile(retObj) != expected) {
+            if (expected == 0)
                 throw `Error 3: ${path} is not a directory`;
             else
                 throw `Error 2: ${path} is not a file!`;

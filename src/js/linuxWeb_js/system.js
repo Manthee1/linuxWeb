@@ -185,7 +185,7 @@ USAGE
   app terminal
   app notepad`,
                 method: (options) => {
-                    if (options == null) return system.cli.commands.app.help;
+                    if (!isDefined(options)) return system.cli.commands.app.help;
                     let appName = options["@s"];
                     if (apps[appName] != undefined) processes.create(appName);
                     else throw `${appName}: No such app`;
@@ -259,8 +259,6 @@ USAGE
 
                     let pid = options["@s"];
                     if (isNaN(Number(pid))) throw pid + " - Must be a number";
-
-
                     if (isDefined(processes.pid[pid])) processes.remove("pid" + pid)
                     else
                         throw pid + " - No such process";
@@ -294,7 +292,7 @@ USAGE
   remind <message> -t <seconds>
   ----------------
   remind Sleep in the shed -t 180,
-  remind Get in the bed -t 3600`,
+  remind Go to bed -t 3600`,
 
                 method: (options) => {
                     const message = options["@s"];
@@ -330,7 +328,7 @@ USAGE
                                 let permissions = fileSystem.getPermissions(x[1]);
                                 ret += `${type} ${permissions}`;
                             }
-                            ret += `    ${x[0]}\n`
+                            ret += ` ${x[0]}\n`
                         }
                     });
                     return ret.slice(0, -1);
@@ -348,7 +346,6 @@ USAGE
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     terminal.setCurrentDirectory(path);
-                    return path;
                 }
             },
             cat: {
@@ -360,8 +357,6 @@ USAGE
   ----------------
   cat example.txt
   cat /home/example.txt`,
-
-
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     return fileSystem.read(path)
@@ -380,7 +375,6 @@ USAGE
                 method: (options, terminal) => {
                     path = parseDir(options, terminal);
                     fileSystem.write(path, 0, null, 777)
-
                 }
             },
             touch: {
@@ -449,8 +443,6 @@ USAGE
     restart: () => page.changePage('./html/shutdown.html', "afterShutdown='restart'", false),
 
 }
-
-
 
 //Figures out which directory a user is targeting. So basically parses a String into an object. In a sense.
 function parseDir(options, terminal = null, dir = null) {
