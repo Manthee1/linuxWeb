@@ -319,7 +319,7 @@ USAGE
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     let moreInfo = false;
-                    let list = fileSystem.getDir(path, false, true);
+                    let list = fileSystem.getDir(path, false, true, 1);
                     let ret = `Contents of '${path}' :\n`
                     if (isDefined(options))
                         moreInfo = isDefined(options['-l']) ? true : false;

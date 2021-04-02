@@ -1,5 +1,5 @@
 fileSystem = {
-    fileRootPath = 'fileSystem.root',
+    fileRootPath: 'fileSystem.root',
     //Check if a file obj is a file
     isFile: function (file) {
         return file['\\0'].slice(3) == '1'
@@ -28,7 +28,7 @@ fileSystem = {
     getType: function (file) {
         return file['\\0'].slice(3)
     },
-    getDir: function (path, returnPath = false, throwError = true) { // returnPath = 'array' or 'string'
+    getDir: function (path, returnPath = false, throwError = true, expected = null) { // returnPath = 'array' or 'string'
         path = path.trim();
         if (!path.startsWith('/')) {
             throw "Error 0: Bad Path Start :: Paths must start with '/'!"
@@ -40,16 +40,25 @@ fileSystem = {
         if (!isTextEmpty(path));
 
         //Gets the fileSystem Object from the stringy path
-        objPath = path.split('/').map(x => { return isTextEmpty(x) ? '' : `['${x}']` }).join('');
+        const objPath = path.split('/').map(x => { return isTextEmpty(x) ? '' : `['${x}']` }).join('');
 
         //Check if the path exists
         try {
             retObj = eval(this.fileRootPath + objPath)
+
+
         } catch (error) {
             retObj = null;
         }
 
-        console.log(retObj, throwError);
+        //Check if location is the expected type (dir or file)
+        if (isDefined(retObj) && expected != null && (fileType = fileSystem.isFile(retObj)) && fileType != expected) {
+            if (fileType == 1)
+                throw `Error 3: ${path} is not a directory`;
+            else
+                throw `Error 2: ${path} is not a file!`;
+        }
+
         if (!isDefined(retObj) && throwError) throw `/${path}: Path not found.`;
         if (returnPath == 'array') return [retObj, path.split('/')];
         if (returnPath == 'string') return [retObj, objPath];
@@ -57,14 +66,13 @@ fileSystem = {
     },
 
     write: function (path, type = null, text = null, permissions = null) {
-        [file, filePath] = this.getDir(path, "array", false);
-        console.log(file, filePath, true);
+        let [file, filePath] = this.getDir(path, "array", false);
 
         // First: Check if it doesn't exists.if true create it.
         if (!isDefined(file)) {
             objPath = this.fileRootPath;
             filePath.forEach(x => {
-                nextPath = isTextEmpty(x) ? '' : `['${x}']`;
+                const nextPath = isTextEmpty(x) ? '' : `['${x}']`;
                 objPath += nextPath;
                 if (!isDefined(eval(objPath))) {
                     eval(objPath + " = { '\\\\0': '7771' }");
@@ -75,7 +83,6 @@ fileSystem = {
 
         // Second: Check if it exists then write to it
         if (isDefined(file)) {
-
             if (type != null && type != this.getType(file)) this.setType(file, type);
             if (permissions != null && permissions != this.getPermissions(file)) this.setPermissions(file, permissions);
             if (this.isFile(file) && isDefined(text)) file.data = text;
@@ -83,14 +90,10 @@ fileSystem = {
     },
 
     read: function (path) {
-        file = this.getDir(path);
-        if (!this.isFile(file)) {
-            throw `Error 2: ${path} is not a file!`;
-        }
-        return file.data
+        return this.getDir(path, false, true, 1).data
     },
     remove: function (path, force = false) {
-        [file, filePath] = this.getDir(path, "string");
+        const [file, filePath] = this.getDir(path, "string");
 
         if (!this.isEmptyDir(file) && !force)
             throw `Error 10: Directory is not empty  (${path}) - try remove(*path*, true) to force remove a directory`;
