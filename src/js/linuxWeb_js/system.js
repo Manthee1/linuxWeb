@@ -115,10 +115,10 @@ system = {
             help: {
                 shortHelp: "Displays help pages for commands",
                 help: `Displays a help page for commands
-                    
-    USAGE
-        help
-        help <command>`,
+      
+USAGE
+  help
+  help <command>`,
                 method: (options) => {
                     let output = "";
                     if (options == null) {
@@ -162,10 +162,10 @@ system = {
                 shortHelp: "Echos your message back to you",
                 help: `Echos your message back to you
 
-    USAGE
-        echo <message>
-         ----------------
-        echo Hello Word`,
+USAGE
+  echo <message>
+   ----------------
+  echo Hello Word`,
                 method: (options) => {
                     if (options != null) {
                         let text = options["@s"]
@@ -179,11 +179,11 @@ system = {
                 shortHelp: "Starts an app",
                 help: `Starts an app
 
-    USAGE
-        app <app name>
-        ----------------
-        app terminal
-        app notepad`,
+USAGE
+  app <app name>
+  ----------------
+  app terminal
+  app notepad`,
                 method: (options) => {
                     if (options == null) return system.cli.commands.app.help;
                     let appName = options["@s"];
@@ -196,8 +196,8 @@ system = {
                 shortHelp: "Shoots the computer",
                 help: `Makes computer go beep boob RIP.
 
-    USAGE
-        shutdown`,
+USAGE
+  shutdown`,
                 method: () => {
                     system.shutdown()
                 }
@@ -207,8 +207,8 @@ system = {
                 shortHelp: "Restarts",
                 help: `Restarts the computer
 
-    USAGE
-        restart`,
+USAGE
+  restart`,
                 method: () => {
                     system.restart()
                 }
@@ -218,8 +218,8 @@ system = {
                 shortHelp: "Logouts",
                 help: `Restarts the computer
 
-    USAGE
-        logout`,
+USAGE
+  logout`,
                 method: () => {
                     system.logout();
                 }
@@ -228,8 +228,8 @@ system = {
                 shortHelp: "Locks the screen",
                 help: `Locks the screen
 
-    USAGE
-        lock`,
+USAGE
+  lock`,
                 method: () => {
                     X.lockScreen.lock();
                 }
@@ -238,8 +238,8 @@ system = {
                 shortHelp: "Exits the terminal window",
                 help: `Exits the terminal window
 
-    USAGE
-        exit`,
+USAGE
+  exit`,
                 method: (options, terminal) => {
                     processes.remove(terminal.elementId)
                 }
@@ -249,10 +249,10 @@ system = {
                 shortHelp: "Kills a process by pid",
                 help: `Kills a running process
 
-    USAGE
-        kill <process pid>
-        ----------------
-        kill 1`,
+USAGE
+  kill <process pid>
+  ----------------
+  kill 1`,
                 method: (options) => {
 
                     console.log(options);
@@ -270,11 +270,11 @@ system = {
                 shortHelp: "Kills processes",
                 help: `Kills all running processes of a name
 
-    USAGE
-        killall <process name>
-        ----------------
-        killall terminal
-        killall google`,
+USAGE
+  killall <process name>
+  ----------------
+  killall terminal
+  killall google`,
                 method: (options) => {
                     let processName = options["@s"];
                     processList = processes.getRunningInstanceList(processName);
@@ -290,11 +290,11 @@ system = {
                 shortHelp: "Create a reminder",
                 help: `Create a reminder
 
-    USAGE
-        remind <message> -t <seconds>
-        ----------------
-        remind Sleep in the shed -t 180,
-        remind Get in the bed -t 3600`,
+USAGE
+  remind <message> -t <seconds>
+  ----------------
+  remind Sleep in the shed -t 180,
+  remind Get in the bed -t 3600`,
 
                 method: (options) => {
                     const message = options["@s"];
@@ -311,11 +311,11 @@ system = {
                 shortHelp: "List the contents of a directory",
                 help: `List the Contents of the current or provided directory
 
-    USAGE
-        ls <directory>
-        ----------------
-        ls
-        ls /home`,
+USAGE
+  ls <directory>
+  ----------------
+  ls
+  ls /home`,
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     let moreInfo = false;
@@ -340,11 +340,11 @@ system = {
                 shortHelp: "Changes Directory",
                 help: `Changes the current directory or display the current directory
 
-    USAGE
-        cd <directory>
-        ----------------
-        cd
-        cd /home`,
+USAGE
+  cd <directory>
+  ----------------
+  cd
+  cd /home`,
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     terminal.setCurrentDirectory(path);
@@ -355,11 +355,11 @@ system = {
                 shortHelp: "Displays file content",
                 help: `Displays the contents of a file
 
-    USAGE
+USAGE
      cat <path/to/file>
-        ----------------
-        cat example.txt
-        cat /home/example.txt`,
+  ----------------
+  cat example.txt
+  cat /home/example.txt`,
 
 
                 method: (options, terminal) => {
@@ -371,11 +371,11 @@ system = {
                 shortHelp: "Create a Directory",
                 help: `Create a Directory
 
-    USAGE
-        mkdir <directory> or <path/to/directory>
-        ----------------
-        mkdir project
-        mkdir /var/www`,
+USAGE
+  mkdir <directory> or <path/to/directory>
+  ----------------
+  mkdir project
+  mkdir /var/www`,
 
                 method: (options, terminal) => {
                     path = parseDir(options, terminal);
@@ -387,11 +387,11 @@ system = {
                 shortHelp: "Creates a file",
                 help: `Creates a file
 
-    USAGE
-        touch <path/to/file>
-        ----------------
-        touch example.txt
-        touch /home/example.txt`,
+USAGE
+  touch <path/to/file>
+  ----------------
+  touch example.txt
+  touch /home/example.txt`,
 
                 method: (options, terminal) => {
                     path = parseDir(options, terminal);
@@ -402,11 +402,11 @@ system = {
                 shortHelp: "Writes to a file",
                 help: `Writes to a file
 
-    USAGE
-        write <text> -f <path/to/file>
-        ----------------
-        write Hello -f example.txt
-        write Hi! -f /home/example.txt`,
+USAGE
+  write <text> -f <path/to/file>
+  ----------------
+  write Hello -f example.txt
+  write Hi! -f /home/example.txt`,
 
                 method: (options, terminal) => {
                     if (options != null && isDefined(options['-f'])) {
@@ -420,8 +420,8 @@ system = {
             top: {
                 shortHelp: "Lists the active processes",
                 help: `List the active processes
-    USAGE
-        top`,
+USAGE
+  top`,
 
                 method: function (options, terminal) {
                     terminal.initUpdate(this.update, options)
