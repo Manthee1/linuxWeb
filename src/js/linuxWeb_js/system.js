@@ -319,7 +319,7 @@ USAGE
                 method: (options, terminal) => {
                     path = parseDir(options, terminal)
                     let moreInfo = false;
-                    let list = fileSystem.getDir(path, false, true, 1);
+                    let list = fileSystem.getDir(path, false, true, 0);
                     let ret = `Contents of '${path}' :\n`
                     if (isDefined(options))
                         moreInfo = isDefined(options['-l']) ? true : false;
@@ -410,9 +410,13 @@ USAGE
 
                 method: (options, terminal) => {
                     if (options != null && isDefined(options['-f'])) {
+                        if (isTextEmpty(options['-f']))
+                            throw "-f: Path can't be empty!"
+
                         dir = options['-f'];
                         text = options['@s'];
-                    } else throw "path must be specified with -f!";
+
+                    } else throw "Path must be specified with -f!";
                     path = parseDir(options, terminal, dir);
                     fileSystem.write(path, 1, text, 755)
                 },
