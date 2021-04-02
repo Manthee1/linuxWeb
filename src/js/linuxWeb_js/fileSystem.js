@@ -60,17 +60,22 @@ fileSystem = {
         [file, filePath] = this.getDir(path, "array", false);
         console.log(file, filePath, true);
 
+        // First: Check if it doesn't exists.if true create it.
         if (!isDefined(file)) {
             objPath = this.fileRootPath;
             filePath.forEach(x => {
                 nextPath = isTextEmpty(x) ? '' : `['${x}']`;
                 objPath += nextPath;
                 if (!isDefined(eval(objPath))) {
-                    eval(objPath + " = { '\\\\0': '7770' }");
+                    eval(objPath + " = { '\\\\0': '7771' }");
                 }
             });
             file = eval(objPath);
-        } else {
+        }
+
+        // Second: Check if it exists then write to it
+        if (isDefined(file)) {
+
             if (type != null && type != this.getType(file)) this.setType(file, type);
             if (permissions != null && permissions != this.getPermissions(file)) this.setPermissions(file, permissions);
             if (this.isFile(file) && isDefined(text)) file.data = text;
