@@ -37,7 +37,6 @@ fileSystem = {
             throw "Error 1: Bad character in path :: '\\0' - Cannot be used in a path!" // '\0' - permissions and type string
         }
         path = path.slice(1); // Remove the '/' from the beginning
-        if (!isTextEmpty(path));
 
         //Gets the fileSystem Object from the stringy path
         const objPath = path.split('/').map(x => { return isTextEmpty(x) ? '' : `['${x}']` }).join('');
@@ -45,14 +44,10 @@ fileSystem = {
         //Check if the path exists
         try {
             retObj = eval(this.fileRootPath + objPath)
-
-
         } catch (error) {
             retObj = null;
         }
-
         //Check if location is the expected type (dir or file)
-        console.log(retObj, expected, fileSystem.isFile(retObj), expected);
         if (isDefined(retObj) && expected != null && fileSystem.isFile(retObj) != expected) {
             if (expected == 0)
                 throw `Error 3: ${path} is not a directory`;

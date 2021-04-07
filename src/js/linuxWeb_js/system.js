@@ -449,7 +449,7 @@ function parseDir(options, terminal = null, dir = null) {
     let path = isDefined(terminal) ? terminal.currentDirectory : '/'
 
     if (!isDefined(dir) && isDefined(options)) {
-        (dir = options["@"][0]);
+        (dir = options["@s"]);
     }
     if (isDefined(dir)) {
         dir = dir.endsWith("/") ? dir.slice(0, -1) : dir;
