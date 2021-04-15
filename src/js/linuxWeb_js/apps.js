@@ -164,19 +164,6 @@ apps = {
             }
         },
 
-        // addTextToTerminal: function (text, element, process) {
-        //     let terminalElement = this.InitiateProcessVariables(process);
-        //     element.value = ""; // Clear the input.
-        //     if (typeof (text) != 'undefined') {
-        //         //Objects just get stringified
-        //         if (typeof (text) == 'object') text = JSON.stringify(text)
-        //         text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
-        //         terminalElement.main.innerHTML += text + "<br>";
-        //     }
-
-        //     element.scrollIntoView(false);
-        // },
-
         getFromCommandHistory: function (process, val) {
             // Go Up||Down a number in the commandHistory array, val=-1 or 1
             let command = process.commandHistory[process.currentHistoryNumber + val];
