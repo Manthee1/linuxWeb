@@ -286,7 +286,8 @@ processes = {
         //If an app is already open and onlyOneInstanceAllowed then just focus on it
         if (apps[appName].createData.onlyOneInstanceAllowed && this.getRunningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
-            this.bringToTop(this.getFirstPidFormAppName(appName).getProcessElement());
+            console.log(this.getFirstPidFromAppName(appName));
+            this.bringToTop(this.getFirstPidFromAppName(appName).getProcessElement());
             return false
         }
 
