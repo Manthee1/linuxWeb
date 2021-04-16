@@ -171,6 +171,7 @@ processes = {
                 top -= (top + height) - maxHeight
             if (left + width > maxWidth)
                 left -= (left + width) - maxWidth
+
             element.style.top = top + 'px';
             element.style.left = left + 'px';
             element.style.height = process.sizeBeforeMaximize.height + 'px';
@@ -194,7 +195,7 @@ processes = {
 
         setTimeout(() => {
             element.style.transition = "";
-        }, 200);
+        }, 300);
 
     },
     // Set maximum size and offload the scaling to scaleToFillArea()
@@ -220,6 +221,7 @@ processes = {
             process.maximized = true;
             this.scaleToFillArea(stringyPID, fillData)
         }
+
     },
     //Play a scale down animation and hide the app
     minimize: function (stringyPID) {
@@ -370,6 +372,7 @@ processes = {
             minimized: false,
             maximized: false,
             scaledToArea: false,
+            projectedFill = {},
             positionBeforeMaximize: { x: position.x, y: position.y },
             sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
             originalOffsetY: 0,
@@ -389,7 +392,10 @@ processes = {
 
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
-        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), () => { processes.maximize(stringyPID) })
+        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => {
+            console.log("Double Click ", stringyPID);
+            processes.maximize(stringyPID)
+        })
 
         apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
@@ -405,6 +411,7 @@ processes = {
             let mouseY = event.clientY
             let mouseX = event.clientX
 
+            //Checks only if the mouse moved some pixels so that we can un-scale the app. Basically a separate mouse move handler than the one that actually moves the app. Which makes sense i guess.
             document.body.onmousemove = e => {
                 if (Math.abs(mouseY - e.clientY) + Math.abs(mouseX - e.clientX) > 40) {
 
@@ -426,9 +433,11 @@ processes = {
                     processes.initiateProcessMouseMoveHandler(process, e.layerY, headerStartToMouseDistance)
                 }
             }
+            this.initiateProcessMouseUpHandler(process)
             return false
         }
         this.initiateProcessMouseMoveHandler(process, event.layerY, event.layerX)
+        this.initiateProcessMouseUpHandler(process)
     },
 
     //Starts the mouse move handler.
@@ -436,16 +445,22 @@ processes = {
         process.originalOffsetY = originalOffsetY;
         process.originalOffsetX = originalOffsetX;
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
+    },
+
+
+    initiateProcessMouseUpHandler: function (process) {
         document.body.onmouseup = event => {
+            console.log('Mouse Up event');
             if (isDefined(process.getProcessElementHeader())) {
                 document.body.setAttribute('onmousemove', null)
                 process.getProcessElementHeader().setAttribute('onmouseup', null)
                 this.scaleToProjectedFill(process);
                 this.hideWindowFillProjection(process, true)
-                document.body.onmouseup = null
-            } else document.body.onmouseup = null
+            }
+            document.body.onmouseup = null
         }
     },
+
     //Mainly moves the app window 
     processMouseMoveHandler: function (event, process) {
         let mouseY = event.clientY

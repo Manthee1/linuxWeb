@@ -167,6 +167,7 @@ let escapeHtml = text => {
 let isObjectEmpty = obj => {
 	if (isDefined(obj))
 		return Object.entries(obj).length == 0
+	else return true
 }
 let isArrayEmpty = arr => {
 	if (isDefined(arr) && typeof arr == "Object")

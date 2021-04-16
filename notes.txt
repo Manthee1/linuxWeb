@@ -200,5 +200,6 @@ DONE FIXME: Cursor gets stuck between resize and move sometimes and renders ever
 DONE FIXME: Firefox event.path undefined.
 DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open
-FIXME: Login allows only 1 character on some phones
-FIXME: Unmaximizeing an app with double click doesn't clear the onmousemove listener
+FIXME: Login allows only 1 character on some phones (Never encountered during testing)
+FIXED FIXME: Un-maximizing an app with double click doesn't clear the onmousemove listener
+FIXED FIXME: Opening singe process apps does not refocus the app.
