@@ -203,3 +203,7 @@ let addDoubleClickListener = (el, callback) => {
 		}, 300);
 	})
 }
+
+document.addEventListener("contextmenu", event => {
+	event.preventDefault()
+})
