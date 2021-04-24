@@ -158,7 +158,7 @@ processes = {
         this.bringToTop(element);
 
         //A lot of calculations i guess...
-        if (process.scaledToArea && isObjectEmpty(fillData)) {
+        if (process.scaledToArea && isObjectEmpty(fillData)) { //If scaled then descale
             let top = process.positionBeforeMaximize.y;
             let left = process.positionBeforeMaximize.x;
             let height = process.sizeBeforeMaximize.height;
@@ -172,6 +172,7 @@ processes = {
             if (left + width > maxWidth)
                 left -= (left + width) - maxWidth
 
+            element.style.transition = '200ms width ease-in-out,200ms height ease-in-out'
             element.style.top = top + 'px';
             element.style.left = left + 'px';
             element.style.height = process.sizeBeforeMaximize.height + 'px';
@@ -205,6 +206,7 @@ processes = {
         let element = document.querySelector(`#${stringyPID}`);
         let process = this.pid[pid];
         this.bringToTop(element);
+
         if (process.maximized == true) {
             // Unmaximize
             element.style.transition = "all 0.2s ease-in-out";
@@ -420,7 +422,7 @@ processes = {
                     document.body.setAttribute('onmousemove', null)
 
                     // Calculate the position of the app window based on your cursors position.
-                    // So that the it doesn't return to it's previous location where your cursor is not present 
+                    // So that the it doesn't return to its previous location where your cursor is not present
                     // And keep your cursors relative app header left offset 
                     let headerStartToMouseDistance = ((e.layerX / element.offsetWidth) * process.sizeBeforeMaximize.width)
                     let topOffset = e.clientY
@@ -467,7 +469,7 @@ processes = {
         let mouseX = event.clientX
         let y = mouseY - process.originalOffsetY;
         let x = mouseX - process.originalOffsetX;
-
+        let element = process.getProcessElement()
         //Check if the mouse is at any of the 'scale to area' locations
         if (mouseY < topBar.offsetHeight)
             this.createWindowSizeProjection(process, 'full')
@@ -481,8 +483,8 @@ processes = {
         // Very understandable I think.
         y = y < topBar.offsetHeight ? topBar.offsetHeight : y; // Cap the position to the topBar height
 
-        process.getProcessElement().style.top = y + "px";
-        process.getProcessElement().style.left = x + "px";
+        element.style.top = y + "px";
+        element.style.left = x + "px";
     },
 
     makeProcessResizable: function (cssSelector) {
