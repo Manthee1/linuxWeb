@@ -1,16 +1,16 @@
-# [linuxWeb](https://manthee1.github.io/linuxWeb)
-
+# [linuxWeb 0.3](http://linuxweb-0_3.surge.sh/)
 A somewhat simulated linux environment inside your browser.
 
+Current Version : 0.3.3
 ---
 
 ## How to use
 
-Go to [linuxWeb](https://manthee1.github.io/linuxWeb)  
+Go to [linuxWeb 0.3](http://linuxweb-0_3.surge.sh/)  
 
 Or to install the desktop app:
 ```
-git clone https://github.com/Manthee1/linuxWeb.git
+**Download and unzip the 0.3.x Release**
 cd linuxWeb
 npm install --global yarn || sudo npm install --global yarn
 yarn install
