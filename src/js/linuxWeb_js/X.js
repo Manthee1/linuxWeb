@@ -81,6 +81,7 @@ X = {
             elementTag: "notification_panel_container",
 
             parseNotificationsToHTML: function () {
+                let notifications
                 if (notifications = X.notification.get()) {
                     let html = "";
                     Object.values(notifications).forEach(x => {
@@ -90,7 +91,32 @@ X = {
                 }
             },
             getHTML: function () {
-                return `<notification_panel_container><do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt><notifications_container>${this.parseNotificationsToHTML()}</notifications_container><calendar_container> ${X.calendar.getHTML()}</calendar_container></notification_panel_container>`;
+
+                reminderForm = {
+                    message: { display: "Message", value: "", type: 'string', required: true },
+                    time: { display: "Remind At", value: 0, type: 'number', required: true },
+                }
+
+                let onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
+                command = "remind " + reminder.message.value + " -t " + reminder.time.value;
+                system.cli.i(command, true)})()`
+                console.log(onclick);
+
+                return `<notification_panel_container class='notification_panel_container'>
+                    <notifications_container>
+                        <div class='notification_wrapper'>${this.parseNotificationsToHTML()}</div>
+                            <div class='notification_footer'>
+                                <do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt>
+                            <button class='button type-a' onclick='X.notification.removeAll(); document.querySelector("notifications_container div.notification_wrapper").innerHTML =X.menus.notificationPanel.parseNotificationsToHTML()'>Clear</button>
+                            </div>
+                    </notifications_container>
+                        <calendar_container>
+                            <div class='calendar_wrapper'>
+                                ${X.calendar.getHTML()}
+                            </div>
+                            <button class='button type-a' onclick='${onclick}'>Add Reminder</button>
+                        </calendar_container>
+                    </notification_panel_container>`;
             },
             closeCondition: function (event) {
                 return !elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
@@ -206,6 +232,11 @@ X = {
         remove: function (id) {
             delete this.notifications[id]
         },
+        removeAll: function () { // Removes all not persistent notifications
+            for (x of Object.entries(X.notification.notifications)) {
+                if (x[1].type == false) delete X.notification.notifications[x[0]]
+            }
+        }
     },
 
     calendar: {
