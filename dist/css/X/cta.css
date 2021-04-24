@@ -1,4 +1,4 @@
-overlay > cta {
+* overlay > cta {
   background-color: var(--main-color);
   display: flex;
   flex-flow: column nowrap;
@@ -9,27 +9,46 @@ overlay > cta {
   padding-top: 10px;
   overflow: hidden;
   color: var(--light); }
-
-overlay > cta > * {
-  margin: 5px 30px;
-  display: flex;
-  width: 100%; }
-
-overlay > cta > cta_title {
-  font-size: 35px; }
-
-overlay > cta > cta_buttons {
-  margin: 0px;
-  margin-top: 30px; }
-
-overlay > cta > cta_buttons > input {
-  position: relative;
-  flex: 1 1 auto;
-  padding: 8px;
-  height: 50px;
-  border: none;
-  border-top: 4px solid var(--main-color-lighter);
-  background-color: var(--main-color); }
-
-overlay > cta > cta_buttons > input:hover {
-  filter: brightness(1.2); }
+  * overlay > cta > * {
+    margin: 5px 30px;
+    display: flex;
+    width: 100%; }
+  * overlay > cta > cta_title {
+    font-size: 35px; }
+  * overlay > cta > cta_form {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center; }
+    * overlay > cta > cta_form > item {
+      display: flex;
+      flex-flow: row nowrap;
+      padding: 0.2em 0em;
+      padding-right: 3em; }
+      * overlay > cta > cta_form > item > input {
+        color: var(--light-color);
+        padding: 0.3em 0.5em;
+        margin-left: auto;
+        background-color: var(--background-color);
+        border: none;
+        border-bottom: 2px solid var(--main-color-lighter); }
+  * overlay > cta > .error_message {
+    display: inline-block;
+    color: var(--light-red-color);
+    text-align: center;
+    margin: auto; }
+  * overlay > cta > cta_buttons {
+    margin: 0px;
+    margin-top: 30px; }
+    * overlay > cta > cta_buttons > input {
+      z-index: 1202;
+      position: relative;
+      flex: 1 1 auto;
+      padding: 8px;
+      height: 50px;
+      border: none;
+      cursor: pointer;
+      border-top: 4px solid var(--main-color-lighter);
+      background-color: var(--main-color); }
+      * overlay > cta > cta_buttons > input:hover {
+        filter: brightness(1.2); }
