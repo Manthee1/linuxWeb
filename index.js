@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 const path = require('path')
 
 function createWindow() {
@@ -9,6 +9,10 @@ function createWindow() {
             preload: path.join(__dirname, 'preload.js')
         }
     })
+
+    //Remove default electron menu
+    var menu = Menu.buildFromTemplate([])
+    Menu.setApplicationMenu(menu);
 
     win.loadFile('dist/index.html')
 }
