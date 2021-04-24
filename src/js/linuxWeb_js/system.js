@@ -66,11 +66,11 @@ system = {
                 //Default option object definition where @s = 
                 options = { "@": [], "$raw": rawArgumentString };
                 let optionBuffer = "";
-
+                let quoteBuffer = ""
                 //Main loop that parses the arguments into the options object
-                //Not complex just... Intricate?
-                for (let x of argArray) {
-                    x = x.trim()
+                //Not complex just... Intricate? Or maybe not?...
+                for (let i = 0; i < argArray.length; i++) {
+                    x = argArray[i].trim()
                     if (x.startsWith('-') && x.length > 1) {
                         if (!isTextEmpty(optionBuffer)) {
                             obj = this.appendToOptions(optionBuffer, '', options);
@@ -81,7 +81,31 @@ system = {
                         else optionBuffer = x.replaceAll('-', '');
                     } else {
                         if (isTextEmpty(optionBuffer)) options['@'].push(x);
-                        else obj = this.appendToOptions(optionBuffer, x, options);
+                        else {
+                            //Checks if quotes are present and then loops thorough the args till it doesn't find another quote to close the string
+                            if (x.startsWith('"')) {
+                                quoteBuffer += x.slice(1) + " "
+
+                                for (let j = i + 1; j < argArray.length; j++) {
+                                    let x = argArray[j] + " "
+                                    console.log(x, "j", j, "i", i);
+                                    if (x.startsWith('-')) {
+                                        i = j
+                                        break
+                                    }
+                                    if (x.includes('"')) {
+                                        quoteBuffer += x.split('"')[0]
+                                        i = j
+                                        break;
+                                    }
+                                    quoteBuffer += x
+
+                                }
+                                x = quoteBuffer;
+                                quoteBuffer = "";
+                            }
+                            obj = this.appendToOptions(optionBuffer, x, options);
+                        }
                         optionBuffer = "";
                     }
                 }
