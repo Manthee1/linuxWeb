@@ -1,6 +1,6 @@
 {
   "name": "linuxweb",
-  "version": "0.3.3",
+  "version": "0.4",
   "description": "Linux... but simulated on your web browser.",
   "main": "index.js",
   "scripts": {
