@@ -172,7 +172,6 @@ processes = {
             if (left + width > maxWidth)
                 left -= (left + width) - maxWidth
 
-            element.style.transition = '200ms width ease-in-out,200ms height ease-in-out'
             element.style.top = top + 'px';
             element.style.left = left + 'px';
             element.style.height = process.sizeBeforeMaximize.height + 'px';
@@ -429,6 +428,8 @@ processes = {
                     let leftOffset = e.clientX - headerStartToMouseDistance
                     process.positionBeforeMaximize.x = leftOffset
                     process.positionBeforeMaximize.y = topOffset
+
+                    element.style.transition = '200ms width ease-in-out,200ms height ease-in-out'
 
                     process.scaledToArea = true;
                     processes.scaleToFillArea(stringyPID, {})
