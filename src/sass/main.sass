@@ -47,7 +47,7 @@ body
     background-color: var(--background-color)
     animation: hideAll 1s ease-in-out
 
-input 
+input
     color: var(--light)
     font-weight: 600
 
@@ -59,7 +59,27 @@ hr
     margin: 10px auto
     background-color: var(--main-color-darker)
 
+button
+    border: 4px solid transparent
+    color: var(--light-color)
+    font-weight: 100
+    font-size: 100%
+    border-radius: 5px
+    cursor: pointer
+    background-color: var(--main-color)
+    &:hover
+        background-color: var(--main-color-lighter)
 
+    &:active
+        background-color: var(--main-color-darker)
+
+    &.type-a
+        background-color: var(--main-color-darker)
+        &:hover
+            background-color: var(--main-color-lighter)
+
+        &:active
+            background-color: var(--background-color)
 
 @keyframes hideAll
     from
@@ -69,47 +89,47 @@ hr
         opacity: 1
 
 linux
-    opacity: 1
-    transition: opacity ease-in-out 0.5s
+        opacity: 1
+        transition: opacity ease-in-out 0.5s
 
 desktop,
 main_background
-    width: 100vw
-    height: 100vh
-    margin: 0
-    padding: 0
-    top: 0px
-    left: 0px
-    position: fixed
-    z-index: 0
-    background-image: url("../img/MainBG.png")
-    background-repeat: no-repeat
-    background-position-x: center
-    background-position-y: center
-    background-size: cover !important
+        width: 100vw
+        height: 100vh
+        margin: 0
+        padding: 0
+        top: 0px
+        left: 0px
+        position: fixed
+        z-index: 0
+        background-image: url("../img/MainBG.png")
+        background-repeat: no-repeat
+        background-position-x: center
+        background-position-y: center
+        background-size: cover !important
 
 desktop
-    background: unset
+        background: unset
 
 system_menu_container > *
-    z-index: 1001
+        z-index: 1001
 
 overlay
-    width: 100vw
-    height: 100vh
-    margin: 0
-    padding: 0
-    top: 0px
-    left: 0px
-    position: fixed
-    display: flex
-    justify-content: center
-    align-content: center
-    background-color: #00000077
-    z-index: 1200
+        width: 100vw
+        height: 100vh
+        margin: 0
+        padding: 0
+        top: 0px
+        left: 0px
+        position: fixed
+        display: flex
+        justify-content: center
+        align-content: center
+        background-color: #00000077
+        z-index: 1200
 
 overlay *
-    z-index: 1201
+        z-index: 1201
 
 \::-webkit-scrollbar
     background-color: transparent
