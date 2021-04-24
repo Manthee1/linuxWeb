@@ -20,7 +20,7 @@ function compileSass(cb) {
 }
 
 function compilePug(cb) {
-    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/html')).pipe(browserSync.stream());
+    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/views')).pipe(browserSync.stream());
 }
 
 function compileJs(cb) {

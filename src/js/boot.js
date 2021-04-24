@@ -166,7 +166,7 @@
 	}
 	// await retrieveJs
 	await delay(1000);
-	page.changePage("./html/X.html", 'system.startup()', true);
+	page.changePage("./views/X.html", 'system.startup()', true);
 
 	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
 	//Fuck you past i changed it!

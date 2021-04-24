@@ -75,7 +75,7 @@
     if (typeof afterShutdown != "undefined" && afterShutdown == 'restart') {
         afterShutdown = "";
         await delay(1000)
-        page.changePage('./html/boot.html')
+        page.changePage('./views/boot.html')
     }
 })();
 
