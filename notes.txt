@@ -109,7 +109,7 @@ Detailed Log:
 20-02-04
 + Stopped writing the detailed log as it's takes additional time I'll rather spend on developing. 
 
-Todos:
+0.2 - 0.3 Tasks:
 DONE TODO: Make a terminal command handler in the system objects 
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
 DONE        |--- Create the interpreter
@@ -154,16 +154,8 @@ DONE TODO: Implement commands: shutdown, restart, logoff, exit, kill
 DONE \----Add a Do not disrupt switch
 DONE \----Add a command for reminders
 DONE TODO: Implement more commands: top,
-DONE TODO: apps get opened in the top left
-     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-TODO: Add an 'Add Reminder' section in the notification panel.
-
-TODO: Make a settings cookie storage system.
-TODO: Expand the settings that don't need saving into cookies.
-
 DONE TODO: Make a default file system object.
 DONE \----Implement all the main functions(read, write, remove)
-
 DONE Implement commands to interface with the file system
 DONE \----Add commands: cat
 DONE \----Add commands: ls
@@ -171,28 +163,42 @@ DONE \----Add commands: cd
 DONE \----Add commands: mkdir
 DONE \----Add commands: touch
 DONE \----Add commands: write
-     \----Add commands: rm
-
 TODO: Revamp the command parser.
      \----Treat things in quotes as a single value
 DONE \----Re-manage how the arguments are stored into the options object.
 DONE \----Add a Redirection operator ('>') for writing the output of a command to a file.
 DONE \----Make a continuous mode that constantly updates the terminal until CTRL + C is pressed or the commands return statement is reached
-TODO: Improve all names. (variable names, function names, html tags, file names...)
-
 DONE TODO: Fix top command pid numbers not showing the correct pids
-
-
-
-
 DONE TODO: Add electron to the project!
+DONE TODO: Add an Animated transition form scaled to an area to un-scaled
 
+
+
+0.4 Plan
+TODO: Disable the default browser context menu
+TODO: Add an 'Add Reminder' section in the notification panel.
+TODO: Make a settings cookie storage system.
+TODO: Expand the settings that don't need saving into cookies.
+TODO: Bunch up together same app instances in the taskbar 
+TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
+TODO: apps get opened in the top left
+     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
+TODO: Create a system api to better handle interfacing with the system and programs
+TODO: Add terminal commands: rm
+TODO: Add Application menus and an easy way to create them
+TODO: Improve the Activities Screen
+     \---- Make the search actually work.
+     \---- Show opened apps (Just like in gnome) 
+
+Always do this
+TODO: Improve all names. (variable names, function names, html tags, file names...)
+TODO: Don't add light mode!
 
 Maybe do (But not necessary)
 TODO: Separate X.js into components because the file is getting too long
 
 
-Bugs:
+0.2 - 0.3 Bugs:
 DONE FIXME: Firefox app_header mousemove not working sometimes.
 DONE FIXME: appMenu disappears when clicked on search  
 DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox 
@@ -200,6 +206,6 @@ DONE FIXME: Cursor gets stuck between resize and move sometimes and renders ever
 DONE FIXME: Firefox event.path undefined.
 DONE FIXME: Enter not working on notepad. (*On Firefox)
 DONE FIXME: all app inputs get cleared when a new app is open
-FIXME: Login allows only 1 character on some phones (Never encountered during testing)
-FIXED FIXME: Un-maximizing an app with double click doesn't clear the onmousemove listener
-FIXED FIXME: Opening singe process apps does not refocus the app.
+SKIPPED FIXME: Login allows only 1 character on some phones (Never encountered during testing)
+DONE FIXME: Un-maximizing an app with double click doesn't clear the onmousemove listener
+DONE FIXME: Opening singe process apps does not refocus the app.
