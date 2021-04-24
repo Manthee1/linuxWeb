@@ -172,11 +172,23 @@ DONE TODO: Fix top command pid numbers not showing the correct pids
 DONE TODO: Add electron to the project!
 DONE TODO: Add an Animated transition form scaled to an area to un-scaled
 
+0.2 - 0.3 Bugs:
+DONE FIXME: Firefox app_header mousemove not working sometimes.
+DONE FIXME: appMenu disappears when clicked on search  
+DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox 
+DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
+DONE FIXME: Firefox event.path undefined.
+DONE FIXME: Enter not working on notepad. (*On Firefox)
+DONE FIXME: all app inputs get cleared when a new app is open
+SKIPPED FIXME: Login allows only 1 character on some phones (Never encountered during testing)
+DONE FIXME: Un-maximizing an app with double click doesn't clear the onmousemove listener
+DONE FIXME: Opening singe process apps does not refocus the app.
 
 
 0.4 Plan
-TODO: Disable the default browser context menu
-TODO: Add an 'Add Reminder' section in the notification panel.
+DONE TODO: Disable the default browser context menu
+DONE TODO: Add an 'Add Reminder' button in the notification panel.
+DONE TODO: Add an 'Clear' button in the notification panel.
 TODO: Make a settings cookie storage system.
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Bunch up together same app instances in the taskbar 
@@ -189,6 +201,8 @@ TODO: Add Application menus and an easy way to create them
 TODO: Improve the Activities Screen
      \---- Make the search actually work.
      \---- Show opened apps (Just like in gnome) 
+DONE TODO: Remove default electron menu
+
 
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
@@ -198,14 +212,3 @@ Maybe do (But not necessary)
 TODO: Separate X.js into components because the file is getting too long
 
 
-0.2 - 0.3 Bugs:
-DONE FIXME: Firefox app_header mousemove not working sometimes.
-DONE FIXME: appMenu disappears when clicked on search  
-DONE FIXME: Scrollbar still visible when booting and shutting down on Firefox 
-DONE FIXME: Cursor gets stuck between resize and move sometimes and renders everything inaccessible
-DONE FIXME: Firefox event.path undefined.
-DONE FIXME: Enter not working on notepad. (*On Firefox)
-DONE FIXME: all app inputs get cleared when a new app is open
-SKIPPED FIXME: Login allows only 1 character on some phones (Never encountered during testing)
-DONE FIXME: Un-maximizing an app with double click doesn't clear the onmousemove listener
-DONE FIXME: Opening singe process apps does not refocus the app.
