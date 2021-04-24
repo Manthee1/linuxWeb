@@ -163,7 +163,7 @@ DONE \----Add commands: cd
 DONE \----Add commands: mkdir
 DONE \----Add commands: touch
 DONE \----Add commands: write
-TODO: Revamp the command parser.
+DONE TODO: Revamp the command parser.
 DONE \----Treat things in quotes as a single value
 DONE \----Re-manage how the arguments are stored into the options object.
 DONE \----Add a Redirection operator ('>') for writing the output of a command to a file.
