@@ -482,6 +482,79 @@ X = {
 
     },
 
+    ctaform: function name(title, formObj) {
+        //Has to be invoked with await to work correctly
+        let formHtml = ""
+
+
+        // Example of formObj
+        // formObj = {
+        //     Item1: { display: "First Item", value: 0, type: Number(), required: true },
+        //     Item2: { display: "Second Item", value: "", type: String(), required: true },
+        //     Item3: { display: "Third Item", value: "", type: String(), required: true },
+        //     Item4: { display: "Fourth Item", value: "", type: String(), required: true },
+        // }
+
+        if (isObjectEmpty(formObj))
+            return false
+
+        for (const item of Object.entries(formObj)) {
+            itemName = item[0]
+            itemContent = item[1]
+
+            itemType = typeof itemContent.type
+            if (itemType != "number" && itemType != "string")
+                itemContent.type = "";
+
+            formHtml += `<item><span>${itemContent.display}</span><input id='${itemName}' type='${itemContent.type}' value='${itemContent.value}' ></item>`
+        }
+
+        let ctaHTML = `
+            <overlay>
+                <cta>
+                    <cta_title>${title}</cta_title>
+                    <cta_form>${formHtml}</cta_form>
+                    <span class='error_message'></span>
+                    <cta_buttons><input type='button' value='Cancel'><input type='button' value='Submit'></cta_buttons>
+                </cta>
+            </overlay>
+            `
+        overlayContainer.innerHTML += ctaHTML;
+
+        ctaFormInputsInDOM = document.querySelectorAll("cta > cta_form input");
+        buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
+        console.log(ctaFormInputsInDOM);
+        return new Promise(resolve => {
+            document.querySelector("cta > cta_buttons input[value='Submit']").addEventListener('click', async event => {
+                // Parse form html to obj
+                for (const input of ctaFormInputsInDOM) {
+                    formItem = formObj[input.id]
+                    if (formItem.required == true && input.value.trim() == "") {
+                        document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' Can't be empty`;
+                        return false;
+                    }
+
+                    if (formItem.type != typeof input.value && isNaN(Number(input.value))) {
+                        document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' must be a ${typeof (formItem.type)}`;
+                        return false;
+                    }
+                    formItem.value = input.value
+                }
+                X.overlay.remove()
+                resolve(formObj);
+                console.log(formObj);
+
+            })
+            document.querySelector("cta > cta_buttons input[value='Cancel']").addEventListener('click', async event => {
+
+                X.overlay.remove()
+                resolve(false);
+
+            });
+
+        });
+    },
+
     shutdown: async function () {
         let shutdownTimeout = setTimeout(() => {
             system.shutdown()
