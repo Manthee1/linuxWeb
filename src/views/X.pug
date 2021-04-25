@@ -8,7 +8,7 @@ head
   
   link(rel='stylesheet' type='text/css' href='./css/X/animations.css')
   link(rel='stylesheet' type='text/css' href='./css/X/icons.css')
-  link(rel='stylesheet' type='text/css' href='./css/X/top_bar.css')
+  link(rel='stylesheet' type='text/css' href='./css/X/.topBar.css')
   link(rel='stylesheet' type='text/css' href='./css/X/popup_notification.css')
   link(rel='stylesheet' type='text/css' href='./css/X/applist.css')
   link(rel='stylesheet' type='text/css' href='./css/X/cta.css')
@@ -19,7 +19,7 @@ head
   link(rel='stylesheet' type='text/css' href='./css/X/system_popups/activities_menu.css')
   link(rel='stylesheet' type='text/css' href='./css/X/system_popups/notification_panel.css')
 
-  link(rel='stylesheet' type='text/css' href='./css/X/apps_container.css')
+  link(rel='stylesheet' type='text/css' href='./css/X/#appsContainer.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/terminal.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/settings.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/notepad.css')
@@ -36,41 +36,41 @@ body
       date
       p Click or Press a key to unlock
     form(onsubmit='event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));')
-      login_user.login_user
-        user_icon_container
+      div.user_wrapper
+        div.user_icon_wrapper
           user_icon
-        user_name root
+        div#loginUserName root
       input(type='password' name='password' placeholder='Password')
-    top_bar
-      left
-      middle
-      right
-        lockscreen_statusarea.statusArea
+    div.topBar
+      div.left_wrapper
+      div.middle_wrapper
+      div.right_wrapper
+        div#lockscreenStatusArea.statusArea
           network_icon
           volume_icon
           down_icon
-  linux
+  div#linuxRoot
     // Desktop Area
-    main_background
-    desktop
+    div#main_background
+    div#desktop'
     // Title bar
-    top_bar
-      left
-        activities_menu_button
+    .topBar
+      div.left_wrapper
+        div#activitiesMenuButton
           | Activities
-      middle
+      div.middle_wrapper
         datetime
-      right
-        statusarea.statusArea
+      div.right_wrapper
+        div#statusarea.statusArea
           network_icon
           volume_icon
           down_icon
     // Popup notifications
-    popup_notifications_container
+    div#popupNotificationsContainer
     // App List Bar
-    app_list
+    div#appList
     // Apps Container
-    apps_container.apps_container
-    system_menu_container
-    system_menu_animation_container
-  overlay_container
+    div#appsContainer
+    div#systemMenuContainer
+    div#systemMenuAnimationContainer
+  div#overlayContainer

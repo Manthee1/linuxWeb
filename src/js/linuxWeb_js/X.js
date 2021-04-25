@@ -6,7 +6,7 @@ X = {
             //Menu options
             createOnMousePosition: true,
             listenerType: "contextmenu",
-            toggleElement: document.querySelector('desktop'),
+            toggleElement: document.querySelector('#desktop'),
             recreateBehaviour: "recreate",
             changeBorder: false,
             preventDefault: true,
@@ -43,7 +43,7 @@ X = {
         },
         activities: {
             listenerType: "click",
-            toggleElement: document.querySelector('activities_menu_button'),
+            toggleElement: document.querySelector('#activitiesMenuButton'),
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 200, //ms 
@@ -386,21 +386,21 @@ X = {
 
     lockScreen: {
         //Define are lockscreen elements
-        form: document.querySelector("body > .login > form"),
-        loginContainer: document.querySelector('body > .login'),
-        loginTime: document.querySelector('body > .login > .login_time'),
-        time: document.querySelector('body > .login > .login_time > time'),
-        date: document.querySelector('body > .login > .login_time > date'),
-        p: document.querySelector(".login > .login_time > p "),
+        form: document.querySelector("body > #loginRoot > form"),
+        loginContainer: document.querySelector('body > #loginRoot'),
+        loginTime: document.querySelector('body > #loginRoot > #login_time'),
+        time: document.querySelector('body > #loginRoot> #login_time > time'),
+        date: document.querySelector('body > #loginRoot> #login_time > date'),
+        p: document.querySelector("#loginRoot> #login_time > p "),
 
         unlock: function () {
             X.clearOpenMenus();
             //Fades the lockscreen and displays the linux element
             X.services.clock.update.remove(this.loginTime)
             this.loginContainer.style.display = 'none'
-            document.querySelector('body>linux').style = 'opacity:0;'
+            document.querySelector('body>#linuxRoot').style = 'opacity:0;'
             setTimeout(() => {
-                document.querySelector('body>linux').style.opacity = '1'
+                document.querySelector('body>#linuxRoot').style.opacity = '1'
             }, 20);
         },
 
@@ -421,13 +421,13 @@ X = {
                 this.p.style.opacity = '1';
             }, 3000);
 
-            document.querySelector('body>linux').style.opacity = '0'
+            document.querySelector('body>#linuxRoot').style.opacity = '0'
             setTimeout(() => {
                 this.loginContainer.style = 'opacity:1'
                 document.querySelector("input[type=password]").value = '';
                 this.form.style = "position:relative;bottom:0px;display:none";
                 this.loginContainer.style = "opacity:1;"
-                document.querySelector('body>linux').style = 'visibility:hidden'
+                document.querySelector('body>#linuxRoot').style = 'visibility:hidden'
             }, 20);
             setTimeout(() => {
                 document.body.setAttribute('onclick', `X.lockScreen.showForm(event)`)
@@ -460,14 +460,14 @@ X = {
                 //Correct password
                 this.form.style = "position:relative;bottom:50px;opacity:0;";
                 this.loginContainer.style = "opacity:0;"
-                document.querySelector('body>linux').style = 'visibility:hidden;opacity: 0'
+                document.querySelector('body>#linuxRoot').style = 'visibility:hidden;opacity: 0'
                 setTimeout(() => {
                     this.unlock();
                 }, 500);
             } else {
                 //Wrong password
                 this.form.style = "position:relative;bottom:120px;opacity:1;";
-                document.querySelector("input[type=password]").style = "border-color:var(--error-color)";
+                document.querySelector("input[type=password]").style = "border-color:var(--color-danger)";
                 document.querySelector("input[type=password]").innerHTML = "";
 
                 setTimeout(() => {
@@ -614,15 +614,15 @@ X = {
     //initializes the X object 
     initialize: function () {
 
-        linux = document.querySelector("body > linux");
-        desktop = document.querySelector("linux > desktop");
-        topBar = document.querySelector("linux > top_bar");
-        popupNotificationContainer = document.querySelector("linux > popup_notifications_container");
-        appsContainer = document.querySelector("linux > apps_container");
-        appList = document.querySelector("linux > app_list");
-        systemMenuContainer = document.querySelector("system_menu_container");
-        systemExitAnimationMenuContainer = document.querySelector("system_menu_animation_container");
-        overlayContainer = document.querySelector("body > overlay_container");
+        linux = document.querySelector("#linuxRoot");
+        desktop = document.querySelector("#linuxRoot> #desktop");
+        topBar = document.querySelector("#linuxRoot> .topBar");
+        popupNotificationContainer = document.querySelector("#linuxRoot> #popupNotificationsContainer");
+        appsContainer = document.querySelector("#linuxRoot> #appsContainer");
+        appList = document.querySelector("#linuxRoot> #appList");
+        systemMenuContainer = document.querySelector("#systemMenuContainer");
+        systemExitAnimationMenuContainer = document.querySelector("#systemMenuAnimationContainer");
+        overlayContainer = document.querySelector("body > #overlayContainer");
 
         Object.entries(X.services).forEach(xObj => {
             let [xObjName, xObjValue] = [xObj[0], xObj[1]];

@@ -1,4 +1,4 @@
-.login
+#loginRoot
     display: flex
     opacity: 1
     margin: auto
@@ -15,7 +15,7 @@
         opacity: 1
 
     >
-        .login_background
+        #login_background
             width: 100vw
             height: 100vh
             margin: 0
@@ -24,8 +24,8 @@
             z-index: -1
             top: 0px
             left: 0px
-            background: var(--main-color)
-            background: radial-gradient(circle, #18171f 0%, var(--background-color) 100%)
+            background: var(--color-background-300)
+            background: radial-gradient(circle, #18171f 0%, var(--color-background-600) 100%)
 
             /* background-image: url("../../img/LoginBG.jpg");
             background-repeat: no-repeat
@@ -36,7 +36,7 @@
             /* filter: contrast(0.6) blur(1vh);
             /* transform: scale(1.2);
 
-        .login_time
+        #login_time
             /* font-size: 80px;
             position: absolute
 
@@ -77,14 +77,14 @@
             transition: all 0.5s ease-in-out
 
             >
-                .login_user
+                .user_wrapper
                     display: block
                     margin-bottom: 2rem
 
                     > *
                         margin: auto
 
-                    > user_icon_container
+                    > .user_icon_wrapper
                         display: flex
                         flex-flow: column nowrap
                         border: 2px solid gray
@@ -104,12 +104,11 @@
                             background-position: center
                             background-position-y: 0%
 
-                    > user_name
+                    > #loginUserName
                         font-size: 25px
                         margin-top: 2rem
                         color: gray
                         font-weight: 100
-
 
                 input
                     display: inline-block
@@ -131,7 +130,6 @@
                     &:focus
                         border: 1px solid transparent
 
-                       
                     &[type="submit"]
                         position: relative
                         display: inline-block
@@ -146,24 +144,24 @@
                         color: whitesmoke
                         background-color: #556080
 
-        .login_user, input
+        .user_wrapper, input
             position: relative
             bottom: 100px
 
-        top_bar
+        .topBar
             background-color: transparent
             border: none
 
-.login_status_area_menu
+#login_status_area_menu
     z-index: 1
-    background-color: var(--background-color)
+    background-color: var(--color-background-600)
     visibility: visible
-    border: var(--main-color-lighter) 2px solid
+    border: var(--color-background-200) 2px solid
     item
-        background-color: var(--background-color)
+    background-color: var(--color-background-600)
     dropdown
-        background-color: var(--background-color)
-        filter: brightness(0.8)
+    background-color: var(--color-background-600)
+    filter: brightness(0.8)
 
 input::-moz-focus-inner
     border: 0

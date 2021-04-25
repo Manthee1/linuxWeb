@@ -8,23 +8,27 @@
 html
     background: unset !important
     visibility: visible !important
-    --top_bar-color: #0f0f0f
+
     --top_bar-height: 25px
-    --main-color: #222222
-    --main-color-lighter: #272727
-    --main-color-darker: #1d1d1d
-    --background-color: #141414
-    --app-header-color: #1b1b1b
-    --light-color: #cbcbcb
-    --dark-color: #070707
-    --light-gray-color: #8d8c8c
-    --select-color: #15539e
-    --error-color: #410e0e
-    --light-red-color: #ff5a5a
+    --color-background-200: #272727
+    --color-background-300: #be4545
+    --color-background-400: #161616
+    --color-background-300: #1b1b1b
+    --color-background-600: #141414
+    --color-background-700: #0f0f0f
+
+    --gradient-100: linear-gradient(90deg, rgba(20,20,20,1) 0%, rgba(39,39,39,1) 100%)
+
+    --color-text-light: #eeeeee
+    --color-text-medium: #a7a7a7
+    --color-text-dark: #161616
+    --color-select: #15539e
+    --color-danger: #db0d0d
+    --color-danger-light: #d64646
     --sans-font: "SourceSansPro"
     --mono-font: "RobotMono"
     font-family: var(--sans-font), sans
-    color: var(--light-color)
+    color: var(--color-text-light)
 
 *
     background-size: 100%
@@ -44,7 +48,7 @@ body
     padding: 0px
     margin: 0px
     opacity: 1
-    background-color: var(--background-color)
+    background-color: var(--color-background-600)
     animation: hideAll 1s ease-in-out
 
 input
@@ -57,29 +61,29 @@ hr
     border: none
     margin: auto
     margin: 10px auto
-    background-color: var(--main-color-darker)
+    background-color: var(--color-background-400)
 
 button
     border: 4px solid transparent
-    color: var(--light-color)
+    color: var(--color-text-light)
     font-weight: 100
     font-size: 100%
     border-radius: 5px
     cursor: pointer
-    background-color: var(--main-color)
+    background-color: var(--color-background-300)
     &:hover
-        background-color: var(--main-color-lighter)
+        background-color: var(--color-background-200)
 
     &:active
-        background-color: var(--main-color-darker)
+        background-color: var(--color-background-400)
 
     &.type-a
-        background-color: var(--main-color-darker)
+        background-color: var(--color-background-400)
         &:hover
-            background-color: var(--main-color-lighter)
+            background-color: var(--color-background-200)
 
         &:active
-            background-color: var(--background-color)
+            background-color: var(--color-background-600)
 
 @keyframes hideAll
     from
@@ -88,12 +92,12 @@ button
     to
         opacity: 1
 
-linux
+#linuxRoot
         opacity: 1
         transition: opacity ease-in-out 0.5s
 
 desktop,
-main_background
+#main_background
         width: 100vw
         height: 100vh
         margin: 0
@@ -111,7 +115,7 @@ main_background
 desktop
         background: unset
 
-system_menu_container > *
+#systemMenuContainer > *
         z-index: 1001
 
 overlay
@@ -141,7 +145,7 @@ overlay *
     opacity: 0.5
 
 \::-webkit-scrollbar-thumb
-    background-color: var(--main-color)
+    background-color: var(--color-background-300)
     border-radius: 20px
     border: 2px solid transparent
     opacity: 0.5
