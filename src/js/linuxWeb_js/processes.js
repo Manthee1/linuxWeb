@@ -69,7 +69,7 @@ processes = {
     },
     //Projects where the window will scale to.
     createWindowSizeProjection: function (process, fillType = "full") {
-        if (isDefined(document.querySelector(`${fillType}-wsp`))) return false
+        // if (isDefined(document.querySelector(`#windowSizeProjection[data-fill-type="${fillType}-wsp"]`))) return false
         let processElement = process.getProcessElement();
         let top = topBar.offsetHeight;
         let left = 0;
@@ -104,16 +104,16 @@ processes = {
             width: width,
             height: height,
         }
-        //If 'window_size_projection' exists just change it's style. else create it
-        if (isDefined(document.querySelector('window_size_projection'))) {
-            let el = document.querySelector('window_size_projection');
+        //If '#windowSizeProjection' exists just change it's style. else create it
+        if (isDefined(document.querySelector('#windowSizeProjection'))) {
+            let el = document.querySelector('#windowSizeProjection');
             el.style.cssText = style;
-            processElement.insertAdjacentElement('beforebegin', document.querySelector('window_size_projection'));
-
+            el.setAttribute('data-fill-type', `${fillType}-wsp`)
+            processElement.insertAdjacentElement('beforebegin', document.querySelector('#windowSizeProjection'));
         } else {
             this.hideWindowFillProjection(process)
-            windowSizeProjectionHTML = `<window_size_projection id='#${fillType}-wsp' style='${style}' ></window_size_projection>`
-            processElement.insertAdjacentHTML('beforebegin', windowSizeProjectionHTML);
+            let WSPHTML = `<div id='windowSizeProjection' data-fill-type='${fillType}-wsp' style='${style}'></div>`
+            processElement.insertAdjacentHTML('beforebegin', WSPHTML);
         }
     },
 
@@ -134,7 +134,7 @@ processes = {
 
     // Hide the blue fill area projection thingy. Simple...
     hideWindowFillProjection: function (process, clearStyle = false) {
-        el = document.querySelector('window_size_projection')
+        el = document.querySelector('#windowSizeProjection')
         if (isDefined(el)) {
             if (clearStyle) {
                 process.projectedFill = {}
@@ -341,9 +341,9 @@ processes = {
 					<app_maximize onclick="processes.maximize('${stringyPID}')"><square_icon></square_icon></app_maximize>
 					<app_exit onclick="processes.remove('${stringyPID}')"><x_icon></x_icon></app_exit>
 				</app_header>
-				<app_body style="${bodyStyles}">
+				<div class='app_body' style="${bodyStyles}">
 					${appCreateData.getHTML()}
-				</app_body>
+				</div>
 				<app_resize>
 					<resize_point class='bottom-right'></resize_point>
 					<resize_point class='bottom-left'></resize_point>
@@ -379,7 +379,7 @@ processes = {
             originalOffsetY: 0,
             originalOffsetX: 0,
             getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
-            getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>app_body`) },
+            getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>.app_body`) },
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
         });

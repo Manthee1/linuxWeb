@@ -1,27 +1,25 @@
 
 $terminalFontSize: 15px
 
-app_body >
-    terminal_main,terminal_buffer
-        display: block
-        font-size: $terminalFontSize
-        font-family: var(--mono-font)
-        -khtml-user-select: text
-        -webkit-user-select: text
-        -ms-user-select: text
-        user-select: text
-        cursor: default
-        white-space: break-spaces
-    
+.app_body > terminal_main,terminal_buffer
+    display: block
+    font-size: $terminalFontSize
+    font-family: var(--mono-font)
+    -khtml-user-select: text
+    -webkit-user-select: text
+    -ms-user-select: text
+    user-select: text
+    cursor: default
+    white-space: break-spaces
 
-app_body > terminal_main *,
+.app_body > terminal_main *,
 terminal_input,
 terminal_input *
     font-family: var(--mono-font)
     font-size: $terminalFontSize
     font-weight: 400
 
-app_body > terminal_main > command
+.app_body > terminal_main > command
     display: block
     margin-left: 2px
 
@@ -30,7 +28,6 @@ terminal_input
     background-color: black
     width: 100%
     color: inherit
-
 
 terminal_input > input
     flex: 1 1 auto

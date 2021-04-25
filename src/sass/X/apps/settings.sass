@@ -1,43 +1,39 @@
-app_body > settings
-width: 100%
-height: 100%
-flex-flow: row nowrap
-display: flex
-background-color: var(--color-background-300)
-color: var(--color-text-light)
+.app_body > #settingsAppContainer
+    width: 100%
+    height: 100%
+    flex-flow: row nowrap
+    display: flex
+    background-color: var(--color-background-400)
+    color: var(--color-text-light)
 
-app_body > settings > *
-flex: 1 1 auto
-padding: 20px
+    > *
+        flex: 1 1 auto
+        padding: 20px
 
-app_body > settings > sidebarMenu
-display: flex
-flex-flow: column
-flex: 0 0 0
-padding: 0px
-    // border-right: 2px var(--color-background-200) solid
+    > #sidebarMenu
+        display: flex
+        flex-flow: column
+        flex: 0 0 0
+        padding: 0px
+        > .selected
+            background-color: var(--color-select)
+        > *
+            display: flex
+            flex-flow: row nowrap
+            flex: 0 0 0
+            padding: 10px 20px
+            transition: background-color 0.1s linear
 
-app_body > settings > sidebarMenu > *
-display: flex
-flex-flow: row nowrap
-flex: 0 0 0
-padding: 10px 20px
-transition: background-color 0.2s linear
+            > *:first-child
+                height: 20px
+                width: 20px
+                margin-right: 10px
 
-app_body > settings > sidebarMenu > * > *:first-child
-    /* flex: 0 0 0;
-height: 20px
-width: 20px
-margin-right: 10px
+            &:hover
+                background-color: var(--color-background-300)
 
-app_body > settings > sidebarMenu > *:hover
-background-color: var(--color-background-400)
-
-app_body > settings > sidebarMenu > .selected
-background-color: var(--color-background-200)
-
-app_body > settings > panel
-background-color: var(--color-background-200)
-> *
-    margin: 5px
-    padding: 0px
+    > #contentPanel
+        background-color: var(--color-background-300)
+        > *
+            margin: 5px
+            padding: 0px

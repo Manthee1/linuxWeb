@@ -8,7 +8,7 @@ head
   
   link(rel='stylesheet' type='text/css' href='./css/X/animations.css')
   link(rel='stylesheet' type='text/css' href='./css/X/icons.css')
-  link(rel='stylesheet' type='text/css' href='./css/X/.topBar.css')
+  link(rel='stylesheet' type='text/css' href='./css/X/top_bar.css')
   link(rel='stylesheet' type='text/css' href='./css/X/popup_notification.css')
   link(rel='stylesheet' type='text/css' href='./css/X/applist.css')
   link(rel='stylesheet' type='text/css' href='./css/X/cta.css')
@@ -19,7 +19,7 @@ head
   link(rel='stylesheet' type='text/css' href='./css/X/system_popups/activities_menu.css')
   link(rel='stylesheet' type='text/css' href='./css/X/system_popups/notification_panel.css')
 
-  link(rel='stylesheet' type='text/css' href='./css/X/#appsContainer.css')
+  link(rel='stylesheet' type='text/css' href='./css/X/apps_container.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/terminal.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/settings.css')
   link(rel='stylesheet' type='text/css' href='./css/X/apps/notepad.css')
@@ -29,9 +29,9 @@ head
   script(src='./js/linuxWeb_js/X.js')
 
 body
-  login.login
-    div.login_background 
-    div.login_time
+  div#loginRoot
+    div#login_background 
+    div#login_time
       time
       date
       p Click or Press a key to unlock
@@ -52,9 +52,9 @@ body
   div#linuxRoot
     // Desktop Area
     div#main_background
-    div#desktop'
+    div#desktop
     // Title bar
-    .topBar
+    div.topBar
       div.left_wrapper
         div#activitiesMenuButton
           | Activities

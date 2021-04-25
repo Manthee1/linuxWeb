@@ -256,7 +256,7 @@ apps = {
                     if (typeof menuItem != 'object') return ''
                     return `<menuItem ${apps.settings.layout.selected == menuItemId && "class='selected'"} onclick='apps.settings.switchToPanel(${menuItemId},false,this)'><${menuItem.iconTag}></${menuItem.iconTag}>${menuItem.name}</menuItem>`
                 }).join('');
-                return `<settings><sidebarMenu>${menuItems}</sidebarMenu><panel>${apps.settings.switchToPanel(0, true)}</panel></settings>`;
+                return `<div id='settingsAppContainer'><div id="sidebarMenu">${menuItems}</div><div id='contentPanel'>${apps.settings.switchToPanel(0, true)}</div></div>`;
             }
         },
         // Switches to the panel that's defined in the layout object...
@@ -264,8 +264,8 @@ apps = {
             let panelHTML = this.layout[panelMenuId].getPanelHTML();
             if (onlyGetHTML) return panelHTML
             else {
-                document.querySelectorAll('settings .selected').forEach(x => x.classList.remove("selected"))
-                document.querySelector('settings > panel').innerHTML = panelHTML;
+                document.querySelectorAll('#settingsAppContainer .selected').forEach(x => x.classList.remove("selected"))
+                document.querySelector('#settingsAppContainer > #contentPanel').innerHTML = panelHTML;
                 element.classList.add("selected")
             }
             return true
