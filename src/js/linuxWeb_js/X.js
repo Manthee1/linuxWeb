@@ -378,19 +378,23 @@ X = {
     },
 
     overlay: {
-        //Simply remove's any element with the overlay tag
+        //Creates an overlay
+        create: function (html) {
+            overlayContainer.innerHTML += `<div class='overlay'>${html}</div>`;
+        },
+        //Simply removes any element with the overlay tag
         remove: function () {
-            document.querySelectorAll('overlay').forEach(x => x.remove())
+            document.querySelectorAll('div.overlay').forEach(x => x.remove())
         }
     },
 
     lockScreen: {
         //Define are lockscreen elements
-        form: document.querySelector("body > #loginRoot > form"),
-        loginContainer: document.querySelector('body > #loginRoot'),
-        loginTime: document.querySelector('body > #loginRoot > #login_time'),
-        time: document.querySelector('body > #loginRoot> #login_time > time'),
-        date: document.querySelector('body > #loginRoot> #login_time > date'),
+        form: document.querySelector("#loginRoot > form"),
+        loginContainer: document.querySelector('#loginRoot'),
+        loginTime: document.querySelector('#loginRoot > #login_time'),
+        time: document.querySelector('#loginRoot> #login_time > time'),
+        date: document.querySelector('#loginRoot> #login_time > date'),
         p: document.querySelector("#loginRoot> #login_time > p "),
 
         unlock: function () {
@@ -491,15 +495,14 @@ X = {
         let buttonsHTML = buttons.map(x => { return `<input type='button' value='${x[0]}'>` }).join('')
 
         let ctaHTML = `
-            <overlay>
                 <cta>
                     <cta_title>${title}</cta_title>
                     <cta_message>${message}</cta_message>
                     <cta_buttons>${buttonsHTML}</cta_buttons>
                 </cta>
-            </overlay>
             `
-        overlayContainer.innerHTML += ctaHTML;
+        X.overlay.create(ctaHTML)
+
         document.querySelector("cta > cta_buttons > input").focus()
         buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
         return new Promise(resolve => {
@@ -541,17 +544,14 @@ X = {
         }
 
         let ctaHTML = `
-            <overlay>
                 <cta>
                     <cta_title>${title}</cta_title>
                     <cta_form>${formHtml}</cta_form>
                     <span class='error_message'></span>
                     <cta_buttons><input type='button' value='Cancel'><input type='button' value='Submit'></cta_buttons>
                 </cta>
-            </overlay>
             `
-        overlayContainer.innerHTML += ctaHTML;
-
+        X.overlay.create(ctaHTML)
         ctaFormInputsInDOM = document.querySelectorAll("cta > cta_form input");
         buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
         console.log(ctaFormInputsInDOM);
