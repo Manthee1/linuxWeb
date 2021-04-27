@@ -47,28 +47,28 @@ X = {
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 200, //ms 
-            elementQuery: "activities_menu_container",
+            elementQuery: "#activitiesMenuContainer",
 
             getHTML: function () {
                 let html = `
-				<activities_menu_container>
-					<app_search><search_icon></search_icon><input placeholder='Type to search' type='search'></app_search>
-					<favorites>
+				<div id='activitiesMenuContainer'>
+					<div class='app_search'><search_icon></search_icon><input placeholder='Type to search' type='search'></div>
+					<div class='favorites'>
 					${Object.entries(apps).map(x => {
                     let appIcon;
                     if (x[1].icon != undefined) appIcon = `<img src='${x[1].icon}'>`;
-                    else if (x[1].name != undefined) appIcon = x[1].name[0];
+                    else if (x[1].name != undefined) appIcon = `<span>${x[1].name[0]}</span>`;
                     else appIcon = x[0][0];
                     return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');">${appIcon}</app>`
                 }).join('')}
-			</favorites>
-				</activities_menu_container>
+			</div>
+				</div>
 		`
                 return html;
             },
 
             closeCondition: function (event) {
-                return !elementIsInEventPath(event, document.querySelector("activities_menu_container"))
+                return event.target == document.querySelector("#activitiesMenuContainer")
             },
 
         },
