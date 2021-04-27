@@ -13,32 +13,32 @@ X = {
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 100, //ms 
-            elementTag: "context_menu",
+            elementQuery: "#context_menu",
 
             getHTML: function (x = 100, y = 100) {
                 return `
-		<context_menu style="top: ${y}px;left: ${x}px;">
-				<context_item onclick="X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])">Change Background</context_item><hr>
-				<context_item onclick="processes.create('terminal')">Terminal</context_item>
-				<context_item onclick="processes.create('settings')">Settings</context_item>
-			</context_menu>
+		<div id='context_menu' style="top: ${y}px;left: ${x}px;">
+				<span onclick="X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])">Change Background</span>
+                <hr>
+				<span onclick="processes.create('terminal')">Terminal</span>
+				<span onclick="processes.create('settings')">Settings</span>
+                <hr>
+                <span class='context_sub_menu_header'>Hello</span>
+                <div class='context_sub_menu'>
+                <span>New</span>
+                <span>Context</span>
+                <span>Sub</span>
+                <span>Menu</span>
+                <span>YAY!</span>
+
+                </div>
+			</div>
 				`
 
             },
             // Close the menu when the condition returns true
             closeCondition: function (event) {
-                return event.target.tagName != "CONTEXT_MENU"
-            },
-            //Gets called when the menu is created.
-            onCreate: function () {
-                document.querySelectorAll('.context_sub_menu').forEach(x => {
-                    x.addEventListener('mouseover', () => {
-                        x.querySelector('context_sub_menu').style.display = 'block'
-                    })
-                    x.addEventListener('mouseleave', () => {
-                        x.querySelector('context_sub_menu').style.display = ''
-                    })
-                })
+                return event.target.id != "context_menu"
             },
         },
         activities: {
@@ -47,7 +47,7 @@ X = {
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 200, //ms 
-            elementTag: "activities_menu_container",
+            elementQuery: "activities_menu_container",
 
             getHTML: function () {
                 let html = `
@@ -78,7 +78,7 @@ X = {
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementTag: "notification_panel_container",
+            elementQuery: "notification_panel_container",
 
             parseNotificationsToHTML: function () {
                 let notifications
@@ -128,7 +128,7 @@ X = {
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementTag: "status_area_container",
+            elementQuery: "status_area_container",
             getHTML: function () {
                 return `<status_area_container>
 					<item>
@@ -167,7 +167,7 @@ X = {
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementTag: "status_area_container",
+            elementQuery: "status_area_container",
             getHTML: () => `<status_area_container class='login_status_area_menu'>
 					<item>
 					    <volume_icon></volume_icon>
@@ -644,7 +644,7 @@ X = {
             closeCondition: '',
             enterAnimation: "",
             exitAnimation: "",
-            elementTag: "",
+            elementQuery: "",
         }
 
         // Do stuff.. Make all the objects with a toggle button show their html and handle the clicking and closing when clicked outside of html. i don't know what im writing i hope this is understandable
@@ -697,8 +697,8 @@ X = {
                 X.menus[openMenu].toggleElement.style.borderBottom = "";
 
                 //If there is a exitAnimation then play it and remove the element
-                if (X.menus[openMenu].elementTag && X.menus[openMenu].exitAnimation) {
-                    let element = document.querySelector(X.menus[openMenu].elementTag);
+                if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
+                    let element = document.querySelector(X.menus[openMenu].elementQuery);
                     systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
                     element.classList.add(X.menus[openMenu].exitAnimation)
                     if (X.menus[openMenu].enterAnimation) {
@@ -718,7 +718,7 @@ X = {
     //Creates a menu.....
     createMenu: function (menuUIData, x, y) {
         let elHTML = menuUIData.getHTML(x, y);
-        let elTag = menuUIData.elementTag;
+        let elTag = menuUIData.elementQuery;
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the objects html to the DOM.
 
         if (menuUIData.createOnMousePosition) {
@@ -732,9 +732,9 @@ X = {
 
         }
 
-        if (menuUIData.elementTag != "" && menuUIData.enterAnimation != "") {
+        if (menuUIData.elementQuery != "" && menuUIData.enterAnimation != "") {
             //If there is a enterAnimation then append it
-            let element = systemMenuContainer.querySelector(menuUIData.elementTag);
+            let element = systemMenuContainer.querySelector(menuUIData.elementQuery);
             element.classList.add(menuUIData.enterAnimation);
         }
 
