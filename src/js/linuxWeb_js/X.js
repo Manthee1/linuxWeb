@@ -107,7 +107,7 @@ X = {
                         <div class='notification_wrapper'>${this.parseNotificationsToHTML()}</div>
                             <div class='notification_footer'>
                                 <do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt>
-                            <button class='button type-a' onclick='X.notification.removeAll(); document.querySelector("notifications_container div.notification_wrapper").innerHTML =X.menus.notificationPanel.parseNotificationsToHTML()'>Clear</button>
+                            <button class='button type-a' onclick='X.notification.removeAll(); document.querySelector("#notificationPanelContainer .notifications_container div.notification_wrapper").innerHTML = X.menus.notificationPanel.parseNotificationsToHTML()'>Clear</button>
                             </div>
                     </div>
                         <calendar_container>
