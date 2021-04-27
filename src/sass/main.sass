@@ -11,11 +11,12 @@ html
 
     --top_bar-height: 25px
     --color-background-200: #272727
-    --color-background-300: #be4545
-    --color-background-400: #161616
-    --color-background-300: #1b1b1b
-    --color-background-600: #141414
+    --color-background-300: #222222
+    --color-background-400: #1a1818
+    --color-background-500: #131111
+    --color-background-600: #131212
     --color-background-700: #0f0f0f
+    --color-background-800: #000000
 
     --gradient-100: linear-gradient(90deg, rgba(20,20,20,1) 0%, rgba(39,39,39,1) 100%)
 
@@ -93,46 +94,43 @@ button
         opacity: 1
 
 #linuxRoot
-        opacity: 1
-        transition: opacity ease-in-out 0.5s
+    opacity: 1
+    transition: opacity ease-in-out 0.5s
 
-desktop,
+#desktop,
 #main_background
-        width: 100vw
-        height: 100vh
-        margin: 0
-        padding: 0
-        top: 0px
-        left: 0px
-        position: fixed
-        z-index: 0
-        background-image: url("../img/MainBG.png")
-        background-repeat: no-repeat
-        background-position-x: center
-        background-position-y: center
-        background-size: cover !important
-
-desktop
-        background: unset
+    width: 100vw
+    height: 100vh
+    margin: 0
+    padding: 0
+    top: 0px
+    left: 0px
+    position: fixed
+    z-index: 0
+    background: unset
+    background-image: url("../img/MainBG.png")
+    background-repeat: no-repeat
+    background-position-x: center
+    background-position-y: center
+    background-size: cover !important
 
 #systemMenuContainer > *
-        z-index: 1001
+    z-index: 1001
 
-overlay
-        width: 100vw
-        height: 100vh
-        margin: 0
-        padding: 0
-        top: 0px
-        left: 0px
-        position: fixed
-        display: flex
-        justify-content: center
-        align-content: center
-        background-color: #00000077
-        z-index: 1200
-
-overlay *
+.overlay
+    width: 100vw
+    height: 100vh
+    margin: 0
+    padding: 0
+    top: 0px
+    left: 0px
+    position: fixed
+    display: flex
+    justify-content: center
+    align-content: center
+    background-color: #00000077
+    z-index: 1200
+    >*
         z-index: 1201
 
 \::-webkit-scrollbar
