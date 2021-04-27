@@ -27,7 +27,7 @@ system = {
         //Add system.build variable [version]
         (async () => { system.build = await (async () => { return (await fetch("./build.ver")).text() })() })() // Get build version
         X.initialize();
-        X.services.clock.update.add(document.querySelector('dateTime'), "month>str date time-s")
+        X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
         X.notification.create('', '', '', '', '', false)
         X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
     },

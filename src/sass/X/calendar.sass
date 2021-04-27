@@ -1,13 +1,13 @@
-calendar
+.calendar
     display: inline-block
     max-width: min-content
     padding: 1.5em
         // border: 1px solid black
     border-radius: 8px
-    background-color: var(--color-background-300-lighter)
+    background-color: var(--color-background-200)
     --size: 30px
     padding: 10px
-    > calendar_content
+    > .calendar_content
         display: flex
         flex-flow: column nowrap
         justify-content: center
@@ -26,34 +26,34 @@ calendar
                 width: var(--size)
                 text-align: center
                 flex: 1 1 0px
-            > dates
-                padding-top: 0.2rem
-                >week
-                    display: flex
-                    flex-flow: row nowrap
-                    justify-content: center
-                    align-content: center
+        > dates
+            padding-top: 0.2rem
+            >week
+                display: flex
+                flex-flow: row nowrap
+                justify-content: center
+                align-content: center
+                flex: 1 1 0px
+                > day
+                    position: relative
+                    background-color: transparent
+                    text-align: center
                     flex: 1 1 0px
-                    > day
-                        position: relative
-                        background-color: transparent
-                        text-align: center
-                        flex: 1 1 0px
-                        font-size: 80%
-                        > span
-                            display: inline-block
-                            border: 0
-                            border-radius: 50%
-                            height: var(--size)
-                            width: var(--size)
-                            line-height: var(--size)
-                            vertical-align: .middle_wrapper
-                            background-color: var(--color-background-300-lighter)
-                            &:hover
-                                filter: brightness(1.15)
-                            &:not(.current_date):active
-                                background-color: var(--color-background-300-darker)
-                        >.not_current_months_date
-                            color: var(--light-gray-color)
-                        >.current_date
-                            background-color: var(--select-color)
+                    font-size: 80%
+                    > span
+                        display: inline-block
+                        border: 0
+                        border-radius: 50%
+                        height: var(--size)
+                        width: var(--size)
+                        line-height: var(--size)
+                        vertical-align: middle
+                        background-color: var(--color-background-300-lighter)
+                        &:hover
+                            filter: brightness(1.15)
+                        &:not(.current_date):active
+                            background-color: var(--color-background-300-darker)
+                    >.not_current_months_date
+                        color: var(--light-gray-color)
+                    >.current_date
+                        background-color: var(--select-color)

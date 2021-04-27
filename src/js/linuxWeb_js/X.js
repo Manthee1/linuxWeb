@@ -74,18 +74,18 @@ X = {
         },
         notificationPanel: {
             listenerType: "click",
-            toggleElement: document.querySelector("datetime"),
+            toggleElement: document.querySelector("#topBarDateTime"),
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementQuery: "notification_panel_container",
+            elementQuery: "#notificationPanelContainer",
 
             parseNotificationsToHTML: function () {
                 let notifications
                 if (notifications = X.notification.get()) {
                     let html = "";
                     Object.values(notifications).forEach(x => {
-                        html += `<notification onclick="${x.clickAction}"><notification_content><img src='${x.iconPath}'><text><title>${x.title}</title><description>${x.description}</description></text></notification_content>${!x.type ? `<x_icon onclick='X.notification.remove(${x.id}); this.parentElement.remove()'></x_icon>` : ""}</notification>`;
+                        html += `<notification onclick="${x.clickAction}"><div class='notification_content'><img src='${x.iconPath}'><div class='notification_text_wrapper'><h1>${x.title}</h1><div class='description'>${x.description}</div></div></div>${!x.type ? `<x_icon onclick='X.notification.remove(${x.id}); this.parentElement.remove()'></x_icon>` : ""}</notification>`;
                     })
                     return html;
                 }
@@ -102,24 +102,24 @@ X = {
                 system.cli.i(command, true)})()`
                 console.log(onclick);
 
-                return `<notification_panel_container class='notification_panel_container'>
-                    <notifications_container>
+                return `<div id='notificationPanelContainer'>
+                    <div class='notifications_container'>
                         <div class='notification_wrapper'>${this.parseNotificationsToHTML()}</div>
                             <div class='notification_footer'>
                                 <do_not_disrupt><span>Do not disturb</span><input id='doNotDisruptSwitch' ${system.global.doNotDisturb && "checked"} type="checkbox"><label onclick="system.global.doNotDisturb = !this.parentElement.querySelector('#doNotDisruptSwitch').checked" for="doNotDisruptSwitch"></label></do_not_disrupt>
                             <button class='button type-a' onclick='X.notification.removeAll(); document.querySelector("notifications_container div.notification_wrapper").innerHTML =X.menus.notificationPanel.parseNotificationsToHTML()'>Clear</button>
                             </div>
-                    </notifications_container>
+                    </div>
                         <calendar_container>
                             <div class='calendar_wrapper'>
                                 ${X.calendar.getHTML()}
                             </div>
                             <button class='button type-a' onclick='${onclick}'>Add Reminder</button>
                         </calendar_container>
-                    </notification_panel_container>`;
+                    </div>`;
             },
             closeCondition: function (event) {
-                return !elementIsInEventPath(event, document.querySelector("notification_panel_container")) || (tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
+                return !elementIsInEventPath(event, document.querySelector("#notificationPanelContainer")) || (tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
             }
         },
         statusArea: {
@@ -242,7 +242,7 @@ X = {
     calendar: {
         getHTML: function () {
             let htmlOut =
-                `<calendar><month>${date.get('month>full date year')}</month><calendar_content>
+                `<div class='calendar'><month>${date.get('month>full date year')}</month><div class='calendar_content'>
 <week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days><dates>`
             let calendarArray = this.createCalendarArray(0, 0, true, true)
             calendarArray.forEach(week => {
@@ -250,7 +250,7 @@ X = {
                 htmlOut += week.map(date => `<day><span ${date.startsWith('-') ? "class = 'not_current_months_date'" : ""} ${date.startsWith('&') ? "class = 'current_date'" : ""}>${date.replace(/-|&/gm, '') || date}</span></day>`).join('')
                 htmlOut += "</week>"
             });
-            return htmlOut + "</calendar_content>";
+            return htmlOut + "</div></div>";
         },
         //Creates an calendar array. Yes a lot of Date stuff
         createCalendarArray: function (year = 0, month = 0, notMonthDatePrefix = false, currentDatePrefix = false) {

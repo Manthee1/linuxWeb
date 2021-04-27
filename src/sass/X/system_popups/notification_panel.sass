@@ -1,4 +1,4 @@
-.notification_panel_container
+#notificationPanelContainer
     position: fixed
     margin-top: 0px
     display: flex
@@ -6,7 +6,7 @@
     justify-content: center
     align-content: center
     position: absolute
-    top: calc(var(--.topBar-height) + 10px)
+    top: calc(var(--topBar-height) + 10px)
     left: 50%
     transform: translate(-50%)
     background-color: var(--color-background-300)
@@ -26,7 +26,7 @@
         button
             flex: 1 1 auto
             margin-top: 1em
-    > notifications_container
+    > .notifications_container
         border-right: 1px solid var(--color-background-200)
         display: flex
         flex-flow: column nowrap
@@ -63,18 +63,18 @@
                         filter: brightness(1.05)
                     &:active
                         background-color: var(--color-background-400)
-                > notification_content
+                > .notification_content
                     display: flex
                     flex-flow: row nowrap
                     img
                         padding: 0.6rem
                         height: 2rem
-                    >text
+                    >.notification_text_wrapper
                         display: flex
                         flex-flow: column nowrap
                         justify-content: center
                         align-content: center
-                        >title
+                        >h1
                             display: block
                             font-size: 150%
         > .notification_footer
