@@ -496,15 +496,15 @@ X = {
 
         let ctaHTML = `
                 <cta>
-                    <cta_title>${title}</cta_title>
-                    <cta_message>${message}</cta_message>
-                    <cta_buttons>${buttonsHTML}</cta_buttons>
+                    <h1>${title}</h1>
+                    <span>${message}</span>
+                    <div class='buttons_container'>${buttonsHTML}</div>
                 </cta>
             `
         X.overlay.create(ctaHTML)
 
-        document.querySelector("cta > cta_buttons > input").focus()
-        buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
+        document.querySelector("cta > .buttons_container > input").focus()
+        buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
         return new Promise(resolve => {
             for (const i in buttons) {
                 buttonsInDOM[i].addEventListener('click', async event => {
@@ -545,18 +545,18 @@ X = {
 
         let ctaHTML = `
                 <cta>
-                    <cta_title>${title}</cta_title>
-                    <cta_form>${formHtml}</cta_form>
+                    <h1>${title}</h1>
+                    <form>${formHtml}</form>
                     <span class='error_message'></span>
-                    <cta_buttons><input type='button' value='Cancel'><input type='button' value='Submit'></cta_buttons>
+                    <div class='buttons_container'><input type='button' value='Cancel'><input type='button' value='Submit'></div>
                 </cta>
             `
         X.overlay.create(ctaHTML)
-        ctaFormInputsInDOM = document.querySelectorAll("cta > cta_form input");
-        buttonsInDOM = document.querySelectorAll("cta > cta_buttons > input");
+        ctaFormInputsInDOM = document.querySelectorAll("cta > form input");
+        buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
         console.log(ctaFormInputsInDOM);
         return new Promise(resolve => {
-            document.querySelector("cta > cta_buttons input[value='Submit']").addEventListener('click', async event => {
+            document.querySelector("cta > .buttons_container input[value='Submit']").addEventListener('click', async event => {
                 // Parse form html to obj
                 for (const input of ctaFormInputsInDOM) {
                     formItem = formObj[input.id]
@@ -576,7 +576,7 @@ X = {
                 console.log(formObj);
 
             })
-            document.querySelector("cta > cta_buttons input[value='Cancel']").addEventListener('click', async event => {
+            document.querySelector("cta > .buttons_container input[value='Cancel']").addEventListener('click', async event => {
 
                 X.overlay.remove()
                 resolve(false);
