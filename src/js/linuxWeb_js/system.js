@@ -463,7 +463,13 @@ USAGE
     },
 
     shutdown: () => page.changePage('./views/shutdown.html'),
-    logout: () => page.changePage('./views/X.html', "(async()=>{await retrieveMainJs(false);system.startup();})();"),
+    logout: async () => {
+        //Reload the scripts and then the page
+        for (const jsSrc of jsSources) {
+            await page.loadJs(jsSrc)
+        }
+        page.changePage('./views/X.html', "system.startup();")
+    },
     restart: () => page.changePage('./views/shutdown.html', "afterShutdown='restart'", false),
 
 }
