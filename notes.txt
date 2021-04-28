@@ -49,11 +49,11 @@ Detailed Log:
 
 2021-01-04
 + Redesigned the 'status_area_container' (& Added a Connected item)
-+ Changed the hover on top_bar elements (background color -> brightness())
++ Changed the hover on .topBar elements (background color -> brightness())
 + Change the 'app_menu_button' icon('O') into text('Activities')
 + Changed the background
 + Changed the logo
-+ Changed 'titlebar' -> 'top_bar'
++ Changed 'titlebar' -> '.topBar'
 + Made app title aligned to the center of the header
 * Found a bug on Firefox where the windows sometimes lose movability
 
@@ -99,7 +99,7 @@ Detailed Log:
 2021-01-30
 + Changed fonts
 + Updated alot of styles
-+ Changed settings, terminal, top_bar, context-menu, app_container styles
++ Changed settings, terminal, .topBar, context-menu, app_container styles
 + Limited the app width/height
 
 2021-02-1
@@ -114,8 +114,8 @@ DONE TODO: Make a terminal command handler in the system objects
 DONE    |--- Create layout : system.cli={i:'function',methods:{command:'function',command2:'function'...} } 
 DONE        |--- Create the interpreter
 DONE |--- INFO: system.cli.i(command,terminalProcess) parses the command into an object and calls the function(options,terminalProcess)
-DONE TODO: Make the top_bar height dynamic 
-DONE TODO: Add the transparent top_bar with only the right menu to the login screen 
+DONE TODO: Make the .topBar height dynamic 
+DONE TODO: Add the transparent .topBar with only the right menu to the login screen 
 DONE TODO: Create a CTA/message function in the X object.
 DONE TODO: Make the powerMenu a dropdown.
 DONE TODO: Make unfocused app windows more transparent
@@ -135,7 +135,7 @@ DONE TODO: Style the CTA
 DONE TODO: Fix logout().
 DONE TODO: Limit the window scaling to the screen size
 DONE TODO: Implement gulp into the project for performance and other reasons.
-DONE TODO: Add a notification panel with a calendar as in grub. (opened on when the top_bar time is clicked)
+DONE TODO: Add a notification panel with a calendar as in grub. (opened on when the .topBar time is clicked)
 DONE TODO: Allow input immediately for when the login screen appears 
 DONE TODO: Change the style color to most everything.
 DONE TODO: Make the status area a lighter color
@@ -189,13 +189,22 @@ DONE FIXME: Opening singe process apps does not refocus the app.
 DONE TODO: Disable the default browser context menu
 DONE TODO: Add an 'Add Reminder' button in the notification panel.
 DONE TODO: Add an 'Clear' button in the notification panel.
+TODO: Redesign a lot
+DONE Make a better color scheme
+\---- Make default global css classes for elements
+DONE* \---- Change element tags into div and apply classes to them
+DONE* \---- Update the css to work with classes
+
+TODO: Reworked the lockscreen system.
+
+TODO: Create a system api to better handle interfacing with the system and programs
+
 TODO: Make a settings cookie storage system.
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Bunch up together same app instances in the taskbar 
 TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
 TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-TODO: Create a system api to better handle interfacing with the system and programs
 TODO: Add terminal commands: rm
 TODO: Add Application menus and an easy way to create them
 TODO: Improve the Activities Screen
