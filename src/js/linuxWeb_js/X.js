@@ -540,7 +540,7 @@ X = {
             if (itemType != "number" && itemType != "string")
                 itemContent.type = "";
 
-            formHtml += `<item><span>${itemContent.display}</span><input id='${itemName}' type='${itemContent.type}' value='${itemContent.value}' ></item>`
+            formHtml += `<li><span>${itemContent.display}</span><input id='${itemName}' type='${itemContent.type}' value='${itemContent.value}' ></li>`
         }
 
         let ctaHTML = `
