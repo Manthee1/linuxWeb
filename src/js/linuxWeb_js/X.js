@@ -124,40 +124,40 @@ X = {
         },
         statusArea: {
             listenerType: "click",
-            toggleElement: document.querySelector("statusArea"),
+            toggleElement: document.querySelector("#statusAreaButton"),
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementQuery: "status_area_container",
+            elementQuery: "#statusAreaContainer",
             getHTML: function () {
-                return `<status_area_container>
-					<item>
+                return `<ul id='statusAreaContainer'>
+					<li>
 					<volume_icon></volume_icon>
 					<input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
-					</item>
-					<item>
+					</li>
+					<li>
 					<brightness_icon></brightness_icon>
 					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
-                    </item>
+                    </li>
                     <hr>
-                    <item><network_icon></network_icon><text>Connected</text></item>
+                    <li><network_icon></network_icon><span>Connected</span></li>
                     <hr>
-					<item onclick="X.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><text>Settings</text></item>
-					<item onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><text>Lock</text></item>
-                    <dropdown_item onclick='X.general.dropdown.toggle(this)'>
-                    <item><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></item>
+					<li onclick="X.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><span>Settings</span></li>
+					<li onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><span>Lock</span></li>
+                    <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
+                    <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
                     <dropdown>
-                        <item onclick='X.restart();'><span>Restart</span></item>
-                        <item onclick='X.shutdown();'><span>Power Off</span></item>
+                        <li onclick='X.restart();'><span>Restart</span></li>
+                        <li onclick='X.shutdown();'><span>Power Off</span></li>
                         <hr>
-                        <item onclick='X.logout();'><span>Log Out</span></item>
+                        <li onclick='X.logout();'><span>Log Out</span></li>
                     </dropdown>
-                    </dropdown_item>
+                    </div>
 
-        </status_area_container>`;
+        </ul>`;
             },
             closeCondition: function (event) {
-                return !elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !elementIsInEventPath(event, document.querySelector("#statusAreaContainer"))
             },
         },
 
@@ -169,22 +169,22 @@ X = {
             exitAnimationTime: 200, //ms
             elementQuery: "status_area_container",
             getHTML: () => `<status_area_container class='login_status_area_menu'>
-					<item>
+					<li>
 					    <volume_icon></volume_icon>
 					    <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
-					</item>
-					<item>
+					</li>
+					<li>
 					    <brightness_icon></brightness_icon>
 					    <input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
-                    </item>
+                    </li>
                     <hr>
                     <dropdown_item onclick='X.general.dropdown.toggle(this)'>
-                        <item><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></item>
+                        <li><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></li>
                     <dropdown>
-                        <item onclick='X.restart();'><span>Restart</span></item>
-                        <item onclick='X.shutdown();'><span>Power Off</span></item>
+                        <item onclick='X.restart();'><span>Restart</span></li>
+                        <item onclick='X.shutdown();'><span>Power Off</span></li>
                         </dropdown>
-                    </dropdown_item>
+                    </dropdown_li>
         </status_area_container>`,
             closeCondition: function (event) {
                 return !elementIsInEventPath(event, document.querySelector("status_area_container"))
@@ -710,8 +710,6 @@ X = {
                 }
             })
             X.openMenus = [];
-
-            // X.statusArea.volumeSliderDisplayToggle(true);
             systemMenuContainer.innerHTML = "";
         }
     },
