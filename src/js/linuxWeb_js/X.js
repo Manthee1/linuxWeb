@@ -163,31 +163,31 @@ X = {
 
         loginStatusArea: {
             listenerType: "click",
-            toggleElement: document.querySelector("lockscreen_statusArea"),
+            toggleElement: document.querySelector("#lockscreenStatusAreaButton"),
             enterAnimation: "bottomFadeIn",
             exitAnimation: "bottomFadeOut",
             exitAnimationTime: 200, //ms
-            elementQuery: "status_area_container",
-            getHTML: () => `<status_area_container class='login_status_area_menu'>
+            elementQuery: "#statusAreaContainer",
+            getHTML: () => `<div class='lockscreen' id='statusAreaContainer'>
 					<li>
 					    <volume_icon></volume_icon>
 					    <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
 					</li>
 					<li>
-					    <brightness_icon></brightness_icon>
-					    <input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
+                        <brightness_icon></brightness_icon>
+                        <input oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
                     </li>
                     <hr>
-                    <dropdown_item onclick='X.general.dropdown.toggle(this)'>
-                        <li><power_off_icon></power_off_icon><text>Power Off / Log Out</text><down_icon></down_icon></li>
-                    <dropdown>
-                        <item onclick='X.restart();'><span>Restart</span></li>
-                        <item onclick='X.shutdown();'><span>Power Off</span></li>
+                    <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
+                        <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
+                        <dropdown>
+                            <li onclick='X.restart();'><span>Restart</span></li>
+                            <li onclick='X.shutdown();'><span>Power Off</span></li>
                         </dropdown>
-                    </dropdown_li>
-        </status_area_container>`,
+                    </div>
+        </div>`,
             closeCondition: function (event) {
-                return !elementIsInEventPath(event, document.querySelector("status_area_container"))
+                return !elementIsInEventPath(event, document.querySelector("#statusAreaContainer"))
             },
         },
     },

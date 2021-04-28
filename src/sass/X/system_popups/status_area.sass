@@ -1,3 +1,4 @@
+
 #statusAreaContainer
     display: inline-block
     position: fixed
@@ -7,42 +8,6 @@
     background-color: var(--color-background-300)
     border-radius: 10px
     padding: 10px 0px
-
-    li
-        display: flex
-        margin: 5px 0px
-        width: auto
-        padding: 5px 20px
-        background-color: none
-        justify-content: center
-        align-content: center
-        color: var(--color-text-light)
-        font-size: 14px
-        text-align: left
-        border-radius: 0px
-        background-color: var(--color-background-300)
-
-        > *
-            flex: 1 1 auto
-            height: 20px
-            margin: auto
-
-        &:hover
-            filter: brightness(1.2)
-
-        *:first-child
-            flex: 0 1 auto
-            width: 16px
-            margin-right: 10px
-
-        *:last-child
-            text-overflow: ellipsis
-            flex: 1 1 auto
-
-        *
-            flex: 1 1 auto
-            height: 20px
-            margin: auto
 
     .dropdown_item
         display: flex
@@ -68,10 +33,41 @@
             > li
                 padding-left: 50px
                 margin: auto 0px
-                background-color: var(--color-background-400)
+                &:hover
+                    background: var(--color-accent-100)
+    li
+        display: flex
+        margin: 5px 0px
+        width: auto
+        padding: 5px 20px
+        background-color: transparent
+        justify-content: center
+        align-content: center
+        color: var(--color-text-light)
+        font-size: 14px
+        text-align: left
+        border-radius: 0px
 
-        & > li:hover
-            background-color: var(--color-background-300)
+        &:hover
+            background: var(--color-accent-100)
+        > *
+            flex: 1 1 auto
+            height: 20px
+            margin: auto
+
+        *:first-child
+            flex: 0 1 auto
+            width: 16px
+            margin-right: 10px
+
+        *:last-child
+            text-overflow: ellipsis
+            flex: 1 1 auto
+
+        *
+            flex: 1 1 auto
+            height: 20px
+            margin: auto
 
     input[type="range"]
         -webkit-appearance: none
