@@ -59,7 +59,7 @@ X = {
                     if (x[1].icon != undefined) appIcon = `<img src='${x[1].icon}'>`;
                     else if (x[1].name != undefined) appIcon = `<span>${x[1].name[0]}</span>`;
                     else appIcon = x[0][0];
-                    return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');">${appIcon}</app>`
+                    return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');" --data-tooltip="${x[1].name}" >${appIcon}</app>`
                 }).join('')}
 			</div>
 				</div>

@@ -97,6 +97,38 @@ button
         &:active
             background-color: var(--color-background-600)
 
+[--data-tooltip]
+    &:hover::after
+        z-index: 10
+        position: absolute
+        content: attr(--data-tooltip)
+        padding: 0.1em 0.3em
+        background: var(--color-accent-150)
+        border-radius: 0.3em
+        transform: translate(100%, 0%)
+        right: -0.5em
+        align-self: center
+        justify-self: center
+        height: min-content
+        animation: reverse fade ease-in-out 0.2s
+    &.tooltip-left::after
+        left: unset
+        right: -0.5em
+        transform: translate(100%, 0%)
+    &.tooltip-right::after
+        right: unset
+        left: -0.5em
+        transform: translate(-100%, 0%)
+    &.tooltip-top::after
+        bottom: unset
+        margin-top: -3em
+        transform: translate(0%, -100%)
+    &.tooltip-bottom::after
+        top: unset
+        margin-top: 3em
+
+        // bottom: -0.5em
+        transform: translate(0%, 100%)
 @keyframes hideAll
     from
         opacity: 0
