@@ -46,6 +46,9 @@
         width: auto
         margin: auto
         display: flex
+        flex-flow: column nowrap
+        justify-content: center
+        align-content: center
         top: 50%
         transform: translate(0, -50%)
         border: 2px solid var(--color-background-200)
@@ -53,12 +56,13 @@
         border-radius: 0px 10px 10px 0px
         background: var(--color-accent-100)
         padding: 5px 0px
-        flex-flow: column wrap
-
+        >*
+            height: 3em
+            width: 3em
         > app
             text-overflow: ellipsis
             text-align: center
-            display: inline-block
+            display: flex
             border-radius: 10px
             flex: 1 1 auto
             margin: 5px 5px
@@ -67,13 +71,12 @@
             &:hover
                 background: var(--color-background-300)
             > img
-                width: 3em
-                height: 3em
+                font-size: 1em
+                width: 100%
+                height: 100%
                 filter: brightness(0.5)
             >span
                 color: var(--color-text-medium)
                 font-size: 3em
                 line-height: 0.7em
                 margin: auto
-                // line-height: 0em
-                // vertical-align: middle
