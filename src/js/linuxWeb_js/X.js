@@ -669,7 +669,7 @@ X = {
                                     X.menus.openMenuClicked == false && (X.menus.openMenuClicked = true);
                                 }
                             })
-                            menuUIData.changeBorder && (menuUIData.toggleElement.style.borderBottom = "solid gray 2px");
+                            menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
                             X.openMenus.push(xObjName);
                             typeof menuUIData.onCreate == 'function' && menuUIData.onCreate(event);
                         }, 1);
@@ -694,7 +694,7 @@ X = {
     clearOpenMenus: function (forcefully = false) {
         if (X.openMenus.length != 0 || forcefully) {
             X.openMenus.forEach(openMenu => {
-                X.menus[openMenu].toggleElement.style.borderBottom = "";
+                X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
 
                 //If there is a exitAnimation then play it and remove the element
                 if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
