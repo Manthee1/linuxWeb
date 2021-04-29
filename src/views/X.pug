@@ -29,48 +29,11 @@ head
   script(src='./js/linuxWeb_js/X.js')
 
 body
-  div#loginRoot
-    div#login_background 
-    div#login_time
-      time
-      date
-      p Click or Press a key to unlock
-    form(onsubmit='event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));')
-      div.user_wrapper
-        div.user_icon_wrapper
-          user_icon
-        div#loginUserName root
-      input(type='password' name='password' placeholder='Password')
-    div.topBar
-      div.left_wrapper
-      div.middle_wrapper
-      div.right_wrapper
-        div#lockscreenStatusAreaButton.statusAreaButton
-          network_icon
-          volume_icon
-          down_icon
+  
   div#linuxRoot
-    // Desktop Area
-    div#main_background
-    div#desktop
-    // Title bar
-    div.topBar
-      div.left_wrapper
-        div#activitiesMenuButton
-          | Activities
-      div.middle_wrapper
-        span#topBarDateTime
-      div.right_wrapper
-        div#statusAreaButton.statusAreaButton
-          network_icon
-          volume_icon
-          down_icon
-    // Popup notifications
-    div#popupNotificationsContainer
-    // App List Bar
-    div#appList
-    // Apps Container
-    div#appsContainer
+    div#topBar
+    div#mainContent
+
+  div#overlayContainer
     div#systemMenuContainer
     div#systemMenuAnimationContainer
-  div#overlayContainer

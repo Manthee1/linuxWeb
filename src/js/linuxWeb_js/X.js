@@ -620,9 +620,9 @@ X = {
         popupNotificationContainer = document.querySelector("#linuxRoot> #popupNotificationsContainer");
         appsContainer = document.querySelector("#linuxRoot> #appsContainer");
         appList = document.querySelector("#linuxRoot> #appList");
-        systemMenuContainer = document.querySelector("#systemMenuContainer");
-        systemExitAnimationMenuContainer = document.querySelector("#systemMenuAnimationContainer");
         overlayContainer = document.querySelector("body > #overlayContainer");
+        systemMenuContainer = document.querySelector("#overlayContainer > #systemMenuContainer");
+        systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemMenuAnimationContainer");
 
         Object.entries(X.services).forEach(xObj => {
             let [xObjName, xObjValue] = [xObj[0], xObj[1]];
