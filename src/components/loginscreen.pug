@@ -1,0 +1,7 @@
+div#login_background 
+form(onsubmit='event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));')
+    div.user_wrapper
+    div.user_icon_wrapper
+        user_icon
+    div#loginUserName root
+    input(type='password' name='password' placeholder='Password')
