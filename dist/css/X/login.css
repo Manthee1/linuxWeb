@@ -1,4 +1,4 @@
-.login {
+#loginRoot {
   display: flex;
   opacity: 1;
   margin: auto;
@@ -10,9 +10,9 @@
   top: 0px;
   left: 0px;
   transition: opacity 0.5s ease-in-out; }
-  .login * {
+  #loginRoot * {
     opacity: 1; }
-  .login > .login_background {
+  #loginRoot > #login_background {
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -21,8 +21,8 @@
     z-index: -1;
     top: 0px;
     left: 0px;
-    background: var(--main-color);
-    background: radial-gradient(circle, #18171f 0%, var(--background-color) 100%);
+    background: var(--color-background-300);
+    background: radial-gradient(circle, #18171f 0%, var(--color-background-600) 100%);
     /* background-image: url("../../img/LoginBG.jpg"); */
     background-repeat: no-repeat;
     background-position-x: center;
@@ -30,7 +30,7 @@
     background-size: cover;
     /* filter: contrast(0.6) blur(1vh); */
     /* transform: scale(1.2); */ }
-  .login > .login_time {
+  #loginRoot > #login_time {
     /* font-size: 80px; */
     position: absolute;
     /* background-color: black; */
@@ -42,18 +42,18 @@
     /* padding: 20px; */
     /* border: 10px solid white; */
     transition: all 0.5s ease-in-out; }
-    .login > .login_time > * {
+    #loginRoot > #login_time > * {
       display: block;
       margin-top: 10px; }
-    .login > .login_time > date {
+    #loginRoot > #login_time > date {
       font-size: 25px; }
-    .login > .login_time > p {
+    #loginRoot > #login_time > p {
       position: relative;
       top: 50px;
       opacity: 0;
       font-size: 15px;
       transition: opacity 0.2s ease-in-out; }
-  .login > form {
+  #loginRoot > form {
     bottom: 0px;
     display: inline-block;
     z-index: 1;
@@ -63,12 +63,12 @@
     padding-bottom: 120px;
     color: gray;
     transition: all 0.5s ease-in-out; }
-    .login > form > .login_user {
+    #loginRoot > form > .user_wrapper {
       display: block;
       margin-bottom: 2rem; }
-      .login > form > .login_user > * {
+      #loginRoot > form > .user_wrapper > * {
         margin: auto; }
-      .login > form > .login_user > user_icon_container {
+      #loginRoot > form > .user_wrapper > .user_icon_wrapper {
         display: flex;
         flex-flow: column nowrap;
         border: 2px solid gray;
@@ -79,19 +79,19 @@
         border-radius: 50%;
         padding: 15px;
         margin-bottom: 0.4rem; }
-        .login > form > .login_user > user_icon_container > user_icon {
+        #loginRoot > form > .user_wrapper > .user_icon_wrapper > user_icon {
           background-size: 100%;
           height: 50px;
           width: 50px;
           margin: auto;
           background-position: center;
           background-position-y: 0%; }
-      .login > form > .login_user > user_name {
+      #loginRoot > form > .user_wrapper > #loginUserName {
         font-size: 25px;
         margin-top: 2rem;
         color: gray;
         font-weight: 100; }
-    .login > form > input {
+    #loginRoot > form > input {
       display: inline-block;
       font-size: 20px;
       padding: 8px;
@@ -106,9 +106,9 @@
       border: 2px solid #000;
       border: none;
       transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out; }
-      .login > form > input:focus {
+      #loginRoot > form > input:focus {
         border: 1px solid transparent; }
-      .login > form > input[type="submit"] {
+      #loginRoot > form > input[type="submit"] {
         position: relative;
         display: inline-block;
         font-family: monospace;
@@ -121,23 +121,20 @@
         height: 56px;
         color: whitesmoke;
         background-color: #556080; }
-  .login > .login_user, .login > input {
+  #loginRoot > .user_wrapper, #loginRoot > input {
     position: relative;
     bottom: 100px; }
-  .login > top_bar {
+  #loginRoot > .topBar {
     background-color: transparent;
     border: none; }
 
-.login_status_area_menu {
+#statusAreaContainer.lockscreen {
   z-index: 1;
-  background-color: var(--background-color);
+  background-color: var(--color-background-600);
   visibility: visible;
-  border: var(--main-color-lighter) 2px solid; }
-  .login_status_area_menu item {
-    background-color: var(--background-color); }
-  .login_status_area_menu dropdown {
-    background-color: var(--background-color);
-    filter: brightness(0.8); }
+  border: var(--color-accent-100) 2px solid; }
+  #statusAreaContainer.lockscreen * dropdown {
+    background-color: var(--color-accent-150); }
 
 input::-moz-focus-inner {
   border: 0;

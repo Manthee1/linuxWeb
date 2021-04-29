@@ -1,4 +1,4 @@
-app_body > terminal_main, app_body > terminal_buffer {
+.app_body > terminal_main, terminal_buffer {
   display: block;
   font-size: 15px;
   font-family: var(--mono-font);
@@ -9,14 +9,14 @@ app_body > terminal_main, app_body > terminal_buffer {
   cursor: default;
   white-space: break-spaces; }
 
-app_body > terminal_main *,
+.app_body > terminal_main *,
 terminal_input,
 terminal_input * {
   font-family: var(--mono-font);
   font-size: 15px;
   font-weight: 400; }
 
-app_body > terminal_main > command {
+.app_body > terminal_main > command {
   display: block;
   margin-left: 2px; }
 

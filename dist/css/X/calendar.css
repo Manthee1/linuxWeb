@@ -1,23 +1,23 @@
-calendar {
+.calendar {
   display: inline-block;
   max-width: min-content;
   padding: 1.5em;
   border-radius: 8px;
-  background-color: var(--main-color-lighter);
+  background-color: var(--color-background-200);
   --size: 30px;
   padding: 10px; }
-  calendar > calendar_content {
+  .calendar > .calendar_content {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-content: center; }
-    calendar > calendar_content > week_days {
+    .calendar > .calendar_content > week_days {
       display: flex;
       flex-flow: row nowrap;
       justify-content: center;
       align-content: center;
       margin-top: 1.25em; }
-      calendar > calendar_content > week_days > * {
+      .calendar > .calendar_content > week_days > * {
         font-size: 0.7em;
         font-weight: 500;
         letter-spacing: 0.1em;
@@ -25,21 +25,21 @@ calendar {
         width: var(--size);
         text-align: center;
         flex: 1 1 0px; }
-    calendar > calendar_content > dates {
+    .calendar > .calendar_content > dates {
       padding-top: 0.2rem; }
-      calendar > calendar_content > dates > week {
+      .calendar > .calendar_content > dates > week {
         display: flex;
         flex-flow: row nowrap;
         justify-content: center;
         align-content: center;
         flex: 1 1 0px; }
-        calendar > calendar_content > dates > week > day {
+        .calendar > .calendar_content > dates > week > day {
           position: relative;
           background-color: transparent;
           text-align: center;
           flex: 1 1 0px;
           font-size: 80%; }
-          calendar > calendar_content > dates > week > day > span {
+          .calendar > .calendar_content > dates > week > day > span {
             display: inline-block;
             border: 0;
             border-radius: 50%;
@@ -47,12 +47,12 @@ calendar {
             width: var(--size);
             line-height: var(--size);
             vertical-align: middle;
-            background-color: var(--main-color-lighter); }
-            calendar > calendar_content > dates > week > day > span:hover {
+            background-color: var(--color-background-300-lighter); }
+            .calendar > .calendar_content > dates > week > day > span:hover {
               filter: brightness(1.15); }
-            calendar > calendar_content > dates > week > day > span:not(.current_date):active {
-              background-color: var(--main-color-darker); }
-          calendar > calendar_content > dates > week > day > .not_current_months_date {
+            .calendar > .calendar_content > dates > week > day > span:not(.current_date):active {
+              background-color: var(--color-background-300-darker); }
+          .calendar > .calendar_content > dates > week > day > .not_current_months_date {
             color: var(--light-gray-color); }
-          calendar > calendar_content > dates > week > day > .current_date {
+          .calendar > .calendar_content > dates > week > day > .current_date {
             background-color: var(--select-color); }

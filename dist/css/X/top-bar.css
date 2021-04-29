@@ -1,32 +1,32 @@
 /** @format */
 
-top_bar {
+.topBar {
 	position: fixed;
 	display: flex;
 	flex-direction: row;
 	top: 0px;
 	left: 0px;
 	width: 100vw;
-	height: calc(var(--top_bar-height) - 2px);
-	background-color: var(--main-color);
-	border-bottom: var(--main-color) 2px solid;
+	height: calc(var(--topBar-height) - 2px);
+	background-color: var(--color-background-300);
+	border-bottom: var(--color-background-300) 2px solid;
 }
 
-top_bar > * {
+.topBar > * {
 	width: 33%;
-	height: calc(var(--top_bar-height) - 2px);
-	line-height: calc(var(--top_bar-height) - 2px);
+	height: calc(var(--topBar-height) - 2px);
+	line-height: calc(var(--topBar-height) - 2px);
 	text-align: center;
 }
 
-top_bar > left {
+.topBar > .left_wrapper {
 	display: flex;
 	flex: 1 1 auto;
 	text-align: left;
 	justify-content: left;
 }
 
-top_bar > left > activities_menu_button {
+.topBar > .left_wrapper > #activitiesMenuButton {
 	display: flex;
 	transition: filter ease-in-out 0.05s;
 	height: 100%;
@@ -41,20 +41,20 @@ dateTime {
 }
 
 /* Right styles */
-top_bar > right {
+.topBar > .right_wrapper {
 	display: inline-block;
 	position: relative;
 	flex: 1 1 auto;
 	text-align: right;
 }
 
-top_bar > right > * {
+.topBar > .right_wrapper > * {
 	padding: 0px 4px;
 	background-color: transparent;
 	transition: background-color ease-in-out 0.05s;
 }
 
-.statusArea {
+.statusAreaButton {
 	position: relative;
 	display: inline-block;
 	width: auto;
@@ -62,7 +62,7 @@ top_bar > right > * {
 	height: 100%;
 	cursor: default;
 }
-.statusArea > * {
+.statusAreaButton > * {
 	position: relative;
 	display: inline-block;
 	width: 20px;
@@ -70,18 +70,18 @@ top_bar > right > * {
 	opacity: 0.8;
 	filter: brightness(0.8);
 }
-.statusArea:hover > * {
+.statusAreaButton:hover > * {
 	filter: brightness(1);
 }
-.statusArea > * {
+.statusAreaButton > * {
 	margin: 0px 0px 0px 5px;
 	background-size: 90%;
 }
-.statusArea > down_icon {
+.statusAreaButton > down_icon {
 	display: inline-block;
 	width: 15px;
 }
 
-top_bar > * > *:hover {
+.topBar > * > *:hover {
 	filter: brightness(1.4);
 }

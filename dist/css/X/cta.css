@@ -1,5 +1,5 @@
-* overlay > cta {
-  background-color: var(--main-color);
+.overlay > cta {
+  background-color: var(--color-background-300);
   display: flex;
   flex-flow: column nowrap;
   padding: 0px;
@@ -9,38 +9,36 @@
   padding-top: 10px;
   overflow: hidden;
   color: var(--light); }
-  * overlay > cta > * {
+  .overlay > cta > * {
     margin: 5px 30px;
     display: flex;
     width: 100%; }
-  * overlay > cta > cta_title {
-    font-size: 35px; }
-  * overlay > cta > cta_form {
+  .overlay > cta > form {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-content: center; }
-    * overlay > cta > cta_form > item {
+    .overlay > cta > form > li {
       display: flex;
       flex-flow: row nowrap;
       padding: 0.2em 0em;
       padding-right: 3em; }
-      * overlay > cta > cta_form > item > input {
-        color: var(--light-color);
+      .overlay > cta > form > li > input {
+        color: var(--color-text-light);
         padding: 0.3em 0.5em;
         margin-left: auto;
-        background-color: var(--background-color);
+        background-color: var(--color-background-600);
         border: none;
-        border-bottom: 2px solid var(--main-color-lighter); }
-  * overlay > cta > .error_message {
+        border-bottom: 2px solid var(--color-background-200); }
+  .overlay > cta > .error_message {
     display: inline-block;
-    color: var(--light-red-color);
+    color: var(--color-danger-light);
     text-align: center;
     margin: auto; }
-  * overlay > cta > cta_buttons {
+  .overlay > cta > .buttons_container {
     margin: 0px;
     margin-top: 30px; }
-    * overlay > cta > cta_buttons > input {
+    .overlay > cta > .buttons_container > input {
       z-index: 1202;
       position: relative;
       flex: 1 1 auto;
@@ -48,7 +46,7 @@
       height: 50px;
       border: none;
       cursor: pointer;
-      border-top: 4px solid var(--main-color-lighter);
-      background-color: var(--main-color); }
-      * overlay > cta > cta_buttons > input:hover {
+      border-top: 4px solid var(--color-background-200);
+      background-color: var(--color-background-300); }
+      .overlay > cta > .buttons_container > input:hover {
         filter: brightness(1.2); }

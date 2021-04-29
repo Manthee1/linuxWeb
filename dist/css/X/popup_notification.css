@@ -1,21 +1,21 @@
-popup_notifications_container {
+#popupNotificationsContainer {
   position: relative;
-  top: var(--top_bar-height);
+  top: var(--topBar-height);
   width: 100vw; }
-  popup_notifications_container > div {
+  #popupNotificationsContainer > div {
     z-index: 5;
     display: block;
     width: 15rem;
-    color: var(--light-color);
+    color: var(--color-text-light);
     margin: 10px auto;
     padding: 10px;
-    background: var(--main-color);
+    background: var(--color-background-300);
     opacity: 0.7;
     border-radius: 10px;
     cursor: pointer; }
-    popup_notifications_container > div:hover {
+    #popupNotificationsContainer > div:hover {
       opacity: 1; }
-    popup_notifications_container > div > * {
-      display: block; }
-    popup_notifications_container > div > title {
-      font-size: 120%; }
+      #popupNotificationsContainer > div:hover > * {
+        display: block; }
+      #popupNotificationsContainer > div:hover > title {
+        font-size: 120%; }

@@ -1,4 +1,4 @@
-context_menu {
+#context_menu, .context_sub_menu {
   position: absolute;
   display: block;
   height: auto;
@@ -8,39 +8,34 @@ context_menu {
   padding: 5px 0px;
   border-radius: 10px;
   box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.226);
-  background-color: var(--main-color); }
-
-context_menu > context_item {
-  position: relative;
-  overflow: visible;
-  display: block;
-  width: auto;
-  font-size: 15px;
-  padding: 8px 10px;
-  color: var(--light-color);
-  margin: 2px 0px;
-  background-color: var(--main-color); }
-
-context_menu > context_item:hover {
-  filter: brightness(1.15); }
-
-context_menu > context_item > context_sub_menu {
-  display: none;
-  position: absolute;
-  top: 0px;
-  left: 100%;
-  background: var(--main-color);
-  padding: 2px 10px;
-  border: 1px solid var(--secondary-color);
-  width: 100%;
-  box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.5); }
-
-context_menu > context_item > context_sub_menu:hover {
-  filter: brightness(1.2); }
-
-.context_sub_menu::after {
-  position: absolute;
-  content: ">";
-  font-family: consolas;
-  margin: 0 10px 0px 0px;
-  right: 0px; }
+  background-color: var(--color-background-300); }
+  #context_menu span, .context_sub_menu span {
+    position: relative;
+    overflow: visible;
+    display: block;
+    width: auto;
+    font-size: 15px;
+    padding: 8px 10px;
+    color: var(--color-text-light);
+    margin: 2px 0px;
+    background-color: var(--color-background-300); }
+    #context_menu span:hover, .context_sub_menu span:hover {
+      filter: brightness(1.15); }
+  #context_menu .context_sub_menu, .context_sub_menu .context_sub_menu {
+    display: none;
+    position: absolute;
+    margin-top: -40px;
+    left: calc(100% + 0px);
+    box-shadow: 2px 3px 10px 2px rgba(0, 0, 0, 0.5); }
+  #context_menu .context_sub_menu_header::after, .context_sub_menu .context_sub_menu_header::after {
+    position: absolute;
+    content: "|";
+    color: transparent;
+    font-family: var(--sans-font);
+    margin: 0 10px 0px 0px;
+    border-right: 2px solid var(--color-background-500);
+    right: 0px; }
+  #context_menu .context_sub_menu_header:hover + .context_sub_menu, .context_sub_menu .context_sub_menu_header:hover + .context_sub_menu {
+    display: block; }
+  #context_menu .context_sub_menu:hover, .context_sub_menu .context_sub_menu:hover {
+    display: block; }
