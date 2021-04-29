@@ -615,14 +615,21 @@ X = {
     initialize: function () {
 
         linux = document.querySelector("#linuxRoot");
-        desktop = document.querySelector("#linuxRoot> #desktop");
         topBar = document.querySelector("#linuxRoot> #topBar");
+        //Main Linux interface Content
+        mainContent = document.querySelector("#mainContent")
+
+        systemMenuContainer = document.querySelector("#overlayContainer > #systemMenuContainer");
+        systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemMenuAnimationContainer");
+
+        overlayContainer = document.querySelector("body > #overlayContainer");
+
+        desktop = document.querySelector("#linuxRoot> #desktop");
         popupNotificationContainer = document.querySelector("#linuxRoot> #popupNotificationsContainer");
         appsContainer = document.querySelector("#linuxRoot> #appsContainer");
         appList = document.querySelector("#linuxRoot> #appList");
-        overlayContainer = document.querySelector("body > #overlayContainer");
-        systemMenuContainer = document.querySelector("#overlayContainer > #systemMenuContainer");
-        systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemMenuAnimationContainer");
+
+        X.screen.set("loginScreen")
 
         Object.entries(X.services).forEach(xObj => {
             let [xObjName, xObjValue] = [xObj[0], xObj[1]];
