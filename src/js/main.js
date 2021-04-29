@@ -24,6 +24,18 @@ page = {
 			}
 		});
 	},
+	getHtml: (src) => {
+		let html;
+		return new Promise(async resolve => {
+			try {
+				html = await (await fetch(src)).text()
+			} catch (e) {
+				console.error(e, src);
+				eval(html)
+			}
+			resolve(await html)
+		});
+	},
 
 	// Why am i commenting on function that are very easy to understand. IDK. 
 	// Probably to waste your time reading this :)
