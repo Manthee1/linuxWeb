@@ -12,6 +12,7 @@ const src = "./src";
 const dir = {
     sass: src + "/sass/**/*.sass",
     views: src + "/views/**/*.pug",
+    components: src + "/components/**/*.pug",
     js: src + "/js/**/*.js",
 }
 
@@ -19,8 +20,12 @@ function compileSass(cb) {
     return gulp.src(dir.sass).pipe(sass()).pipe(inline_image()).pipe(gulp.dest(dist + '/css')).pipe(browserSync.stream())
 }
 
-function compilePug(cb) {
+function compileViews(cb) {
     return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/views')).pipe(browserSync.stream());
+}
+
+function compileComponents(cb) {
+    return gulp.src(dir.components).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/components')).pipe(browserSync.stream());
 }
 
 function compileJs(cb) {
@@ -34,11 +39,13 @@ function watch() {
         }
     })
     gulp.watch(dir.sass, compileSass)
-    gulp.watch(dir.views, compilePug)
+    gulp.watch(dir.views, compileViews)
+    gulp.watch(dir.components, compileComponents)
     gulp.watch(dir.js, compileJs)
 }
 
 exports.sass = compileSass
-exports.pug = compilePug
+exports.views = compileViews
+exports.components = compileComponents
 exports.js = compileJs
 exports.watch = watch
