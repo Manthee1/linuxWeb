@@ -142,6 +142,11 @@
 		"./js/linuxWeb_js/processes.js",
 		"./js/linuxWeb_js/fileSystem.js",
 	];
+	componentSources = new Map([
+		["loginScreen", "./components/loginscreen.html"],
+		["lockScreen", "./components/lockscreen.html"],
+		["desktop", "./components/desktop.html"],
+	]);
 
 	(async (x = true) => {
 		return new Promise(resolve => {
@@ -156,14 +161,32 @@
 		})
 	})();
 
+	(async (x = 1) => {
+		return new Promise(resolve => {
+			(async () => {
+				for (const item of componentSources[Symbol.iterator]()) {
+					x && addMessage(`Started retrieving ${item[1]} ...`);
+
+					components[item[0]] = {
+						src: item[1],
+						html: await page.getHtml(item[1])
+					}
+					x && addMessage(`Retrieved ${item[1]} and seved it to components.${item[0]} ...`);
+				}
+				resolve();
+			})()
+		})
+	})();
+
+
 	// Loop thorough the messages and display one, wait, display another, wait...
 	// let retrieveJs = page.loadAllJsFromHtml()
-	for (const text of bootText) {
-		addMessage(text);
-		await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (bootText.length * 2))) || Math.random() * (timeMax / (bootText.length * 2)));
-		//     /\ Random delay for each boot message
-		document.querySelector("message_info").lastElementChild.scrollIntoView()
-	}
+	// for (const text of bootText) {
+	// 	addMessage(text);
+	// 	await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (bootText.length * 2))) || Math.random() * (timeMax / (bootText.length * 2)));
+	// 	//     /\ Random delay for each boot message
+	// 	document.querySelector("message_info").lastElementChild.scrollIntoView()
+	// }
 	// await retrieveJs
 	await delay(1000);
 	page.changePage("./views/X.html", 'system.startup()', true);

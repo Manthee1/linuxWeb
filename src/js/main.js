@@ -29,6 +29,7 @@ page = {
 		return new Promise(async resolve => {
 			try {
 				html = await (await fetch(src)).text()
+				console.info(src + " Retrieved")
 			} catch (e) {
 				console.error(e, src);
 				eval(html)
@@ -66,7 +67,7 @@ page = {
 		});
 	}
 }
-
+components = {}
 //No one actually knows what this one does. Very mysterious this one.
 //Well hopefully it doesn't matter
 //Oh btw. It's initiated with 'await' - remember that
