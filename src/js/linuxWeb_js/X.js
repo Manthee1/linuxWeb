@@ -611,6 +611,49 @@ X = {
         if (await restartcta) system.restart()
         clearTimeout(restartTimeout);
     },
+
+
+    topBar: {
+
+        hide: function () {
+            topBar.style.display = "none"
+        },
+
+        show: function () {
+            topBar.style.display = ""
+        },
+
+        showWrappers: function (left = true, middle = true, right = true) {
+            topBar.querySelector(".left_wrapper").style.visibility = (!left && "hidden") || ""
+            topBar.querySelector(".middle_wrapper").style.visibility = (!middle && "hidden") || ""
+            topBar.querySelector(".right_wrapper").style.visibility = (!right && "hidden") || ""
+        },
+    },
+
+
+    screen: {
+
+        set: function (screenName) {
+            if (screenName == "loginScreen") {
+                X.topBar.showWrappers(0, 1, 1);
+                X.status.screen = "loginScreen";
+                return;
+            }
+
+            if (screenName == "lockScreen") {
+                X.topBar.showWrappers(0, 0, 1);
+                X.status.screen = "lockScreen";
+                return;
+            }
+
+            if (screenName == "desktop") {
+                X.topBar.showWrappers(1, 1, 1);
+                X.status.screen = "desktop";
+                return;
+            }
+        }
+    },
+
     //initializes the X object 
     initialize: function () {
 
