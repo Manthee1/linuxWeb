@@ -616,7 +616,7 @@ X = {
 
         linux = document.querySelector("#linuxRoot");
         desktop = document.querySelector("#linuxRoot> #desktop");
-        topBar = document.querySelector("#linuxRoot> .topBar");
+        topBar = document.querySelector("#linuxRoot> #topBar");
         popupNotificationContainer = document.querySelector("#linuxRoot> #popupNotificationsContainer");
         appsContainer = document.querySelector("#linuxRoot> #appsContainer");
         appList = document.querySelector("#linuxRoot> #appList");

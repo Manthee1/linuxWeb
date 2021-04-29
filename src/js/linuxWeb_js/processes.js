@@ -480,7 +480,7 @@ processes = {
             this.createWindowSizeProjection(process, 'right-half')
         else
             this.hideWindowFillProjection(process)
-        //Caps the apps top position to the .topBar's height.
+        //Caps the apps top position to the #topBar's height.
         // Very understandable I think.
         y = y < topBar.offsetHeight ? topBar.offsetHeight : y; // Cap the position to the topBar height
 
