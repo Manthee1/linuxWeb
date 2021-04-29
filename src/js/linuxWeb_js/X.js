@@ -1,6 +1,10 @@
 X = {
     openMenus: [],
+    status: {
 
+        screen: "lockScreen"
+
+    },
     menus: {
         desktopContextMenu: {
             //Menu options
@@ -91,18 +95,19 @@ X = {
                 }
             },
             getHTML: function () {
+                if (X.status.screen == "desktop") {
 
-                reminderForm = {
-                    message: { display: "Message", value: "", type: 'string', required: true },
-                    time: { display: "Remind At", value: 0, type: 'number', required: true },
-                }
+                    reminderForm = {
+                        message: { display: "Message", value: "", type: 'string', required: true },
+                        time: { display: "Remind At", value: 0, type: 'number', required: true },
+                    }
 
-                let onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
+                    let onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
                 command = "remind " + reminder.message.value + " -t " + reminder.time.value;
                 system.cli.i(command, true)})()`
-                console.log(onclick);
+                    console.log(onclick);
 
-                return `<div id='notificationPanelContainer'>
+                    return `<div id='notificationPanelContainer'>
                     <div class='notifications_container'>
                         <div class='notification_wrapper'>${this.parseNotificationsToHTML()}</div>
                             <div class='notification_footer'>
@@ -117,6 +122,16 @@ X = {
                             <button class='button type-a' onclick='${onclick}'>Add Reminder</button>
                         </calendar_container>
                     </div>`;
+                }
+                if (X.status.screen == "loginScreen") {
+                    return `<div id='notificationPanelContainer'>
+                        <calendar_container>
+                            <div class='calendar_wrapper'>
+                                ${X.calendar.getHTML()}
+                            </div>
+                        </calendar_container>
+                    </div>`;
+                }
             },
             closeCondition: function (event) {
                 return !elementIsInEventPath(event, document.querySelector("#notificationPanelContainer")) || (tagIsInEventPath(event, "NOTIFICATION") && event.target.tagName != "X_ICON");
@@ -130,20 +145,66 @@ X = {
             exitAnimationTime: 200, //ms
             elementQuery: "#statusAreaContainer",
             getHTML: function () {
-                return `<ul id='statusAreaContainer'>
-					<li>
-					<volume_icon></volume_icon>
-					<input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
-					</li>
-					<li>
-					<brightness_icon></brightness_icon>
-					<input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
+
+                if (X.status.screen == "loginScreen") {
+                    return `<div id='statusAreaContainer'>
+                        <li>
+                            <volume_icon></volume_icon>
+                            <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
+                        </li>
+                        <li>
+                            <brightness_icon></brightness_icon>
+                            <input oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
+                        </li>
+                        <hr>
+                        <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
+                            <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
+                            <dropdown>
+                                <li onclick='X.restart();'><span>Restart</span></li>
+                                <li onclick='X.shutdown();'><span>Power Off</span></li>
+                            </dropdown>
+                        </div>
+                    </div>`
+                }
+
+                if (X.status.screen == "lockScreen") {
+                    return `<div class='lockscreen' id='statusAreaContainer'>
+                    <li>
+                        <volume_icon></volume_icon>
+                        <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
+                    </li>
+                    <li>
+                        <brightness_icon></brightness_icon>
+                        <input oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
+                    </li>
+                    <hr>
+                    <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
+                        <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
+                        <dropdown>
+                            <li onclick='X.logoff();'><span>Log Off</span></li>
+                            <hr>
+                            <li onclick='X.restart();'><span>Restart</span></li>
+                            <li onclick='X.shutdown();'><span>Power Off</span></li>
+                        </dropdown>
+                    </div>
+                        </div>`
+                }
+
+                if (X.status.screen == "desktop") {
+                    return `<ul id='statusAreaContainer'>
+                    <li>
+                    <volume_icon></volume_icon>
+                    <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
+                    </li>
+                    <li>
+                    <brightness_icon></brightness_icon>
+                    <input  oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="175" value="${system.global.brightness}" step="1" type="range">
                     </li>
                     <hr>
                     <li><network_icon></network_icon><span>Connected</span></li>
                     <hr>
-					<li onclick="X.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><span>Settings</span></li>
-					<li onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><span>Lock</span></li>
+                    <li onclick="X.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><span>Settings</span></li>
+                    <li onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><span>Lock</span></li>
                     <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
                     <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
                     <dropdown>
@@ -153,39 +214,10 @@ X = {
                         <li onclick='X.logout();'><span>Log Out</span></li>
                     </dropdown>
                     </div>
+                    </ul>`;
+                }
 
-        </ul>`;
             },
-            closeCondition: function (event) {
-                return !elementIsInEventPath(event, document.querySelector("#statusAreaContainer"))
-            },
-        },
-
-        loginStatusArea: {
-            listenerType: "click",
-            toggleElement: document.querySelector("#lockscreenStatusAreaButton"),
-            enterAnimation: "bottomFadeIn",
-            exitAnimation: "bottomFadeOut",
-            exitAnimationTime: 200, //ms
-            elementQuery: "#statusAreaContainer",
-            getHTML: () => `<div class='lockscreen' id='statusAreaContainer'>
-					<li>
-					    <volume_icon></volume_icon>
-					    <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
-					</li>
-					<li>
-                        <brightness_icon></brightness_icon>
-                        <input oninput='system.changeBrightness(this.value)' id='brightness_slider' min="25" max="100" value="${system.global.brightness}" step="1" type="range">
-                    </li>
-                    <hr>
-                    <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
-                        <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
-                        <dropdown>
-                            <li onclick='X.restart();'><span>Restart</span></li>
-                            <li onclick='X.shutdown();'><span>Power Off</span></li>
-                        </dropdown>
-                    </div>
-        </div>`,
             closeCondition: function (event) {
                 return !elementIsInEventPath(event, document.querySelector("#statusAreaContainer"))
             },
@@ -737,8 +769,6 @@ X = {
             X.clearOpenMenus()
         });
         console.log("X Initialize");
-        X.lockScreen.lock();
-
     },
     //Clear all open menus.
     clearOpenMenus: function (forcefully = false) {
