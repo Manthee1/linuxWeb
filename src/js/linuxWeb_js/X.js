@@ -669,17 +669,28 @@ X = {
             if (!availableScreens.includes(screenName))
                 return;
 
-            if (screenName == "loginScreen")
-                X.topBar.showWrappers(0, 1, 1);
-
-            if (screenName == "lockScreen")
-                X.topBar.showWrappers(0, 0, 1);
-
-            if (screenName == "desktop")
-                X.topBar.showWrappers(1, 1, 1);
-
             mainContent.innerHTML = screens[screenName].html
             X.status.screen = screenName;
+            this[screenName].init()
+
+        },
+
+        loginScreen: {
+            init: function () {
+                X.topBar.showWrappers(0, 1, 1);
+            }
+        },
+
+        lockScreen: {
+            init: function () {
+                X.topBar.showWrappers(0, 0, 1);
+            }
+        },
+
+        desktop: {
+            init: function () {
+                X.topBar.showWrappers(1, 1, 1);
+            }
         }
     },
 
