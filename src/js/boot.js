@@ -142,36 +142,36 @@
 		"./js/linuxWeb_js/processes.js",
 		"./js/linuxWeb_js/fileSystem.js",
 	];
-	componentSources = new Map([
-		["loginScreen", "./components/loginscreen.html"],
-		["lockScreen", "./components/lockscreen.html"],
-		["desktop", "./components/desktop.html"],
+	screensSources = new Map([
+		["loginScreen", "./screens/loginscreen.html"],
+		["lockScreen", "./screens/lockscreen.html"],
+		["desktop", "./screens/desktop.html"],
 	]);
 
-	(async (x = true) => {
+	(async () => {
 		return new Promise(resolve => {
 			(async () => {
 				for (const jsSrc of jsSources) {
-					x && addMessage(`Started retrieving ${jsSrc} ...`);
+					addMessage(`Started retrieving ${jsSrc} ...`);
 					await page.loadJs(jsSrc)
-					x && addMessage(`Retrieved ${jsSrc} ...`);
+					addMessage(`Retrieved ${jsSrc} ...`);
 				}
 				resolve();
 			})()
 		})
 	})();
 
-	(async (x = 1) => {
+	(async () => {
 		return new Promise(resolve => {
 			(async () => {
-				for (const item of componentSources[Symbol.iterator]()) {
-					x && addMessage(`Started retrieving ${item[1]} ...`);
+				for (const item of screensSources[Symbol.iterator]()) {
+					addMessage(`Started retrieving ${item[1]} ...`);
 
-					components[item[0]] = {
+					X.screen.data[item[0]] = {
 						src: item[1],
 						html: await page.getHtml(item[1])
 					}
-					x && addMessage(`Retrieved ${item[1]} and seved it to components.${item[0]} ...`);
+					addMessage(`Retrieved ${item[1]} and saved it to X.screen.data.${item[0]} ...`);
 				}
 				resolve();
 			})()
