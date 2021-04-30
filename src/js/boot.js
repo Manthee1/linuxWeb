@@ -166,8 +166,7 @@
 			(async () => {
 				for (const item of screensSources[Symbol.iterator]()) {
 					addMessage(`Started retrieving ${item[1]} ...`);
-
-					X.screen.data[item[0]] = {
+					screens[item[0]] = {
 						src: item[1],
 						html: await page.getHtml(item[1])
 					}

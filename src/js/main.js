@@ -1,5 +1,9 @@
 htmlEl = document.querySelector("html");
 
+
+components = {}
+screens = {}
+
 page = {
 	//I mean... Simple i think. Chang the page. Yeah.... Thats all. You can keep scrolling now.
 	changePage: async (pageUrl, doOnComplete = false, executeOnComplete = true) => {
