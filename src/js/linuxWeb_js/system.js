@@ -1,6 +1,6 @@
 system = {
     started: false,
-    user: "root",
+    user: "",
     encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f",
     global: {
         //Global variables
@@ -9,6 +9,17 @@ system = {
         doNotDisturb: false,
         css: {},
     },
+    accounts: {
+        root: { username: "root", privileged: true, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f" },
+        user1: { username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f" },
+    },
+
+
+    validatePassword: function (username, password) {
+        if (sha256(btoa(password)) == system.accounts[username].encPassword) return true;
+        else return false;
+    },
+
     // I won't comment understandable functions here...
     changeBrightness: function (brightness) {
         this.global.brightness = brightness;
@@ -32,10 +43,7 @@ system = {
         X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
     },
 
-    validatePassword: function (password) {
-        if (sha256(btoa(password)) == system.encPassword) return true;
-        else return false;
-    },
+
     cli: {
         // 'i' A.K.A Interpreter parses the command options and calls the command function
         i: function (command = false, terminalProcess = false) {
