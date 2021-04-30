@@ -67,7 +67,6 @@ page = {
 		});
 	}
 }
-components = {}
 //No one actually knows what this one does. Very mysterious this one.
 //Well hopefully it doesn't matter
 //Oh btw. It's initiated with 'await' - remember that

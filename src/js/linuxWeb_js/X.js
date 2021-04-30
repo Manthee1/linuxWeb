@@ -662,9 +662,12 @@ X = {
         },
     },
 
+    component: {
+        data: {}
+    },
 
     screen: {
-
+        data: {},
         set: function (screenName) {
             if (screenName == "loginScreen") {
                 X.topBar.showWrappers(0, 1, 1);
