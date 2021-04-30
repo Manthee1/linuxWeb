@@ -664,23 +664,22 @@ X = {
 
     screen: {
         set: function (screenName) {
-            if (screenName == "loginScreen") {
+            let availableScreens = ["loginScreen", "lockScreen", "desktop"];
+
+            if (!availableScreens.includes(screenName))
+                return;
+
+            if (screenName == "loginScreen")
                 X.topBar.showWrappers(0, 1, 1);
-                X.status.screen = "loginScreen";
-                return;
-            }
 
-            if (screenName == "lockScreen") {
+            if (screenName == "lockScreen")
                 X.topBar.showWrappers(0, 0, 1);
-                X.status.screen = "lockScreen";
-                return;
-            }
 
-            if (screenName == "desktop") {
+            if (screenName == "desktop")
                 X.topBar.showWrappers(1, 1, 1);
-                X.status.screen = "desktop";
-                return;
-            }
+
+            mainContent.innerHTML = screens[screenName].html
+            X.status.screen = screenName;
         }
     },
 
