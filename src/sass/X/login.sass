@@ -1,4 +1,4 @@
-#loginRoot
+.login_screen
     display: flex
     opacity: 1
     margin: auto
@@ -10,6 +10,54 @@
     top: 0px
     left: 0px
     transition: opacity 0.5s ease-in-out
+    .center_container
+        display: flex
+        flex-flow: column nowrap
+        justify-content: center
+        align-content: center
+        margin: auto
+        row-gap: 1em
+        > span
+            text-align: left
+            margin-left: 0.3em
+            margin-top: -0.5em
+            color: var(--color-text-medium)
+            &:hover
+                color: var(--color-text-light)
+        > .account_content
+            display: flex
+            width: auto
+            padding: 5px 20px
+            background-color: var(--color-accent-200)
+            justify-content: center
+            align-content: center
+            color: var(--color-text-light)
+            text-align: left
+            border-radius: 0.4em
+            height: 4em
+            column-gap: 1em
+            &:hover
+                background: var(--color-accent-100)
+            &:active
+                background: var(--color-accent-300)
+                box-shadow: 0px 0px 20px 1px var(--color-accent-300) inset
+            > *
+                flex: 1 1 auto
+                margin: auto
+
+            *:first-child
+                flex: 0 1 auto
+                height: 50%
+
+            *:last-child
+                text-overflow: ellipsis
+                flex: 1 1 auto
+                width: 10em
+
+            *
+                flex: 1 1 auto
+                height: 20px
+                margin: auto
 
     *
         opacity: 1
@@ -24,8 +72,8 @@
             z-index: -1
             top: 0px
             left: 0px
-            background: var(--color-background-300)
-            background: radial-gradient(circle, #18171f 0%, var(--color-background-600) 100%)
+            background: var(--color-background-1000)
+            // background: radial-gradient(circle, var(--color-background-900) 0%, var(--color-background-600) 100%)
 
             /* background-image: url("../../img/LoginBG.jpg");
             background-repeat: no-repeat
@@ -94,7 +142,7 @@
                         opacity: 0.5
                         border-radius: 50%
                         padding: 15px
-                        margin-bottom: 0.4rem
+                        // margin-bottom: 0.4rem
 
                         > user_icon
                             background-size: 100%
@@ -106,7 +154,7 @@
 
                     > #loginUserName
                         font-size: 25px
-                        margin-top: 2rem
+                        margin-top: 0.2rem
                         color: gray
                         font-weight: 100
 
@@ -117,18 +165,16 @@
                     padding-left: 8px
                     height: 20px
                     width: 250px
-                    background: #00000063
+                    background: var(--color-accent-200)
                     border-radius: 5px
                     margin: -5px
                     color: white
                     font-weight: 100
-                    border: 2px solid #000
-                    border: none
-                    // opacity: 0.5
+                    border: 2px solid var(--color-accent-100)
                     transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out
 
                     &:focus
-                        border: 1px solid transparent
+                        background: var(--color-accent-100)
 
                     &[type="submit"]
                         position: relative
@@ -141,7 +187,7 @@
                         padding: 0px
                         width: 35px
                         height: 56px
-                        color: whitesmoke
+                        color: var(--color-text-light)
                         background-color: #556080
 
         .user_wrapper, input
