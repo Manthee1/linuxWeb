@@ -691,6 +691,36 @@ X = {
 
                 mainContent.querySelector('.center_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
             },
+
+            showLoginForm: function (username) {
+
+                mainContent.querySelector('#loginForm').style.display = '';
+                mainContent.querySelector('.center_container').style.display = 'none';
+                mainContent.querySelector('#loginUserName').innerHTML = username
+
+                let loginForm = mainContent.querySelector('form')
+                loginForm.addEventListener('submit', (event) => {
+
+                    event.preventDefault()
+
+                    formData = new FormData(loginForm);
+
+                    // In future (maybe 0.5) there will be a nice token based permission system.
+                    // as for now. you get logged in by X.
+                    // But actually X should be just an extension of the system
+                    // And the system should be the one allowing you to log in,
+                    // and managing what you can or can not do with it.
+
+                    if (system.validatePassword(username, formData.get('password'))) {
+                        X.screen.set('desktop')
+                        return;
+                    }
+                    inputEl = loginForm.querySelector('input')
+                    loginForm.querySelector('input').classList.remove('incorrectLogin')
+                    void loginForm.querySelector('input').offsetWidth; //IDK. makes the animation reset work tho.
+                    loginForm.querySelector('input').classList.add('incorrectLogin')
+                })
+            }
         },
 
         lockScreen: {
