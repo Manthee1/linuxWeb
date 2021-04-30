@@ -678,7 +678,19 @@ X = {
         loginScreen: {
             init: function () {
                 X.topBar.showWrappers(0, 1, 1);
-            }
+                this.showAccounts()
+            },
+
+            showAccounts: function () {
+                let loginAccountsHTML = Object.values(system.accounts).map(x => `
+                    <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
+                        <user_icon></user_icon>
+                        <span>${x.username}</span>
+                    </div>
+            `).join('')
+
+                mainContent.querySelector('.center_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
+            },
         },
 
         lockScreen: {
