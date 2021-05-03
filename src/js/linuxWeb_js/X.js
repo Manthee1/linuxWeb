@@ -655,6 +655,11 @@ X = {
             topBar.style.display = ""
         },
 
+        setColor: function (color = "") {
+            topBar.style.backgroundColor = color
+            topBar.style.borderColor = color
+        },
+
         showWrappers: function (left = true, middle = true, right = true) {
             topBar.querySelector(".left_wrapper").style.visibility = (!left && "hidden") || ""
             topBar.querySelector(".middle_wrapper").style.visibility = (!middle && "hidden") || ""
@@ -678,6 +683,7 @@ X = {
         loginScreen: {
             init: function () {
                 X.topBar.showWrappers(0, 1, 1);
+                X.topBar.setColor('transparent')
                 this.showAccounts()
             },
 
@@ -726,12 +732,14 @@ X = {
         lockScreen: {
             init: function () {
                 X.topBar.showWrappers(0, 0, 1);
+                X.topBar.setColor('transparent')
             }
         },
 
         desktop: {
             init: function () {
                 X.topBar.showWrappers(1, 1, 1);
+                X.topBar.setColor('')
             }
         }
     },
