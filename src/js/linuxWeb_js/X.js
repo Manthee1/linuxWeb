@@ -737,6 +737,22 @@ X = {
                     void loginForm.querySelector('input').offsetWidth; //IDK. makes the animation reset work tho.
                     loginForm.querySelector('input').classList.add('incorrectLogin')
                 })
+
+            },
+
+            showCustomLoginForm: function () {
+                this.setActive('#customLoginForm')
+                let customLoginForm = mainContent.querySelector('#customLoginForm')
+                customLoginForm.reset()
+
+                customLoginForm.addEventListener('submit', event => {
+                    event.preventDefault()
+                    let formData = new FormData(customLoginForm);
+                    let username = formData.get('username')
+
+                    this.showLoginForm(username)
+
+                });
             }
         },
 
