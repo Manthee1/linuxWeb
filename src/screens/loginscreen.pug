@@ -2,15 +2,15 @@ div.login_screen
     div#login_background 
     div.center_container
         div.account_container
-        span Not Listed?
+        span(onclick ="X.screen.loginScreen.showCustomLoginForm()") Not Listed?
             
-    form#loginForm(style='display:none')
+    form#loginForm.login_form(style='display:none')
         div.user_wrapper
             div.user_icon_wrapper
                 user_icon
             div#loginUserName
         div.input_container
-            span.back_button
+            span.back_button(onclick ="X.screen.loginScreen.showAccounts()")
                 down_icon
             input(type='password' name='password' placeholder='Password')
     form#customLoginForm.login_form(style='display:none')
