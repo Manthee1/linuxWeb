@@ -13,3 +13,12 @@ div.login_screen
             span.back_button
                 down_icon
             input(type='password' name='password' placeholder='Password')
+    form#customLoginForm.login_form(style='display:none')
+        div.user_wrapper
+            div.user_icon_wrapper
+                user_icon
+        div.input_container
+            span.back_button(onclick ="X.screen.loginScreen.showAccounts()")
+                down_icon
+            input(type='username' name='username' placeholder='Username')
+            
