@@ -711,25 +711,16 @@ X = {
             },
 
             showLoginForm: function (username) {
-
-                mainContent.querySelector('#loginForm').style.display = '';
-                mainContent.querySelector('.center_container').style.display = 'none';
-                mainContent.querySelector('#loginUserName').innerHTML = username
-
-                let loginForm = mainContent.querySelector('form')
-
-                loginForm.querySelector(".back_button").addEventListener('click', () => {
-
-                    this.showAccounts()
-
-                });
-
-
+                this.setActive("#loginForm")
+                let loginForm = mainContent.querySelector('#loginForm')
+                loginForm.querySelector('#loginUserName').innerHTML = username
+                loginForm.reset()
+                loginForm.querySelector('input').classList.remove('incorrectLogin')
                 loginForm.addEventListener('submit', event => {
 
                     event.preventDefault()
 
-                    formData = new FormData(loginForm);
+                    let formData = new FormData(loginForm);
 
                     // In future (maybe 0.5) there will be a nice token based permission system.
                     // as for now. you get logged in by X.
