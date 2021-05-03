@@ -447,6 +447,47 @@ USAGE
                     fileSystem.write(path, 1, text, 755)
                 },
             },
+            rm: {
+                shortHelp: "Removes a file",
+                help: `Removes a file
+
+USAGE
+  rm <path/to/file>
+  ----------------
+  rm example.txt`,
+
+                method: (options, terminal) => {
+                    if (options == null)
+                        throw "Path must be specified";
+                    dir = options['@s'];
+                    path = parseDir(options, terminal, dir);
+                    fileSystem.removeFile(path, isDefined(options["-f"]))
+                },
+            },
+            rmdir: {
+                shortHelp: "Removes a directory",
+                help: `Removes a directory
+
+USAGE
+  rmdir <path/to/dir>
+  ----------------
+  rmdir var/example`,
+
+                method: (options, terminal) => {
+                    if (options == null)
+                        throw "Path must be specified";
+                    dir = options['@s'];
+                    path = parseDir(options, terminal, dir);
+                    console.log(isDefined(options["-f"]), options["-f"]);
+                    try {
+                        fileSystem.removeDir(path, isDefined(options["-f"]));
+                    } catch (error) {
+                        if (error.startsWith('Error 10'))
+                            throw "That directory is not empty"
+                        throw error
+                    }
+                },
+            },
             top: {
                 shortHelp: "Lists the active processes",
                 help: `List the active processes
