@@ -687,10 +687,18 @@ X = {
                 this.showAccounts()
             },
 
-            showAccounts: function () {
+            setActive: function (selector) {
 
-                mainContent.querySelector('#loginForm').style.display = 'none';
-                mainContent.querySelector('.center_container').style.display = '';
+                mainContent.querySelectorAll(".login_screen > *").forEach(x => {
+                    x.style.display = 'none'
+                });
+                mainContent.querySelector('#login_background').style.display = ''
+                mainContent.querySelector(selector).style.display = ''
+
+            },
+
+            showAccounts: function () {
+                this.setActive(".center_container")
                 mainContent.querySelector('.account_container').innerHTML = ""
                 let loginAccountsHTML = Object.values(system.accounts).map(x => `
                     <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
