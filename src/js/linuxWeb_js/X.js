@@ -688,6 +688,10 @@ X = {
             },
 
             showAccounts: function () {
+
+                mainContent.querySelector('#loginForm').style.display = 'none';
+                mainContent.querySelector('.center_container').style.display = '';
+                mainContent.querySelector('.account_container').innerHTML = ""
                 let loginAccountsHTML = Object.values(system.accounts).map(x => `
                     <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
                         <user_icon></user_icon>
@@ -695,7 +699,7 @@ X = {
                     </div>
             `).join('')
 
-                mainContent.querySelector('.center_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
+                mainContent.querySelector('.account_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
             },
 
             showLoginForm: function (username) {
