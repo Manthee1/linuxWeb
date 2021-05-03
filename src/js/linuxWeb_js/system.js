@@ -14,8 +14,8 @@ system = {
         user1: { username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f" },
     },
 
-
     validatePassword: function (username, password) {
+        if (!isDefined(system.accounts[username])) return false
         if (sha256(btoa(password)) == system.accounts[username].encPassword) return true;
         else return false;
     },
