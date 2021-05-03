@@ -718,6 +718,7 @@ X = {
                 loginForm.querySelector('#loginUserName').innerHTML = username
                 loginForm.reset()
                 loginForm.querySelector('input').classList.remove('incorrectLogin')
+                loginForm.querySelector('input').focus()
                 loginForm.addEventListener('submit', event => {
 
                     event.preventDefault()
@@ -746,7 +747,7 @@ X = {
                 this.setActive('#customLoginForm')
                 let customLoginForm = mainContent.querySelector('#customLoginForm')
                 customLoginForm.reset()
-
+                customLoginForm.querySelector('input').focus()
                 customLoginForm.addEventListener('submit', event => {
                     event.preventDefault()
                     let formData = new FormData(customLoginForm);
@@ -768,7 +769,13 @@ X = {
         desktop: {
             init: function () {
                 X.topBar.showWrappers(1, 1, 1);
-                X.topBar.setColor('')
+                X.topBar.setColor('');
+
+                desktop = document.querySelector("#mainContent > #desktop");
+                popupNotificationContainer = document.querySelector("#mainContent > #popupNotificationsContainer");
+                appsContainer = document.querySelector("#mainContent > #appsContainer");
+                appList = document.querySelector("#mainContent > #appList");
+
             }
         }
     },
@@ -785,11 +792,6 @@ X = {
         systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemMenuAnimationContainer");
 
         overlayContainer = document.querySelector("body > #overlayContainer");
-
-        desktop = document.querySelector("#linuxRoot> #desktop");
-        popupNotificationContainer = document.querySelector("#linuxRoot> #popupNotificationsContainer");
-        appsContainer = document.querySelector("#linuxRoot> #appsContainer");
-        appList = document.querySelector("#linuxRoot> #appList");
 
         X.screen.set("loginScreen")
 
