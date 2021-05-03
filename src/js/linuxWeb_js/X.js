@@ -705,7 +705,15 @@ X = {
                 mainContent.querySelector('#loginUserName').innerHTML = username
 
                 let loginForm = mainContent.querySelector('form')
-                loginForm.addEventListener('submit', (event) => {
+
+                loginForm.querySelector(".back_button").addEventListener('click', () => {
+
+                    this.showAccounts()
+
+                });
+
+
+                loginForm.addEventListener('submit', event => {
 
                     event.preventDefault()
 

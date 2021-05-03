@@ -157,38 +157,65 @@
                         margin-top: 0.2rem
                         color: gray
                         font-weight: 100
-
-                input
-                    display: inline-block
-                    font-size: 20px
-                    padding: 8px
-                    padding-left: 8px
-                    height: 20px
-                    width: 250px
-                    background: var(--color-accent-200)
-                    border-radius: 5px
-                    margin: -5px
-                    color: white
-                    font-weight: 100
-                    border: 2px solid var(--color-accent-100)
-                    transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out
-
-                    &:focus
-                        background: var(--color-accent-100)
-
-                    &[type="submit"]
-                        position: relative
+                .input_container
+                    display: flex
+                    flex-flow: row nowrap
+                    justify-content: center
+                    align-content: center
+                    .back_button
+                        transform: rotate(90deg)
+                        justify-self: center
                         display: inline-block
-                        font-family: monospace
-                        border: none
-                        top: 0px
-                        font-family: inherit
-                        left: 3px
-                        padding: 0px
-                        width: 35px
-                        height: 56px
-                        color: var(--color-text-light)
-                        background-color: #556080
+                        text-align: center
+                        margin: auto
+                        padding: 0.3em
+                        height: 25px
+                        width: 25px
+                        margin-left: calc(-0.3em - 25px)
+                        background: var(--color-accent-100)
+                        margin-right: 0.6em
+                        border-radius: 50%
+                        border: 1px solid var(--color-background-300)
+                        &:hover
+                            background-color: var(--color-accent-200)
+                        &:active
+                            background: var(--color-accent-150)
+
+                        *
+                            height: 27px
+                            width: 15px
+
+                    input
+                        display: inline-block
+                        font-size: 20px
+                        padding: 8px
+                        padding-left: 8px
+                        height: 20px
+                        width: 250px
+                        background: var(--color-accent-200)
+                        border-radius: 5px
+                    margin: -5px
+                        color: white
+                        font-weight: 100
+                        border: 2px solid var(--color-accent-100)
+                        transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out
+
+                        &:focus
+                            background: var(--color-accent-100)
+
+                        &[type="submit"]
+                            position: relative
+                            display: inline-block
+                            font-family: monospace
+                            border: none
+                            top: 0px
+                            font-family: inherit
+                            left: 3px
+                            padding: 0px
+                            width: 35px
+                            height: 56px
+                            color: var(--color-text-light)
+                            background-color: #556080
 
         .user_wrapper, input
             position: relative
