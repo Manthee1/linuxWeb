@@ -88,13 +88,32 @@ fileSystem = {
     read: function (path) {
         return this.getDir(path, false, true, 1).data
     },
-    remove: function (path, force = false) {
+
+    remove: function (path, force = false) { //Works for both Dir and files
         const [file, filePath] = this.getDir(path, "string");
 
-        if (!this.isEmptyDir(file) && !force)
+        if (this.isDir(file) && !this.isEmptyDir(file) && !force)
             throw `Error 10: Directory is not empty  (${path}) - try remove(*path*, true) to force remove a directory`;
 
         eval('delete ' + this.fileRootPath + filePath)
+    },
+
+    removeDir: function (path, force = false) {
+        try {
+            this.getDir(path, "string", true, 0);
+        } catch (error) {
+            throw error
+        }
+        this.remove(path, force)
+    },
+
+    removeFile: function (path, force = false) {
+        try {
+            this.getDir(path, "string", true, 1);
+        } catch (error) {
+            throw error
+        }
+        this.remove(path, force)
     },
     //Actual file system
     root: {
