@@ -700,12 +700,14 @@ X = {
             showAccounts: function () {
                 this.setActive(".center_container")
                 mainContent.querySelector('.account_container').innerHTML = ""
-                let loginAccountsHTML = Object.values(system.accounts).map(x => `
+                let loginAccountsHTML = Object.values(system.accounts).map(x => {
+                    if (x.username != "root")
+                        return `
                     <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
                         <user_icon></user_icon>
                         <span>${x.username}</span>
                     </div>
-            `).join('')
+            `}).join('')
 
                 mainContent.querySelector('.account_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
             },
