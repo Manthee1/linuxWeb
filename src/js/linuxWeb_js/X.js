@@ -614,7 +614,7 @@ X = {
                     if (x.username != "root")
                         return `
                     <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
-                        <user_icon></user_icon>
+                        <user_icon ${isDefined(x.settings.profilePictureUrl) && `style="background-image:url('${x.settings.profilePictureUrl}')" class="custom_picture"`}"></user_icon>
                         <span>${x.username}</span>
                     </div>
             `}).join('')
@@ -626,6 +626,10 @@ X = {
                 X.screen.setActiveSubScreen("#loginForm")
                 let loginForm = mainContent.querySelector('#loginForm')
                 loginForm.querySelector('#loginUserName').innerHTML = username
+
+                X.screen.setToUserProfilePicture(loginForm.querySelector('user_icon'), system.accounts[username].settings.profilePictureUrl)
+
+                
                 loginForm.reset()
                 loginForm.querySelector('input').classList.remove('incorrectLogin')
                 loginForm.querySelector('input').focus()
