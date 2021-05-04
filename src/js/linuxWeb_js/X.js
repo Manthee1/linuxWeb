@@ -624,15 +624,14 @@ X = {
 
             showLoginForm: function (username) {
                 X.screen.setActiveSubScreen("#loginForm")
+
                 let loginForm = mainContent.querySelector('#loginForm')
                 loginForm.querySelector('#loginUserName').innerHTML = username
-
                 X.screen.setToUserProfilePicture(loginForm.querySelector('user_icon'), system.accounts[username].settings.profilePictureUrl)
-
-                
                 loginForm.reset()
-                loginForm.querySelector('input').classList.remove('incorrectLogin')
-                loginForm.querySelector('input').focus()
+                let inputEl = loginForm.querySelector('input')
+                inputEl.classList.remove('incorrectLogin')
+                inputEl.focus()
                 loginForm.addEventListener('submit', event => {
 
                     event.preventDefault()
@@ -662,10 +661,9 @@ X = {
                         })
                         return;
                     }
-                    inputEl = loginForm.querySelector('input')
-                    loginForm.querySelector('input').classList.remove('incorrectLogin')
-                    void loginForm.querySelector('input').offsetWidth; //IDK. makes the animation reset work tho.
-                    loginForm.querySelector('input').classList.add('incorrectLogin')
+                    inputEl.classList.remove('incorrectLogin')
+                    void inputEl.offsetWidth; //IDK. makes the animation reset work tho.
+                    inputEl.classList.add('incorrectLogin')
                 })
 
             },
