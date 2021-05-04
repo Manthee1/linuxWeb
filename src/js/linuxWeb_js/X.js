@@ -685,6 +685,7 @@ X = {
         },
 
         lockScreen: {
+            pauseElementChange: false,
             init: function () {
                 X.topBar.showWrappers(0, 0, 1);
                 X.topBar.setColor('transparent')
@@ -712,6 +713,53 @@ X = {
                     if (loginTime.classList.contains('selected')) return this.showLoginForm()
 
                     if (event.code == "Escape") this.showTime()
+                }
+
+                document.addEventListener('keyup', subScreenChangeKeyupHandler)
+
+                loginForm.querySelector('#loginUserName').innerHTML = system.activeUser
+                loginForm.reset()
+                inputEl.classList.remove('incorrectLogin')
+                inputEl.focus()
+
+                loginForm.addEventListener('submit', event => {
+                    event.preventDefault()
+
+                    let formData = new FormData(loginForm);
+                    if (system.validatePassword(system.activeUser, formData.get('password'))) {
+                        X.screen.set('desktop')
+                        return;
+                    }
+                    inputEl.classList.remove('incorrectLogin')
+                    void inputEl.offsetWidth; //IDK. makes the animation reset work tho.
+                    inputEl.classList.add('incorrectLogin')
+                })
+
+            },
+
+            enablePauseElementChange: function () {
+                this.pauseElementChange = true
+                setTimeout(() => { this.pauseElementChange = false }, 500)
+            },
+
+            showTime: function () {
+
+                if (!this.pauseElementChange) {
+                    this.enablePauseElementChange()
+                    loginTime.classList.add('selected')
+                    loginForm.classList.remove('selected')
+                    mainContent.querySelector('.switch_user_button').style.transform = 'scale(0)'
+                }
+            },
+
+            showLoginForm: function () {
+
+                if (!this.pauseElementChange) {
+                    this.enablePauseElementChange()
+                    loginTime.classList.remove('selected')
+                    loginForm.classList.add('selected')
+                    mainContent.querySelector('.switch_user_button').style.transform = 'scale(1)'
+
                 }
             },
         },
