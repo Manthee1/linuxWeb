@@ -34,7 +34,7 @@ apps = {
                 updateInitialized: false,
 
                 currentDirectory: "/",
-                user: system.user,
+                user: system.activeUser,
 
                 getPrefix: function () {
                     return `[${this.user} ${this.currentDirectory}] $&nbsp`;

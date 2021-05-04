@@ -684,6 +684,7 @@ X = {
             init: function () {
                 X.topBar.showWrappers(0, 1, 1);
                 X.topBar.setColor('transparent')
+                system.activeUser = "";
                 this.showAccounts()
             },
 
@@ -733,6 +734,7 @@ X = {
 
                     if (system.validatePassword(username, formData.get('password'))) {
                         X.screen.set('desktop')
+                        system.activeUser = username;
                         return;
                     }
                     inputEl = loginForm.querySelector('input')

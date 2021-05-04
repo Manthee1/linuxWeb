@@ -1,6 +1,7 @@
 system = {
     started: false,
     user: "",
+    activeUser: "",
     encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f",
     global: {
         //Global variables
