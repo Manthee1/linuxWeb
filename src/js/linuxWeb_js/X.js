@@ -735,6 +735,18 @@ X = {
                     if (system.validatePassword(username, formData.get('password'))) {
                         X.screen.set('desktop')
                         system.activeUser = username;
+                        Object.entries(system.accounts[username].settings).forEach(x => {
+                            let [itemName, itemProperties] = [x[0], x[1]]
+                            if (Object.prototype.toString.call(itemProperties) == "[object Object]") {
+                                switch (itemProperties.type) {
+                                    case "cssVar":
+                                        root.style.setProperty('--' + itemProperties.variable, itemProperties.value);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        })
                         return;
                     }
                     inputEl = loginForm.querySelector('input')
@@ -784,6 +796,8 @@ X = {
 
     //initializes the X object 
     initialize: function () {
+
+        root = document.documentElement
 
         linux = document.querySelector("#linuxRoot");
         topBar = document.querySelector("#linuxRoot> #topBar");
