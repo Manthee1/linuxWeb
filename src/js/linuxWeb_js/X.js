@@ -598,6 +598,17 @@ X = {
             this.activeSubScreen = selector
         },
 
+        setToUserProfilePicture: function (element, pictureUrl) {
+
+            if (isDefined(pictureUrl)) {
+                element.style.backgroundImage = `url('${pictureUrl}')`
+                element.classList.add('custom_picture')
+            } else {
+                element.style.backgroundImage = ""
+                element.classList.remove('custom_picture')
+            }
+
+        },
 
         loginScreen: {
             init: function () {
