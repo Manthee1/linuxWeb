@@ -589,7 +589,7 @@ X = {
             mainContent.querySelectorAll(".login_screen > *").forEach(x => {
                 x.style.display = 'none'
             });
-            mainContent.querySelector("#loginForm").style.display = ''
+            mainContent.querySelectorAll('.ignore_hide').forEach(x => x.style.display = '')
             mainContent.querySelector(selector).style.display = ''
 
         },
