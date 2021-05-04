@@ -584,6 +584,17 @@ X = {
 
         },
 
+        setActiveSubScreen: function (selector) {
+
+            mainContent.querySelectorAll(".login_screen > *").forEach(x => {
+                x.style.display = 'none'
+            });
+            mainContent.querySelector("#loginForm").style.display = ''
+            mainContent.querySelector(selector).style.display = ''
+
+        },
+
+
         loginScreen: {
             init: function () {
                 X.topBar.showWrappers(0, 1, 1);
@@ -592,18 +603,8 @@ X = {
                 this.showAccounts()
             },
 
-            setActive: function (selector) {
-
-                mainContent.querySelectorAll(".login_screen > *").forEach(x => {
-                    x.style.display = 'none'
-                });
-                mainContent.querySelector('#login_background').style.display = ''
-                mainContent.querySelector(selector).style.display = ''
-
-            },
-
             showAccounts: function () {
-                this.setActive(".center_container")
+                X.screen.setActiveSubScreen(".center_container")
                 mainContent.querySelector('.account_container').innerHTML = ""
                 let loginAccountsHTML = Object.values(system.accounts).map(x => {
                     if (x.username != "root")
@@ -618,7 +619,7 @@ X = {
             },
 
             showLoginForm: function (username) {
-                this.setActive("#loginForm")
+                X.screen.setActiveSubScreen("#loginForm")
                 let loginForm = mainContent.querySelector('#loginForm')
                 loginForm.querySelector('#loginUserName').innerHTML = username
                 loginForm.reset()
@@ -662,7 +663,7 @@ X = {
             },
 
             showCustomLoginForm: function () {
-                this.setActive('#customLoginForm')
+                X.screen.setActiveSubScreen('#customLoginForm')
                 let customLoginForm = mainContent.querySelector('#customLoginForm')
                 customLoginForm.reset()
                 customLoginForm.querySelector('input').focus()
