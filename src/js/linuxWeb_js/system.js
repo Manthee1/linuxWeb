@@ -11,7 +11,11 @@ system = {
     },
     accounts: {
         root: { username: "root", privileged: true, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f" },
-        user1: { username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f" },
+        user1: {
+            username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f", settings: {
+                background: { type: "cssVar", variable: "user-background", value: "url('https://wallpapercave.com/wp/wp3440146.jpg')" },
+            }
+        },
     },
 
     validatePassword: function (username, password) {
