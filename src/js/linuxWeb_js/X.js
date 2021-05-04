@@ -688,7 +688,15 @@ X = {
             init: function () {
                 X.topBar.showWrappers(0, 0, 1);
                 X.topBar.setColor('transparent')
-            }
+
+                this.time = mainContent.querySelector('#loginTime > time')
+                this.date = mainContent.querySelector('#loginTime > date')
+
+                X.services.clock.update.add(this.time, 'time-s');
+                X.services.clock.update.add(this.date, 'day>str month>str date');
+
+               
+            },
         },
 
         desktop: {
