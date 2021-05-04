@@ -804,8 +804,7 @@ X = {
 
         overlayContainer = document.querySelector("body > #overlayContainer");
 
-        X.screen.set("lockScreen")
-        // X.screen.set("loginScreen")
+        X.screen.set("loginScreen")
 
         X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
         X.notification.create('', '', '', '', '', false)
