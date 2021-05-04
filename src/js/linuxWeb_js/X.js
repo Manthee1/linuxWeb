@@ -572,6 +572,8 @@ X = {
     },
 
     screen: {
+        activeSubScreen: "",
+        activeScreen: "",
         set: function (screenName) {
             let availableScreens = ["loginScreen", "lockScreen", "desktop"];
 
@@ -580,6 +582,8 @@ X = {
 
             mainContent.innerHTML = screens[screenName].html
             X.status.screen = screenName;
+            this.activeScreen = screenName
+            this.activeSubScreen = ""
             this[screenName].init()
 
         },
@@ -591,7 +595,7 @@ X = {
             });
             mainContent.querySelectorAll('.ignore_hide').forEach(x => x.style.display = '')
             mainContent.querySelector(selector).style.display = ''
-
+            this.activeSubScreen = selector
         },
 
 
