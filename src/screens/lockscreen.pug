@@ -1,11 +1,15 @@
-div#login_background 
-div#login_time
-    time
-    date
-    p Click or Press a key to unlock
-form(onsubmit='event.preventDefault();X.lockScreen.playLoginAnimation(system.validatePassword(this.children[1].value));')
-    div.user_wrapper
-    div.user_icon_wrapper
-        user_icon
-    div#loginUserName root
-    input(type='password' name='password' placeholder='Password')
+div.login-lock_screen
+    div.lock_background.ignore_hide.background_image
+    div.switch_user_button.ignore_hide
+    div.center_container
+        div#login_time
+            time
+            date
+            p Click or Press a key to unlock
+    form#loginForm.login_form(style='display:none')
+        div.user_wrapper
+            div.user_icon_wrapper
+                user_icon
+            div#loginUserName
+        div.input_container
+            input(type='password' name='password' placeholder='Password')
