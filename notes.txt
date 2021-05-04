@@ -196,6 +196,13 @@ DONE* \---- Change element tags into div and apply classes to them
 DONE* \---- Update the css to work with classes
 
 TODO: Reworked the lockscreen system.
+DONE \---- Do the login screen (design and function)
+DONE \---- Redesign the lock screen
+DONE \---- Make em all work
+
+TODO: Rework how to context menu is handled
+     \---- Have it created on request for an element.
+     \---- Have a dynamic object containing the structure of the context menu (Item name and function)
 
 TODO: Create a system api to better handle interfacing with the system and programs
 
