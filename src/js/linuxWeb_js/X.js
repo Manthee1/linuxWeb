@@ -695,7 +695,24 @@ X = {
                 X.services.clock.update.add(this.time, 'time-s');
                 X.services.clock.update.add(this.date, 'day>str month>str date');
 
-               
+                let loginForm = mainContent.querySelector('#loginForm')
+                let loginTime = mainContent.querySelector('#loginTime')
+                let inputEl = loginForm.querySelector('input')
+
+                loginTime.classList.add('selected')
+
+                X.screen.setToUserProfilePicture(loginForm.querySelector('user_icon'), system.accounts[system.activeUser].settings.profilePictureUrl)
+
+                mainContent.querySelector('.login-lock_screen').addEventListener('mouseup', event => {
+                    if (loginTime.classList.contains('selected')) this.showLoginForm()
+                })
+
+                let subScreenChangeKeyupHandler = event => {
+                    console.log(event);
+                    if (loginTime.classList.contains('selected')) return this.showLoginForm()
+
+                    if (event.code == "Escape") this.showTime()
+                }
             },
         },
 
