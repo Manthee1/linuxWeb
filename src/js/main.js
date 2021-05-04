@@ -180,6 +180,7 @@ let escapeHtml = text => {
 	var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
 	return text.replace(/[&<>"']/g, function (m) { return map[m]; });
 }
+let isObject = obj => isDefined(obj) && Object.prototype.toString.call(obj) == "[object Object]"
 let isObjectEmpty = obj => {
 	if (isDefined(obj))
 		return Object.entries(obj).length == 0

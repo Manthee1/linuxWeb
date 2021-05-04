@@ -737,7 +737,7 @@ X = {
                         system.activeUser = username;
                         Object.entries(system.accounts[username].settings).forEach(x => {
                             let [itemName, itemProperties] = [x[0], x[1]]
-                            if (Object.prototype.toString.call(itemProperties) == "[object Object]") {
+                            if (isObject(itemProperties)) {
                                 switch (itemProperties.type) {
                                     case "cssVar":
                                         root.style.setProperty('--' + itemProperties.variable, itemProperties.value);
