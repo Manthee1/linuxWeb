@@ -590,7 +590,7 @@ X = {
 
         setActiveSubScreen: function (selector) {
 
-            mainContent.querySelectorAll(".login_screen > *").forEach(x => {
+            mainContent.querySelectorAll(".login-lock_screen > *").forEach(x => {
                 x.style.display = 'none'
             });
             mainContent.querySelectorAll('.ignore_hide').forEach(x => x.style.display = '')
