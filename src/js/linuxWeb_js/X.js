@@ -809,7 +809,13 @@ X = {
 
         overlayContainer = document.querySelector("body > #overlayContainer");
 
-        X.screen.set("loginScreen")
+        X.screen.set("lockScreen")
+        // X.screen.set("loginScreen")
+
+        X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
+        X.notification.create('', '', '', '', '', false)
+        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
+
 
         Object.entries(X.services).forEach(xObj => {
             let [xObjName, xObjValue] = [xObj[0], xObj[1]];
