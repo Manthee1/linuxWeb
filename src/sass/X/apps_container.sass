@@ -14,7 +14,6 @@
     > app_container //This resides in the #appsContainer.
         position: absolute
         display: flex
-        overflow: visible
         flex-direction: column
         width: 600px
         height: 400px
@@ -23,9 +22,9 @@
         max-width: 100vw
         max-height: 100vh
         box-shadow: 4px 4px 12px 2px rgba(0, 0, 0, 0.4)
-        border-radius: 8px 8px 0px 0px
+        border-radius: 0.4em 0.4em 0px 0px
         transform: scale(1)
-        overflow: hidden
+        overflow: visible
         z-index: 4
         opacity: 1
         transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out
@@ -34,11 +33,12 @@
             display: flex
             flex-flow: row nowrap
             text-align: center
+            border-radius: 0.4em 0.4em 0px 0px
             width: auto
             font-size: 16px
             flex: 0 0 auto
-            height: 30px
-            padding: 2px 0px
+            height: 2em
+            padding: 0em 0.1em
             padding-left: 5px
             text-overflow: ellipsis
             background-color: var(--app-header-color)
@@ -51,7 +51,7 @@
                 top: 0px
                 left: 0px
                 line-height: 200%
-                width: calc(100% - 140px)
+                width: calc(100% - 70px)
                 padding-left: 70px
                 text-align: center
                 text-overflow: ellipsis
@@ -83,7 +83,7 @@
 
                 &:hover
                     opacity: 1
-                    background-color: var(--main-color)
+                    background-color: var(--color-accent-400)
 
             > app_exit
                 &:hover

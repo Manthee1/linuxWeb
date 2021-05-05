@@ -6,7 +6,7 @@
     src: url("../fonts/RobotoMono.ttf")
 
 \:root
-    --topBar-height: 25px
+    --topBar-height: 27px
 
     --user-background: url("../img/MainBG.png")
     --app-header-color: var(--color-primary-300)
@@ -75,6 +75,12 @@ html
     outline: none !important
     -webkit-user-select: none
     -moz-user-select: none
+    box-sizing: border-box
+    &::after
+        box-sizing: border-box
+
+    &::before
+        box-sizing: border-box
 
 body
     overflow: hidden
@@ -127,7 +133,8 @@ button
         position: absolute
         content: attr(--data-tooltip)
         padding: 0.1em 0.3em
-        background: var(--color-accent-700)
+        font-size: 1rem
+        background: var(--color-accent-800)
         border-radius: 0.3em
         transform: translate(100%, 0%)
         right: -0.5em
