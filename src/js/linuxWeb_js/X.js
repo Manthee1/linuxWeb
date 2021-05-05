@@ -419,7 +419,6 @@ X = {
 
     cta: function (title = "cta title :)", message = "This is a generic cta message", buttons = [["OK", true]]) {
         //Has to be invoked with await to work correctly
-        X.clearOpenMenus();//We remove any open menus
 
         // buttons: {["buttonText","returnValue"],["Cancel",false]}
         // returnValue is what will be return when the user clicks that button.
@@ -452,10 +451,7 @@ X = {
     ctaform: function name(title, formObj) {
         //Has to be invoked with await to work correctly
 
-        X.clearOpenMenus();//Remove any open menus
-
         let formHtml = ""
-
 
         // Example of formObj
         // formObj = {
