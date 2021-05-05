@@ -772,7 +772,10 @@ X = {
                     loginTime.classList.remove('selected')
                     loginForm.classList.add('selected')
                     mainContent.querySelector('.switch_user_button').style.transform = 'scale(1)'
-
+                    //The timeout makes the focus work
+                    setTimeout(() => {
+                        loginForm.querySelector('input').focus()
+                    }, 100);
                 }
             },
         },
