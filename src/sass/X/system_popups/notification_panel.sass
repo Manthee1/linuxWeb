@@ -40,13 +40,18 @@
                 display: flex
                 flex-flow: column nowrap
                 background-color: var(--color-primary-200)
-                border-radius: 10px
+                border: 2px solid var(--color-accent-600)
+                border-radius: 8px
                 padding: 0.5rem
                 margin: 0.5rem
                 cursor: pointer
                 filter: brightness(1)
                 transition: filter 0.1s linear
 
+                &:hover
+                    filter: brightness(1.1)
+                &:active
+                    background-color: var(--color-primary-400)
                 > x_icon
                     position: absolute
                     right: 0px
@@ -58,12 +63,10 @@
                     background-size: 50%
                     line-height: 20px
                     text-align: center
+                    filter: brightness(0.8)
                     &:hover
-                        filter: brightness(1.2)
-                    &:hover
-                        filter: brightness(1.05)
-                    &:active
-                        background-color: var(--color-primary-400)
+                        filter: brightness(1)
+                        background-color: var(--color-accent-500)
                 > .notification_content
                     display: flex
                     flex-flow: row nowrap
@@ -92,7 +95,9 @@
                 align-self: center
                 span
                     margin-right: 0.7em
-
+                    margin-left: 0.4em
+                    font-weight: 300
+                    color: var(--color-text-medium-light)
                 >label
                     display: inline-block
                     border: 1px solid var(--color-primary-400)
