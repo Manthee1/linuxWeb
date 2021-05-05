@@ -195,10 +195,12 @@ DONE Make a better color scheme
 DONE* \---- Change element tags into div and apply classes to them
 DONE* \---- Update the css to work with classes
 
-TODO: Reworked the lockscreen system.
+DONE TODO: Reworked the lockscreen system.
 DONE \---- Do the login screen (design and function)
 DONE \---- Redesign the lock screen
 DONE \---- Make em all work
+
+DONE TODO: Use border-box
 
 TODO: Rework how to context menu is handled
      \---- Have it created on request for an element.
@@ -212,8 +214,9 @@ TODO: Bunch up together same app instances in the taskbar
 TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
 TODO: apps get opened in the top left
      \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
-TODO: Add terminal commands: rm
-TODO: Add Application menus and an easy way to create them
+DONE TODO: Add terminal commands: rm
+DONE TODO: Add terminal commands: rmdir
+DONE TODO: Add Application menus and an easy way to create them
 TODO: Improve the Activities Screen
      \---- Make the search actually work.
      \---- Show opened apps (Just like in gnome) 
