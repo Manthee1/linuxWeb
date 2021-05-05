@@ -330,7 +330,7 @@ X = {
                 setTimeout(() => {
                     setInterval(() => {
                         //Updates all elements in the 'updateElements' object
-                        Object.values(X.services.clock.update.updateElements).forEach(x => {
+                        this.update.updateElements.forEach(x => {
                             x.element.innerHTML = date.get(x.options);
                         });
                         console.log("Time updated. Next one in: ", 60 - new Date().getSeconds());
@@ -341,25 +341,23 @@ X = {
             update: {
                 //updateElements stores the elements and their options eg. 0:{element,options}
 
-                updateElements: {},
+                updateElements: [],
                 //add Adds a new element to the object
                 add: function (element, options) {
-                    for (const x in this.updateElements) {
-                        if (this.updateElements[x].element == element) {
-                            return false
-                        }
+                    for (const x of this.updateElements) {
+                        if (x.element == element) return false
                     }
                     newObj = { element: element, options: options }
-                    Object.assign(this.updateElements, { newObj })
+                    this.updateElements.push(newObj)
                     this.updateNow(element, options)
 
                 },
                 //remove Removes a existing element from the object
 
                 remove: function (element) {
-                    for (const x in this.updateElements) {
-                        if (this.updateElements[x].element == element) {
-                            delete this.updateElements[x];
+                    for (const x of this.updateElements) {
+                        if (x.element == element) {
+                            delete x
                             return true
                         }
                     }
