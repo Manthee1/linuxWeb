@@ -105,7 +105,6 @@ X = {
                     let onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
                 command = "remind " + reminder.message.value + " -t " + reminder.time.value;
                 system.cli.i(command, true)})()`
-                    console.log(onclick);
 
                     return `<div id='notificationPanelContainer'>
                     <div class='notifications_container'>
@@ -410,11 +409,11 @@ X = {
     overlay: {
         //Creates an overlay
         create: function (html) {
-            overlayContainer.innerHTML += `<div class='overlay'>${html}</div>`;
+            overlayContainer.querySelector('.general').innerHTML += `<div class='overlay'>${html}</div>`;
         },
         //Simply removes any element with the overlay tag
         remove: function () {
-            document.querySelectorAll('div.overlay').forEach(x => x.remove())
+            overlayContainer.querySelectorAll('.general > div.overlay').forEach(x => x.remove())
         }
     },
 
@@ -452,6 +451,9 @@ X = {
 
     ctaform: function name(title, formObj) {
         //Has to be invoked with await to work correctly
+
+        X.clearOpenMenus();//Remove any open menus
+
         let formHtml = ""
 
 
@@ -802,8 +804,8 @@ X = {
         //Main Linux interface Content
         mainContent = document.querySelector("#mainContent")
 
-        systemMenuContainer = document.querySelector("#overlayContainer > #systemMenuContainer");
-        systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemMenuAnimationContainer");
+        systemMenuContainer = document.querySelector("#overlayContainer > #systemOverlays #systemMenuContainer");
+        systemExitAnimationMenuContainer = document.querySelector("#overlayContainer > #systemOverlays #systemMenuAnimationContainer");
 
         overlayContainer = document.querySelector("body > #overlayContainer");
 
@@ -879,22 +881,22 @@ X = {
         console.log("X Initialize");
     },
     //Clear all open menus.
-    clearOpenMenus: function (forcefully = false) {
-        if (X.openMenus.length != 0 || forcefully) {
+    clearOpenMenus: function (force = false) {
+        if (X.openMenus.length != 0 || force) {
             X.openMenus.forEach(openMenu => {
                 X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
 
                 //If there is a exitAnimation then play it and remove the element
                 if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
                     let element = document.querySelector(X.menus[openMenu].elementQuery);
-                    systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
-                    element.classList.add(X.menus[openMenu].exitAnimation)
-                    if (X.menus[openMenu].enterAnimation) {
-                        element.classList.remove(X.menus[openMenu].enterAnimation)
+                    if (isDefined(element)) {
+                        systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
+                        element.classList.add(X.menus[openMenu].exitAnimation)
+                        if (X.menus[openMenu].enterAnimation) element.classList.remove(X.menus[openMenu].enterAnimation)
+                        setTimeout(() => {
+                            systemExitAnimationMenuContainer.innerHTML = ""
+                        }, X.menus[openMenu].exitAnimationTime || 200);
                     }
-                    setTimeout(() => {
-                        element.remove()
-                    }, X.menus[openMenu].exitAnimationTime || 200);
                 }
             })
             X.openMenus = [];
