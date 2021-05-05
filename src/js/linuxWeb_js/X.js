@@ -409,6 +409,7 @@ X = {
     overlay: {
         //Creates an overlay
         create: function (html) {
+            X.clearOpenMenus()
             overlayContainer.querySelector('.general').innerHTML += `<div class='overlay'>${html}</div>`;
         },
         //Simply removes any element with the overlay tag
