@@ -75,7 +75,7 @@
                 display: flex
                 width: auto
                 padding: 0.2em 1em
-                background-color: var(--color-accent-200)
+                background-color: var(--color-accent-800)
                 justify-content: center
                 align-content: center
                 color: var(--color-text-light)
@@ -84,10 +84,10 @@
                 height: 4em
                 column-gap: 1em
                 &:hover
-                    background: var(--color-accent-100)
+                    background: var(--color-accent-400)
                 &:active
-                    background: var(--color-accent-300)
-                    box-shadow: 0px 0px 20px 1px var(--color-accent-300) inset
+                    background: var(--color-accent-select)
+                    box-shadow: 0px 0px 20px 1px var(--color-accent-select) inset
                 > *
                     flex: 1 1 auto
                     margin: auto
@@ -109,16 +109,16 @@
         position: fixed
         right: 1em
         bottom: 1em
-        background-color: var(--color-accent-100)
+        background-color: var(--color-accent-400)
         background-size: 50%
         border-radius: 50%
-        border: 1px solid var(--color-background-500)
+        border: 1px solid var(--color-primary-500)
         width: 2em
         height: 2em
         transform: scale(0)
         transition: transform 0.5s ease-in-out
         &:hover
-            background-color: var(--color-accent-200)
+            background-color: var(--color-accent-800)
 
     .login_background,.lock_background
         position: fixed
@@ -129,7 +129,7 @@
         z-index: -1
         top: 0px
         left: 0px
-        background: var(--color-background-1000)
+        background: var(--color-neutral-600)
     .lock_background
         background: var(--user-background)
         background-position: center
@@ -157,7 +157,7 @@
                     display: flex
                     flex-flow: column nowrap
                     box-sizing: border-box
-                    background-color: var(--color-accent-200)
+                    background-color: var(--color-accent-800)
                     background-blend-mode: darken
                     height: 6em
                     width: 6em
@@ -184,14 +184,14 @@
                     height: 25px
                     width: 25px
                     margin-left: calc(-0.3em - 25px)
-                    background: var(--color-accent-100)
+                    background: var(--color-accent-400)
                     margin-right: 0.6em
                     border-radius: 50%
-                    border: 1px solid var(--color-background-300)
+                    border: 1px solid var(--color-primary-300)
                     &:hover
-                        background-color: var(--color-accent-200)
+                        background-color: var(--color-accent-800)
                     &:active
-                        background: var(--color-accent-150)
+                        background: var(--color-accent-700)
 
                     *
                         height: 27px
@@ -215,7 +215,7 @@
                         background: var(--color-accent-100)
     & user_icon
         background-position: center
-        border: 2px solid var(--color-background-200)
+        border: 2px solid var(--color-primary-200)
         border-radius: 50%
         min-width: 3em
         min-height: 3em
@@ -226,11 +226,11 @@
 
 #statusAreaContainer.lockscreen
     z-index: 1
-    background-color: var(--color-background-600)
+    background-color: var(--color-primary-500)
     visibility: visible
-    border: var(--color-accent-100) 2px solid
+    border: var(--color-accent-400) 2px solid
     * dropdown
-        background-color: var(--color-accent-150)
+        background-color: var(--color-accent-700)
 
 input::-moz-focus-inner
     border: 0
