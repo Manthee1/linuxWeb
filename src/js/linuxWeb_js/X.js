@@ -204,7 +204,7 @@ X = {
                     <li><network_icon></network_icon><span>Connected</span></li>
                     <hr>
                     <li onclick="X.clearOpenMenus();processes.create('settings')"><settings_icon></settings_icon><span>Settings</span></li>
-                    <li onclick='X.lockScreen.lock()'><padlock_icon></padlock_icon><span>Lock</span></li>
+                    <li onclick="X.screen.set('lockScreen')"><padlock_icon></padlock_icon><span>Lock</span></li>
                     <div class='dropdown_item' onclick='X.general.dropdown.toggle(this)'>
                     <li><power_off_icon></power_off_icon><span>Power Off / Log Out</span><down_icon></down_icon></li>
                     <dropdown>
@@ -576,6 +576,8 @@ X = {
         activeScreen: "",
         set: function (screenName) {
             let availableScreens = ["loginScreen", "lockScreen", "desktop"];
+
+            X.clearOpenMenus()
 
             if (!availableScreens.includes(screenName))
                 return;
