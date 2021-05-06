@@ -202,9 +202,11 @@ DONE \---- Make em all work
 
 DONE TODO: Use border-box
 
+TODO: Restyle the Applist Bar
+
 TODO: Rework how to context menu is handled
-     \---- Have it created on request for an element.
-     \---- Have a dynamic object containing the structure of the context menu (Item name and function)
+DONE \---- Have it created on request for an element.
+DONE \---- Have a dynamic object containing the structure of the context menu (Item name and function)
 
 TODO: Create a system api to better handle interfacing with the system and programs
 
