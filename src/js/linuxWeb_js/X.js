@@ -6,11 +6,11 @@ X = {
 
     },
     menus: {
-        desktopContextMenu: {
+        contextMenu: {
             //Menu options
             createOnMousePosition: true,
             listenerType: "contextmenu",
-            toggleElement: document.querySelector('#desktop'),
+            toggleElement: null,
             recreateBehaviour: "recreate",
             changeBorder: false,
             preventDefault: true,
@@ -222,6 +222,48 @@ X = {
             },
         },
     },
+
+    contextMenu: {
+
+        stored: [],
+
+        add: function (element, layout) {
+            let contextMenuInnerHTML = ""
+
+            for (const item of layout) {
+
+                if (isTextEmpty(item[0])) {
+                    contextMenuInnerHTML += "<hr>"
+                    continue;
+                }
+
+                if (Array.isArray(item[1])) {
+                    contextMenuInnerHTML += `<span class="context_sub_menu_header">${item[0]}</span>
+                    <div class='context_sub_menu'>`
+                    for (const subitem of item[1]) {
+                        contextMenuInnerHTML += `<span onclick="${subitem[1]}">${subitem[0]}</span>`
+                    }
+                    contextMenuInnerHTML += "</div>"
+                    continue;
+                }
+
+
+
+                contextMenuInnerHTML += `<span onclick="${item[1]}">${item[0]}</span>`
+            }
+            this.stored.push({ element: element, layout: layout, innerHTML: contextMenuInnerHTML })
+            element.addEventListener('contextmenu', event => {
+                X.clearOpenMenus();
+
+                let contextMenuHTML = `<div id='context_menu' class='fadeIn' style="top: ${event.clientY}px;left: ${event.clientX}px;">${contextMenuInnerHTML}</div>`
+                systemMenuContainer.innerHTML = contextMenuHTML
+                X.openMenus.push("contextMenu")
+                // systemMenuContainer.insertAdjacentHTML('beforeend', contextMenuHTML)
+            })
+        }
+
+    },
+
     //The notification handler
     notification: {
         notifications: {},
@@ -787,6 +829,13 @@ X = {
                 appsContainer = document.querySelector("#mainContent > #appsContainer");
                 appList = document.querySelector("#mainContent > #appList");
 
+                X.contextMenu.add(desktop, [
+                    ["Change Background", "X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])"],
+                    [""],
+                    ["Terminal", "processes.create('terminal')"],
+                    ["Settings", "processes.create('settings')"],
+                ])
+
             }
         }
     },
@@ -881,7 +930,7 @@ X = {
     clearOpenMenus: function (force = false) {
         if (X.openMenus.length != 0 || force) {
             X.openMenus.forEach(openMenu => {
-                X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
+                isDefined(X.menus[openMenu].toggleElement) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
 
                 //If there is a exitAnimation then play it and remove the element
                 if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
