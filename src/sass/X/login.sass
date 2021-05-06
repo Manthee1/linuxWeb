@@ -111,18 +111,24 @@
                     margin: auto
     .switch_user_button
         position: fixed
+        display: inline-block
         right: 1em
         bottom: 1em
         background-color: var(--color-accent-400)
         background-size: 50%
         border-radius: 50%
         border: 1px solid var(--color-primary-500)
+        background-blend-mode: darken
         width: 2em
         height: 2em
+        min-width: 1em
+        min-height: 1em
+
         transform: scale(0)
         transition: transform 0.5s ease-in-out
         &:hover
             background-color: var(--color-accent-800)
+            background-blend-mode: normal
 
     .login_background,.lock_background
         position: fixed
