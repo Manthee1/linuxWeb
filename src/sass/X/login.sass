@@ -214,17 +214,18 @@
                     padding-left: 8px
                     height: 2.3em
                     width: 14em
-                    background: var(--color-accent-600)
+                    background: var(--color-accent-400)
                     border-radius: 5px
                     font-weight: 100
-                    border: 2px solid var(--color-accent-600)
+                    border: 2px solid var(--color-accent-700)
                     transition: background-color 50ms ease-in-out, border-color 50ms ease-in-out
-                    box-shadow: 0px 0px 3px 1px var(--color-accent-900)
                     font-size: 100%
-                    color: var(--color-text-medium-light)
+                    // color: var(--color-text-medium-light)
+                    &::placeholder
+                        // color: var(--color-accent-900)
+                        // border: 2px solid silver
                     &:focus
-                        box-shadow: 0px 0px 1px 0px var(--color-accent-900)
-                        background: var(--color-accent-700)
+                        background: var(--color-primary-400)
                         border: 2px solid var(--color-primary-400)
     & user_icon
         background-position: center
