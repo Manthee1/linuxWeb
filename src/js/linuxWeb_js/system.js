@@ -265,7 +265,7 @@ USAGE
 USAGE
   lock`,
                 method: () => {
-                    X.lockScreen.lock();
+                    X.screen.set('lockScreen');
                 }
             },
             exit: {
