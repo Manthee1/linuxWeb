@@ -3,8 +3,8 @@
   max-width: min-content;
   padding: 1.5em;
   border-radius: 8px;
-  background-color: var(--color-background-200);
-  --size: 30px;
+  background-color: var(--color-primary-200);
+  --size: 2.5em;
   padding: 10px; }
   .calendar > .calendar_content {
     display: flex;
@@ -38,7 +38,8 @@
           background-color: transparent;
           text-align: center;
           flex: 1 1 0px;
-          font-size: 80%; }
+          font-size: 80%;
+          margin: 0.1em; }
           .calendar > .calendar_content > dates > week > day > span {
             display: inline-block;
             border: 0;
@@ -47,12 +48,13 @@
             width: var(--size);
             line-height: var(--size);
             vertical-align: middle;
-            background-color: var(--color-background-300-lighter); }
+            background-color: transparent; }
             .calendar > .calendar_content > dates > week > day > span:hover {
-              filter: brightness(1.15); }
+              background-color: var(--color-primary-300); }
             .calendar > .calendar_content > dates > week > day > span:not(.current_date):active {
-              background-color: var(--color-background-300-darker); }
+              background-color: var(--color-primary-400); }
+            .calendar > .calendar_content > dates > week > day > span.current_date {
+              background-color: var(--color-select);
+              box-shadow: 0px 0px 5px 1px inset var(--color-accent-800); }
           .calendar > .calendar_content > dates > week > day > .not_current_months_date {
-            color: var(--light-gray-color); }
-          .calendar > .calendar_content > dates > week > day > .current_date {
-            background-color: var(--select-color); }
+            color: var(--color-text-medium); }

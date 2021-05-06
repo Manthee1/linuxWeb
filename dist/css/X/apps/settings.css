@@ -3,7 +3,7 @@
   height: 100%;
   flex-flow: row nowrap;
   display: flex;
-  background-color: var(--color-background-400);
+  background-color: var(--color-primary-400);
   color: var(--color-text-light); }
   .app_body > #settingsAppContainer > * {
     flex: 1 1 auto;
@@ -26,9 +26,9 @@
         width: 20px;
         margin-right: 10px; }
       .app_body > #settingsAppContainer > #sidebarMenu > *:hover {
-        background-color: var(--color-background-300); }
+        background-color: var(--color-primary-300); }
   .app_body > #settingsAppContainer > #contentPanel {
-    background-color: var(--color-background-300); }
+    background-color: var(--color-primary-300); }
     .app_body > #settingsAppContainer > #contentPanel > * {
       margin: 5px;
       padding: 0px; }

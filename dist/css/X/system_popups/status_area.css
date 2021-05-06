@@ -4,7 +4,7 @@
   right: 10px;
   top: calc(var(--topBar-height) + 10px);
   width: 18em;
-  background-color: var(--color-background-300);
+  background-color: var(--color-primary-300);
   border-radius: 10px;
   padding: 10px 0px; }
   #statusAreaContainer .dropdown_item {
@@ -21,7 +21,7 @@
         transition: transform 0.2s ease-in-out; }
     #statusAreaContainer .dropdown_item > dropdown {
       height: 0px;
-      background: var(--color-background-400);
+      background: var(--color-primary-400);
       overflow: hidden;
       display: flex;
       flex-flow: column nowrap;
@@ -30,7 +30,7 @@
         padding-left: 3.3em;
         margin: auto 0px; }
       #statusAreaContainer .dropdown_item > dropdown > hr {
-        background: var(--color-background-200); }
+        background: var(--color-primary-200); }
   #statusAreaContainer li {
     display: flex;
     margin: 5px 0px;
@@ -44,9 +44,9 @@
     text-align: left;
     border-radius: 0px; }
     #statusAreaContainer li:hover {
-      background: var(--color-background-200); }
+      background: var(--color-primary-200); }
     #statusAreaContainer li:active {
-      background: var(--color-accent-200); }
+      background: var(--color-accent-800); }
     #statusAreaContainer li > * {
       flex: 1 1 auto;
       height: 20px;
