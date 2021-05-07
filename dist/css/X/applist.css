@@ -1,38 +1,36 @@
 #appList {
-  background-color: var(--color-primary-300);
+  background-color: var(--color-accent-400);
+  box-shadow: 0px 0px 10px 1px var(--color-accent-500) inset;
   display: flex;
   position: absolute;
   bottom: 0px;
   left: 0px;
-  border-top: 2px solid var(--color-primary-300);
   align-content: center;
-  height: 25px;
-  opacity: 1;
+  justify-content: left;
+  height: 2em;
   width: 100%;
   z-index: 1002;
   flex-direction: row; }
-
-#appList > process {
-  position: relative;
-  flex: 1 1 auto;
-  padding: 0px 8px;
-  min-height: 25px;
-  max-width: 12rem;
-  text-overflow: ellipsis;
-  line-height: 25px;
-  font-size: 14px;
-  border-right: 1px solid var(--color-primary-300-lighter);
-  background-color: var(--color-primary-300);
-  font-weight: 100;
-  cursor: pointer; }
-
-#appList > process:hover {
-  filter: brightness(1.15);
-  opacity: 1; }
-
-#appList > process.selected {
-  background-color: var(--color-primary-300-darker);
-  opacity: 0.9;
-  top: -2px;
-  border-top: var(--light-color) 2px solid;
-  border-radius: 2px 2px 0px 0px; }
+  #appList:empty {
+    display: none; }
+  #appList > process {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    padding: 0px 8px;
+    align-items: center;
+    white-space: nowrap;
+    height: 100%;
+    max-width: 11rem;
+    text-overflow: ellipsis;
+    font-size: 0.8em;
+    font-weight: 100;
+    cursor: pointer;
+    column-gap: 0.4em; }
+    #appList > process img {
+      height: 50%; }
+    #appList > process:hover {
+      background-color: var(--color-accent-600); }
+    #appList > process.selected {
+      background-color: var(--color-accent-700);
+      box-shadow: 0px 3px 0px 0px var(--color-accent-800) inset; }

@@ -1,7 +1,7 @@
 .app_body > textarea {
   height: 100vh;
   resize: none;
-  background-color: var(--color-primary-300);
+  background-color: var(--color-primary-100);
   border: none;
   padding: 10px;
   overflow: auto;

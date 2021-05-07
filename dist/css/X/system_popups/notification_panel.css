@@ -32,7 +32,16 @@
     width: 23em;
     flex: 2 1 0; }
     #notificationPanelContainer > .notifications_container > .notification_wrapper {
+      position: relative;
       height: 100%; }
+      #notificationPanelContainer > .notifications_container > .notification_wrapper:empty::after {
+        position: absolute;
+        content: "No notifications";
+        color: var(--color-text-medium);
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.4em; }
       #notificationPanelContainer > .notifications_container > .notification_wrapper > notification {
         display: flex;
         flex-flow: column nowrap;

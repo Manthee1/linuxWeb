@@ -202,16 +202,21 @@ DONE \---- Make em all work
 
 DONE TODO: Use border-box
 
-TODO: Restyle the Applist Bar
 
-TODO: Rework how to context menu is handled
+DONE TODO: Rework how to context menu is handled
 DONE \---- Have it created on request for an element.
 DONE \---- Have a dynamic object containing the structure of the context menu (Item name and function)
 
-TODO: Create a system api to better handle interfacing with the system and programs
+TODO: Save the desktop status after lock and reinstate it after login.
+DONE TODO: Restyle the Applist Bar
+TODO: Fix notepad styles
+TODO: Check if firefox works
 
+TODO: Add 'passwd' command
+DONE TODO: Add a no Notifications thing to the notification panel when no notifications
 TODO: Make a settings cookie storage system.
 TODO: Expand the settings that don't need saving into cookies.
+TODO: Create a system api to better handle interfacing with the system and programs
 TODO: Bunch up together same app instances in the taskbar 
 TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
 TODO: apps get opened in the top left
@@ -224,6 +229,9 @@ TODO: Improve the Activities Screen
      \---- Show opened apps (Just like in gnome) 
 DONE TODO: Remove default electron menu
 
+DONE FIXME: lockScreen event listeners stop things from working sometimes
+     \----Fixed By: Adding screen specific eventListeners and clearing them after the screen change.
+DONE FIXME: context menu can get of screen when you right click to the right edge
 
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
