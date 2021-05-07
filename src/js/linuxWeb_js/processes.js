@@ -363,7 +363,7 @@ processes = {
 		`;
         //Insert the appHTML so that the value fields of inputs and similar elements don't get wiped.
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
-        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${appCreateData.title}</process>`
+        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${(isDefined(apps[appName].icon) && `<img src="${apps[appName].icon}">`) || ""} ${appCreateData.title}</process>`
         processes.pid[processID] = {}
 
         //Assign the createDate.methods object to the root of the apps pid object.
@@ -380,10 +380,10 @@ processes = {
             sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
             originalOffsetY: 0,
             originalOffsetX: 0,
-            getProcessElement: function () { return document.querySelector(`#${this.elementId}`) },
+            getProcessElement: function () { return document.querySelector(`#${this.elementId} `) },
             getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>.app_body`) },
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
-            getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id}`) },
+            getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id} `) },
         });
 
         setTimeout(() => {
@@ -449,7 +449,7 @@ processes = {
     initiateProcessMouseMoveHandler: function (process, originalOffsetY, originalOffsetX) {
         process.originalOffsetY = originalOffsetY;
         process.originalOffsetX = originalOffsetX;
-        document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event,processes.pid['${pid}'])`)
+        document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event, processes.pid['${pid}'])`)
     },
 
 
