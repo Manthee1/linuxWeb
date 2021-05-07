@@ -3,7 +3,7 @@
     height: 100%
     flex-flow: row nowrap
     display: flex
-    background-color: var(--color-primary-400)
+    background-color: var(--color-primary-200)
     color: var(--color-text-light)
 
     > *
@@ -15,8 +15,7 @@
         flex-flow: column
         flex: 0 0 0
         padding: 0px
-        > .selected
-            background-color: var(--color-select)
+
         > *
             display: flex
             flex-flow: row nowrap
@@ -31,9 +30,10 @@
 
             &:hover
                 background-color: var(--color-primary-300)
-
+        > .selected
+            background-color: var(--color-select)
     > #contentPanel
-        background-color: var(--color-primary-300)
+        background-color: var(--color-primary-100)
         > *
             margin: 5px
             padding: 0px

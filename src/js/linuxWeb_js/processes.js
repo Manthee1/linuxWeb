@@ -264,7 +264,7 @@ processes = {
         bodyColor: "",
         textColor: "",
         headerColor: "",
-        headerBorderBottomColor: "transparent",
+        headerBorderBottomColor: "",
         bodyBorderSize: "",
         padding: "",
         additionalBodyCss: "",
@@ -329,7 +329,9 @@ processes = {
         let headerStyles = `
 			color: ${appCreateData.titleColor};
 			background-color:${appCreateData.headerColor};
-			border-bottom: 1px solid ${appCreateData.headerBorderBottomColor};
+			border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: ${appCreateData.headerBorderBottomColor};
 		`;
 
         //This is how the app html is created.
