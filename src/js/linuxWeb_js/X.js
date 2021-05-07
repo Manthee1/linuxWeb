@@ -613,6 +613,7 @@ X = {
     screen: {
         activeSubScreen: "",
         activeScreen: "",
+        activeEventListeners: [],
         set: function (screenName) {
             let availableScreens = ["loginScreen", "lockScreen", "desktop"];
 
@@ -620,6 +621,10 @@ X = {
 
             if (!availableScreens.includes(screenName))
                 return;
+
+            for (const listener of this.activeEventListeners) {
+                listener.element.removeEventListener(listener.type, listener.callback)
+            }
 
             mainContent.innerHTML = screens[screenName].html
             X.status.screen = screenName;
@@ -649,6 +654,11 @@ X = {
                 element.classList.remove('custom_picture')
             }
 
+        },
+
+        addEventListener: function (element, type, callback) {
+            this.activeEventListeners.push({ element: element, type: type, callback: callback })
+            element.addEventListener(type, callback)
         },
 
         loginScreen: {
@@ -759,15 +769,13 @@ X = {
                 mainContent.querySelector('.login-lock_screen').addEventListener('mouseup', event => {
                     if (loginTime.classList.contains('selected')) this.showLoginForm()
                 })
-
-                let subScreenChangeKeyupHandler = event => {
+                X.screen.addEventListener(document, 'keyup', event => {
                     console.log(event);
                     if (loginTime.classList.contains('selected')) return this.showLoginForm()
 
                     if (event.code == "Escape") this.showTime()
-                }
+                })
 
-                document.addEventListener('keyup', subScreenChangeKeyupHandler)
 
                 loginForm.querySelector('#loginUserName').innerHTML = system.activeUser
                 loginForm.reset()
