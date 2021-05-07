@@ -34,8 +34,16 @@
         flex: 2 1 0
         // margin-bottom: 50px
         >.notification_wrapper
+            position: relative
             height: 100%
-
+            &:empty::after
+                position: absolute
+                content: "No notifications"
+                color: var(--color-text-medium)
+                left: 50%
+                top: 50%
+                transform: translate(-50%,-50%)
+                font-size: 1.4em
             > notification
                 display: flex
                 flex-flow: column nowrap
