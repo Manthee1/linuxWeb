@@ -268,22 +268,21 @@ X = {
     notification: {
         notifications: {},
         get: function () {
-            if (this.notifications == {}) return false
+            if (isObjectEmpty(this.notifications)) return false
             return this.notifications;
         },
         create: function (title = "", description = "", clickAction = "", iconPath = "", persistent = false, alert = true) {
             title = title || "Notification";
             description = description || "This is a default notification";
             iconPath = iconPath || "./img/about.svg";
-            type = typeof (type) != "boolean" ? false : persistent; //'persistent', 'temporary'
+            let type = typeof persistent != "boolean" ? false : persistent; //'persistent', 'temporary' : false, true
             clickAction = clickAction || "";
-            id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
-            //Creates an popup notification when condition is true.
+            let id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
+            //Creates a popup notification when condition is true.
             if (alert && !system.global.doNotDisturb) {
                 notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
                 popupNotificationContainer.insertAdjacentHTML('afterbegin', notificationHTML);
                 popupNotificationContainer.children[0].style.transform = "scale(1)";
-
                 popupNotificationContainer.children[0].style.transition = "all 0.2s linear";
                 setTimeout(() => {
                     popupNotificationContainer.children[0].style.transform = "scale(0.8)";
