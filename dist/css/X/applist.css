@@ -17,16 +17,20 @@
     position: relative;
     display: flex;
     flex: 1 1 auto;
-    padding: 0px 8px;
+    padding: 0px 0.6em;
     align-items: center;
     white-space: nowrap;
     height: 100%;
     max-width: 11rem;
-    text-overflow: ellipsis;
     font-size: 0.8em;
     font-weight: 100;
     cursor: pointer;
     column-gap: 0.4em; }
+    #appList > process * {
+      margin: auto 0em; }
+    #appList > process span {
+      overflow: hidden;
+      text-overflow: ellipsis; }
     #appList > process img {
       height: 50%; }
     #appList > process:hover {

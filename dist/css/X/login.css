@@ -91,7 +91,9 @@
           height: 4em;
           width: 4em;
           border-color: var(--color-accent-200);
-          background-size: cover; }
+          background-size: 60%; }
+          .login-lock_screen .center_container .account_container .account_content *:first-child.custom_picture {
+            background-size: cover; }
         .login-lock_screen .center_container .account_container .account_content *:last-child {
           text-overflow: ellipsis;
           flex: 1 1 auto;
