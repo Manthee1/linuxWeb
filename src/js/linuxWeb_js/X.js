@@ -671,6 +671,30 @@ X = {
             element.addEventListener(type, callback)
         },
 
+        loginUser: function (username, password) {
+            // In future (maybe 0.5) there will be a nice token based permission system.
+            // as for now. you get logged in by X.
+            // But actually X should be just an extension of the system
+            // And the system should be the one allowing you to log in,
+            // and managing what you can or can not do with it.
+            if (system.validatePassword(username, password)) {
+                system.activeUser = username;
+                Object.entries(system.accounts[username].settings).forEach(x => {
+                    let [itemName, itemProperties] = [x[0], x[1]]
+                    if (isObject(itemProperties)) {
+                        switch (itemProperties.type) {
+                            case "cssVar":
+                                root.style.setProperty('--' + itemProperties.variable, itemProperties.value);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })
+            }
+            X.screen.set('desktop')
+        },
+
         loginScreen: {
             init: function () {
                 X.topBar.showWrappers(0, 1, 1);
@@ -695,6 +719,11 @@ X = {
             },
 
             showLoginForm: function (username) {
+
+                if (isTextEmpty(system.accounts[username].encPassword)) {
+                    X.screen.loginUser(username, "")
+                    return
+                }
                 X.screen.setActiveSubScreen("#loginForm")
 
                 let loginForm = mainContent.querySelector('#loginForm')
@@ -705,37 +734,14 @@ X = {
                 inputEl.classList.remove('incorrectLogin')
                 inputEl.focus()
                 loginForm.addEventListener('submit', event => {
-
                     event.preventDefault()
 
                     let formData = new FormData(loginForm);
-
-                    // In future (maybe 0.5) there will be a nice token based permission system.
-                    // as for now. you get logged in by X.
-                    // But actually X should be just an extension of the system
-                    // And the system should be the one allowing you to log in,
-                    // and managing what you can or can not do with it.
-
                     if (system.validatePassword(username, formData.get('password'))) {
-                        system.activeUser = username;
-
-                        Object.entries(system.accounts[username].settings).forEach(x => {
-                            let [itemName, itemProperties] = [x[0], x[1]]
-                            if (isObject(itemProperties)) {
-                                switch (itemProperties.type) {
-                                    case "cssVar":
-                                        root.style.setProperty('--' + itemProperties.variable, itemProperties.value);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                        })
-
-                        X.screen.set('desktop')
-
+                        X.screen.loginUser(username, formData.get('password'))
                         return;
                     }
+
                     inputEl.classList.remove('incorrectLogin')
                     void inputEl.offsetWidth; //IDK. makes the animation reset work tho.
                     inputEl.classList.add('incorrectLogin')
@@ -779,6 +785,9 @@ X = {
 
                 loginTime.classList.add('selected')
 
+                if (isTextEmpty(system.accounts[system.activeUser].encPassword))
+                    mainContent.querySelector('.switch_user_button').style.transform = 'scale(1)'
+
                 X.screen.setToUserProfilePicture(loginForm.querySelector('user_icon'), system.accounts[system.activeUser].settings.profilePictureUrl)
 
                 mainContent.querySelector('.login-lock_screen').addEventListener('mouseup', event => {
@@ -802,7 +811,7 @@ X = {
 
                     let formData = new FormData(loginForm);
                     if (system.validatePassword(system.activeUser, formData.get('password'))) {
-                        X.screen.set('desktop')
+                        X.screen.loginUser(system.activeUser, formData.get('password'))
                         return;
                     }
                     inputEl.classList.remove('incorrectLogin')
@@ -829,6 +838,15 @@ X = {
 
             showLoginForm: function () {
 
+
+                if (isTextEmpty(system.accounts[system.activeUser].encPassword)) {
+                    setTimeout(() => {
+                        if (X.screen.activeScreen != "lockScreen")
+                            return; //If The screen changed(mainly because of the switch user button). Don't change it to desktop
+                        X.screen.loginUser(system.accounts[system.activeUser], "")
+                    }, 500);
+                    loginForm.style.display = "none"
+                }
                 if (!this.pauseElementChange) {
                     this.enablePauseElementChange()
                     loginTime.classList.remove('selected')
