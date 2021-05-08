@@ -19,12 +19,14 @@ system = {
             },
             sessionStateCache: {}
         },
+        user2: { username: "user2", privileged: false, encPassword: "", settings: {}, sessionStateCache: {} },
     },
 
     validatePassword: function (username, password) {
         if (!isDefined(system.accounts[username])) return false
+        if (isTextEmpty(system.accounts[username].encPassword)) return true;
         if (sha256(btoa(password)) == system.accounts[username].encPassword) return true;
-        else return false;
+        return false;
     },
 
     // I won't comment understandable functions here...
@@ -342,6 +344,37 @@ USAGE
                     else
                         throw "message - Cannot be empty";
                 }
+            },
+
+            passwd: {
+                shortHelp: "Change a password",
+                help: `Changes a specified account's password
+
+USAGE
+  passwd <username> -p <password>
+  passwd <username> -c
+  ----------------
+  passwd user1 -p 123
+  passwd user1 -c    //clears an users password`,
+
+
+                method: (options, terminal) => {
+                    const username = options["@"][0];
+                    let password = ""
+                    console.log(options, username);
+                    if (isTextEmpty(username)) throw "Username not provided"
+                    if (!isDefined(system.accounts[username])) throw "That user does not exist"
+
+
+                    if (!isDefined(options["-c"]) && !isDefined(options["-p"])) throw "-c or -p required"
+                    if (isDefined(options["-c"]) && isDefined(options["-p"])) throw "You can't both clear and change a password"
+                    if (isDefined(options["-p"]) && isTextEmpty(options["-p"])) throw "-p: Can't be empty"
+                    else password = options["-p"];
+                    if (isDefined(options["-c"])) system.accounts[username].encPassword = ""
+                    else system.accounts[username].encPassword = sha256(btoa(password))
+                    return "Password successfully changed"
+                }
+
             },
             ls: {
                 shortHelp: "List the contents of a directory",
