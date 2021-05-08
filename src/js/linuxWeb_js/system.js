@@ -10,12 +10,14 @@ system = {
         css: {},
     },
     accounts: {
-        root: { username: "root", privileged: true, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f", settings: {} },
+        root: { username: "root", privileged: true, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f", settings: {}, sessionStateCache: {} },
         user1: {
-            username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f", settings: {
+            username: "user1", privileged: false, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f",
+            settings: {
                 background: { type: "cssVar", variable: "user-background", value: "url('https://cdn.pling.com/img//hive/content-pre1/155710-1.jpg')" },
                 profilePictureUrl: "https://p.favim.com/orig/2018/10/01/cartoon-profile-picture-cute-Favim.com-6346120.jpg"
-            }
+            },
+            sessionStateCache: {}
         },
     },
 

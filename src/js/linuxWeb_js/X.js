@@ -609,6 +609,13 @@ X = {
         },
     },
 
+    cacheSession: function () {
+        let sessionStateCache = system.accounts[system.activeUser].sessionStateCache
+        sessionStateCache.desktopHTML = mainContent.innerHTML
+        sessionStateCache.runningProcesses = processes.pid
+        sessionStateCache.notifications = X.notification.notifications
+    },
+
     screen: {
         activeSubScreen: "",
         activeScreen: "",
@@ -617,6 +624,10 @@ X = {
             let availableScreens = ["loginScreen", "lockScreen", "desktop"];
 
             X.clearOpenMenus()
+
+            if (this.activeScreen == "desktop" && screenName != "desktop")
+                X.cacheSession()
+
 
             if (!availableScreens.includes(screenName))
                 return;
@@ -706,8 +717,8 @@ X = {
                     // and managing what you can or can not do with it.
 
                     if (system.validatePassword(username, formData.get('password'))) {
-                        X.screen.set('desktop')
                         system.activeUser = username;
+
                         Object.entries(system.accounts[username].settings).forEach(x => {
                             let [itemName, itemProperties] = [x[0], x[1]]
                             if (isObject(itemProperties)) {
@@ -720,6 +731,9 @@ X = {
                                 }
                             }
                         })
+
+                        X.screen.set('desktop')
+
                         return;
                     }
                     inputEl.classList.remove('incorrectLogin')
@@ -744,6 +758,8 @@ X = {
                 });
             }
         },
+
+
 
         lockScreen: {
             pauseElementChange: false,
@@ -830,6 +846,15 @@ X = {
             init: function () {
                 X.topBar.showWrappers(1, 1, 1);
                 X.topBar.setColor('');
+
+                if (!isObjectEmpty(system.accounts[system.activeUser].sessionStateCache)) {
+                    let sessionStateCache = system.accounts[system.activeUser].sessionStateCache
+                    mainContent.innerHTML = sessionStateCache.desktopHTML
+                    processes.pid = sessionStateCache.runningProcesses
+                    X.notification.notifications = sessionStateCache.notifications
+                    sessionStateCache = {}
+                }
+
 
                 desktop = document.querySelector("#mainContent > #desktop");
                 popupNotificationContainer = document.querySelector("#mainContent > #popupNotificationsContainer");
