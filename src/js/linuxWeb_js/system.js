@@ -267,7 +267,9 @@ USAGE
 USAGE
   lock`,
                 method: () => {
-                    X.screen.set('lockScreen');
+                    setTimeout(() => {
+                        X.screen.set('lockScreen');
+                    }, 100); //Timeout so that the lockScreen event listener does not immediately trigger when you press enter and execute the command 
                 }
             },
             exit: {
