@@ -614,6 +614,9 @@ X = {
         sessionStateCache.desktopHTML = mainContent.innerHTML
         sessionStateCache.runningProcesses = processes.pid
         sessionStateCache.notifications = X.notification.notifications
+        processes.pid = {}
+        X.notification.notifications = {}
+
     },
 
     screen: {
@@ -700,6 +703,7 @@ X = {
                 X.topBar.showWrappers(0, 1, 1);
                 X.topBar.setColor('transparent')
                 system.activeUser = "";
+                root.style = ""
                 this.showAccounts()
             },
 
