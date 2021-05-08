@@ -363,7 +363,7 @@ processes = {
 		`;
         //Insert the appHTML so that the value fields of inputs and similar elements don't get wiped.
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
-        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${(isDefined(apps[appName].icon) && `<img src="${apps[appName].icon}">`) || ""} ${appCreateData.title}</process>`
+        appList.innerHTML += `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${(isDefined(apps[appName].icon) && `<img src="${apps[appName].icon}">`) || ""}<span>${appCreateData.title}</span></process>`
         processes.pid[processID] = {}
 
         //Assign the createDate.methods object to the root of the apps pid object.
