@@ -207,20 +207,20 @@ DONE TODO: Rework how to context menu is handled
 DONE \---- Have it created on request for an element.
 DONE \---- Have a dynamic object containing the structure of the context menu (Item name and function)
 
-TODO: Save the desktop status after lock and reinstate it after login.
+DONE TODO: Save the desktop status after lock and reinstate it after login.
 DONE TODO: Restyle the Applist Bar
-TODO: Fix notepad styles
-TODO: Check if firefox works
+DONE TODO: Fix notepad styles
+DONE TODO: Check if firefox works
 
-TODO: Add 'passwd' command
-DONE TODO: Add a no Notifications thing to the notification panel when no notifications
+DONE TODO: Add 'passwd' command
+DONE TODO: Add a no Notifications thin to the notification panel when no notifications
 TODO: Make a settings cookie storage system.
 TODO: Expand the settings that don't need saving into cookies.
 TODO: Create a system api to better handle interfacing with the system and programs
 TODO: Bunch up together same app instances in the taskbar 
-TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
+DONE TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
 TODO: apps get opened in the top left
-     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom left (so basically like any os does)
+     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom right (so basically like any os does)
 DONE TODO: Add terminal commands: rm
 DONE TODO: Add terminal commands: rmdir
 DONE TODO: Add Application menus and an easy way to create them
@@ -234,6 +234,9 @@ DONE FIXME: lockScreen event listeners stop things from working sometimes
 DONE FIXME: context menu can get of screen when you right click to the right edge
 DONE FIXME: Fix firefox css.
 DONE FIXME: Apps can be dragged under the applist taskbar and then they can become unreturnable.
+FIXME: Switching screen out of and back into desktop clear the listeners for the applist
+     \---- Possible solution. Cache event listeners. And reinstate them on login.
+
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
 TODO: Don't add light mode!
