@@ -233,6 +233,7 @@ DONE FIXME: lockScreen event listeners stop things from working sometimes
      \----Fixed By: Adding screen specific eventListeners and clearing them after the screen change.
 DONE FIXME: context menu can get of screen when you right click to the right edge
 DONE FIXME: Fix firefox css.
+DONE FIXME: Apps can be dragged under the applist taskbar and then they can become unreturnable.
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
 TODO: Don't add light mode!

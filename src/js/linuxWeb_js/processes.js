@@ -485,7 +485,8 @@ processes = {
         //Caps the apps top position to the #topBar's height.
         // Very understandable I think.
         y = y < topBar.offsetHeight ? topBar.offsetHeight : y; // Cap the position to the topBar height
-
+        let appListPosition = (window.innerHeight - appList.offsetHeight * 2)
+        y = y > appListPosition ? appListPosition : y  // Makes sure the app header doesn't go under the applist
         element.style.top = y + "px";
         element.style.left = x + "px";
     },
