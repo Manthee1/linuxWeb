@@ -8,6 +8,7 @@ X = {
     menus: {
         contextMenu: {
             //Menu options
+            menuName: "contextMenu",
             createOnMousePosition: true,
             correctionType: 0,
             listenerType: "contextmenu",
@@ -21,25 +22,7 @@ X = {
             elementQuery: "#context_menu",
 
             getHTML: function (x = 100, y = 100) {
-                return `
-		<div id='context_menu' style="top: ${y}px;left: ${x}px;">
-				<span onclick="X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])">Change Background</span>
-                <hr>
-				<span onclick="processes.create('terminal')">Terminal</span>
-				<span onclick="processes.create('settings')">Settings</span>
-                <hr>
-                <span class='context_sub_menu_header'>Hello</span>
-                <div class='context_sub_menu'>
-                <span>New</span>
-                <span>Context</span>
-                <span>Sub</span>
-                <span>Menu</span>
-                <span>YAY!</span>
-
-                </div>
-			</div>
-				`
-
+                return ``;
             },
             // Close the menu when the condition returns true
             closeCondition: function (event) {
@@ -47,6 +30,7 @@ X = {
             },
         },
         activities: {
+            menuName: "activities",
             listenerType: "click",
             toggleElement: document.querySelector('#activitiesMenuButton'),
             enterAnimation: "fadeIn",
@@ -78,6 +62,7 @@ X = {
 
         },
         notificationPanel: {
+            menuName: "notificationPanel",
             listenerType: "click",
             toggleElement: document.querySelector("#topBarDateTime"),
             enterAnimation: "bottomFadeIn",
@@ -138,6 +123,7 @@ X = {
             }
         },
         statusArea: {
+            menuName: "statusArea",
             listenerType: "click",
             toggleElement: document.querySelector("#statusAreaButton"),
             enterAnimation: "bottomFadeIn",
@@ -962,7 +948,6 @@ X = {
                                 }
                             })
                             menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
-                            X.openMenus.push(xObjName);
                             typeof menuUIData.onCreate == 'function' && menuUIData.onCreate(event);
                         }, 1);
                     }
@@ -1005,6 +990,7 @@ X = {
     },
     //Creates a menu.....
     createMenu: function (menuUIData, x, y) {
+        this.clearOpenMenus();
         let elHTML = menuUIData.getHTML(x, y);
         let elTag = menuUIData.elementQuery;
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the objects html to the DOM.
@@ -1023,6 +1009,7 @@ X = {
             let element = systemMenuContainer.querySelector(menuUIData.elementQuery);
             element.classList.add(menuUIData.enterAnimation);
         }
+        X.openMenus.push(menuUIData.menuName);
     },
     correctPosition: function (x, y, width, height, correctionType = 0) {
 
