@@ -969,18 +969,19 @@ X = {
     clearOpenMenus: function (force = false) {
         if (X.openMenus.length != 0 || force) {
             X.openMenus.forEach(openMenu => {
-                isDefined(X.menus[openMenu].toggleElement) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
-
-                //If there is a exitAnimation then play it and remove the element
-                if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
-                    let element = document.querySelector(X.menus[openMenu].elementQuery);
-                    if (isDefined(element)) {
-                        systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
-                        element.classList.add(X.menus[openMenu].exitAnimation)
-                        if (X.menus[openMenu].enterAnimation) element.classList.remove(X.menus[openMenu].enterAnimation)
-                        setTimeout(() => {
-                            systemExitAnimationMenuContainer.innerHTML = ""
-                        }, X.menus[openMenu].exitAnimationTime || 200);
+                if (isDefined(X.menus[openMenu])) {
+                    isDefined(X.menus[openMenu].toggleElement) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
+                    //If there is a exitAnimation then play it and remove the element
+                    if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
+                        let element = document.querySelector(X.menus[openMenu].elementQuery);
+                        if (isDefined(element)) {
+                            systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
+                            element.classList.add(X.menus[openMenu].exitAnimation)
+                            if (X.menus[openMenu].enterAnimation) element.classList.remove(X.menus[openMenu].enterAnimation)
+                            setTimeout(() => {
+                                systemExitAnimationMenuContainer.innerHTML = ""
+                            }, X.menus[openMenu].exitAnimationTime || 200);
+                        }
                     }
                 }
             })
