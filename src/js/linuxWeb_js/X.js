@@ -248,17 +248,16 @@ X = {
                     continue;
                 }
 
-
-
                 contextMenuInnerHTML += `<span onclick="${item[1]}">${item[0]}</span>`
             }
             this.stored.push({ element: element, layout: layout, innerHTML: contextMenuInnerHTML })
             element.addEventListener('contextmenu', event => {
                 X.clearOpenMenus();
 
-                let contextMenuHTML = `<div id='context_menu' class='fadeIn' style="top: ${event.clientY}px;left: ${event.clientX}px;">${contextMenuInnerHTML}</div>`
-                systemMenuContainer.innerHTML = contextMenuHTML
-                X.openMenus.push("contextMenu")
+                let menuUIData = X.menus.contextMenu
+                menuUIData.getHTML = () => `<div id='context_menu' class='fadeIn' style="top: ${event.clientY}px;left: ${event.clientX}px;">${contextMenuInnerHTML}</div>`
+
+                X.createMenu(X.menus.contextMenu, event.clientX, event.clientY)
                 // systemMenuContainer.insertAdjacentHTML('beforeend', contextMenuHTML)
             })
         }
