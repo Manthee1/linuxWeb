@@ -36,7 +36,12 @@ apps = {
                 currentDirectory: "/",
                 user: system.activeUser,
 
+                updateUserName: function () {
+                    this.user = system.activeUser;
+                },
+
                 getPrefix: function () {
+                    this.updateUserName();
                     return `[${this.user} ${this.currentDirectory}] $&nbsp`;
                 },
 
