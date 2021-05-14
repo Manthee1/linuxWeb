@@ -714,7 +714,7 @@ X = {
                     if (x.username != "root")
                         return `
                     <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
-                        <user_icon ${isDefined(x.settings.profilePictureUrl) && `style="background-image:url('${x.settings.profilePictureUrl}')" class="custom_picture"`}"></user_icon>
+                        <user_icon ${(isDefined(x.settings.profilePictureUrl) && `style="background-image:url('${x.settings.profilePictureUrl}')" class="custom_picture"`) || ''}></user_icon>
                         <span>${x.username}</span>
                     </div>
             `}).join('')
