@@ -1025,8 +1025,25 @@ X = {
             let element = systemMenuContainer.querySelector(menuUIData.elementQuery);
             element.classList.add(menuUIData.enterAnimation);
         }
+    },
+    correctPosition: function (x, y, width, height, correctionType = 0) {
 
-    }
+        // Correct something's position if the part of it appears outside the screen
+        const appListHeight = isDefined(appList) ? appList.offsetHeight : 0
+        switch (correctionType) {
+            case 0:
+                x = x > window.innerWidth - width ? window.innerWidth - width : x
+                y = y > window.innerHeight - (height + appListHeight) ? y - height : y
+                break;
+            case 1:
+                x = x > window.innerWidth - width ? x - width : x
+                y = y > window.innerHeight - (height + appListHeight) ? y - height : y
+                break;
+            default:
+                break;
+        }
+        return [x, y]
+    },
 }
 
 
