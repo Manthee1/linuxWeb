@@ -9,6 +9,7 @@ X = {
         contextMenu: {
             //Menu options
             createOnMousePosition: true,
+            correctionType: 0,
             listenerType: "contextmenu",
             toggleElement: null,
             recreateBehaviour: "recreate",
@@ -1010,14 +1011,12 @@ X = {
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the objects html to the DOM.
 
         if (menuUIData.createOnMousePosition) {
-            let el = systemMenuContainer.querySelector(elTag)
-
-            // Correct the menu position if the part of it appears outside the screen
-            x = x > window.innerWidth - el.offsetWidth ? window.innerWidth - el.offsetWidth : x
-            y = y > window.innerHeight - (el.offsetHeight + appList.offsetHeight) ? window.innerHeight - (el.offsetHeight + appList.offsetHeight + 1) : y
-            el.style.top = y + 'px'
-            el.style.left = x + 'px'
-
+            const el = systemMenuContainer.querySelector(elTag);
+            const correctionType = isDefined(menuUIData.correctionType) ? menuUIData.correctionType : 0;
+            [x, y] = X.correctPosition(x, y, el.offsetWidth, el.offsetHeight, correctionType);
+            console.log(x, y, el.offsetWidth, el.offsetHeight, correctionType);
+            el.style.left = x + "px";
+            el.style.top = y + "px";
         }
 
         if (menuUIData.elementQuery != "" && menuUIData.enterAnimation != "") {
