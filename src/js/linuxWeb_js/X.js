@@ -321,8 +321,9 @@ X = {
 
                 contextMenuInnerHTML += `<span onclick="${item[1]}">${item[0]}</span>`
             }
-            this.stored.push({ element: element, layout: layout, innerHTML: contextMenuInnerHTML })
-            element.addEventListener('contextmenu', event => {
+            // this.stored.push({ element: element, layout: layout, innerHTML: contextMenuInnerHTML })
+
+            contextMenuEventHandler = event => {
                 X.clearOpenMenus();
 
                 let menuUIData = X.menus.contextMenu
@@ -330,7 +331,10 @@ X = {
 
                 X.createMenu(X.menus.contextMenu, event.clientX, event.clientY)
                 // systemMenuContainer.insertAdjacentHTML('beforeend', contextMenuHTML)
-            })
+            }
+
+            if (cacheListener) X.addEventListener(element, 'contextmenu', contextMenuEventHandler)
+            else element.addEventListener('contextmenu', contextMenuEventHandler)
         }
 
     },
@@ -687,7 +691,9 @@ X = {
         sessionStateCache.notifications = X.notification.notifications
         processes.pid = {}
         X.notification.notifications = {}
-
+        for (const listener of system.accounts[system.activeUser].sessionStateCache.activeEventListeners) {
+            listener.element.removeEventListener(listener.event, listener.callback)
+        }
     },
 
     screen: {
@@ -697,14 +703,13 @@ X = {
         set: function (screenName) {
             let availableScreens = ["loginScreen", "lockScreen", "desktop"];
 
+            if (!availableScreens.includes(screenName))
+                return;
+
             X.clearOpenMenus()
 
             if (this.activeScreen == "desktop" && screenName != "desktop")
                 X.cacheSession()
-
-
-            if (!availableScreens.includes(screenName))
-                return;
 
             for (const listener of this.activeEventListeners) {
                 listener.element.removeEventListener(listener.type, listener.callback)
@@ -945,6 +950,9 @@ X = {
                     mainContent.innerHTML = sessionStateCache.desktopHTML
                     processes.pid = sessionStateCache.runningProcesses
                     X.notification.notifications = sessionStateCache.notifications
+                    for (const listener of system.accounts[system.activeUser].sessionStateCache.activeEventListeners) {
+                        listener.element.addEventListener(listener.event, listener.callback)
+                    }
                     sessionStateCache = {}
                 }
 
@@ -959,8 +967,7 @@ X = {
                     [""],
                     ["Terminal", "processes.create('terminal')"],
                     ["Settings", "processes.create('settings')"],
-                ])
-
+                ], false)
             }
         }
     },
@@ -1115,6 +1122,11 @@ X = {
                 break;
         }
         return [x, y]
+    },
+    addEventListener: function (element, event, callback) {
+        !isDefined(system.accounts[system.activeUser].sessionStateCache.activeEventListeners) && (system.accounts[system.activeUser].sessionStateCache.activeEventListeners = []);
+        system.accounts[system.activeUser].sessionStateCache.activeEventListeners.push({ element: element, event: event, callback: callback })
+        element.addEventListener(event, callback);
     },
 }
 
