@@ -50,7 +50,9 @@ X = {
                     else appIcon = x[0][0];
                     return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');" --data-tooltip="${x[1].name}" >${appIcon}</app>`
                 }).join('')}
-			</div>
+			        </div>
+                    <div class="search_results_container">
+                    </div>
 				</div>
 		`
                 return html;
@@ -59,6 +61,14 @@ X = {
             closeCondition: function (event) {
                 return event.target == document.querySelector("#activitiesMenuContainer")
             },
+
+            onCreate: function () {
+                const inputElement = systemMenuContainer.querySelector(".app_search > input")
+                inputElement.focus()
+                inputElement.addEventListener('input', event => {
+                    systemMenuContainer.querySelector('.search_results_container').innerHTML = X.activities.requestResults(inputElement.value)
+                })
+            }
 
         },
         notificationPanel: {
@@ -210,11 +220,43 @@ X = {
         },
     },
 
+    //Activities menu thing
+    activities: {
+
+        requestResults: function (searchQuery) {
+            if (isTextEmpty(searchQuery)) return ""
+            searchQuery = searchQuery.toLowerCase()
+
+            let ret = ""
+            let indexedApps = []
+            const propertiesToIndex = ["name", "description"]
+
+            Object.entries(apps).forEach(x => {
+                const appName = x[0]
+                const appProperties = x[1]
+                indexedApps.push([appName, propertiesToIndex.map(property => { return (isDefined(appProperties[property]) && (appProperties[property].toLowerCase() + " ")) || "" }).join('')])
+            })
+
+            indexedApps.forEach(x => {
+
+                const appName = x[0]
+                const appHaystack = x[1]
+
+                if (appHaystack.includes(searchQuery)) {
+                    let appIcon = apps[appName][0];
+                    if (apps[appName].icon != undefined) appIcon = `<img src='${apps[appName].icon}'>`;
+                    else if (apps[appName].name != undefined) appIcon = `<span>${apps[appName].name[0]}</span>`;
+                    ret += `<app onclick="X.clearOpenMenus();processes.create('${appName}');" --data-tooltip="${x[1].description}" ><div class='iconWrapper'>${appIcon}</div><span class='app_name'>${apps[appName].name}</span></app>`
+                }
+            })
+            return ret;
+        }
+    },
     contextMenu: {
 
         stored: [],
 
-        add: function (element, layout) {
+        add: function (element, layout, cacheListener = true) {
             let contextMenuInnerHTML = ""
 
             for (const item of layout) {

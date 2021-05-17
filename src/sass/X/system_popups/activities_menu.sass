@@ -41,14 +41,52 @@
             &::placeholder
                 color: var(--color-text-light)
 
-    > .favorites
+    > .search_results_container
+        max-width: 80%
+        display: flex
+        flex-flow: row nowrap
+        justify-content: center
+        align-content: center
+        height: auto
+        align-self: center
+        > app
+            display: flex
+            flex-flow: column nowrap
+            justify-content: center
+            align-content: center
+            border-radius: 10px
+            text-align: center
+            width: 9em
+            height: 9em
+            padding: 0.6em
+            >*
+                flex: 1 1 auto
+            &:hover
+                background: var(--color-accent-600)
+            .iconWrapper
+                // padding: 0.3em
+                display: flex
+                flex-flow: column nowrap
+                justify-self: center
+                align-self: center
+                justify-content: center
+                align-content: center
+                >img
+                    width: 5em
+                    height: 5em
+                >span
+                    font-size: 4em
+            .app_name
+                overflow: hidden
+                white-space: nowrap
+                text-overflow: ellipsis
+                font-size: 0.9em
+                height: 0em
+    > .favorites,
         position: absolute
         width: auto
         margin: auto
         display: flex
-        flex-flow: column nowrap
-        justify-content: center
-        align-content: center
         top: 50%
         transform: translate(0, -50%)
         border: 2px solid var(--color-primary-200)
@@ -56,6 +94,11 @@
         border-radius: 0px 10px 10px 0px
         background: var(--color-accent-400)
         padding: 5px 0px
+        display: flex
+        flex-flow: column nowrap
+        justify-content: center
+        align-content: center
+
         >*
             height: 3em
             width: 3em
