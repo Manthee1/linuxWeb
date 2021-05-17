@@ -1,14 +1,14 @@
-#appsContainer {
+#appsContainer, .open_apps_preview_container {
   position: absolute;
   top: 0px;
   left: 0px;
   margin: 0px;
   padding: 0px; }
-  #appsContainer > * {
+  #appsContainer > *, .open_apps_preview_container > * {
     filter: brightness(0.85); }
-    #appsContainer > *:last-child {
+    #appsContainer > *:last-child, .open_apps_preview_container > *:last-child {
       filter: brightness(1); }
-  #appsContainer > app_container {
+  #appsContainer > app_container, .open_apps_preview_container > app_container {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -25,7 +25,7 @@
     z-index: 4;
     opacity: 1;
     transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; }
-    #appsContainer > app_container > app_header {
+    #appsContainer > app_container > app_header, .open_apps_preview_container > app_container > app_header {
       display: flex;
       flex-flow: row nowrap;
       text-align: center;
@@ -39,7 +39,7 @@
       padding-left: 5px;
       text-overflow: ellipsis;
       background-color: var(--app-header-color); }
-      #appsContainer > app_container > app_header > app_title {
+      #appsContainer > app_container > app_header > app_title, .open_apps_preview_container > app_container > app_header > app_title {
         display: inline-block;
         margin: auto;
         width: 100%;
@@ -54,7 +54,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden; }
-      #appsContainer > app_container > app_header *:not(app_title) {
+      #appsContainer > app_container > app_header *:not(app_title), .open_apps_preview_container > app_container > app_header *:not(app_title) {
         position: relative;
         margin: auto 3px;
         margin-left: 3px;
@@ -74,24 +74,24 @@
         justify-self: center;
         align-self: center;
         opacity: 0.8; }
-        #appsContainer > app_container > app_header *:not(app_title):hover {
+        #appsContainer > app_container > app_header *:not(app_title):hover, .open_apps_preview_container > app_container > app_header *:not(app_title):hover {
           opacity: 1;
           background-color: var(--color-accent-400); }
-      #appsContainer > app_container > app_header > app_exit:hover {
+      #appsContainer > app_container > app_header > app_exit:hover, .open_apps_preview_container > app_container > app_header > app_exit:hover {
         background-color: var(--color-danger) !important;
         filter: none; }
-      #appsContainer > app_container > app_header > app_maximize > * {
+      #appsContainer > app_container > app_header > app_maximize > *, .open_apps_preview_container > app_container > app_header > app_maximize > * {
         background-size: 40%; }
-      #appsContainer > app_container > app_header > app_minimize {
+      #appsContainer > app_container > app_header > app_minimize, .open_apps_preview_container > app_container > app_header > app_minimize {
         margin-left: auto !important; }
-      #appsContainer > app_container > app_header > *:not(app_title) > * {
+      #appsContainer > app_container > app_header > *:not(app_title) > *, .open_apps_preview_container > app_container > app_header > *:not(app_title) > * {
         background-position: center;
         height: 100%;
         width: 100%;
         background-size: 6px;
         padding: 0px;
         margin: 0px; }
-  #appsContainer .app_body {
+  #appsContainer .app_body, .open_apps_preview_container .app_body {
     display: flex;
     flex-direction: column;
     margin: 3px;
