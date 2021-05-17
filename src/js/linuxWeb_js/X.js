@@ -42,17 +42,17 @@ X = {
                 let html = `
 				<div id='activitiesMenuContainer'>
 					<div class='app_search'><search_icon></search_icon><input placeholder='Type to search' type='search'></div>
-					<div class='favorites'>
+					<div class="search_results_container"></div>
+                    <div class='favorites'>
 					${Object.entries(apps).map(x => {
                     let appIcon;
                     if (x[1].icon != undefined) appIcon = `<img src='${x[1].icon}'>`;
                     else if (x[1].name != undefined) appIcon = `<span>${x[1].name[0]}</span>`;
                     else appIcon = x[0][0];
-                    return `<app onclick="X.clearOpenMenus();processes.create('${x[0]}');" --data-tooltip="${x[1].name}" >${appIcon}</app>`
+                    return `<button class='app' onclick="X.clearOpenMenus();processes.create('${x[0]}');" --data-tooltip="${x[1].name}" >${appIcon}</button>`
                 }).join('')}
 			        </div>
-                    <div class="search_results_container">
-                    </div>
+
 				</div>
 		`
                 return html;
@@ -62,12 +62,43 @@ X = {
                 return event.target == document.querySelector("#activitiesMenuContainer")
             },
 
+
             onCreate: function () {
                 const inputElement = systemMenuContainer.querySelector(".app_search > input")
                 inputElement.focus()
                 inputElement.addEventListener('input', event => {
                     systemMenuContainer.querySelector('.search_results_container').innerHTML = X.activities.requestResults(inputElement.value)
                 })
+                let focusedChildIndex = 0
+                systemMenuContainer.querySelector('#activitiesMenuContainer').addEventListener('keydown', event => {
+                    appSearchResultElement = systemMenuContainer.querySelector('.search_results_container')
+                    ignoreKeys = "ArrowRight ArrowLeft Tab Enter"
+
+                    if (event.key.startsWith("Arrow")) {
+                        if (event.key == "ArrowRight" && appSearchResultElement.querySelectorAll('.app').length - 1 > focusedChildIndex) focusedChildIndex++
+                        if (event.key == "ArrowLeft" && focusedChildIndex > 0) focusedChildIndex--
+                        appSearchResultElement.querySelectorAll('.app')[focusedChildIndex].focus()
+                    }
+
+
+                    if (!ignoreKeys.split(' ').includes(event.key)) {
+                        inputElement.focus()
+                        focusedChildIndex = 0
+                        isDefined(appSearchResultElement.querySelector('.app')) &&
+                            setTimeout(() => {
+                                appSearchResultElement.querySelector('.app').focus()
+                            }, 10);
+                    }
+                })
+
+                console.log('hello');
+                document.querySelector("#appList").classList.add('activities_active')
+
+            },
+            onClose: function () {
+                console.log('bye');
+                document.querySelector("#appList").classList.remove('activities_active')
+
             }
 
         },
@@ -246,7 +277,7 @@ X = {
                     let appIcon = apps[appName][0];
                     if (apps[appName].icon != undefined) appIcon = `<img src='${apps[appName].icon}'>`;
                     else if (apps[appName].name != undefined) appIcon = `<span>${apps[appName].name[0]}</span>`;
-                    ret += `<app onclick="X.clearOpenMenus();processes.create('${appName}');" --data-tooltip="${x[1].description}" ><div class='iconWrapper'>${appIcon}</div><span class='app_name'>${apps[appName].name}</span></app>`
+                    ret += `<button class='app' onclick="X.clearOpenMenus();processes.create('${appName}');" --data-tooltip="${x[1].description}" ><div class='iconWrapper'>${appIcon}</div><span class='app_name'>${apps[appName].name}</span></button>`
                 }
             })
             return ret;

@@ -49,7 +49,11 @@
         align-content: center
         height: auto
         align-self: center
-        > app
+        border-radius: 10px
+        padding: 0.4em
+        column-gap: 0.4em
+        background-color: var(--color-accent-400)
+        .app
             display: flex
             flex-flow: column nowrap
             justify-content: center
@@ -59,10 +63,13 @@
             width: 9em
             height: 9em
             padding: 0.6em
+            font-weight: 500
+            background: none
+
             >*
                 flex: 1 1 auto
-            &:hover
-                background: var(--color-accent-600)
+            &:hover, &:focus
+                background: var(--color-accent-900)
             .iconWrapper
                 // padding: 0.3em
                 display: flex
@@ -102,17 +109,19 @@
         >*
             height: 3em
             width: 3em
-        > app
+        .app
             text-overflow: ellipsis
             text-align: center
             display: flex
             border-radius: 10px
             flex: 1 1 auto
+            font-weight: 500
+            background: none
             font-size: 1.4em
             margin: 0.4em
             padding: 0.4em
             transition: background-color 0.1s ease-in-out
-            &:hover
+            &:hover, &:focus
                 background: var(--color-primary-300)
 
             > img
