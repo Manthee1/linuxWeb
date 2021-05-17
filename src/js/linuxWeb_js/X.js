@@ -97,16 +97,18 @@ X = {
                 })
 
                 appsContainer.style.display = "none"
-                overlayContainer.querySelector('.open_apps_preview_container').innerHTML = appsContainer.innerHTML
-                overlayContainer.querySelectorAll('.open_apps_preview_container > app_container').forEach(x => {
-                    x.removeAttribute('onmousedown')
-                    x.addEventListener('mousedown', event => {
-                        event.preventDefault()
-                        event.stopPropagation()
-                        X.clearOpenMenus()
-                        processes.bringToTop(processes.pid[processes.getNumberPid(x.id)].getProcessElement())
+                if (!isTextEmpty(appsContainer.innerHTML)) {
+                    overlayContainer.querySelector('.open_apps_preview_container').innerHTML = appsContainer.innerHTML
+                    overlayContainer.querySelectorAll('.open_apps_preview_container > app_container').forEach(x => {
+                        x.removeAttribute('onmousedown')
+                        x.addEventListener('mousedown', event => {
+                            event.preventDefault()
+                            event.stopPropagation()
+                            X.clearOpenMenus()
+                            processes.bringToTop(processes.pid[processes.getNumberPid(x.id)].getProcessElement())
+                        })
                     })
-                })
+                }
             },
             onClose: function () {
                 appsContainer.style.display = ""

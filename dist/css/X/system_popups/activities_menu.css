@@ -133,9 +133,10 @@
     height: 85%;
     overflow: hidden;
     overflow-y: auto;
+    width: calc(100vw - 12.5em);
     margin: 6em 1em 0em 6.5em;
     border-radius: 5px; }
-    #activitiesMenuContainer .open_apps_preview_container::-webkit-scrollbar {
+    #activitiesMenuContainer .open_apps_preview_container:empty {
       display: none; }
     #activitiesMenuContainer .open_apps_preview_container > app_container {
       filter: brightness(1);
