@@ -209,7 +209,7 @@ let tagIsInEventPath = (event, tag) => {
 let addDoubleClickListener = (el, callback) => {
 	clickedAmount = 0;
 	doubleClickTimeout = 0;
-	el.addEventListener('click', event => {
+	X.addEventListener(el, 'click', event => {
 		if (++clickedAmount == 2) {
 			clearTimeout(doubleClickTimeout);
 			callback(event)

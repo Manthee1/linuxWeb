@@ -11,6 +11,7 @@ processes = {
         if (isObjectEmpty(obj)) return false
         else return Object.values(obj)
     },
+
     //Create a pid number
     getNewPid: function () {
         if (Object.entries(this.pid).length == 0)
@@ -22,6 +23,7 @@ processes = {
     getNumberPid: function (pid) {
         return Number(pid.split('pid')[1])
     },
+
     //Return the first pid object of the specified app name.
     getFirstPidFromAppName: function (appName) {
         let pidValues = this.getPidObject();

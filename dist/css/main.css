@@ -201,6 +201,10 @@ button {
   .overlay > * {
     z-index: 1201; }
 
+* {
+  scrollbar-color: var(--color-primary-300) black;
+  scrollbar-width: thin; }
+
 ::-webkit-scrollbar {
   background-color: transparent;
   width: 8px;
