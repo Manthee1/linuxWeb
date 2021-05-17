@@ -43,6 +43,7 @@ X = {
 				<div id='activitiesMenuContainer'>
 					<div class='app_search'><search_icon></search_icon><input placeholder='Type to search' type='search'></div>
 					<div class="search_results_container"></div>
+                    <div class="open_apps_preview_container"></div>
                     <div class='favorites'>
 					${Object.entries(apps).map(x => {
                     let appIcon;
@@ -67,7 +68,11 @@ X = {
                 const inputElement = systemMenuContainer.querySelector(".app_search > input")
                 inputElement.focus()
                 inputElement.addEventListener('input', event => {
-                    systemMenuContainer.querySelector('.search_results_container').innerHTML = X.activities.requestResults(inputElement.value)
+                    searchResultHtml = X.activities.requestResults(inputElement.value)
+                    if (isTextEmpty(inputElement.value)) overlayContainer.querySelector('.open_apps_preview_container').style.display = ''
+                    else overlayContainer.querySelector('.open_apps_preview_container').style.display = 'none'
+                    systemMenuContainer.querySelector('.search_results_container').innerHTML = searchResultHtml
+
                 })
                 let focusedChildIndex = 0
                 systemMenuContainer.querySelector('#activitiesMenuContainer').addEventListener('keydown', event => {
@@ -91,14 +96,21 @@ X = {
                     }
                 })
 
-                console.log('hello');
-                document.querySelector("#appList").classList.add('activities_active')
-
+                appsContainer.style.display = "none"
+                overlayContainer.querySelector('.open_apps_preview_container').innerHTML = appsContainer.innerHTML
+                overlayContainer.querySelectorAll('.open_apps_preview_container > app_container').forEach(x => {
+                    x.removeAttribute('onmousedown')
+                    x.addEventListener('mousedown', event => {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        X.clearOpenMenus()
+                        processes.bringToTop(processes.pid[processes.getNumberPid(x.id)].getProcessElement())
+                    })
+                })
             },
             onClose: function () {
-                console.log('bye');
-                document.querySelector("#appList").classList.remove('activities_active')
-
+                appsContainer.style.display = ""
+                overlayContainer.querySelector('.open_apps_preview_container').innerHTML = ""
             }
 
         },
