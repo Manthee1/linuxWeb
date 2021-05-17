@@ -1018,6 +1018,7 @@ X = {
                         let element = document.querySelector(X.menus[openMenu].elementQuery);
                         if (isDefined(element)) {
                             systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element);
+                            if (isDefined(X.menus[openMenu].onClose) && typeof X.menus[openMenu].onClose == "function") X.menus[openMenu].onClose()
                             element.classList.add(X.menus[openMenu].exitAnimation)
                             if (X.menus[openMenu].enterAnimation) element.classList.remove(X.menus[openMenu].enterAnimation)
                             setTimeout(() => {
