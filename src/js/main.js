@@ -186,6 +186,11 @@ let isObjectEmpty = obj => {
 		return Object.entries(obj).length == 0
 	else return true
 }
+
+let isFunction = func => {
+	if (isDefined(func) && typeof func == "function") return true
+	return false
+}
 let isArrayEmpty = arr => {
 	if (isDefined(arr) && typeof arr == "Object")
 		return arr.length == 0
