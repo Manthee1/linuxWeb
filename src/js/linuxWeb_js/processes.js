@@ -389,11 +389,12 @@ processes = {
             sizeBeforeMaximize: { width: appCreateData.width, height: appCreateData.height },
             originalOffsetY: 0,
             originalOffsetX: 0,
+            title: appCreateData.title,
             getProcessElement: function () { return document.querySelector(`#${this.elementId} `) },
             getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>.app_body`) },
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id} `) },
-            setProcessTitle: function (title) { this.getProcessBarElement().querySelector('span').innerText = title; this.getProcessElementHeader().querySelector('app_title').innerText = title; }
+            setProcessTitle: function (title) { this.getProcessBarElement().querySelector('span').innerText = title; this.getProcessElementHeader().querySelector('app_title').innerText = title; this.title = title; }
         });
 
         setTimeout(() => {
