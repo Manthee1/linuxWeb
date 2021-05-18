@@ -100,6 +100,7 @@ h1, h2, h3, ul, li {
 button {
   border: 4px solid transparent;
   color: var(--color-text-light);
+  font-family: var(--sans-font);
   font-weight: 100;
   font-size: 100%;
   border-radius: 5px;
@@ -156,54 +157,6 @@ button {
     opacity: 0; }
   to {
     opacity: 1; } }
-
-#linuxRoot {
-  opacity: 1;
-  transition: opacity ease-in-out 0.5s; }
-  #linuxRoot #mainContent {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0px; }
-
-#desktop,
-#main_background {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  top: 0px;
-  left: 0px;
-  position: fixed;
-  z-index: 0;
-  background: black;
-  background: var(--user-background);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; }
-
-#systemMenuContainer > * {
-  z-index: 1001; }
-
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  top: 0px;
-  left: 0px;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  background-color: var(--color-accent-900);
-  z-index: 1200; }
-  .overlay > * {
-    z-index: 1201; }
-
-* {
-  scrollbar-color: var(--color-primary-300) black;
-  scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
   background-color: transparent;
