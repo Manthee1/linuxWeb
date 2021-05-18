@@ -77,7 +77,9 @@ X = {
                 let focusedChildIndex = 0
                 systemMenuContainer.querySelector('#activitiesMenuContainer').addEventListener('keydown', event => {
                     appSearchResultElement = systemMenuContainer.querySelector('.search_results_container')
-                    ignoreKeys = "ArrowRight ArrowLeft Tab Enter"
+                    ignoreKeys = "ArrowRight ArrowLeft Tab Enter Escape"
+
+                    if (event.key == "Escape") { X.clearOpenMenus(); return; }
 
                     if (event.key.startsWith("Arrow")) {
                         if (event.key == "ArrowRight" && appSearchResultElement.querySelectorAll('.app').length - 1 > focusedChildIndex) focusedChildIndex++
