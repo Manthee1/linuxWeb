@@ -1030,12 +1030,11 @@ X = {
             if (typeof (xObjValue) == "object" && menuUIData.toggleElement != undefined && typeof menuUIData.getHTML == 'function') {
                 //Adds a 'onclick' listener for the button element that creates a menu(app menu,status menu...)
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
-                    if (!X.openMenus.includes(xObjName) || menuUIData.recreateBehaviour == 'recreate') {
+                    if ((!X.openMenus.includes(xObjName) || menuUIData.recreateBehaviour == 'recreate') && ((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
                         X.clearOpenMenus(true)
                         menuUIData.preventDefault && event.preventDefault()
                         setTimeout(() => {
                             X.createMenu(menuUIData, event.clientX, event.clientY)
-
                             //Block the body 'onclick' from deleting the popups when you clicked on them.
                             //Block if we '!want' it closed. Get it?
                             systemMenuContainer.children[systemMenuContainer.children.length - 1].addEventListener('click', (event) => {
