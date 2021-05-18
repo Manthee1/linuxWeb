@@ -1037,7 +1037,7 @@ X = {
                             X.createMenu(menuUIData, event.clientX, event.clientY)
                             //Block the body 'onclick' from deleting the popups when you clicked on them.
                             //Block if we '!want' it closed. Get it?
-                            systemMenuContainer.children[systemMenuContainer.children.length - 1].addEventListener('click', (event) => {
+                            systemMenuContainer.childElementCount > 0 && systemMenuContainer.children[systemMenuContainer.children.length - 1].addEventListener('click', (event) => {
                                 if ((typeof menuUIData.closeCondition == 'function' && !menuUIData.closeCondition(event)) || typeof menuUIData.closeCondition != 'function') {
                                     X.menus.openMenuClicked == false && (X.menus.openMenuClicked = true);
                                 }
@@ -1065,7 +1065,7 @@ X = {
         if (X.openMenus.length != 0 || force) {
             X.openMenus.forEach(openMenu => {
                 if (isDefined(X.menus[openMenu])) {
-                    isDefined(X.menus[openMenu].toggleElement) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
+                    isDefined(X.menus[openMenu].toggleElement) && isDefined(X.menus[openMenu].toggleElement.classList) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
                     //If there is a exitAnimation then play it and remove the element
                     if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
                         let element = document.querySelector(X.menus[openMenu].elementQuery);
