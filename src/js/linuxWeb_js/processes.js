@@ -393,6 +393,7 @@ processes = {
             getProcessElementBody: function () { return document.querySelector(`#${this.elementId}>.app_body`) },
             getProcessElementHeader: function () { return document.querySelector(`#${this.elementId} app_header`) },
             getProcessBarElement: function () { return document.querySelector(`#appListPID${this.id} `) },
+            setProcessTitle: function (title) { this.getProcessBarElement().querySelector('span').innerText = title; this.getProcessElementHeader().querySelector('app_title').innerText = title; }
         });
 
         setTimeout(() => {
