@@ -265,6 +265,63 @@ X = {
                 return !elementIsInEventPath(event, document.querySelector("#statusAreaContainer"))
             },
         },
+        taskSwitcher: {
+            //Menu options
+            menuName: "taskSwitcher",
+            createOnMousePosition: false,
+            listenerType: "keydown",
+            toggleElement: document,
+            recreateBehaviour: "toggle",
+            changeBorder: false,
+            preventDefault: false,
+            enterAnimation: "fadeIn",
+            exitAnimation: "fadeOut",
+            exitAnimationTime: 100, //ms 
+            elementQuery: "#taskSwitcher",
+
+            getHTML: function () {
+                let ret = ""
+                Object.values(appsContainer.querySelectorAll('app_container')).map(app => {
+                    app = processes.pid[processes.getNumberPid(app.id)]
+                    let appName = app.appName
+                    let appIcon = apps[appName][0];
+                    if (apps[appName].icon != undefined) appIcon = `<img src='${apps[appName].icon}'>`;
+                    else if (apps[appName].name != undefined) appIcon = `<span>${apps[appName].name[0]}</span>`;
+                    ret = `<button class='app' data-appPid="${app.id}" onclick="X.clearOpenMenus()"><div class='iconWrapper'>${appIcon}</div><span class='app_name'>${app.title}</span></button>` + ret
+                }).join('')
+                return `<div id="taskSwitcher">${ret}</div>`
+            },
+            onCreate: function () {
+                document.querySelector(this.elementQuery + " .app").focus()
+                const numberOfChildren = processes.getPidObject().length - 1;
+                let focusedChildIndex = 0;
+                document.querySelector(this.elementQuery).addEventListener('keydown', event => {
+                    if ((event.key == "ArrowRight" || event.key == "Tab") && numberOfChildren > focusedChildIndex) focusedChildIndex++
+                    if (event.key == "ArrowLeft" && focusedChildIndex > 0) focusedChildIndex--
+                    setTimeout(() => {
+                        document.querySelectorAll(this.elementQuery + " > .app")[focusedChildIndex].focus()
+                    }, 10);
+
+
+                })
+                document.querySelector(this.elementQuery).addEventListener('keyup', event => {
+                    if (event.key.includes("Shift")) {
+                        let appPid = document.querySelectorAll(this.elementQuery + " > .app")[focusedChildIndex].getAttribute('data-appPid')
+                        processes.bringToTop(processes.pid[appPid].getProcessElement())
+                        X.clearOpenMenus()
+                    }
+
+                })
+            },
+            createCondition: function (event) {
+                console.log(event);
+                return event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
+            },
+            // Close the menu when the condition returns true
+            closeCondition: function (event) {
+                return true
+            },
+        },
     },
 
     //Activities menu thing
