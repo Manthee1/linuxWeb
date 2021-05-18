@@ -224,10 +224,15 @@ TODO: apps get opened in the top left
 DONE TODO: Add terminal commands: rm
 DONE TODO: Add terminal commands: rmdir
 DONE TODO: Add Application menus and an easy way to create them
-TODO: Improve the Activities Screen
+DONE TODO: Improve the Activities Screen
 DONE \---- Make the search actually work.
 DONE \---- Show opened apps (Just like in gnome) 
 DONE TODO: Remove default electron menu
+
+DONE TODO: Add a ALT + TAB menu.
+
+TODO: Clean and optimize all the code
+TODO: Comment All the code
 
 DONE FIXME: lockScreen event listeners stop things from working sometimes
      \----Fixed By: Adding screen specific eventListeners and clearing them after the screen change.
