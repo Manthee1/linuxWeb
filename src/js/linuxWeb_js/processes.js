@@ -465,7 +465,7 @@ processes = {
     initiateProcessMouseUpHandler: function (process) {
         document.body.onmouseup = event => {
             if (isDefined(process.getProcessElementHeader())) {
-                document.body.setAttribute('onmousemove', null)
+                document.body.onmousemove = null;
                 process.getProcessElementHeader().setAttribute('onmouseup', null)
                 this.scaleToProjectedFill(process);
                 this.hideWindowFillProjection(process, true)
