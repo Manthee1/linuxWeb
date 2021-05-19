@@ -2,7 +2,7 @@ processes = {
 
     currentlySelectedProcess: null,
     pid: {},
-
+    //Returns processes.pid. if empty returns false
     getPidObject: function () {
         let obj = {}
         Object.values(this.pid).forEach(x => {
@@ -12,7 +12,7 @@ processes = {
         else return Object.values(obj)
     },
 
-    //Create a pid number
+    //Returns a unused pid id num
     getNewPid: function () {
         if (Object.entries(this.pid).length == 0)
             return 0;
@@ -32,6 +32,7 @@ processes = {
         }
     },
 
+    // Returns all the instances of the specified app name
     getRunningInstanceList: function (appName) {
         let pidObject = this.getPidObject();
         if (isObjectEmpty(pidObject)) return false
@@ -42,20 +43,23 @@ processes = {
         if (processesList.length == 0) return false
         return processesList
     },
-
+    // Returns the amount of running instances of the given app name
     getRunningInstanceAmount: function (appName) {
         return this.getRunningInstanceList(appName).length
     },
     //Brings the selected app to top
     bringToTop: function (element, event = null) {
-        if (event != null && event.target.tagName.endsWith("ICON") && event.target.parentElement.parentElement.tagName == "APP_HEADER") return false
+        if (event != null && event.target.tagName.endsWith("ICON")) return false
 
         const pid = this.getNumberPid(element.id);
-        typeof this.pid[pid]['onFocus'] == "function" && setTimeout(() => {// If it has a onFocus then.... do that
-            //Timeout set in order for the focus to work at all
-            typeof this.pid[pid] != "undefined" && this.pid[pid].onFocus(event);
-        }, 1);
+
         if (this.currentlySelectedProcess == this.pid[pid]) return false;
+        // If it has a onFocus then.... do that
+        isFunction(this.pid[pid]['onFocus']) && setTimeout(() => {
+            //Timeout set in order for the focus to work at all
+            this.pid[pid].onFocus(event);
+        }, 1);
+        // If it is minimized then unminimize it 
         if (this.pid[pid].minimized == true) {
             element.style.transform = "";
             element.style.opacity = "";
@@ -92,13 +96,13 @@ processes = {
             default:
                 break;
         }
-
+        // Put position and size into a style and an obj
         let style = `
             top:${top}px;
             left:${left}px;
             width:${width}px;
-            height:${height}px;
-        `
+            height:${height}px;`
+
         process.fillType = fillType
         process.projectedFill = {
             top: top,
@@ -125,18 +129,14 @@ processes = {
     // Or maybe I'm just wasting your time ;)
     scaleToProjectedFill: function (process) {
         if (!isObjectEmpty(process.projectedFill))
-            if (process.fillType == 'full') {
-                this.maximize(process.elementId);
-            } else
-                this.scaleToFillArea(process.elementId, process.projectedFill);
-
+            if (process.fillType == 'full') this.maximize(process.elementId);
+            else this.scaleToFillArea(process.elementId, process.projectedFill);
         this.hideWindowFillProjection(process);
-
     },
 
     // Hide the blue fill area projection thingy. Simple...
     hideWindowFillProjection: function (process, clearStyle = false) {
-        let el = document.querySelector('#windowSizeProjection')
+        const el = document.querySelector('#windowSizeProjection')
         if (isDefined(el)) {
             if (clearStyle) {
                 process.projectedFill = {}
@@ -339,7 +339,7 @@ processes = {
         const appHTML = `
 			<app_container onmousedown="processes.bringToTop(this,event);" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
-					<app_title onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')">${appCreateData.title}</app_title>
+					<app_title>${appCreateData.title}</app_title>
 					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
 					<app_maximize onclick="processes.maximize('${stringyPID}')"><square_icon></square_icon></app_maximize>
 					<app_exit onclick="processes.remove('${stringyPID}')"><x_icon></x_icon></app_exit>
@@ -366,6 +366,7 @@ processes = {
         appsContainer.insertAdjacentHTML('beforeend', appHTML);
         appList.insertAdjacentHTML('beforeend', `<process onclick="processes.bringToTop(document.querySelector('#${stringyPID}'))" id='appListPID${processID}'>${(isDefined(apps[appName].icon) && `<img src="${apps[appName].icon}">`) || ""}<span>${appCreateData.title}</span></process>`)
 
+        //Add a context menu to the taskbar app
         X.contextMenu.add(mainContent.querySelector('#appList > *:last-child'), [
             ["Maximize", `processes.maximize('${stringyPID}')`],
             ["Minimize", `processes.minimize('${stringyPID}')`],
@@ -405,29 +406,26 @@ processes = {
 
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
-        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => {
-            processes.maximize(stringyPID)
-        })
+        // Header double click maximize
+        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => { console.log('D Maximize'); processes.maximize(stringyPID); })
 
-        apps[appName].onStart != undefined && apps[appName].onStart(processes.pid[processID])
+        isFunction(apps[appName].onStart) && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
-        return true;
     },
 
     //Handles window movement. So... yeah.
     processMouseDownHandler: function (event, stringyPID, forceRun = false) {
-        pid = this.getNumberPid(stringyPID);
-        let process = this.pid[pid];
+        const pid = this.getNumberPid(stringyPID);
+        const process = this.pid[pid];
         if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
+        console.log('Header click')
         if (process.scaledToArea) {
             let mouseY = event.clientY
             let mouseX = event.clientX
-
             //Checks only if the mouse moved some pixels so that we can un-scale the app. Basically a separate mouse move handler than the one that actually moves the app. Which makes sense i guess.
             document.body.onmousemove = e => {
                 if (Math.abs(mouseY - e.clientY) + Math.abs(mouseX - e.clientX) > 40) {
-
-                    let element = process.getProcessElement()
+                    const element = process.getProcessElement()
                     element.style.top = e.layerY;
                     document.body.setAttribute('onmousemove', null)
 
@@ -447,18 +445,18 @@ processes = {
                     processes.initiateProcessMouseMoveHandler(process, e.layerY, headerStartToMouseDistance)
                 }
             }
-            this.initiateProcessMouseUpHandler(process)
+            this.initiateProcessMouseUpHandler(process);
             return false
         }
-        this.initiateProcessMouseMoveHandler(process, event.layerY, event.layerX)
-        this.initiateProcessMouseUpHandler(process)
+        this.initiateProcessMouseMoveHandler(process, event.layerY, event.layerX);
+        this.initiateProcessMouseUpHandler(process);
     },
 
     //Starts the mouse move handler.
     initiateProcessMouseMoveHandler: function (process, originalOffsetY, originalOffsetX) {
         process.originalOffsetY = originalOffsetY;
         process.originalOffsetX = originalOffsetX;
-        document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event, processes.pid['${pid}'])`)
+        document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event, processes.pid['${process.id}'])`)
     },
 
 
@@ -559,6 +557,7 @@ processes = {
                 if (height >= window.innerHeight) element.style.height = window.innerHeight
                 if (width >= window.innerWidth) element.style.width = window.innerWidth
             }
+            //Clears the resize listeners
             function stopResize() {
                 document.body.setAttribute('onmousemove', null)
                 window.removeEventListener('mousemove', resize)
