@@ -186,7 +186,7 @@ USAGE
                 shortHelp: "Prints Username Information",
                 help: `Prints System Information`,
                 method: (options) => {
-                    return "root"
+                    return system.activeUser
                 }
             },
             clear: {
