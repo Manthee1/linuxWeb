@@ -1,13 +1,11 @@
-
 (async () => {
-
 	//Request the build.ver file which has the current build version in it...
 	document.querySelector('build').innerHTML = "build: " + await (await fetch("./build.ver")).text()
 	await delay(1000);
 	let addMessage = message => document.querySelector("message_info").innerHTML += `<message><span>[ &nbsp; &nbsp; OK &nbsp; &nbsp; ]</span> ${message}</message>`;
 
-	let timeMax = 1000; //ms
-	let bootText = [
+	const timeMax = 1000; //ms
+	const bootText = [
 		"Started Loading JavaScript from GitHub...",
 		"Created slice system-getty.slice.",
 		"Created slice system-modprobe.slice.",
@@ -142,7 +140,7 @@
 		"./js/linuxWeb_js/processes.js",
 		"./js/linuxWeb_js/fileSystem.js",
 	];
-	screensSources = new Map([
+	const screensSources = new Map([
 		["loginScreen", "./screens/loginscreen.html"],
 		["lockScreen", "./screens/lockscreen.html"],
 		["desktop", "./screens/desktop.html"],
@@ -177,23 +175,18 @@
 		})
 	})();
 
-
 	// Loop thorough the messages and display one, wait, display another, wait...
-	// let retrieveJs = page.loadAllJsFromHtml()
-	// for (const text of bootText) {
-	// 	addMessage(text);
-	// 	await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (bootText.length * 2))) || Math.random() * (timeMax / (bootText.length * 2)));
-	// 	//     /\ Random delay for each boot message
-	// 	document.querySelector("message_info").lastElementChild.scrollIntoView()
-	// }
-	// await retrieveJs
+	for (const text of bootText) {
+		addMessage(text);
+		await delay((Math.random() <= 0.5 && Math.random() * 3 * (timeMax / (bootText.length * 2))) || Math.random() * (timeMax / (bootText.length * 2)));
+		//     /\ Random delay for each boot message
+		document.querySelector("message_info").lastElementChild.scrollIntoView()
+	}
 	await delay(1000);
 	page.changePage("./views/X.html", 'system.startup()', true);
 
 	//Finally load the page (Note: page.changePage() is not used because of reasons. Punk. Trust your past self)
-	//Fuck you past i changed it!
-
-	// await (await (htmlEl.innerHTML = await loginHtml)) && page.loadAllJsFromHtml();
+	//Fuck you past, i changed it!
 })();
 
 
