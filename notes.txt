@@ -233,7 +233,8 @@ DONE TODO: Add a ALT + TAB menu.
 
 TODO: Clean and optimize all the code
 TODO: Comment All the code
-
+TODO: Add keyboard navigation to the loginScreen
+TODO: Make a global keyboard handler object that can have define key combinations to start specific methods
 DONE FIXME: lockScreen event listeners stop things from working sometimes
      \----Fixed By: Adding screen specific eventListeners and clearing them after the screen change.
 DONE FIXME: context menu can get of screen when you right click to the right edge
