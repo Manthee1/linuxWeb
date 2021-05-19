@@ -66,7 +66,7 @@ fileSystem = {
 
         // First: Check if it doesn't exists.if true create it.
         if (!isDefined(file)) {
-            objPath = this.fileRootPath;
+            let objPath = this.fileRootPath;
             filePath.forEach(x => {
                 const nextPath = isTextEmpty(x) ? '' : `['${x}']`;
                 objPath += nextPath;

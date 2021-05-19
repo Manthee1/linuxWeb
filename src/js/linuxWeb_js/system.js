@@ -36,7 +36,6 @@ system = {
     },
     changeVolume: function (volume) {
         this.global.volume = volume;
-        let img
         X.services.volume.update();
     },
 
@@ -61,16 +60,9 @@ system = {
             //Check if redirection operator exist
             if (rawArgumentString.includes('>')) {
                 [rawArgumentString, writeToPath] = rawArgumentString.split('>')
-                writeToPath = parseDir(null, terminalProcess, writeToPath.trim());
+                writeTocPath = parseDir(null, terminalProcess, writeToPath.trim());
             }
-            argArray = (rawArgumentString + " ").split(' ')
-
-            // let getAllInQuotesRegExp = RegExp(`"(.*?)"`, 'gm')
-            // let argsInQuotes = rawArgumentString.match(getAllInQuotesRegExp)
-            // let argArray = rawArgumentString.replaceAll(getAllInQuotesRegExp, '$--##--')
-            // isDefined(argsInQuotes) && argsInQuotes.forEach(x => {
-            //     argArray[argArray.indexOf('$--##--')] = x;
-            // });
+            let argArray = (rawArgumentString + " ").split(' ')
 
             //Separates the command name (callMethod) and it's arguments
             let callMethod = argArray.splice(0, 1)[0].trim();
@@ -84,10 +76,10 @@ system = {
                 //Main loop that parses the arguments into the options object
                 //Not complex just... Intricate? Or maybe not?...
                 for (let i = 0; i < argArray.length; i++) {
-                    x = argArray[i].trim()
+                    let x = argArray[i].trim()
                     if (x.startsWith('-') && x.length > 1) {
                         if (!isTextEmpty(optionBuffer)) {
-                            obj = this.appendToOptions(optionBuffer, '', options);
+                            let obj = this.appendToOptions(optionBuffer, '', options);
                             optionBuffer = "";
                         }
                         if (x.startsWith('--') && x.length > 2)
@@ -102,7 +94,6 @@ system = {
 
                                 for (let j = i + 1; j < argArray.length; j++) {
                                     let x = argArray[j] + " "
-                                    console.log(x, "j", j, "i", i);
                                     if (x.startsWith('-')) {
                                         i = j
                                         break
@@ -125,10 +116,8 @@ system = {
                 }
                 options["@s"] = options["@"].join(' ').trim()
             }
-
-            // console.log(rawArgumentString, writeToPath, argArray, options);
-            //Ahh the classic check if an error occurs and then throw it again :)
-
+            console.log(options);
+            //Ahh the classic "if an error occurs and then throw it again" :)
             try {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
                 if (writeToPath) fileSystem.write(writeToPath, 1, ret, 777);
@@ -294,9 +283,6 @@ USAGE
   ----------------
   kill 1`,
                 method: (options) => {
-
-                    console.log(options);
-
                     let pid = options["@s"];
                     if (isNaN(Number(pid))) throw pid + " - Must be a number";
                     if (isDefined(processes.pid[pid])) processes.remove("pid" + pid)
@@ -361,7 +347,6 @@ USAGE
                 method: (options, terminal) => {
                     const username = options["@"][0];
                     let password = ""
-                    console.log(options, username);
                     if (isTextEmpty(username)) throw "Username not provided"
                     if (!isDefined(system.accounts[username])) throw "That user does not exist"
 
@@ -386,7 +371,7 @@ USAGE
   ls
   ls /home`,
                 method: (options, terminal) => {
-                    path = parseDir(options, terminal)
+                    const path = parseDir(options, terminal)
                     let moreInfo = false;
                     let list = fileSystem.getDir(path, false, true, 0);
                     let ret = `Contents of '${path}' :\n`
@@ -415,7 +400,7 @@ USAGE
   cd
   cd /home`,
                 method: (options, terminal) => {
-                    path = parseDir(options, terminal)
+                    const path = parseDir(options, terminal)
                     terminal.setCurrentDirectory(path);
                 }
             },
@@ -429,7 +414,7 @@ USAGE
   cat example.txt
   cat /home/example.txt`,
                 method: (options, terminal) => {
-                    path = parseDir(options, terminal)
+                    const path = parseDir(options, terminal)
                     return fileSystem.read(path)
                 }
             },
@@ -444,7 +429,7 @@ USAGE
   mkdir /var/www`,
 
                 method: (options, terminal) => {
-                    path = parseDir(options, terminal);
+                    const path = parseDir(options, terminal);
                     fileSystem.write(path, 0, null, 777)
                 }
             },
@@ -459,7 +444,7 @@ USAGE
   touch /home/example.txt`,
 
                 method: (options, terminal) => {
-                    path = parseDir(options, terminal);
+                    const path = parseDir(options, terminal);
                     fileSystem.write(path, 1, "", 777)
                 },
             },
@@ -475,15 +460,12 @@ USAGE
 
                 method: (options, terminal) => {
                     if (options != null && isDefined(options['-f'])) {
-                        if (isTextEmpty(options['-f']))
-                            throw "-f: Path can't be empty!"
-
-                        dir = options['-f'];
-                        text = options['@s'];
-
+                        if (isTextEmpty(options['-f'])) throw "-f: Path can't be empty!"
+                        const dir = options['-f'];
+                        const text = options['@s'];
+                        const path = parseDir(options, terminal, dir);
+                        fileSystem.write(path, 1, text, 755)
                     } else throw "Path must be specified with -f!";
-                    path = parseDir(options, terminal, dir);
-                    fileSystem.write(path, 1, text, 755)
                 },
             },
             rm: {
@@ -498,8 +480,8 @@ USAGE
                 method: (options, terminal) => {
                     if (options == null)
                         throw "Path must be specified";
-                    dir = options['@s'];
-                    path = parseDir(options, terminal, dir);
+                    const dir = options['@s'];
+                    const path = parseDir(options, terminal, dir);
                     fileSystem.removeFile(path, isDefined(options["-f"]))
                 },
             },
@@ -515,9 +497,8 @@ USAGE
                 method: (options, terminal) => {
                     if (options == null)
                         throw "Path must be specified";
-                    dir = options['@s'];
-                    path = parseDir(options, terminal, dir);
-                    console.log(isDefined(options["-f"]), options["-f"]);
+                    const dir = options['@s'];
+                    const path = parseDir(options, terminal, dir);
                     try {
                         fileSystem.removeDir(path, isDefined(options["-f"]));
                     } catch (error) {
@@ -538,7 +519,7 @@ USAGE
                 },
                 update: function (terminal, options, event = null) {
                     if (obj = processes.getPidObject()) {
-                        ret = "PID    AppName\n";
+                        let ret = "PID    AppName\n";
                         for (const x of Object.values(obj)) {
                             ret += `${x.id}    ${x.appName} \n`
                         }
@@ -565,7 +546,6 @@ USAGE
 //Figures out which directory a user is targeting. So basically parses a String into an object. In a sense.
 function parseDir(options, terminal = null, dir = null) {
     let path = isDefined(terminal) ? terminal.currentDirectory : '/'
-
     if (!isDefined(dir) && isDefined(options)) {
         (dir = options["@s"]);
     }

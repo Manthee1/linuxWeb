@@ -1,8 +1,8 @@
 processes = {
 
     currentlySelectedProcess: null,
-
     pid: {},
+
     getPidObject: function () {
         let obj = {}
         Object.values(this.pid).forEach(x => {
@@ -35,7 +35,7 @@ processes = {
     getRunningInstanceList: function (appName) {
         let pidObject = this.getPidObject();
         if (isObjectEmpty(pidObject)) return false
-        processesList = [];
+        let processesList = [];
         for (process of pidObject) {
             if (process.appName == appName) processesList.push(process);
         }
@@ -136,7 +136,7 @@ processes = {
 
     // Hide the blue fill area projection thingy. Simple...
     hideWindowFillProjection: function (process, clearStyle = false) {
-        el = document.querySelector('#windowSizeProjection')
+        let el = document.querySelector('#windowSizeProjection')
         if (isDefined(el)) {
             if (clearStyle) {
                 process.projectedFill = {}
@@ -215,7 +215,7 @@ processes = {
             this.scaleToFillArea(stringyPID, {});
         } else {
             // Maximize
-            fillData = {
+            const fillData = {
                 "top": topBar.offsetHeight,
                 "left": 0,
                 "height": window.innerHeight - (appList.offsetHeight + topBar.offsetHeight),
@@ -291,7 +291,6 @@ processes = {
         //If an app is already open and onlyOneInstanceAllowed then just focus on it
         if (apps[appName].createData.onlyOneInstanceAllowed && this.getRunningInstanceAmount(appName) > 0) {
             let message = `One instance of App: '${appName}' already running!`
-            console.log(this.getFirstPidFromAppName(appName));
             this.bringToTop(this.getFirstPidFromAppName(appName).getProcessElement());
             return false
         }
@@ -337,7 +336,7 @@ processes = {
 		`;
 
         //This is how the app html is created.
-        appHTML = `
+        const appHTML = `
 			<app_container onmousedown="processes.bringToTop(this,event);" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					<app_title onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')">${appCreateData.title}</app_title>
@@ -407,7 +406,6 @@ processes = {
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
         addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => {
-            console.log("Double Click ", stringyPID);
             processes.maximize(stringyPID)
         })
 
@@ -466,7 +464,6 @@ processes = {
 
     initiateProcessMouseUpHandler: function (process) {
         document.body.onmouseup = event => {
-            console.log('Mouse Up event');
             if (isDefined(process.getProcessElementHeader())) {
                 document.body.setAttribute('onmousemove', null)
                 process.getProcessElementHeader().setAttribute('onmouseup', null)

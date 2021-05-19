@@ -46,23 +46,19 @@ X = {
                     <div class="open_apps_preview_container"></div>
                     <div class='favorites'>
 					${Object.entries(apps).map(x => {
-                    let appIcon;
+                    let appIcon = x[0][0];
                     if (x[1].icon != undefined) appIcon = `<img src='${x[1].icon}'>`;
                     else if (x[1].name != undefined) appIcon = `<span>${x[1].name[0]}</span>`;
-                    else appIcon = x[0][0];
                     return `<button class='app' onclick="X.clearOpenMenus();processes.create('${x[0]}');" --data-tooltip="${x[1].name}" >${appIcon}</button>`
                 }).join('')}
 			        </div>
-
-				</div>
-		`
+				</div>`
                 return html;
             },
 
             closeCondition: function (event) {
                 return event.target == document.querySelector("#activitiesMenuContainer")
             },
-
 
             onCreate: function () {
                 const inputElement = systemMenuContainer.querySelector(".app_search > input")
@@ -76,8 +72,8 @@ X = {
                 })
                 let focusedChildIndex = 0
                 systemMenuContainer.querySelector('#activitiesMenuContainer').addEventListener('keydown', event => {
-                    appSearchResultElement = systemMenuContainer.querySelector('.search_results_container')
-                    ignoreKeys = "ArrowRight ArrowLeft Tab Enter Escape"
+                    const appSearchResultElement = systemMenuContainer.querySelector('.search_results_container')
+                    const ignoreKeys = "ArrowRight ArrowLeft Tab Enter Escape"
 
                     if (event.key == "Escape") { X.clearOpenMenus(); return; }
 
@@ -140,12 +136,12 @@ X = {
             getHTML: function () {
                 if (X.status.screen == "desktop") {
 
-                    reminderForm = {
+                    const reminderForm = {
                         message: { display: "Message", value: "", type: 'string', required: true },
                         time: { display: "Remind At", value: 0, type: 'number', required: true },
                     }
 
-                    let onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
+                    const onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
                 command = "remind " + reminder.message.value + " -t " + reminder.time.value;
                 system.cli.i(command, true)})()`
 
@@ -314,7 +310,6 @@ X = {
                 })
             },
             createCondition: function (event) {
-                console.log(event);
                 return event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
             },
             // Close the menu when the condition returns true
@@ -357,14 +352,10 @@ X = {
         }
     },
     contextMenu: {
-
-        stored: [],
-
         add: function (element, layout, cacheListener = true) {
             let contextMenuInnerHTML = ""
 
             for (const item of layout) {
-
                 if (isTextEmpty(item[0])) {
                     contextMenuInnerHTML += "<hr>"
                     continue;
@@ -382,16 +373,11 @@ X = {
 
                 contextMenuInnerHTML += `<span onclick="${item[1]}">${item[0]}</span>`
             }
-            // this.stored.push({ element: element, layout: layout, innerHTML: contextMenuInnerHTML })
-
             contextMenuEventHandler = event => {
                 X.clearOpenMenus();
-
                 let menuUIData = X.menus.contextMenu
                 menuUIData.getHTML = () => `<div id='context_menu' class='fadeIn' style="top: ${event.clientY}px;left: ${event.clientX}px;">${contextMenuInnerHTML}</div>`
-
                 X.createMenu(X.menus.contextMenu, event.clientX, event.clientY)
-                // systemMenuContainer.insertAdjacentHTML('beforeend', contextMenuHTML)
             }
 
             if (cacheListener) X.addEventListener(element, 'contextmenu', contextMenuEventHandler)
@@ -416,7 +402,7 @@ X = {
             let id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
             //Creates a popup notification when condition is true.
             if (alert && !system.global.doNotDisturb) {
-                notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
+                const notificationHTML = `<div onclick="${clickAction}; this.style.display = 'none'" ><title>${title}</title><description>${description}</description></div>`;
                 popupNotificationContainer.insertAdjacentHTML('afterbegin', notificationHTML);
                 popupNotificationContainer.children[0].style.transform = "scale(1)";
                 popupNotificationContainer.children[0].style.transition = "all 0.2s linear";
@@ -451,7 +437,8 @@ X = {
         getHTML: function () {
             let htmlOut =
                 `<div class='calendar'><month>${date.get('month>full date year')}</month><div class='calendar_content'>
-<week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days><dates>`
+                    <week_days><div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div></week_days>
+                    <dates>`
             let calendarArray = this.createCalendarArray(0, 0, true, true)
             calendarArray.forEach(week => {
                 htmlOut += "<week>"
@@ -462,10 +449,11 @@ X = {
         },
         //Creates an calendar array. Yes a lot of Date stuff
         createCalendarArray: function (year = 0, month = 0, notMonthDatePrefix = false, currentDatePrefix = false) {
+            let ret = [];
             year = year || date.get("year");
             month = month || date.get("month");
             const monthFirstDay = new Date(`${year}/${month}/1`)
-            monthLastDay = new Date(monthFirstDay)
+            let monthLastDay = new Date(monthFirstDay)
             monthLastDay.setMonth(monthLastDay.getMonth() + 1)
             monthLastDay = new Date(monthLastDay - 3600 * 1000 * 24)
             const previousMonthFirstDay = new Date(monthFirstDay)
@@ -482,7 +470,7 @@ X = {
             }
 
             if (currentDatePrefix) {
-                day = Number(date.get('date'))
+                const day = Number(date.get('date'))
                 currentMonthDateRange[day - 1] = "&" + currentMonthDateRange[day - 1]
             }
 
@@ -490,10 +478,7 @@ X = {
                 previousMonthDateRange,
                 currentMonthDateRange,
                 nextMonthDateRange,
-            ).slice(0, 42)
-
-            calendarDates = calendarDates.map(x => { x = String(x); return x.length == 1 ? '0' + x : x })
-            let ret = [];
+            ).slice(0, 42).map(x => { x = String(x); return x.length == 1 ? '0' + x : x })
             for (let i = 0; i < 6; i++) ret.push(calendarDates.splice(0, 7))
             return ret;
         }
@@ -510,7 +495,7 @@ X = {
                             x.element.innerHTML = date.get(x.options);
                         });
                         console.log("Time updated. Next one in: ", 60 - new Date().getSeconds());
-                    }, 60 * 1000);
+                    }, (60 - new Date().getSeconds()) * 1000);
                 }, (60 - new Date().getSeconds()) * 1000); // Makes sure the update is synchronized
             },
 
@@ -523,7 +508,7 @@ X = {
                     for (const x of this.updateElements) {
                         if (x.element == element) return false
                     }
-                    newObj = { element: element, options: options }
+                    const newObj = { element: element, options: options }
                     this.updateElements.push(newObj)
                     this.updateNow(element, options)
 
@@ -548,16 +533,14 @@ X = {
         },
         volume: {
             update: function () {
-                volume = system.global.volume;
-                if (volume > 66) {
-                    img = "url('./img/volume/high.svg')";
-                } else if (volume > 33) {
-                    img = "url('./img/volume/medium.svg')";
-                } else if (volume > 0) {
-                    img = "url('./img/volume/low.svg')";
-                } else {
-                    img = "url('./img/volume/mute.svg')";
-                }
+                let img;
+                const volume = system.global.volume;
+
+                if (volume > 66) img = "url('./img/volume/high.svg')";
+                else if (volume > 33) img = "url('./img/volume/medium.svg')";
+                else if (volume > 0) img = "url('./img/volume/low.svg')";
+                else img = "url('./img/volume/mute.svg')";
+
                 document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
             }
 
@@ -614,7 +597,7 @@ X = {
         X.overlay.create(ctaHTML)
 
         document.querySelector("cta > .buttons_container > input").focus()
-        buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
+        const buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
         return new Promise(resolve => {
             for (const i in buttons) {
                 buttonsInDOM[i].addEventListener('click', async event => {
@@ -643,8 +626,8 @@ X = {
             return false
 
         for (const item of Object.entries(formObj)) {
-            itemName = item[0]
-            itemContent = item[1]
+            const itemName = item[0]
+            const itemContent = item[1]
 
             itemType = typeof itemContent.type
             if (itemType != "number" && itemType != "string")
@@ -662,14 +645,12 @@ X = {
                 </cta>
             `
         X.overlay.create(ctaHTML)
-        ctaFormInputsInDOM = document.querySelectorAll("cta > form input");
-        buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
-        console.log(ctaFormInputsInDOM);
+        const ctaFormInputsInDOM = document.querySelectorAll("cta > form input");
         return new Promise(resolve => {
             document.querySelector("cta > .buttons_container input[value='Submit']").addEventListener('click', async event => {
                 // Parse form html to obj
                 for (const input of ctaFormInputsInDOM) {
-                    formItem = formObj[input.id]
+                    const formItem = formObj[input.id]
                     if (formItem.required == true && input.value.trim() == "") {
                         document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' Can't be empty`;
                         return false;
@@ -683,14 +664,11 @@ X = {
                 }
                 X.overlay.remove()
                 resolve(formObj);
-                console.log(formObj);
 
             })
             document.querySelector("cta > .buttons_container input[value='Cancel']").addEventListener('click', async event => {
-
                 X.overlay.remove()
                 resolve(false);
-
             });
 
         });
@@ -867,11 +845,11 @@ X = {
                 }
                 X.screen.setActiveSubScreen("#loginForm")
 
-                let loginForm = mainContent.querySelector('#loginForm')
+                const loginForm = mainContent.querySelector('#loginForm')
                 loginForm.querySelector('#loginUserName').innerHTML = username
                 X.screen.setToUserProfilePicture(loginForm.querySelector('user_icon'), system.accounts[username].settings.profilePictureUrl)
                 loginForm.reset()
-                let inputEl = loginForm.querySelector('input')
+                const inputEl = loginForm.querySelector('input')
                 inputEl.classList.remove('incorrectLogin')
                 inputEl.focus()
                 loginForm.addEventListener('submit', event => {
@@ -892,13 +870,13 @@ X = {
 
             showCustomLoginForm: function () {
                 X.screen.setActiveSubScreen('#customLoginForm')
-                let customLoginForm = mainContent.querySelector('#customLoginForm')
+                const customLoginForm = mainContent.querySelector('#customLoginForm')
                 customLoginForm.reset()
                 customLoginForm.querySelector('input').focus()
                 customLoginForm.addEventListener('submit', event => {
                     event.preventDefault()
-                    let formData = new FormData(customLoginForm);
-                    let username = formData.get('username')
+                    const formData = new FormData(customLoginForm);
+                    const username = formData.get('username')
 
                     this.showLoginForm(username)
 
@@ -920,8 +898,10 @@ X = {
                 X.services.clock.update.add(this.time, 'time-s');
                 X.services.clock.update.add(this.date, 'day>str month>str date');
 
-                let loginForm = mainContent.querySelector('#loginForm')
-                let loginTime = mainContent.querySelector('#loginTime')
+                this.loginForm = mainContent.querySelector('#loginForm')
+                this.loginTime = mainContent.querySelector('#loginTime')
+                let loginForm = this.loginForm
+                let loginTime = this.loginTime
                 let inputEl = loginForm.querySelector('input')
 
                 loginTime.classList.add('selected')
@@ -935,10 +915,8 @@ X = {
                     if (loginTime.classList.contains('selected')) this.showLoginForm()
                 })
                 X.screen.addEventListener(document, 'keyup', event => {
-                    console.log(event);
                     if (loginTime.classList.contains('selected')) return this.showLoginForm()
-
-                    if (event.code == "Escape") this.showTime()
+                    if (event.key == "Escape") this.showTime()
                 })
 
 
@@ -971,8 +949,8 @@ X = {
 
                 if (!this.pauseElementChange) {
                     this.enablePauseElementChange()
-                    loginTime.classList.add('selected')
-                    loginForm.classList.remove('selected')
+                    this.loginTime.classList.add('selected')
+                    this.loginForm.classList.remove('selected')
                     mainContent.querySelector('.switch_user_button').style.transform = 'scale(0)'
                 }
             },
@@ -986,16 +964,16 @@ X = {
                             return; //If The screen changed(mainly because of the switch user button). Don't change it to desktop
                         X.screen.loginUser(system.accounts[system.activeUser], "")
                     }, 500);
-                    loginForm.style.display = "none"
+                    this.loginForm.style.display = "none"
                 }
                 if (!this.pauseElementChange) {
                     this.enablePauseElementChange()
-                    loginTime.classList.remove('selected')
-                    loginForm.classList.add('selected')
+                    this.loginTime.classList.remove('selected')
+                    this.loginForm.classList.add('selected')
                     mainContent.querySelector('.switch_user_button').style.transform = 'scale(1)'
                     //The timeout makes the focus work
                     setTimeout(() => {
-                        loginForm.querySelector('input').focus()
+                        this.loginForm.querySelector('input').focus()
                     }, 100);
                 }
             },
@@ -1115,7 +1093,7 @@ X = {
             }
             X.clearOpenMenus()
         });
-        console.log("X Initialize");
+        console.log("X Initialized");
     },
     //Clear all open menus.
     clearOpenMenus: function (force = false) {
@@ -1153,7 +1131,6 @@ X = {
             const el = systemMenuContainer.querySelector(elTag);
             const correctionType = isDefined(menuUIData.correctionType) ? menuUIData.correctionType : 0;
             [x, y] = X.correctPosition(x, y, el.offsetWidth, el.offsetHeight, correctionType);
-            console.log(x, y, el.offsetWidth, el.offsetHeight, correctionType);
             el.style.left = x + "px";
             el.style.top = y + "px";
         }

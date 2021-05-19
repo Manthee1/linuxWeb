@@ -22,7 +22,7 @@ apps = {
                 <terminal_main>linuxWEB terminal version ${apps.terminal.version}<br></terminal_main>
                 <terminal_buffer></terminal_buffer>
 				<terminal_input><span>${this.methods.getPrefix()}</span><input type=text></terminal_input>
-				`},
+                `},
 
             methods: {
                 // Everything here gets added to the pid object of the app.
@@ -46,7 +46,7 @@ apps = {
                 },
 
                 addText: function (text) {
-                    inputElement = this.getProcessElementBody().querySelector('terminal_input > input');
+                    const inputElement = this.getProcessElementBody().querySelector('terminal_input > input');
                     if (isDefined(text)) {
                         text = escapeHtml(text.toString()).replace(/\n/g, "<br>").replaceAll("    ", "&Tab;");
                         this.getProcessElementBody().querySelector('terminal_main').innerHTML += text + "<br>";
@@ -59,7 +59,7 @@ apps = {
                 },
 
                 setCurrentDirectory: function (dir) {
-                    dirObj = fileSystem.getDir(dir);
+                    const dirObj = fileSystem.getDir(dir);
                     if (!isDefined(dirObj)) throw `${dir}: Path not found.`;
                     if (!fileSystem.isDir(dirObj)) throw `${dir}: Not a directory`;
                     this.currentDirectory = dir;
@@ -73,7 +73,7 @@ apps = {
 
                 startUpdateLoop: function (update, options, event = null, updateDelay = 1000) {
                     terminal = this;
-                    terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
+                    const terminalBuffer = terminal.getProcessElementBody().querySelector('terminal_buffer')
 
                     //Sets the terminal content to what update() returns
                     terminalBuffer.innerHTML = escapeHtml(update(terminal, options, event)).replaceAll("    ", "&Tab;");;
@@ -91,8 +91,8 @@ apps = {
 
                 //This is executed by processes.bringToTop(); When app is 'focused' on.
                 onFocus: function (event) {
-                    let focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
-                    let textElement = this.getProcessElementBody().querySelector('terminal_main');
+                    const focusElement = this.getProcessElementBody().querySelector('terminal_input > input');
+                    const textElement = this.getProcessElementBody().querySelector('terminal_main');
                     (document.activeElement != focusElement && !elementIsInEventPath(event, textElement)) && focusElement.focus();
                 },
 
@@ -124,7 +124,7 @@ apps = {
         },
 
         parseCommand: async function (event, element, process) {
-            let terminalElement = this.InitiateProcessVariables(process);
+            const terminalElement = this.InitiateProcessVariables(process);
             //When the update loop is initialized don't parse the input as a command
             if (process.updateInitialized) {
                 if (event.ctrlKey && event.key.toLowerCase() == 'c') {
@@ -140,24 +140,22 @@ apps = {
             }
             //If enter was pressed do things
             if (event.code.includes('Enter')) {
-                let rawText = element.value;
-                let parsedTextWithPrefix = `${terminalElement.inputPrefix.innerText}${rawText}`;
+                const rawText = element.value;
+                const parsedTextWithPrefix = `${terminalElement.inputPrefix.innerText}${rawText}`;
                 process.addText(parsedTextWithPrefix);
 
-                if (isTextEmpty(rawText))
-                    return false;
+                if (isTextEmpty(rawText)) return false;
 
                 try {
                     //Runs the command through the interpreter and gets the command output.
-                    text = system.cli.i(rawText, process);
+                    const text = system.cli.i(rawText, process);
                     terminalElement.inputPrefix.querySelector('span').innerHTML = process.getPrefix()
                     process.currentHistoryNumber = -1;
                     process.addText(text);
                 } catch (e) {
-                    //Returns error
+                    //If an error is encountered than it prints it in the terminal
                     process.addText(e);
                 }
-
                 element.value = ""; // Clear the input.
                 process.addToCommandHistory(rawText);
             } else if (event.code == "ArrowUp") {
@@ -169,11 +167,13 @@ apps = {
             }
         },
 
+        // Go Up||Down a number in the commandHistory array, val=-1 or 1
         getFromCommandHistory: function (process, val) {
-            // Go Up||Down a number in the commandHistory array, val=-1 or 1
-            let command = process.commandHistory[process.currentHistoryNumber + val];
             if (process.currentHistoryNumber + val < -1) return false
-            terminalElement = apps.terminal.InitiateProcessVariables(process);
+
+            const command = process.commandHistory[process.currentHistoryNumber + val];
+            const terminalElement = apps.terminal.InitiateProcessVariables(process);
+
             if (command != undefined) {
                 // If there is a command in the history then do that. Yeah...
                 terminalElement.input.value = command;
@@ -183,7 +183,7 @@ apps = {
                 terminalElement.input.value = process.currentCommand;
                 process.currentHistoryNumber = -1;
             }
-            // Put the cursor on the end
+            // Put the cursor at the end in the next event loop.
             setTimeout(() => {
                 terminalElement.input.selectionStart = terminalElement.input.selectionEnd = terminalElement.input.value.length;
             }, 0);
@@ -255,7 +255,7 @@ apps = {
             minHeight: 500,
             onlyOneInstanceAllowed: true,
             getHTML: function () {
-                let menuItems = Object.entries(apps.settings.layout).map((x) => {
+                const menuItems = Object.entries(apps.settings.layout).map((x) => {
                     [menuItemId, menuItem] = [x[0], x[1]]
                     if (typeof menuItem != 'object') return ''
                     return `<menuItem ${apps.settings.layout.selected == menuItemId && "class='selected'"} onclick='apps.settings.switchToPanel(${menuItemId},false,this)'><${menuItem.iconTag}></${menuItem.iconTag}>${menuItem.name}</menuItem>`
@@ -265,7 +265,7 @@ apps = {
         },
         // Switches to the panel that's defined in the layout object...
         switchToPanel: function (panelMenuId, onlyGetHTML = false, element) {
-            let panelHTML = this.layout[panelMenuId].getPanelHTML();
+            const panelHTML = this.layout[panelMenuId].getPanelHTML();
             if (onlyGetHTML) return panelHTML
             else {
                 document.querySelectorAll('#settingsAppContainer .selected').forEach(x => x.classList.remove("selected"))
@@ -299,7 +299,7 @@ apps = {
             getHTML: function () { return `<textarea></textarea>` },
             methods: {
                 onFocus: function () {
-                    let focusElement = this.getProcessElementBody().querySelector('textarea')
+                    const focusElement = this.getProcessElementBody().querySelector('textarea')
                     document.activeElement != focusElement && focusElement.focus();
                 },
             },
