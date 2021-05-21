@@ -725,9 +725,12 @@ X = {
         sessionStateCache.notifications = X.notification.notifications
         processes.pid = {}
         X.notification.notifications = {}
-        for (const listener of system.accounts[system.activeUser].sessionStateCache.activeEventListeners) {
-            listener.element.removeEventListener(listener.event, listener.callback)
-        }
+        activeEventListenersCache = system.accounts[system.activeUser].sessionStateCache.activeEventListeners
+        if (isDefined(activeEventListenersCache))
+            for (const listener of system.accounts[system.activeUser].sessionStateCache.activeEventListeners) {
+                listener.element.removeEventListener(listener.event, listener.callback)
+            }
+        else system.accounts[system.activeUser].sessionStateCache.activeEventListeners = {}
     },
 
     screen: {
