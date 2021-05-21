@@ -1,5 +1,4 @@
 X = {
-    openMenus: [],
     menus: {
         contextMenu: {
             //Menu options
@@ -82,7 +81,9 @@ X = {
                         appSearchResultElement.querySelectorAll('.app')[focusedChildIndex].focus()
                     }
 
-                    //When a key is typed, the input is refocused so the key is inputed into it and then we focus to the app results, if any.
+
+
+                    //When a key is typed, the input is refocused so the key is inputted into it and then we focus to the app results, if any.
                     if (!ignoreKeys.split(' ').includes(event.key)) {
                         inputElement.focus()
                         focusedChildIndex = 0
@@ -764,7 +765,7 @@ X = {
             for (const listener of system.accounts[system.activeUser].sessionStateCache.activeEventListeners) {
                 listener.element.removeEventListener(listener.event, listener.callback)
             }
-        else system.accounts[system.activeUser].sessionStateCache.activeEventListeners = {}
+        else system.accounts[system.activeUser].sessionStateCache.activeEventListeners = []
     },
 
     screen: {
@@ -1070,7 +1071,7 @@ X = {
         //Switch to login screen on Default
         X.screen.set("loginScreen")
 
-        //Add the tobpar time update
+        //Add the topBar time update
         X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
         //Create dumb test notifications
         X.notification.create('', '', '', '', '', false)
@@ -1082,9 +1083,8 @@ X = {
             typeof xObjValue.onStart == 'function' && xObjValue.onStart()
         })
 
-        // delcare variables used to handel the system menus 
+        // Declare variables used to handel the system menus 
         X.menus.openMenuClicked = false
-        this.openvMenu = []
         // Execute all the enable() methods in the X objects
         xObjSchema = {
             createOnMousePosition: false,
@@ -1209,10 +1209,10 @@ X = {
         }
         return [x, y]
     },
-    //Add an event listenr to an element and cache it to the user's cache So it can be re=initialized on login.
+    //Add an event listener to an element and cache it to the user's cache So it can be re=initialized on login.
     // Problem is that you can't remove and add the element cause it breaks the variable reference. 
     // This could be done by passing a selector instead but I don't really wanna do it that way.
-    // if I don't find a nother way. QuerySelector parameter it is. Until then. Re-initializing listeners will not work. :(
+    // if I don't find another way. QuerySelector parameter it is. Until then. Re-initializing listeners will not work. :(
     addEventListener: function (element, event, callback) {
         !isDefined(system.accounts[system.activeUser].sessionStateCache.activeEventListeners) && (system.accounts[system.activeUser].sessionStateCache.activeEventListeners = []);
         system.accounts[system.activeUser].sessionStateCache.activeEventListeners.push({ element: element, event: event, callback: callback })
