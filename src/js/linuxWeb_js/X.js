@@ -81,8 +81,6 @@ X = {
                         appSearchResultElement.querySelectorAll('.app')[focusedChildIndex].focus()
                     }
 
-
-
                     //When a key is typed, the input is refocused so the key is inputted into it and then we focus to the app results, if any.
                     if (!ignoreKeys.split(' ').includes(event.key)) {
                         inputElement.focus()
@@ -238,7 +236,7 @@ X = {
                     </div>
                         </div>`
                     case "desktop":
-                        return `<ul id='statusAreaContainer'>
+                        return `<div id='statusAreaContainer'>
                     <li>
                     <volume_icon></volume_icon>
                     <input oninput='system.changeVolume(this.value)' id='volume_slider' min="0" max="100" value="${system.global.volume}" step="1" type="range">
@@ -261,7 +259,7 @@ X = {
                         <li onclick='X.logout();'><span>Log Out</span></li>
                     </dropdown>
                     </div>
-                    </ul>`;
+                    </div>`;
                     default:
                         break;
                 }
@@ -318,10 +316,10 @@ X = {
                         processes.bringToTop(processes.pid[appPid].getProcessElement())
                         X.clearOpenMenus()
                     }
-
                 })
             },
             createCondition: function (event) {
+                console.log(event);
                 return event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
             },
             // Close the menu when the condition returns true
@@ -400,7 +398,6 @@ X = {
             if (cacheListener) X.addEventListener(element, 'contextmenu', contextMenuEventHandler)
             else element.addEventListener('contextmenu', contextMenuEventHandler)
         }
-
     },
 
     //The notification handler
@@ -1109,11 +1106,11 @@ X = {
             Object.assign(menuUIData, xObjValue);
             if (isObject(xObjValue) && isDefined(menuUIData.toggleElement) && isFunction(menuUIData.getHTML)) {
                 //Adds a 'onclick' listener for the button element that creates a menu(app menu,status menu...)
+                console.log(xObjName, menuUIData.listenerType, menuUIData.toggleElement);
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
                     if ((!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${xObjName}']`)) ||
                         menuUIData.recreateBehaviour == 'recreate') &&
-                        (isFunction(menuUIData.createCondition && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
-                        console.log(systemMenuContainer.querySelector(`*[data-menu-name='${xObjName}']`), `*[data-menu-name='${xObjName}']`);
+                        ((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
                         X.clearOpenMenus(true)
                         menuUIData.preventDefault && event.preventDefault()
                         setTimeout(() => {
@@ -1174,7 +1171,6 @@ X = {
         this.clearOpenMenus();
         const elHTML = menuUIData.getHTML(x, y);
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the menus html to the DOM.
-        console.log(elHTML);
         const el = systemMenuContainer.lastElementChild
         el.setAttribute('data-menu-name', menuUIData.menuName)
 
