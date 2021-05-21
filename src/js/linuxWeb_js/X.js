@@ -825,13 +825,14 @@ X = {
                 let loginAccountsHTML = Object.values(system.accounts).map(x => {
                     if (x.username != "root")
                         return `
-                    <div class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
+                    <button class='account_content' onclick="X.screen.loginScreen.showLoginForm('${x.username}')">
                         <user_icon ${(isDefined(x.settings.profilePictureUrl) && `style="background-image:url('${x.settings.profilePictureUrl}')" class="custom_picture"`) || ''}></user_icon>
                         <span>${x.username}</span>
-                    </div>
+                    </button>
             `}).join('')
 
                 mainContent.querySelector('.account_container').insertAdjacentHTML('afterbegin', loginAccountsHTML)
+                mainContent.querySelector('.account_content').focus()
             },
 
             showLoginForm: function (username) {
