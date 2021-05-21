@@ -59,6 +59,7 @@ html {
 * {
   background-size: 100%;
   -webkit-user-select: none;
+  font-family: var(--sans-font);
   -moz-user-select: none;
   background-position: center;
   background-repeat: no-repeat;
@@ -98,6 +99,11 @@ h1, h2, h3, ul, li {
   margin: 0px; }
 
 button {
+  border: none;
+  color: var(--color-text-light);
+  font-size: 100%; }
+
+button.button {
   border: 4px solid transparent;
   color: var(--color-text-light);
   font-family: var(--sans-font);
@@ -106,21 +112,22 @@ button {
   border-radius: 5px;
   cursor: pointer;
   background-color: var(--color-primary-300); }
-  button:hover {
+  button.button:hover {
     background-color: var(--color-primary-200); }
-  button:active {
+  button.button:active {
     background-color: var(--color-primary-400); }
-  button.type-a {
+  button.button.type-a {
     background-color: var(--color-primary-400); }
-    button.type-a:hover {
+    button.button.type-a:hover {
       background-color: var(--color-primary-200); }
-    button.type-a:active {
+    button.button.type-a:active {
       background-color: var(--color-primary-500); }
 
 [--data-tooltip]:hover::after {
   z-index: 10;
   position: absolute;
   content: attr(--data-tooltip);
+  color: var(--color-text-light);
   padding: 0.1em 0.3em;
   font-size: 1rem;
   background: var(--color-accent-800);

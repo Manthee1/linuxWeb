@@ -235,6 +235,10 @@ TODO: Clean and optimize all the code
 TODO: Comment All the code
 TODO: Add keyboard navigation to the loginScreen
 TODO: Make a global keyboard handler object that can have define key combinations to start specific methods
+TODO: Change all the onclicks in the loginScreen to event handlers
+DONE TODO: Make the Alt tab menu cycle through the apps with tab. (not just stop at the end)
+TODO: Disable TaskSwither if a process is being moved if 
+
 DONE FIXME: lockScreen event listeners stop things from working sometimes
      \----Fixed By: Adding screen specific eventListeners and clearing them after the screen change.
 DONE FIXME: context menu can get of screen when you right click to the right edge
