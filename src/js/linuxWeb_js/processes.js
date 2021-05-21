@@ -169,10 +169,10 @@ processes = {
             let maxWidth = window.innerWidth
             //Correct the position of the app if it's outside the screen.
             // So when you unmaximize the app it won't appear partially outside the screen.
-            if (top + height > maxHeight)
-                top -= (top + height) - maxHeight
-            if (left + width > maxWidth)
-                left -= (left + width) - maxWidth
+            if (top + height > maxHeight) top -= (top + height) - maxHeight
+            if (left + width > maxWidth) left -= (left + width) - maxWidth
+            if (top < topBar.offsetHeight) top = topBar.offsetHeight
+            if (left < 0) left = 0
 
             element.style.top = top + 'px';
             element.style.left = left + 'px';
@@ -459,7 +459,7 @@ processes = {
         document.body.setAttribute('onmousemove', `processes.processMouseMoveHandler(event, processes.pid['${process.id}'])`)
     },
 
-
+    // Add a mouse up handler that clears other handlers and does other stuff
     initiateProcessMouseUpHandler: function (process) {
         document.body.onmouseup = event => {
             if (isDefined(process.getProcessElementHeader())) {
