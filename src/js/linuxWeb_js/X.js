@@ -283,12 +283,12 @@ X = {
                 return `<div id="taskSwitcher">${ret}</div>`
             },
             onCreate: function () {
-                document.querySelector(this.elementQuery + " .app").focus()
-                const numberOfChildren = processes.getPidObject().length - 1;
-                let focusedChildIndex = 0;
+                document.querySelectorAll(this.elementQuery + "> .app")[1].focus()
+                const numberOfChildren = processes.getPidObject().length;
+                let focusedChildIndex = 1;
                 document.querySelector(this.elementQuery).addEventListener('keydown', event => {
-                    if ((event.key == "ArrowRight" || event.key == "Tab") && numberOfChildren > focusedChildIndex) focusedChildIndex++
-                    if (event.key == "ArrowLeft" && focusedChildIndex > 0) focusedChildIndex--
+                    if ((event.key == "ArrowRight" || event.key == "Tab")) focusedChildIndex++ && numberOfChildren <= focusedChildIndex && (focusedChildIndex = 0);
+                    if (event.key == "ArrowLeft") focusedChildIndex-- && focusedChildIndex <= 0 && (focusedChildIndex = numberOfChildren)
                     setTimeout(() => {
                         document.querySelectorAll(this.elementQuery + " > .app")[focusedChildIndex].focus()
                     }, 10);
