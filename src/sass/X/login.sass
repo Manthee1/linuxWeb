@@ -47,7 +47,6 @@
                 margin: 12em 0em
                 transform: translate(-50%,-50%) scale(0)
                 transition: all 0.4s ease-in-out
-
                 &.selected
                     opacity: 1
                     visibility: visible
@@ -60,9 +59,9 @@
         > button
             margin-left: 0.3em
             margin-top: -0.5em
-            width: fit-content
-            color: var(--color-text-medium)
-            &:hover
+            width: 100%
+            background: none
+            &:hover,&:focus
                 color: var(--color-text-light)
         .account_container
             display: flex
@@ -170,7 +169,6 @@
                     flex-flow: column nowrap
                     box-sizing: border-box
                     background-color: var(--color-accent-800)
-                    background-blend-mode: darken
                     height: 6em
                     width: 6em
                     &.custom_picture
@@ -227,14 +225,13 @@
                         border: 2px solid var(--color-primary-400)
     & user_icon
         background-position: center
-        border: 2px solid var(--color-primary-200)
         border-radius: 50%
         min-width: 3em
         min-height: 3em
         background-size: 60%
+        background-blend-mode: normal
         &.custom_picture
             background-size: 100%
-            background-blend-mode: normal
 
 #statusAreaContainer.lockscreen
     z-index: 1

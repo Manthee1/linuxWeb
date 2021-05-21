@@ -66,6 +66,7 @@ html
 *
     background-size: 100%
     -webkit-user-select: none
+    font-family: var(--sans-font)
     -moz-user-select: none
     background-position: center
     background-repeat: no-repeat
@@ -104,8 +105,12 @@ hr
 
 h1,h2,h3,ul,li
     margin: 0px
-
 button
+    border: none
+    color: var(--color-text-light)
+    font-size: 100%
+
+button.button
     border: 4px solid transparent
     color: var(--color-text-light)
     font-family: var(--sans-font)
@@ -133,6 +138,7 @@ button
         z-index: 10
         position: absolute
         content: attr(--data-tooltip)
+        color: var(--color-text-light)
         padding: 0.1em 0.3em
         font-size: 1rem
         background: var(--color-accent-800)
