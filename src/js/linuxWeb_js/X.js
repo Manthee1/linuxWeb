@@ -1107,23 +1107,25 @@ X = {
             let menuUIData = {};
             Object.assign(menuUIData, xObjSchema);
             Object.assign(menuUIData, xObjValue);
-            if (typeof (xObjValue) == "object" && menuUIData.toggleElement != undefined && typeof menuUIData.getHTML == 'function') {
+            if (isObject(xObjValue) && isDefined(menuUIData.toggleElement) && isFunction(menuUIData.getHTML)) {
                 //Adds a 'onclick' listener for the button element that creates a menu(app menu,status menu...)
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
-                    if ((!X.openMenus.includes(xObjName) || menuUIData.recreateBehaviour == 'recreate') && ((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
+                    if ((!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${xObjName}']`)) ||
+                        menuUIData.recreateBehaviour == 'recreate') &&
+                        (isFunction(menuUIData.createCondition && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
+                        console.log(systemMenuContainer.querySelector(`*[data-menu-name='${xObjName}']`), `*[data-menu-name='${xObjName}']`);
                         X.clearOpenMenus(true)
                         menuUIData.preventDefault && event.preventDefault()
                         setTimeout(() => {
                             X.createMenu(menuUIData, event.clientX, event.clientY)
                             //Block the body 'onclick' from deleting the popups when you clicked on them.
                             //Block if we '!want' it closed. Get it?
-                            systemMenuContainer.childElementCount > 0 && systemMenuContainer.children[systemMenuContainer.children.length - 1].addEventListener('click', (event) => {
-                                if ((typeof menuUIData.closeCondition == 'function' && !menuUIData.closeCondition(event)) || typeof menuUIData.closeCondition != 'function') {
-                                    X.menus.openMenuClicked == false && (X.menus.openMenuClicked = true);
-                                }
+                            systemMenuContainer.childElementCount > 0 && systemMenuContainer.lastElementChild.addEventListener('click', (event) => {
+                                if ((isFunction(menuUIData.closeCondition) && !menuUIData.closeCondition(event)) || !isFunction(menuUIData.closeCondition))
+                                    X.menus.openMenuClicked = true;
                             })
                             menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
-                            typeof menuUIData.onCreate == 'function' && menuUIData.onCreate(event);
+                            isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
                         }, 1);
                     }
                 });
@@ -1142,40 +1144,42 @@ X = {
     },
     //Clear all open menus.
     clearOpenMenus: function (force = false) {
-        if (X.openMenus.length != 0 || force) {
-            X.openMenus.forEach(openMenu => {
-                if (isDefined(X.menus[openMenu])) {
-                    isDefined(X.menus[openMenu].toggleElement) && isDefined(X.menus[openMenu].toggleElement.classList) && X.menus[openMenu].toggleElement.classList.remove('selected-topBar');
+        if (systemMenuContainer.childrenElementCount != 0 || force) {
+            Object.values(systemMenuContainer.children).forEach(openMenuEL => {
+                const openMenuName = openMenuEL.getAttribute('data-menu-name');
+                if (isDefined(X.menus[openMenuName])) {
+                    const openMenuUIData = X.menus[openMenuName];
+                    isDefined(openMenuUIData.toggleElement) && isDefined(openMenuUIData.toggleElement.classList) && openMenuUIData.toggleElement.classList.remove('selected-topBar');
+                    if (isFunction(openMenuUIData.onClose)) openMenuUIData.onClose() // Run its onClose
+
                     //If there is a exitAnimation then play it and remove the element
-                    if (X.menus[openMenu].elementQuery && X.menus[openMenu].exitAnimation) {
-                        let element = document.querySelector(X.menus[openMenu].elementQuery);
-                        if (isDefined(element)) {
-                            systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', element) //Move the element into animations ;
-                            if (isFunction(X.menus[openMenu].onClose)) X.menus[openMenu].onClose() // Run its onClose
-                            element.classList.add(X.menus[openMenu].exitAnimation)
-                            if (X.menus[openMenu].enterAnimation) element.classList.remove(X.menus[openMenu].enterAnimation)
-                            setTimeout(() => {
-                                //Remove the element after the animation has played
-                                systemExitAnimationMenuContainer.innerHTML = ""
-                            }, X.menus[openMenu].exitAnimationTime || 200);
-                        }
+                    if (openMenuUIData.exitAnimation) {
+                        systemExitAnimationMenuContainer.insertAdjacentElement('afterbegin', openMenuEL) //Move the element into animations
+                        openMenuEL.classList.add(openMenuUIData.exitAnimation)
+                        if (openMenuUIData.enterAnimation) openMenuEL.classList.remove(openMenuUIData.enterAnimation)
+                        setTimeout(() => {
+                            //Remove the element after the animation has played
+                            systemExitAnimationMenuContainer.innerHTML = ""
+                        }, openMenuUIData.exitAnimationTime || 200);
                     }
                 }
             })
             //Clear the menus array and container
-            X.openMenus = [];
             systemMenuContainer.innerHTML = ""
         }
     },
     //Creates a menu.....
-    createMenu: function (menuUIData, x, y) {
+    createMenu: function (menuUIData, x = 0, y = 0) {
+        if (!isFunction(menuUIData.getHTML)) return;
         this.clearOpenMenus();
-        let elHTML = menuUIData.getHTML(x, y);
-        let elTag = menuUIData.elementQuery;
+        const elHTML = menuUIData.getHTML(x, y);
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the menus html to the DOM.
+        console.log(elHTML);
+        const el = systemMenuContainer.lastElementChild
+        el.setAttribute('data-menu-name', menuUIData.menuName)
+
         if (menuUIData.createOnMousePosition) {
             //Initialize the menu at the cursor position
-            const el = systemMenuContainer.querySelector(elTag);
             const correctionType = isDefined(menuUIData.correctionType) ? menuUIData.correctionType : 0;
             [x, y] = X.correctPosition(x, y, el.offsetWidth, el.offsetHeight, correctionType);
             el.style.left = x + "px";
@@ -1184,14 +1188,8 @@ X = {
 
         if (menuUIData.elementQuery != "" && menuUIData.enterAnimation != "") {
             //If there is a enterAnimation then append it
-            let element = systemMenuContainer.querySelector(menuUIData.elementQuery);
-            element.classList.add(menuUIData.enterAnimation);
+            el.classList.add(menuUIData.enterAnimation);
         }
-        X.openMenus.push(menuUIData.menuName); // Add the menu to the array
-        //Theoretically the openMenus array is not needed.
-        // .. The  system menu element's children on their own could be treated as the identifier if they're open or not.
-        // That's of course if we assume that the own menu will be wrapped in one element. which it normally is. so yeah...
-        // TODO: Make the contents of SystemMenu work as the openMenus Array. that should be less convoluted
     },
     correctPosition: function (x, y, width, height, correctionType = 0) {
 
