@@ -1,10 +1,5 @@
 X = {
     openMenus: [],
-    status: {
-
-        screen: "lockScreen"
-
-    },
     menus: {
         contextMenu: {
             //Menu options
@@ -134,7 +129,7 @@ X = {
                 }
             },
             getHTML: function () {
-                if (X.status.screen == "desktop") {
+                if (X.screen.activeScreen == "desktop") {
 
                     const reminderForm = {
                         message: { display: "Message", value: "", type: 'string', required: true },
@@ -161,7 +156,7 @@ X = {
                         </calendar_container>
                     </div>`;
                 }
-                if (X.status.screen == "loginScreen") {
+                if (X.screen.activeScreen == "loginScreen") {
                     return `<div id='notificationPanelContainer'>
                         <calendar_container>
                             <div class='calendar_wrapper'>
@@ -185,7 +180,7 @@ X = {
             elementQuery: "#statusAreaContainer",
             getHTML: function () {
 
-                if (X.status.screen == "loginScreen") {
+                if (X.screen.activeScreen == "loginScreen") {
                     return `<div id='statusAreaContainer'>
                         <li>
                             <volume_icon></volume_icon>
@@ -206,7 +201,7 @@ X = {
                     </div>`
                 }
 
-                if (X.status.screen == "lockScreen") {
+                if (X.screen.activeScreen == "lockScreen") {
                     return `<div class='lockscreen' id='statusAreaContainer'>
                     <li>
                         <volume_icon></volume_icon>
@@ -229,7 +224,7 @@ X = {
                         </div>`
                 }
 
-                if (X.status.screen == "desktop") {
+                if (X.screen.activeScreen == "desktop") {
                     return `<ul id='statusAreaContainer'>
                     <li>
                     <volume_icon></volume_icon>
@@ -755,7 +750,6 @@ X = {
             }
 
             mainContent.innerHTML = screens[screenName].html
-            X.status.screen = screenName;
             this.activeScreen = screenName
             this.activeSubScreen = ""
             this[screenName].init()
