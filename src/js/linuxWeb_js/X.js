@@ -563,7 +563,41 @@ X = {
                 document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
             }
 
-        }
+        },
+        keyboardShortcutHandler: {
+            //Shortcuts can inly have one final key and any combination of Ctrl, shift and alt.
+            shortcutsUnparsed: [
+                ["Shift Tab", (event) => { event.preventDefault(); X.createMenu(X.menus.taskSwitcher, null, null, event) }],
+                ["Shift q", (event) => { event.preventDefault(); X.createMenu(X.menus.activities, null, null, event) }],
+            ],
+            shortcuts: {},
+            onStart: function () {
+                this.shortcutsUnparsed.forEach(x => {
+                    let shortcutKeyCombination = ""
+                    let shortcutKeys = x[0].toLowerCase().split(' ');
+                    const finalKey = shortcutKeys.pop(-1)
+                    shortcutKeys = shortcutKeys.join(' ')
+                    if (shortcutKeys.includes('ctrl')) shortcutKeyCombination += 'ctrl'
+                    if (shortcutKeys.includes('shift')) shortcutKeyCombination += 'shift'
+                    if (shortcutKeys.includes('alt')) shortcutKeyCombination += 'alt'
+                    this.shortcuts[shortcutKeyCombination + " " + finalKey] = x[1]
+                })
+
+                document.addEventListener('keydown', event => {
+                    let shortcutKeyCombination = ""
+                    const eventKey = event.key.toLowerCase()
+                    if (event.ctrlKey && eventKey != 'control') shortcutKeyCombination += 'ctrl'
+                    if (event.shiftKey && eventKey != 'shift') shortcutKeyCombination += 'shift'
+                    if (event.altKey && eventKey != 'alt') shortcutKeyCombination += 'alt'
+                    shortcutKeyCombination += " " + eventKey
+                    if (isFunction(this.shortcuts[shortcutKeyCombination])) {
+                        this.shortcuts[shortcutKeyCombination](event)
+                    }
+                })
+
+            }
+
+        },
     },
 
     general: {
