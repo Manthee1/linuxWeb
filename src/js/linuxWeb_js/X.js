@@ -1109,18 +1109,12 @@ X = {
             Object.assign(menuUIData, xObjSchema);
             Object.assign(menuUIData, xObjValue);
             if (isObject(xObjValue) && isDefined(menuUIData.toggleElement) && isFunction(menuUIData.getHTML)) {
-                //Adds a 'onclick' listener for the button element that creates a menu(app menu,status menu...)
+                //Adds a 'listenerType' listener for the button element that creates a menu(activities,status menu...)
                 console.log(xObjName, menuUIData.listenerType, menuUIData.toggleElement);
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
-                    if ((!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${xObjName}']`)) ||
-                        menuUIData.recreateBehaviour == 'recreate') &&
-                        ((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) {
-                        X.clearOpenMenus(true)
-                        menuUIData.preventDefault && event.preventDefault()
-                        setTimeout(() => {
-                            X.createMenu(menuUIData, event.clientX, event.clientY, event)
-                        }, 1);
-                    }
+                    setTimeout(() => {
+                        X.createMenu(menuUIData, event.clientX, event.clientY, event)
+                    }, 1);
                 });
             }
         });
@@ -1165,11 +1159,15 @@ X = {
     createMenu: function (menuUIData, x = 0, y = 0, event = null) {
         if (!isFunction(menuUIData.getHTML)) return;
         if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`) && (menuUIData.recreateBehaviour == 'no' || menuUIData.recreateBehaviour == false))) return;
+        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && menuUIData.recreateBehaviour != 'recreate') return;
+        if (!((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) return;
         this.clearOpenMenus();
         const elHTML = menuUIData.getHTML(x, y);
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the menus html to the DOM.
         const el = systemMenuContainer.lastElementChild
         el.setAttribute('data-menu-name', menuUIData.menuName)
+
+        menuUIData.preventDefault && event.preventDefault()
 
         //Block the body 'onclick' from deleting the popups when you clicked on them.
         //Block if we '!want' it closed. Get it?
@@ -1179,6 +1177,8 @@ X = {
         })
         menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
         isDefined(event) && isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
+
+
 
         if (menuUIData.createOnMousePosition) {
             //Initialize the menu at the cursor position
