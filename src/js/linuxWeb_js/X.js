@@ -296,13 +296,15 @@ X = {
             },
             onCreate: function () {
                 //Focus the second taskSwitcher app instance
-                document.querySelectorAll(this.elementQuery + "> .app")[1].focus()
+                setTimeout(() => {
+                    document.querySelectorAll(this.elementQuery + "> .app")[1].focus()
+                }, 1);
                 const numberOfChildren = processes.getPidObject().length;
                 let focusedChildIndex = 1;
                 //Keyboard navigation for the taskList.
                 document.querySelector(this.elementQuery).addEventListener('keydown', event => {
-                    if ((event.key == "ArrowRight" || event.key == "Tab")) focusedChildIndex++ && numberOfChildren <= focusedChildIndex && (focusedChildIndex = 0);
-                    if (event.key == "ArrowLeft") focusedChildIndex-- && focusedChildIndex <= 0 && (focusedChildIndex = numberOfChildren)
+                    if ((event.key == "ArrowRight" || event.key == "Tab")) ++focusedChildIndex && numberOfChildren <= focusedChildIndex && (focusedChildIndex = 0);
+                    if (event.key == "ArrowLeft") --focusedChildIndex && focusedChildIndex < 0 && (focusedChildIndex = numberOfChildren - 1)
                     setTimeout(() => {
                         document.querySelectorAll(this.elementQuery + " > .app")[focusedChildIndex].focus()
                     }, 10);
