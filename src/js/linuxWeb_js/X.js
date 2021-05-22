@@ -1170,7 +1170,7 @@ X = {
                 const openMenuName = openMenuEL.getAttribute('data-menu-name');
                 if (isDefined(X.menus[openMenuName])) {
                     const openMenuUIData = X.menus[openMenuName];
-                    isDefined(openMenuUIData.toggleElement) && isDefined(openMenuUIData.toggleElement.classList) && openMenuUIData.toggleElement.classList.remove('selected-topBar');
+                    isDefined(openMenuUIData.toggleElement) && isDefined(openMenuUIData.toggleElement.classList) && openMenuUIData.toggleElement.classList.remove('selected');
                     if (isFunction(openMenuUIData.onClose)) openMenuUIData.onClose() // Run its onClose
 
                     //If there is a exitAnimation then play it and remove the element
@@ -1209,7 +1209,7 @@ X = {
             if ((isFunction(menuUIData.closeCondition) && !menuUIData.closeCondition(event)) || !isFunction(menuUIData.closeCondition))
                 X.menus.openMenuClicked = true;
         })
-        menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
+        menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected"));
         isDefined(event) && isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
 
 
