@@ -1144,11 +1144,12 @@ X = {
             Object.assign(menuUIData, xObjValue);
             if (isObject(xObjValue) && isDefined(menuUIData.toggleElement) && isFunction(menuUIData.getHTML)) {
                 //Adds a 'listenerType' listener for the button element that creates a menu(activities,status menu...)
-                console.log(xObjName, menuUIData.listenerType, menuUIData.toggleElement);
                 menuUIData.toggleElement.addEventListener(menuUIData.listenerType, event => {
-                    setTimeout(() => {
-                        X.createMenu(menuUIData, event.clientX, event.clientY, event)
-                    }, 1);
+                    event.preventDefault()
+                    X.createMenu(menuUIData, event.clientX, event.clientY, event)
+                    // setTimeout(() => {
+                    //     X.createMenu(menuUIData, event.clientX, event.clientY, event)
+                    // }, 1);
                 });
             }
         });
@@ -1192,8 +1193,8 @@ X = {
     //Creates a menu.....
     createMenu: function (menuUIData, x = 0, y = 0, event = null) {
         if (!isFunction(menuUIData.getHTML)) return;
-        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`) && (menuUIData.recreateBehaviour == 'no' || menuUIData.recreateBehaviour == false))) return;
-        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && menuUIData.recreateBehaviour != 'recreate') return;
+        if (!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`))) event.stopPropagation()
+        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && menuUIData.recreateBehaviour == 'recreate') return;
         if (!((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) return;
         this.clearOpenMenus();
         const elHTML = menuUIData.getHTML(x, y);
