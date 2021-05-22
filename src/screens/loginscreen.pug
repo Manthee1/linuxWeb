@@ -2,21 +2,21 @@ div.login-lock_screen
     div.login_background.ignore_hide
     div.center_container
         div.account_container
-        button(onclick ="X.screen.loginScreen.showCustomLoginForm()") Not Listed?
+        button Not Listed?
             
     form#loginForm.login_form(style='display:none')
         div.user_wrapper
             user_icon
             div#loginUserName
         div.input_container
-            span.back_button(onclick ="X.screen.loginScreen.showAccounts()")
+            span.back_button
                 down_icon
             input(type='password' name='password' placeholder='Password')
     form#customLoginForm.login_form(style='display:none')
         div.user_wrapper
             user_icon
         div.input_container
-            span.back_button(onclick ="X.screen.loginScreen.showAccounts()")
+            span.back_button
                 down_icon
             input(type='username' name='username' placeholder='Username')
             

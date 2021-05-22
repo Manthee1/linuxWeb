@@ -849,6 +849,8 @@ X = {
                 X.topBar.setColor('transparent')
                 system.activeUser = ""; // clears the active user
                 root.style = "" //Removes the user set css style variables
+                mainContent.querySelectorAll('.back_button').forEach(x => x.addEventListener('click', event => X.screen.loginScreen.showAccounts()))
+                mainContent.querySelector('.center_container > button').addEventListener('click', event => X.screen.loginScreen.showCustomLoginForm())
                 this.showAccounts()
             },
 
@@ -954,7 +956,9 @@ X = {
                 X.screen.addEventListener(document, 'keyup', event => { // The selected sunscreen gets changed on key up as well. But with escape doing stuff
                     if (loginTime.classList.contains('selected')) return this.showLoginForm()
                     if (event.key == "Escape") this.showTime()
-                })
+                });
+                //Change to lockscreen when the switch user button is clicked
+                mainContent.querySelector(".switch_user_button").addEventListener('click', event => X.screen.set('loginScreen'))
 
                 // Resets the login form a nd focuses it
                 loginForm.querySelector('#loginUserName').innerHTML = system.activeUser
