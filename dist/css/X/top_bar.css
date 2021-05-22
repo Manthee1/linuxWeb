@@ -9,7 +9,7 @@
   background-color: var(--color-neutral-800);
   border-bottom: var(--color-neutral-800) 2px solid;
   z-index: 100; }
-  #topBar .selected-topBar {
+  #topBar .selected {
     border-bottom: solid var(--color-select) 2px;
     filter: brightness(1.8);
     color: var(--color-text-light); }

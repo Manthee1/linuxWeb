@@ -229,15 +229,15 @@ DONE \---- Make the search actually work.
 DONE \---- Show opened apps (Just like in gnome) 
 DONE TODO: Remove default electron menu
 
-DONE TODO: Add a ALT + TAB menu.
+DONE TODO: Add a ALT + TAB menu. (TaskSwitcher)
 
-TODO: Clean and optimize all the code
+DONE TODO: Clean and optimize all the code
 TODO: Comment All the code
-TODO: Add keyboard navigation to the loginScreen
+DONE TODO: Add keyboard navigation to the loginScreen
 TODO: Make a global keyboard handler object that can have define key combinations to start specific methods
 DONE TODO: Change all the onclicks in the loginScreen and lockScreen to event handlers
-DONE TODO: Make the TaskSwither menu cycle through the apps with tab. (not just stop at the end)
-TODO: Disable TaskSwither if a process is being moved if 
+DONE TODO: Make the TaskSwitcher menu cycle through the apps with tab. (not just stop at the end)
+TODO: Disable taskSwitcher if a process is being moved if 
 
 
 DONE FIXME: lockScreen event listeners stop things from working sometimes
