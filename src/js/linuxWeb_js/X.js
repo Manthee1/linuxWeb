@@ -273,9 +273,7 @@ X = {
             //Menu options
             menuName: "taskSwitcher",
             createOnMousePosition: false,
-            listenerType: "keydown",
-            toggleElement: document,
-            recreateBehaviour: "toggle",
+            recreateBehaviour: "no",
             changeBorder: false,
             preventDefault: false,
             enterAnimation: "fadeIn",
@@ -392,7 +390,7 @@ X = {
                 // Created the menu with the parsed contextMenu Html
                 let menuUIData = X.menus.contextMenu
                 menuUIData.getHTML = () => `<div id='context_menu' class='fadeIn' style="top: ${event.clientY}px;left: ${event.clientX}px;">${contextMenuInnerHTML}</div>`
-                X.createMenu(X.menus.contextMenu, event.clientX, event.clientY)
+                X.createMenu(X.menus.contextMenu, event.clientX, event.clientY, event)
             }
             // If cacheListener is true. Cache the listener.
             if (cacheListener) X.addEventListener(element, 'contextmenu', contextMenuEventHandler)
@@ -1090,7 +1088,7 @@ X = {
         xObjSchema = {
             createOnMousePosition: false,
             listenerType: "click",
-            toggleElement: undefined,
+            toggleElement: null,
             recreateBehaviour: "toggle",
             changeBorder: true,
             preventDefault: false,
@@ -1118,15 +1116,7 @@ X = {
                         X.clearOpenMenus(true)
                         menuUIData.preventDefault && event.preventDefault()
                         setTimeout(() => {
-                            X.createMenu(menuUIData, event.clientX, event.clientY)
-                            //Block the body 'onclick' from deleting the popups when you clicked on them.
-                            //Block if we '!want' it closed. Get it?
-                            systemMenuContainer.childElementCount > 0 && systemMenuContainer.lastElementChild.addEventListener('click', (event) => {
-                                if ((isFunction(menuUIData.closeCondition) && !menuUIData.closeCondition(event)) || !isFunction(menuUIData.closeCondition))
-                                    X.menus.openMenuClicked = true;
-                            })
-                            menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
-                            isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
+                            X.createMenu(menuUIData, event.clientX, event.clientY, event)
                         }, 1);
                     }
                 });
@@ -1170,13 +1160,23 @@ X = {
         }
     },
     //Creates a menu.....
-    createMenu: function (menuUIData, x = 0, y = 0) {
+    createMenu: function (menuUIData, x = 0, y = 0, event = null) {
         if (!isFunction(menuUIData.getHTML)) return;
+        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`) && (menuUIData.recreateBehaviour == 'no' || menuUIData.recreateBehaviour == false))) return;
         this.clearOpenMenus();
         const elHTML = menuUIData.getHTML(x, y);
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the menus html to the DOM.
         const el = systemMenuContainer.lastElementChild
         el.setAttribute('data-menu-name', menuUIData.menuName)
+
+        //Block the body 'onclick' from deleting the popups when you clicked on them.
+        //Block if we '!want' it closed. Get it?
+        systemMenuContainer.childElementCount > 0 && systemMenuContainer.lastElementChild.addEventListener('click', (event) => {
+            if ((isFunction(menuUIData.closeCondition) && !menuUIData.closeCondition(event)) || !isFunction(menuUIData.closeCondition))
+                X.menus.openMenuClicked = true;
+        })
+        menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected-topBar"));
+        isDefined(event) && isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
 
         if (menuUIData.createOnMousePosition) {
             //Initialize the menu at the cursor position
