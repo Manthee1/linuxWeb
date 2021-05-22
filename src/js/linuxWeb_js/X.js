@@ -273,7 +273,7 @@ X = {
             //Menu options
             menuName: "taskSwitcher",
             createOnMousePosition: false,
-            recreateBehaviour: "no",
+            recreateBehaviour: "static",
             changeBorder: false,
             preventDefault: false,
             enterAnimation: "fadeIn",
@@ -1194,7 +1194,7 @@ X = {
     createMenu: function (menuUIData, x = 0, y = 0, event = null) {
         if (!isFunction(menuUIData.getHTML)) return;
         if (!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`))) event.stopPropagation()
-        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && menuUIData.recreateBehaviour == 'recreate') return;
+        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && (menuUIData.recreateBehaviour == 'recreate' || menuUIData.recreateBehaviour == 'static')) return;
         if (!((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) return;
         this.clearOpenMenus();
         const elHTML = menuUIData.getHTML(x, y);
