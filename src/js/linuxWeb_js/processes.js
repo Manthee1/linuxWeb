@@ -1,6 +1,7 @@
 processes = {
 
     currentlySelectedProcess: null,
+    pidPositionsIndex: { x: [], y: [] },
     pid: {},
     //Returns processes.pid. if empty returns false
     getPidObject: function () {
@@ -306,8 +307,25 @@ processes = {
         // Make sure the size and position is good
         appCreateData.height < appCreateData.minHeight && (appCreateData.height = appCreateData.minHeight)
         appCreateData.width < appCreateData.minWidth && (appCreateData.width = appCreateData.minWidth)
-        position.y == 'default' && (position.y = window.innerHeight / 2 - appCreateData.height / 2) + "px"
-        position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2) + "px"
+        position.y = position.y == 'default' ? topBar.offsetHeight + 30 : y;
+        position.x = position.x == 'default' ? 40 : x;
+
+        this.pidPositionsIndex.x = [];
+        this.pidPositionsIndex.y = [];
+
+        //Index app positions and place the new app where there is space.
+        for (const process of Object.values(this.getPidObject())) {
+            this.pidPositionsIndex.x.push(process.positionBeforeMaximize.x)
+            this.pidPositionsIndex.y.push(process.positionBeforeMaximize.y)
+        }
+
+        this.pidPositionsIndex.x = this.pidPositionsIndex.x.sort()
+        this.pidPositionsIndex.y = this.pidPositionsIndex.y.sort()
+
+        for (let i = 0; i < this.pidPositionsIndex.x.length; i++) {
+            if (position.x + 40 > this.pidPositionsIndex.x[i] && position.x - 10 < this.pidPositionsIndex.x[i]) position.x += 20
+            if (position.y + 40 > this.pidPositionsIndex.y[i] && position.y - 10 < this.pidPositionsIndex.y[i]) position.y += 20
+        }
 
         //Then styles are defined here
         const containerStyles = `
