@@ -15,9 +15,9 @@ processes = {
 
     //Returns a unused pid id num
     getNewPid: function () {
-        if (Object.entries(this.pid).length == 0)
+        if (isObjectEmpty(this.pid))
             return 0;
-        else return Number(Object.keys(this.pid).sort().slice(-1)) + 1
+        else return Object.keys(this.pid).map(x => Number(x)).sort((a, b) => a - b).slice(-1)[0] + 1
     },
 
     //Convert string pid into pid 'pid0' => 0
