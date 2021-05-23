@@ -319,12 +319,23 @@ processes = {
             this.pidPositionsIndex.y.push(process.positionBeforeMaximize.y)
         }
 
-        this.pidPositionsIndex.x = this.pidPositionsIndex.x.sort()
-        this.pidPositionsIndex.y = this.pidPositionsIndex.y.sort()
+        this.pidPositionsIndex.x = this.pidPositionsIndex.x.sort((a, b) => a - b)
+        this.pidPositionsIndex.y = this.pidPositionsIndex.y.sort((a, b) => a - b)
 
+        //Loops through all the indexed app positions and finds a spot to create the app window.
         for (let i = 0; i < this.pidPositionsIndex.x.length; i++) {
-            if (position.x + 40 > this.pidPositionsIndex.x[i] && position.x - 10 < this.pidPositionsIndex.x[i]) position.x += 20
-            if (position.y + 40 > this.pidPositionsIndex.y[i] && position.y - 10 < this.pidPositionsIndex.y[i]) position.y += 20
+            if ((position.x + 20 > this.pidPositionsIndex.x[i] && position.x - 10 < this.pidPositionsIndex.x[i]) || (position.y + 20 > this.pidPositionsIndex.y[i] && position.y - 10 < this.pidPositionsIndex.y[i])) {
+                //Increment the position if there's already and app window in the vicinity
+                position.x += 25
+                position.y += 25
+                //Make sure the app is not created out of bounds
+                if (position.y > window.innerHeight - (appList.offsetHeight + 430)) {
+                    position.y = topBar.offsetHeight + 30;
+                }
+                if (position.x > window.innerWidth - 630) {
+                    position.x = 40;
+                }
+            }
         }
 
         //Then styles are defined here
@@ -438,7 +449,6 @@ processes = {
         const pid = this.getNumberPid(stringyPID);
         const process = this.pid[pid];
         if (((event.target.tagName != "APP_HEADER" && event.target.tagName != "APP_TITLE") && !forceRun)) return false
-        console.log('Header click')
         if (process.scaledToArea) {
             let mouseY = event.clientY
             let mouseX = event.clientX
