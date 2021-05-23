@@ -320,7 +320,7 @@ X = {
             },
             createCondition: function (event) {
                 console.log(event);
-                return event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
+                return !isDefined(document.body.getAttribute("onmousemove")) && event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
             },
             // Close the menu when the condition returns true
             closeCondition: function (event) {
