@@ -12,18 +12,21 @@ fileSystem = {
         if (isDefined(file))
             return Object.entries(file).length <= 1
     },
+    //Change the permission value of the file/dir
     setPermissions: function (file, val) {
         file['\\0'] = val + this.getType(file);
 
     },
     setType: function (file, val) {
+        //If val is not either 1 or 0. throw error.
         if (!(val.toString() === '0' || val.toString() === '1')) {
             throw `Error 4: Bad type value :: ${val}`
         }
+        //Sets the file to the new value. '777' + 0 || 1
         file['\\0'] = this.getPermissions(file) + val
     },
     getPermissions: function (file) {
-        return file['\\0'].slice(0, 3)
+        return file['\\0'].slice(0, 3) // eg. Returns '777' from '7770'
     },
     getType: function (file) {
         return file['\\0'].slice(3)
@@ -54,7 +57,7 @@ fileSystem = {
             else
                 throw `Error 2: ${path} is not a file!`;
         }
-
+        //Check options and return what needs to be returned
         if (!isDefined(retObj) && throwError) throw `/${path}: Path not found.`;
         if (returnPath == 'array') return [retObj, path.split('/')];
         if (returnPath == 'string') return [retObj, objPath];
@@ -84,11 +87,11 @@ fileSystem = {
             if (this.isFile(file) && isDefined(text)) file.data = text;
         }
     },
-
+    //Return the Data of the dir obj
     read: function (path) {
         return this.getDir(path, false, true, 1).data
     },
-
+    // Remove file/dir.
     remove: function (path, force = false) { //Works for both Dir and files
         const [file, filePath] = this.getDir(path, "string");
 
@@ -97,7 +100,7 @@ fileSystem = {
 
         eval('delete ' + this.fileRootPath + filePath)
     },
-
+    //Remove directory
     removeDir: function (path, force = false) {
         try {
             this.getDir(path, "string", true, 0);
@@ -106,7 +109,7 @@ fileSystem = {
         }
         this.remove(path, force)
     },
-
+    //Remove file
     removeFile: function (path, force = false) {
         try {
             this.getDir(path, "string", true, 1);
