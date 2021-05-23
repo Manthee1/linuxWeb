@@ -70,6 +70,7 @@ X = {
                 //Makes the app Search result navigable with the keyboard
                 let focusedChildIndex = 0
                 systemMenuContainer.querySelector('#activitiesMenuContainer').addEventListener('keydown', event => {
+
                     const appSearchResultElement = systemMenuContainer.querySelector('.search_results_container')
                     const ignoreKeys = "ArrowRight ArrowLeft Tab Enter Escape"
 
@@ -85,10 +86,11 @@ X = {
                     if (!ignoreKeys.split(' ').includes(event.key)) {
                         inputElement.focus()
                         focusedChildIndex = 0
-                        isDefined(appSearchResultElement.querySelector('.app')) &&
-                            setTimeout(() => {
+
+                        setTimeout(() => {
+                            isDefined(appSearchResultElement.querySelector('.app')) &&
                                 appSearchResultElement.querySelector('.app').focus()
-                            }, 10);
+                        }, 5);
                     }
                 })
 
