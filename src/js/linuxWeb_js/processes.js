@@ -310,14 +310,16 @@ processes = {
         position.x == 'default' && (position.x = window.innerWidth / 2 - appCreateData.width / 2) + "px"
 
         //Then styles are defined here
-        let containerStyles = `
+        const containerStyles = `
 			min-height:${appCreateData.minHeight}px;
 			min-width:${appCreateData.minWidth}px;
             opacity: 0;
             transform: scale(0.8);
             transition: all 0.1s linear;
+            top: ${position.y}px;
+            left: ${position.x}px;
 		`;
-        let bodyStyles = `
+        const bodyStyles = `
 			background-color:${appCreateData.bodyColor};
 			color:${appCreateData.textColor};
 			margin:${(appCreateData.bodyBorder && appCreateData.bodyBorderSize) || '0px'};
@@ -327,7 +329,7 @@ processes = {
 			padding: ${appCreateData.padding};
 			${appCreateData.additionalBodyCss}
 		`;
-        let headerStyles = `
+        const headerStyles = `
 			color: ${appCreateData.titleColor};
 			background-color:${appCreateData.headerColor};
 			border-bottom-style: solid;
@@ -337,7 +339,7 @@ processes = {
 
         //This is how the app html is created.
         const appHTML = `
-			<app_container onmousedown="processes.bringToTop(this,event);" id='${stringyPID}' style = "top: ${position.y}px;left: ${position.x}px;${containerStyles}" >
+			<app_container onmousedown="processes.bringToTop(this,event);" id='${stringyPID}' style = '${containerStyles}' >
 				<app_header style="${headerStyles}opacity:1;" onmousedown="processes.processMouseDownHandler(event, '${stringyPID}')" >
 					<app_title>${appCreateData.title}</app_title>
 					<app_minimize onclick="processes.minimize('${stringyPID}')"><minus_icon></minus_icon></app_minimize>
