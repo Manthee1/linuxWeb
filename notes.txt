@@ -201,8 +201,6 @@ DONE \---- Redesign the lock screen
 DONE \---- Make em all work
 
 DONE TODO: Use border-box
-
-
 DONE TODO: Rework how to context menu is handled
 DONE \---- Have it created on request for an element.
 DONE \---- Have a dynamic object containing the structure of the context menu (Item name and function)
@@ -214,13 +212,9 @@ DONE TODO: Check if firefox works
 
 DONE TODO: Add 'passwd' command
 DONE TODO: Add a no Notifications thin to the notification panel when no notifications
-TODO: Make a settings cookie storage system.
-TODO: Expand the settings that don't need saving into cookies.
-TODO: Create a system api to better handle interfacing with the system and programs
-TODO: Bunch up together same app instances in the taskbar 
 DONE TODO: Add a context menu to the taskbar: Maximize, Minimize, Close, Close ALL
-TODO: apps get opened in the top left
-     \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom right (so basically like any os does)
+DONE TODO: apps get opened in the top left
+DONE \----When an app is already in the area where another app want's to open. Move the new app a little more to the bottom right (so basically like any os does)
 DONE TODO: Add terminal commands: rm
 DONE TODO: Add terminal commands: rmdir
 DONE TODO: Add Application menus and an easy way to create them
@@ -232,12 +226,12 @@ DONE TODO: Remove default electron menu
 DONE TODO: Add a ALT + TAB menu. (TaskSwitcher)
 
 DONE TODO: Clean and optimize all the code
-TODO: Comment All the code
-DONE TODO: Add keyboard navigation to the loginScreen
-TODO: Make a global keyboard handler object that can have define key combinations to start specific methods
+DONE TODO: Comment All the code
+DONE TODO: Make a global keyboard handler object that can have define key combinations to start specific methods
+DONE TODO: Add keyboard navigation to the loginScreen.
 DONE TODO: Change all the onclicks in the loginScreen and lockScreen to event handlers
 DONE TODO: Make the TaskSwitcher menu cycle through the apps with tab. (not just stop at the end)
-TODO: Disable taskSwitcher if a process is being moved if 
+DONE TODO: Disable taskSwitcher if a process is being moved if 
 
 
 DONE FIXME: lockScreen event listeners stop things from working sometimes
@@ -247,6 +241,16 @@ DONE FIXME: Fix firefox css.
 DONE FIXME: Apps can be dragged under the applist taskbar and then they can become unreturnable.
 FIXME: Switching screen out of and back into desktop clear the listeners for the applist
      \---- Possible solution. Cache event listeners. And reinstate them on login. -- Kinda works, but not really.
+
+
+0.5 Plan
+TODO: Make a settings cookie storage system.
+TODO: Expand the settings that don't need saving into cookies.
+TODO: Create a system api to better handle interfacing with the system and programs
+TODO: Make a nice token based permission system for running guarded functions. 
+TODO: If X does not exist. boot into a cli mode
+TODO: Bunch up together same app instances in the taskbar 
+
 
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
