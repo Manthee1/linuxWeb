@@ -9,6 +9,8 @@ system = {
         doNotDisturb: false,
         css: {},
     },
+    //The accounts object includes... accounts, and... more accounts...
+    // It also contains the user settings and other stuff
     accounts: {
         root: { username: "root", privileged: true, encPassword: "bf0dbd74174039131b667de9f31b5d8012baaf82011b934b2cc0e3bd53a02a1f", settings: {}, sessionStateCache: {} },
         user1: {
@@ -22,6 +24,7 @@ system = {
         user2: { username: "user2", privileged: false, encPassword: "", settings: {}, sessionStateCache: {} },
     },
 
+    //Simple. Check if the users password is valid/correct
     validatePassword: function (username, password) {
         if (!isDefined(system.accounts[username])) return false
         if (isTextEmpty(system.accounts[username].encPassword)) return true;
@@ -34,9 +37,10 @@ system = {
         this.global.brightness = brightness;
         document.querySelector("html").style.filter = `brightness(${system.global.brightness / 100})`;
     },
+    //Idk what this does...
     changeVolume: function (volume) {
         this.global.volume = volume;
-        X.services.volume.update();
+        isDefined(X) && X.services.volume.update();
     },
 
     startup: function () { // !Important: Should only be run once
@@ -45,9 +49,9 @@ system = {
 
         //Add system.build variable [version]
         (async () => { system.build = await (async () => { return (await fetch("./build.ver")).text() })() })() // Get build version
-        X.initialize();
+        //Initializes X if iit exists.
+        isDefined(X) && X.initialize();
     },
-
 
     cli: {
         // 'i' A.K.A Interpreter parses the command options and calls the command function
@@ -122,12 +126,12 @@ system = {
                 const ret = system.cli.commands[callMethod] != undefined ? system.cli.commands[callMethod].method(options, terminalProcess) : `${callMethod}: command not found`
                 if (writeToPath) fileSystem.write(writeToPath, 1, ret, 777);
                 else return ret;
-            } catch (error) {
+            } catch (error) { // if an error is encountered... Throw it again...
                 throw `${callMethod}: ${error}`
             }
         },
+        //Append the buffer, aka the terminal option, and it's value to the obj
         appendToOptions: function (buffer, value, obj) {
-
             if (buffer.startsWith('-'))
                 obj["-" + buffer] = value;
             else if (!isTextEmpty(buffer))
@@ -137,7 +141,7 @@ system = {
             return obj;
         },
 
-        //The commands object containing the command names and all of their things...
+        //The commands object containing the command names, and all of their things...
         commands: {
             help: {
                 shortHelp: "Displays help pages for commands",
@@ -300,8 +304,8 @@ USAGE
   killall terminal
   killall google`,
                 method: (options) => {
-                    let processName = options["@s"];
-                    processList = processes.getRunningInstanceList(processName);
+                    const processName = options["@s"];
+                    const processList = processes.getRunningInstanceList(processName);
                     if (isValid(processList) && processList != false) {
                         for (const process of processList) {
                             processes.remove("pid" + process.id);
@@ -327,8 +331,7 @@ USAGE
                     if (isValid(message) && message.length != 0) setTimeout(() => {
                         X.notification.create("Reminder", message, '', '', false, true)
                     }, time * 1000);
-                    else
-                        throw "message - Cannot be empty";
+                    else throw "message - Cannot be empty";
                 }
             },
 
@@ -349,8 +352,6 @@ USAGE
                     let password = ""
                     if (isTextEmpty(username)) throw "Username not provided"
                     if (!isDefined(system.accounts[username])) throw "That user does not exist"
-
-
                     if (!isDefined(options["-c"]) && !isDefined(options["-p"])) throw "-c or -p required"
                     if (isDefined(options["-c"]) && isDefined(options["-p"])) throw "You can't both clear and change a password"
                     if (isDefined(options["-p"]) && isTextEmpty(options["-p"])) throw "-p: Can't be empty"
@@ -372,8 +373,8 @@ USAGE
   ls /home`,
                 method: (options, terminal) => {
                     const path = parseDir(options, terminal)
+                    const list = fileSystem.getDir(path, false, true, 0);
                     let moreInfo = false;
-                    let list = fileSystem.getDir(path, false, true, 0);
                     let ret = `Contents of '${path}' :\n`
                     if (isDefined(options))
                         moreInfo = isDefined(options['-l']) ? true : false;
@@ -400,8 +401,7 @@ USAGE
   cd
   cd /home`,
                 method: (options, terminal) => {
-                    const path = parseDir(options, terminal)
-                    terminal.setCurrentDirectory(path);
+                    terminal.setCurrentDirectory(parseDir(options, terminal));
                 }
             },
             cat: {
@@ -414,8 +414,7 @@ USAGE
   cat example.txt
   cat /home/example.txt`,
                 method: (options, terminal) => {
-                    const path = parseDir(options, terminal)
-                    return fileSystem.read(path)
+                    return fileSystem.read(parseDir(options, terminal))
                 }
             },
             mkdir: {
@@ -429,8 +428,7 @@ USAGE
   mkdir /var/www`,
 
                 method: (options, terminal) => {
-                    const path = parseDir(options, terminal);
-                    fileSystem.write(path, 0, null, 777)
+                    fileSystem.write(parseDir(options, terminal), 0, null, 777)
                 }
             },
             touch: {
@@ -518,7 +516,8 @@ USAGE
                     terminal.initUpdate(this.update, options)
                 },
                 update: function (terminal, options, event = null) {
-                    if (obj = processes.getPidObject()) {
+                    const obj = processes.getPidObject();
+                    if (obj) {
                         let ret = "PID    AppName\n";
                         for (const x of Object.values(obj)) {
                             ret += `${x.id}    ${x.appName} \n`
@@ -543,11 +542,11 @@ USAGE
 
 }
 
-//Figures out which directory a user is targeting. So basically parses a String into an object. In a sense.
+//Figures out which directory a user is targeting. So basically parses a String into a path to the file/directory object.
 function parseDir(options, terminal = null, dir = null) {
     let path = isDefined(terminal) ? terminal.currentDirectory : '/'
     if (!isDefined(dir) && isDefined(options)) {
-        (dir = options["@s"]);
+        dir = options["@s"];
     }
     if (isDefined(dir)) {
         dir = dir.endsWith("/") ? dir.slice(0, -1) : dir;
@@ -557,7 +556,6 @@ function parseDir(options, terminal = null, dir = null) {
         else path = dir;
     }
     !path.startsWith('/') && (path = '/' + path)
-
     return path;
 }
 
