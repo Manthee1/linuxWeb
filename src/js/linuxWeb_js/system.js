@@ -64,7 +64,8 @@ system = {
             //Check if redirection operator exist
             if (rawArgumentString.includes('>')) {
                 [rawArgumentString, writeToPath] = rawArgumentString.split('>')
-                writeTocPath = parseDir(null, terminalProcess, writeToPath.trim());
+                rawArgumentString = rawArgumentString.trim()
+                writeToPath = parseDir(null, terminalProcess, writeToPath.trim());
             }
             let argArray = (rawArgumentString + " ").split(' ')
 
@@ -201,7 +202,7 @@ USAGE
                     if (options != null) {
                         let text = options["@s"]
                         text = text.trim()
-                        if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)[0]
+                        if (text[0] == '"' && text.slice(-1) == '"') text = text.slice(1, -1)
                         return text
                     }
                 }
