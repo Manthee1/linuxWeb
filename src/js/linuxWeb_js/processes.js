@@ -54,13 +54,15 @@ processes = {
 
         const pid = this.getNumberPid(element.id);
 
-        if (this.currentlySelectedProcess == this.pid[pid]) return false;
         // If it has a onFocus then.... do that
         isFunction(this.pid[pid]['onFocus']) && setTimeout(() => {
             //Timeout set in order for the focus to work at all
             this.pid[pid].onFocus(event);
         }, 1);
-        // If it is minimized then unminimize it 
+        //If it is already on top. then return;
+        if (this.currentlySelectedProcess == this.pid[pid]) return false;
+
+        // If it is minimized then unminimize it
         if (this.pid[pid].minimized == true) {
             element.style.transform = "";
             element.style.opacity = "";
