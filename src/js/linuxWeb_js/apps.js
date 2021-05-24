@@ -146,6 +146,8 @@ apps = {
 
                 if (isTextEmpty(rawText)) return false;
 
+                process.addToCommandHistory(rawText);
+
                 try {
                     //Runs the command through the interpreter and gets the command output.
                     const text = system.cli.i(rawText, process);
@@ -157,7 +159,6 @@ apps = {
                     process.addText(e);
                 }
                 element.value = ""; // Clear the input.
-                process.addToCommandHistory(rawText);
             } else if (event.code == "ArrowUp") {
                 // Go thought the command history just like in a conventional terminal
                 process.currentHistoryNumber == -1 && (process.currentCommand = element.value);
