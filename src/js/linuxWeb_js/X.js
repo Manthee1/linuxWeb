@@ -589,6 +589,7 @@ X = {
                 })
 
                 document.addEventListener('keydown', event => {
+                    if (!isDefined(event.key)) return;
                     let shortcutKeyCombination = ""
                     const eventKey = event.key.toLowerCase()
                     if (event.ctrlKey && eventKey != 'control') shortcutKeyCombination += 'ctrl'
