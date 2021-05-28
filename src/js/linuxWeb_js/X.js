@@ -149,9 +149,13 @@ X = {
                             time: { display: "Remind At", value: 0, type: 'number', required: true },
                         }
 
-                        const onclick = `(async()=>{reminder = await X.ctaform("Create Reminder", ${JSON.stringify(reminderForm)});
-                command = "remind " + reminder.message.value + " -t " + reminder.time.value;
-                system.cli.i(command, true)})()`
+                        // const parsedReminderForm = Object.entries(reminderForm).map(x => {
+                        //     return `${x[0]}: ${JSON.stringify(x[1])}`
+                        // })
+                        const onclick = `(async () => {
+                            reminder = await X.cta(\"form\", { title: \"Create Reminder\", formData: ${JSON.stringify(reminderForm)}});
+                            command = \"remind \" + reminder.message.value + \" -t \" + reminder.time.value;
+                            system.cli.i(command, true)})();`;
 
                         return `<div id='notificationPanelContainer'>
                     <div class='notifications_container'>
@@ -321,7 +325,6 @@ X = {
                 })
             },
             createCondition: function (event) {
-                console.log(event);
                 return !isDefined(document.body.getAttribute("onmousemove")) && event.shiftKey && event.key == "Tab" && processes.getPidObject().length > 1
             },
             // Close the menu when the condition returns true
@@ -635,112 +638,120 @@ X = {
     },
 
 
-    // TODO: Combine the ctaform and cta obj.
-    cta: function (title = "cta title :)", message = "This is a generic cta message", buttons = [["OK", true]]) {
+    cta: function (type = "button", data = {}) {
         //Has to be invoked with await to work correctly
 
-        // buttons: {["buttonText","returnValue"],["Cancel",false]}
-        // returnValue is what will be return when the user clicks that button.
-        if (buttons == [] || typeof buttons != 'object') return false;
-        if (typeof buttons[0] != "object") buttons = [...buttons];
-        // Parses the buttons int an array
-        let buttonsHTML = buttons.map(x => { return `<input type='button' value='${x[0]}'>` }).join('')
+        return new Promise(async resolve => {// Promise a response so that we can await when the user responds to the cta
+            // buttons: {["buttonText","returnValue"],["Cancel",false]}
+            // returnValue is what will be return when the user clicks that button.
 
-        let ctaHTML = `
+            let ctaHTML = "";
+            let resolveFunc = async () => { return false }
+            switch (type) {
+                case "button":
+                    data.title = data.title || "cta title :)";
+                    data.message = data.message || "This is a generic cta message";
+                    data.buttons = data.buttons || [["OK", true]];
+
+                    if (data.buttons == [] || typeof data.buttons != 'object') return false;
+                    if (typeof data.buttons[0] != "object") data.buttons = [...data.buttons];
+                    // Parses the buttons int an array
+                    let buttonsHTML = data.buttons.map(x => { return `<input type='button' value='${x[0]}'>` }).join('')
+
+                    ctaHTML = `
                 <cta>
-                    <h1>${title}</h1>
-                    <span>${message}</span>
+                    <h1>${data.title}</h1>
+                    <span>${data.message}</span>
                     <div class='buttons_container'>${buttonsHTML}</div>
                 </cta>
             `
-        X.overlay.create(ctaHTML)
+                    resolveFunc = async (data, resolve) => {
+                        const buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
+                        for (const i in data.buttons) {
+                            buttonsInDOM[i].addEventListener('click', async event => {
+                                X.overlay.remove()
+                                resolve(data.buttons[i][1])
+                            })
+                        }
+                    }
+                    break;
 
-        document.querySelector("cta > .buttons_container > input").focus()
-        const buttonsInDOM = document.querySelectorAll("cta > .buttons_container > input");
-        return new Promise(resolve => {
-            for (const i in buttons) {
-                buttonsInDOM[i].addEventListener('click', async event => {
-                    X.overlay.remove()
-                    resolve(buttons[i][1]);
-                })
-            }
-        });
+                case "form":
+                    let formHtml = ""
 
-    },
+                    // Example of formObj
+                    // data.formData = {
+                    //     Item1: { display: "First Item", value: 0, type: Number(), required: true },
+                    //     Item2: { display: "Second Item", value: "", type: String(), required: true },
+                    //     Item3: { display: "Third Item", value: "", type: String(), required: true },
+                    //     Item4: { display: "Fourth Item", value: "", type: String(), required: true },
+                    // }
 
-    ctaform: function name(title, formObj) {
-        //Has to be invoked with await to work correctly
+                    if (isObjectEmpty(data.formData)) return false
 
-        let formHtml = ""
+                    //Parse the formObj
+                    for (const item of Object.entries(data.formData)) {
+                        const itemName = item[0]
+                        const itemContent = item[1]
 
-        // Example of formObj
-        // formObj = {
-        //     Item1: { display: "First Item", value: 0, type: Number(), required: true },
-        //     Item2: { display: "Second Item", value: "", type: String(), required: true },
-        //     Item3: { display: "Third Item", value: "", type: String(), required: true },
-        //     Item4: { display: "Fourth Item", value: "", type: String(), required: true },
-        // }
+                        const itemType = typeof itemContent.type
+                        if (itemType != "number" && itemType != "string")
+                            itemContent.type = "";
 
-        if (isObjectEmpty(formObj))
-            return false
+                        formHtml += `<li><span>${itemContent.display}</span><input id='${itemName}' type='${itemContent.type}' value='${itemContent.value}' ></li>`
+                    }
 
-        //Parse the formObj
-        for (const item of Object.entries(formObj)) {
-            const itemName = item[0]
-            const itemContent = item[1]
-
-            itemType = typeof itemContent.type
-            if (itemType != "number" && itemType != "string")
-                itemContent.type = "";
-
-            formHtml += `<li><span>${itemContent.display}</span><input id='${itemName}' type='${itemContent.type}' value='${itemContent.value}' ></li>`
-        }
-
-        let ctaHTML = `
+                    ctaHTML = `
                 <cta>
-                    <h1>${title}</h1>
+                    <h1>${data.title}</h1>
                     <form>${formHtml}</form>
                     <span class='error_message'></span>
                     <div class='buttons_container'><input type='button' value='Cancel'><input type='button' value='Submit'></div>
                 </cta>
             `
-        X.overlay.create(ctaHTML)
-        const ctaFormInputsInDOM = document.querySelectorAll("cta > form input");
-        //Add the form to the overlay, add event listeners for buttons.
-        return new Promise(resolve => {// Promise a response so that we cak await when the user responds to the cta
-            document.querySelector("cta > .buttons_container input[value='Submit']").addEventListener('click', async event => {
-                // Parse form html to obj
-                for (const input of ctaFormInputsInDOM) {
-                    const formItem = formObj[input.id]
-                    if (formItem.required == true && input.value.trim() == "") {
-                        document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' Can't be empty`;
-                        return false;
+                    resolveFunc = async (data, resolve) => {
+                        const ctaFormInputsInDOM = document.querySelectorAll("cta > form input");
+
+                        //Add event listeners for buttons.
+                        document.querySelector("cta > .buttons_container input[value='Submit']").addEventListener('click', async event => {
+                            // Parse form html to obj
+                            for (const input of ctaFormInputsInDOM) {
+                                let formItem = data.formData[input.id]
+                                if (formItem.required == true && input.value.trim() == "") {
+                                    document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' Can't be empty`;
+                                    return false
+                                }
+
+                                if (formItem.type != typeof input.value && isNaN(Number(input.value))) {
+                                    document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' must be a ${typeof (formItem.type)}`;
+                                    return false;
+                                }
+                                data.formData[input.id].value = input.value
+                            }
+                            X.overlay.remove();
+                            resolve(data.formData)
+                        })
+                        document.querySelector("cta > .buttons_container input[value='Cancel']").addEventListener('click', async event => {
+                            X.overlay.remove()
+                            resolve(false)
+                        });
                     }
-
-                    if (formItem.type != typeof input.value && isNaN(Number(input.value))) {
-                        document.querySelector("cta .error_message").innerHTML = `'${formItem.display}' must be a ${typeof (formItem.type)}`;
-                        return false;
-                    }
-                    formItem.value = input.value
-                }
-                X.overlay.remove()
-                resolve(formObj);
-
-            })
-            document.querySelector("cta > .buttons_container input[value='Cancel']").addEventListener('click', async event => {
-                X.overlay.remove()
-                resolve(false);
-            });
-
+                    break;
+                default:
+                    break;
+            }
+            X.overlay.create(ctaHTML)
+            resolveFunc(data, resolve);
         });
+
     },
 
     shutdown: async function () {
         let shutdownTimeout = setTimeout(() => {
             system.shutdown()
         }, 10000);
-        let shutdowncta = X.cta("Power Off", "This 'thing' Will turn off in 10 seconds!", [["Cancel", false], ["Power Off", true]]);
-        if (await shutdowncta) system.shutdown()
+        let shutdownCta = X.cta('button', { title: "Power Off", message: "This 'thing' Will turn off in 10 seconds!", buttons: [["Cancel", false], ["Power Off", true]] });
+        if (await shutdownCta) system.shutdown()
         clearTimeout(shutdownTimeout);
 
     },
@@ -748,16 +759,16 @@ X = {
         let logoutTimeout = setTimeout(() => {
             system.logout();
         }, 10000);
-        let logoutcta = X.cta("Log Out", "You will be logged out in 10 seconds!", [["Cancel", false], ["Log Out", true]]);
-        if (await logoutcta) system.logout();
+        let logoutCta = X.cta('button', { title: "Log Out", message: "You will be logged out in 10 seconds!", buttons: [["Cancel", false], ["Log Out", true]] });
+        if (await logoutCta) system.logout();
         clearTimeout(logoutTimeout);
     },
     restart: async function () {
         let restartTimeout = setTimeout(() => {
             system.restart()
         }, 10000);
-        let restartcta = X.cta("Restart", "This 'thing' Will restart in 10 seconds!", [["Cancel", false], ["Restart", true]]);
-        if (await restartcta) system.restart()
+        let restartCta = X.cta('button', { title: "Restart", message: "This 'thing' Will restart in 10 seconds!", buttons: [["Cancel", false], ["Restart", true]] });
+        if (await restartCta) system.restart()
         clearTimeout(restartTimeout);
     },
 
@@ -1080,7 +1091,7 @@ X = {
 
                 //Initialize the desktop context menu
                 X.contextMenu.add(desktop, [
-                    ["Change Background", "X.cta('Unavailable','This feature is not yet implemented',[['Sad Face :(']])"],
+                    ["Change Background", "X.cta('button', { title: 'Unavailable', message: 'This feature is not yet implemented', buttons: [['Sad Face :(']]})"],
                     [""],
                     ["Terminal", "processes.create('terminal')"],
                     ["Settings", "processes.create('settings')"],
@@ -1112,7 +1123,7 @@ X = {
         X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
         //Create dumb test notifications
         X.notification.create('', '', '', '', '', false)
-        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('JK','No virus here...')", "./img/network.svg", true, false)
+        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('button', { title: 'JK', message: 'No virus here...'}", "./img/network.svg", true, false)
 
         //Initialize all tge services
         Object.entries(X.services).forEach(xObj => {
@@ -1214,8 +1225,6 @@ X = {
         })
         menuUIData.changeBorder && (menuUIData.toggleElement.classList.add("selected"));
         isDefined(event) && isFunction(menuUIData.onCreate) && menuUIData.onCreate(event);
-
-
 
         if (menuUIData.createOnMousePosition) {
             //Initialize the menu at the cursor position
