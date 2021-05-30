@@ -617,18 +617,8 @@ X = {
         dropdown: {
             //Dropdown handler...
             toggle: (element) => {
-                // TODO: Rewrite this
                 if (!isDefined(element)) return false
-                let dropdownElement = element.querySelector('dropdown');
-                if (dropdownElement.style.height == "") {
-                    dropdownElement.style = `height:${dropdownElement.childElementCount * 30}px;`
-                    element.querySelector('down_icon').style.transform = "rotate(0deg)";
-                }
-                else {
-                    dropdownElement.style.height = ""
-                    element.querySelector('down_icon').style.transform = "";
-
-                }
+                element.classList.toggle("open");
             }
         },
     },
