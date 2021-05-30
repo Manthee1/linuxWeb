@@ -105,6 +105,9 @@
         flex-flow: column nowrap
         justify-content: center
         align-content: center
+        transition: transform 0.1s linear
+        &.hidden
+            transform: translate(-100%, -50%)
 
         >*
             height: 3em

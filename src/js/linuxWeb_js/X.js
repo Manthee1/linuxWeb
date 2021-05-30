@@ -62,9 +62,16 @@ X = {
                 inputElement.focus()
                 // Searches the apps every time you "input". and then spits out matches, if any
                 inputElement.addEventListener('input', event => {
-                    searchResultHtml = X.activities.requestResults(inputElement.value)
-                    if (isTextEmpty(inputElement.value)) overlayContainer.querySelector('.open_apps_preview_container').style.display = ''
-                    else overlayContainer.querySelector('.open_apps_preview_container').style.display = 'none'
+                    const searchResultHtml = X.activities.requestResults(inputElement.value)
+                    const favoritesEl = overlayContainer.querySelector('.favorites')
+                    if (isTextEmpty(inputElement.value)) {
+                        overlayContainer.querySelector('.open_apps_preview_container').style.display = ''
+                        favoritesEl.classList.remove('hidden')
+                    }
+                    else {
+                        overlayContainer.querySelector('.open_apps_preview_container').style.display = 'none'
+                        favoritesEl.classList.add('hidden')
+                    }
                     systemMenuContainer.querySelector('.search_results_container').innerHTML = searchResultHtml
                 });
                 //Makes the app Search result navigable with the keyboard
