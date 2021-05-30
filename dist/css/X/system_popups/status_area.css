@@ -19,16 +19,22 @@
         display: flex;
         transform: rotate(-90deg);
         transition: transform 0.2s ease-in-out; }
+    #statusAreaContainer .dropdown_item.open li down_icon {
+      transform: rotate(0deg); }
+    #statusAreaContainer .dropdown_item.open > dropdown {
+      transform: scaleY(1);
+      max-height: 100%; }
     #statusAreaContainer .dropdown_item > dropdown {
-      height: 0px;
+      height: auto;
       background: var(--color-primary-400);
       overflow: hidden;
       display: flex;
       flex-flow: column nowrap;
-      transition: height 0.2s ease-in-out; }
+      transition: max-height 0.2s ease-in-out;
+      max-height: 0px; }
       #statusAreaContainer .dropdown_item > dropdown > li {
         padding-left: 3.3em;
-        margin: auto 0px; }
+        margin: 0px; }
       #statusAreaContainer .dropdown_item > dropdown > hr {
         background: var(--color-primary-200); }
   #statusAreaContainer li {

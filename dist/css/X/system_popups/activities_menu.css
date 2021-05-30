@@ -96,7 +96,10 @@
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
-    align-content: center; }
+    align-content: center;
+    transition: transform 0.1s linear; }
+    #activitiesMenuContainer > .favorites.hidden {
+      transform: translate(-100%, -50%); }
     #activitiesMenuContainer > .favorites > * {
       height: 3em;
       width: 3em; }
