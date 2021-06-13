@@ -42,8 +42,11 @@
       #taskSwitcher .app .iconWrapper > span {
         font-size: 4em; }
     #taskSwitcher .app .app_name {
+      max-width: 100%;
+      text-align: center;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       font-size: 0.9em;
+      margin: auto;
       height: 0em; }
