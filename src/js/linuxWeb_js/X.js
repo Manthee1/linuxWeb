@@ -27,6 +27,7 @@ X = {
             menuName: "activities",
             listenerType: "click",
             toggleElement: document.querySelector('#activitiesMenuButton'),
+            recreateBehaviour: "toggle",
             enterAnimation: "fadeIn",
             exitAnimation: "fadeOut",
             exitAnimationTime: 200, //ms 
@@ -1205,9 +1206,17 @@ X = {
     createMenu: function (menuUIData, x = 0, y = 0, event = null) {
         if (!isFunction(menuUIData.getHTML)) return;
         if (!isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`))) event.stopPropagation()
-        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`)) && (menuUIData.recreateBehaviour == 'static')) return;
+        if (isDefined(systemMenuContainer.querySelector(`*[data-menu-name='${menuUIData.menuName}']`))) {
+            if (menuUIData.recreateBehaviour == 'static') return;
+            if (menuUIData.recreateBehaviour == 'toggle') {
+                this.clearOpenMenus();
+                return;
+            };
+
+        }
         if (!((isFunction(menuUIData.createCondition) && menuUIData.createCondition(event)) || !isFunction(menuUIData.createCondition))) return;
         this.clearOpenMenus();
+
         const elHTML = menuUIData.getHTML(x, y);
         systemMenuContainer.insertAdjacentHTML("beforeend", elHTML) //Add the menus html to the DOM.
         const el = systemMenuContainer.lastElementChild
