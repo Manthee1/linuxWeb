@@ -11,10 +11,10 @@ const dist = "./dist"
 const src = "./src";
 const tmp = "./tmp";
 const dir = {
-    sass: src + "/assets/sass/**/*.sass",
-    views: src + "/assets/views/**/*.pug",
+    sass: src + "/assets/styles/**/*.sass",
+    views: src + "/views/**/*.pug",
     screens: src + "/screens/**/*.pug",
-    js: src + "/js/**/*.js",
+    js: src + "/assets/js/**/*.js",
 }
 
 function compileSass(destDir = "./dist") {
