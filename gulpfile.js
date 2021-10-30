@@ -27,11 +27,6 @@ function compileScreens(cb) {
     return gulp.src(dir.screens).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/screens'));
 }
 
-
-function compileComponents(cb) {
-    return gulp.src(dir.components).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/components'));
-}
-
 function compileJs(cb) {
     return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(dist + '/js'))
 }
@@ -47,7 +42,6 @@ function watch() {
 exports.sass = compileSass
 exports.views = compileViews
 exports.screens = compileScreens
-exports.components = compileComponents
 exports.js = compileJs
 exports.watch = watch
 exports.build = gulp.series(compileSass, compileViews, compileScreens, compileComponents, compileJs)
