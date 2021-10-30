@@ -5,38 +5,65 @@ const plumber = require('gulp-plumber');
 const inline_image = require('gulp-inline-image');
 const uglify = require('gulp-uglify-es').default;
 const webserver = require('gulp-webserver');
+const del = require('del');
 
 const dist = "./dist"
 const src = "./src";
+const tmp = "./tmp";
 const dir = {
-    sass: src + "/sass/**/*.sass",
-    views: src + "/views/**/*.pug",
+    sass: src + "/assets/sass/**/*.sass",
+    views: src + "/assets/views/**/*.pug",
     screens: src + "/screens/**/*.pug",
     js: src + "/js/**/*.js",
 }
 
-function compileSass(cb) {
-    return gulp.src(dir.sass).pipe(sass()).pipe(inline_image()).pipe(gulp.dest(dist + '/css'))
+function compileSass(destDir = "./dist") {
+    return gulp.src(dir.sass).pipe(sass()).pipe(inline_image()).pipe(gulp.dest(destDir + '/assets/styles'))
 }
 
-function compileViews(cb) {
-    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/views'));
+function compileViews(destDir = "./dist") {
+    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(destDir + '/views'));
 }
 
-function compileScreens(cb) {
-    return gulp.src(dir.screens).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/screens'));
+function compileScreens(destDir = "./dist") {
+    return gulp.src(dir.screens).pipe(plumber()).pipe(pug()).pipe(gulp.dest(destDir + '/screens'));
 }
 
-function compileJs(cb) {
-    return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(dist + '/js'))
+function compileJs(destDir = "./dist") {
+    return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(destDir + '/assets/js'))
 }
 
-function watch() {
-    gulp.watch(dir.sass, compileSass)
-    gulp.watch(dir.views, compileViews)
-    gulp.watch(dir.screens, compileScreens)
-    gulp.watch(dir.js, compileJs)
+async function moveOtherAssets(destDir = "./dist") { //img fonts
+    await gulp.src(src + "/assets/img/**/*").pipe(gulp.dest(destDir + '/assets/img'));
+    await gulp.src(src + "/assets/fonts/**/*").pipe(gulp.dest(destDir + '/assets/fonts'));
+    await gulp.src(src + "/*.pug").pipe(plumber()).pipe(pug()).pipe(gulp.dest(destDir + "/"));
+    return;
 }
+
+async function watch() {
+    await build_dev();
+    gulp.watch(src, build_dev);
+    return;
+}
+
+async function build(destDir = dist) {
+    //clear dest dir
+    await del(destDir + "/**");
+    await compileSass(destDir);
+    await compileViews(destDir);
+    await compileScreens(destDir);
+    await compileJs(destDir);
+    await moveOtherAssets(destDir);
+}
+
+async function build_dev() {
+    return build(tmp);
+}
+
+async function build_prod() {
+    return build(dist);
+}
+
 function serve() {
     return gulp.src(dist).pipe(webserver({
         port: 5000,
@@ -45,12 +72,6 @@ function serve() {
     }));
 }
 
-
-
-exports.sass = compileSass
-exports.views = compileViews
-exports.screens = compileScreens
-exports.js = compileJs
 exports.watch = watch
-exports.build = gulp.series(compileSass, compileViews, compileScreens, compileJs)
+exports.build = build_prod
 exports.serve = serve
