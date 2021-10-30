@@ -1,9 +1,0 @@
-.app_body > textarea {
-  height: 100vh;
-  resize: none;
-  background-color: var(--color-primary-100);
-  border: none;
-  padding: 10px;
-  overflow: auto;
-  color: var(--color-text-light);
-  margin: 0em; }
