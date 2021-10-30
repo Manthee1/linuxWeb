@@ -242,15 +242,13 @@ DONE FIXME: Apps can be dragged under the applist taskbar and then they can beco
 FIXME: Switching screen out of and back into desktop clear the listeners for the applist
      \---- Possible solution. Cache event listeners. And reinstate them on login. -- Kinda works, but not really.
 
-
 0.5 Plan
-TODO: Make a settings cookie storage system.
-TODO: Expand the settings that don't need saving into cookies.
+TODO: Store settings and other info in localStorage
 TODO: Create a system api to better handle interfacing with the system and programs
 TODO: Make a nice token based permission system for running guarded functions. 
-TODO: If X does not exist. boot into a cli mode
-TODO: Bunch up together same app instances in the taskbar 
-
+TODO: If X does not exist. boot into cli mode
+TODO: Bunch up the same app instances in the taskbar
+TODO: Add an option to create a new user in the settings
 
 Always do this
 TODO: Improve all names. (variable names, function names, html tags, file names...)
