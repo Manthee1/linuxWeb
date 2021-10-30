@@ -4,8 +4,6 @@ const pug = require('gulp-pug');
 const plumber = require('gulp-plumber');
 const inline_image = require('gulp-inline-image');
 const uglify = require('gulp-uglify-es').default;
-const concat = require('gulp-concat');
-const browserSync = require('browser-sync').create();
 
 const dist = "./dist"
 const src = "./src";
@@ -18,32 +16,27 @@ const dir = {
 }
 
 function compileSass(cb) {
-    return gulp.src(dir.sass).pipe(sass()).pipe(inline_image()).pipe(gulp.dest(dist + '/css')).pipe(browserSync.stream())
+    return gulp.src(dir.sass).pipe(sass()).pipe(inline_image()).pipe(gulp.dest(dist + '/css'))
 }
 
 function compileViews(cb) {
-    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/views')).pipe(browserSync.stream());
+    return gulp.src(dir.views).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/views'));
 }
 
 function compileScreens(cb) {
-    return gulp.src(dir.screens).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/screens')).pipe(browserSync.stream());
+    return gulp.src(dir.screens).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/screens'));
 }
 
 
 function compileComponents(cb) {
-    return gulp.src(dir.components).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/components')).pipe(browserSync.stream());
+    return gulp.src(dir.components).pipe(plumber()).pipe(pug()).pipe(gulp.dest(dist + '/components'));
 }
 
 function compileJs(cb) {
-    return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(dist + '/js')).pipe(browserSync.stream())
+    return gulp.src(dir.js).pipe(uglify()).pipe(gulp.dest(dist + '/js'))
 }
 
 function watch() {
-    browserSync.init({
-        server: {
-            baseDir: dist
-        }
-    })
     gulp.watch(dir.sass, compileSass)
     gulp.watch(dir.views, compileViews)
     gulp.watch(dir.screens, compileScreens)
