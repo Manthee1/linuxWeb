@@ -440,7 +440,11 @@ processes = {
         this.makeProcessResizable("#" + processes.pid[processID].elementId);
         this.bringToTop(processes.pid[processID].getProcessElement())
         // Header double click maximize
-        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => { console.log('D Maximize'); processes.maximize(stringyPID); })
+        addDoubleClickListener(processes.pid[processID].getProcessElementHeader(), (event) => {
+            processes.maximize(stringyPID);
+            //Remove the mousemove so that the app doesn't move when it is maximized/minimized.
+            document.body.onmousemove = null;
+        })
 
         isFunction(apps[appName].onStart) && apps[appName].onStart(processes.pid[processID])
         appCreateData = {};
