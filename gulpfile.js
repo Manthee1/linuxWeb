@@ -1,5 +1,5 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('node-sass'));
 const pug = require('gulp-pug');
 const plumber = require('gulp-plumber');
 const inline_image = require('gulp-inline-image');
