@@ -50,3 +50,4 @@ exports.screens = compileScreens
 exports.components = compileComponents
 exports.js = compileJs
 exports.watch = watch
+exports.build = gulp.series(compileSass, compileViews, compileScreens, compileComponents, compileJs)
