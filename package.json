@@ -26,19 +26,13 @@
   },
   "homepage": "https://github.com/Manthee1/linuxWeb#readme",
   "devDependencies": {
-    "del": "^6.0.0",
-    "electron": "^12.0.2",
     "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
     "gulp-inline-image": "^1.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.1.0",
     "gulp-uglify-es": "^2.0.0",
-    "gulp-webserver": "^0.9.1",
-    "sass": "^1.32.8"
+    "gulp-webserver": "^0.9.1"
   },
-  "dependencies": {
-    "node-sass": "^5.0.0"
-  }
+  "dependencies": {}
 }
