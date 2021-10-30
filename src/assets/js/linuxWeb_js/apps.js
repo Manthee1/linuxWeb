@@ -5,7 +5,7 @@ apps = {
         name: "linuxWEB Terminal",
         path: "apps.terminal",
         version: "1.2.0",
-        icon: "./img/terminal.svg",
+        icon: "./assets/img/terminal.svg",
 
         createData: {
             //The createData object is used to define the general parameters
@@ -193,7 +193,7 @@ apps = {
 
     settings: {
         name: "Settings",
-        icon: "./img/settings.svg",
+        icon: "./assets/img/settings.svg",
 
         //The HTML Layout gets stored object... yea kinda wired. I even remember thinking this is good...
         // Well I don't have time to fix this so you can stare at it for now.
@@ -292,7 +292,7 @@ apps = {
     },
     notepad: {
         name: "Notepad",
-        icon: "./img/notepad.svg",
+        icon: "./assets/img/notepad.svg",
         createData: {
             title: "Notepad - Untitled Document",
             fullWidth: true,

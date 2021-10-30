@@ -424,7 +424,7 @@ X = {
             //Declares some values
             title = title || "Notification";
             description = description || "This is a default notification";
-            iconPath = iconPath || "./img/about.svg";
+            iconPath = iconPath || "./assets/img/about.svg";
             let type = typeof persistent != "boolean" ? false : persistent; //'persistent', 'temporary' : false, true
             clickAction = clickAction || "";
             let id = Object.entries(this.notifications).length == 0 ? 0 : Number(Object.keys(this.notifications).sort().slice(-1)) + 1
@@ -568,10 +568,10 @@ X = {
                 let img;
                 const volume = system.global.volume;
 
-                if (volume > 66) img = "url('./img/volume/high.svg')";
-                else if (volume > 33) img = "url('./img/volume/medium.svg')";
-                else if (volume > 0) img = "url('./img/volume/low.svg')";
-                else img = "url('./img/volume/mute.svg')";
+                if (volume > 66) img = "url('./assets/img/volume/high.svg')";
+                else if (volume > 33) img = "url('./assets/img/volume/medium.svg')";
+                else if (volume > 0) img = "url('./assets/img/volume/low.svg')";
+                else img = "url('./assets/img/volume/mute.svg')";
 
                 document.querySelectorAll('volume_icon').forEach(x => x.style.backgroundImage = img)
             }
@@ -1122,7 +1122,7 @@ X = {
         X.services.clock.update.add(document.querySelector('#topBarDateTime'), "month>str date time-s")
         //Create dumb test notifications
         X.notification.create('', '', '', '', '', false)
-        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('button', { title: 'JK', message: 'No virus here...'}", "./img/network.svg", true, false)
+        X.notification.create("Virus Alert", "Your computer has a virus", "X.cta('button', { title: 'JK', message: 'No virus here...'}", "./assets/img/network.svg", true, false)
 
         //Initialize all tge services
         Object.entries(X.services).forEach(xObj => {

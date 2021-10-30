@@ -134,11 +134,11 @@
 		"Reached target Graphical Interface.",
 	];
 	jsSources = [
-		"./js/libraries/sha256.js",
-		"./js/linuxWeb_js/system.js",
-		"./js/linuxWeb_js/apps.js",
-		"./js/linuxWeb_js/processes.js",
-		"./js/linuxWeb_js/fileSystem.js",
+		"./assets/js/libraries/sha256.js",
+		"./assets/js/linuxWeb_js/system.js",
+		"./assets/js/linuxWeb_js/apps.js",
+		"./assets/js/linuxWeb_js/processes.js",
+		"./assets/js/linuxWeb_js/fileSystem.js",
 	];
 	const screensSources = new Map([
 		["loginScreen", "./screens/loginscreen.html"],
